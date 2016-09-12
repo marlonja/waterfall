@@ -49,6 +49,11 @@
 			
 			</h:inputText>
 			
+			<h:outputLabel for="password" value="Password" />
+			<h:inputSecret id="password" label="Password" value="#{userBean.password}" required="true">
+			
+			</h:inputSecret>
+			
 			<h:commandButton action="#{userBean.registerNewUser()}" value="Save" />
 		</h:panelGrid>
 

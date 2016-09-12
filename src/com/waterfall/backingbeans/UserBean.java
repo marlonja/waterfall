@@ -24,6 +24,7 @@ public class UserBean implements Serializable{
 	private String dob;
 	private String email;
 	private String gender;
+	private String password;
 	
 	@EJB 
 	private LocalUser userEJB;
@@ -36,6 +37,7 @@ public class UserBean implements Serializable{
 		user.setEmail(email);
 		user.setCity(city);
 		user.setGender(gender);
+		user.setPassword(password);
 		
 		// temporary date for database purposes
 		Date exampleDate = new Date(0,0,0);
@@ -56,6 +58,18 @@ public class UserBean implements Serializable{
 	
 	
 	
+	public String getPassword() {
+		return password;
+	}
+
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+
 	public String getFirstName() {
 		return firstName;
 	}

@@ -13,7 +13,7 @@ import java.util.Date;
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
 
-	private static final long serialVersionUID = -738460582119284054L;
+	private static final long serialVersionUID = 5461470282886888730L;
 
 	@Id
 	private String userid;
@@ -30,6 +30,8 @@ public class User implements Serializable {
 	private String gender;
 
 	private String lastname;
+
+	private String password;
 
 	private String username;
 
@@ -90,6 +92,14 @@ public class User implements Serializable {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getUsername() {
