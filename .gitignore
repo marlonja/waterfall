@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -83,6 +84,8 @@ captures/
 node_modules/
 target/
 =======
+=======
+>>>>>>> 99ac37d43c894edfe38558b51f9c488fecd127c0
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -166,4 +169,7 @@ local.properties
 captures/
 node_modules/
 target/
+<<<<<<< HEAD
 >>>>>>> refs/remotes/origin/master
+=======
+>>>>>>> 99ac37d43c894edfe38558b51f9c488fecd127c0
