@@ -14,8 +14,8 @@ public class UserEJB implements LocalUser {
 	private UserDAOBean userDAOBean;
 
 	@Override
-	public boolean storeUser(User user) {
-		return userDAOBean.storeUser(user);
+	public boolean saveUser(User user) {
+		return userDAOBean.saveUser(user);
 	}
 
 }

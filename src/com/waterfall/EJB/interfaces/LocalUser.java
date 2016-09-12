@@ -9,5 +9,5 @@ import com.waterfall.models.User;
 @Local
 public interface LocalUser {
 
-	boolean storeUser(User user);
+	boolean saveUser(User user);
 }

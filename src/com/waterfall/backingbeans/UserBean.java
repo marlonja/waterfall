@@ -10,6 +10,8 @@ import javax.inject.Named;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.User;
 
+import sun.reflect.generics.tree.VoidDescriptor;
+
 @Named(value = "userBean")
 @SessionScoped
 public class UserBean implements Serializable{
@@ -36,11 +38,14 @@ public class UserBean implements Serializable{
 		user.setGender(gender);
 		
 		// temporary date for database purposes
-		Date exampleDate = new Date(1996, 4, 14);
+		Date exampleDate = new Date(0,0,0);
+		exampleDate.setDate(14);
+		exampleDate.setYear(1964);
+		exampleDate.setMonth(04);
 		
 		user.setBirthdate(exampleDate);
 		
-		userEJB.storeUser(user);
+		userEJB.saveUser(user);
 		
 //		System.out.println(user);
 //		System.out.println("I BEAN!");
@@ -48,6 +53,8 @@ public class UserBean implements Serializable{
 		
 		return "index";
 	}
+	
+	
 	
 	public String getFirstName() {
 		return firstName;

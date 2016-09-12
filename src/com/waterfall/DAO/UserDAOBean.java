@@ -14,7 +14,7 @@ public class UserDAOBean {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public boolean storeUser(User user) {
+	public boolean saveUser(User user) {
 		
 		if(em.merge(user) != null){
 			return true;
