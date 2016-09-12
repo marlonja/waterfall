@@ -3,19 +3,55 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-<ui:composition template="">
-	<ui:define name="header">
-	    Add your header here or delete to use the default
-	</ui:define>
-	<ui:define name="content">
-	    Add your content here or delete to use the default
-	</ui:define>
-	<ui:define name="footer">
-	    Add your footer here or delete to use the default
-	</ui:define>
-</ui:composition>
+<h:head>
+	<title>Register new user</title>
+</h:head>
+
+<h:body>
+	<h:form id="userForm">
+		<h:messages></h:messages>
+		<h:panelGrid columns="2" columnsClasses="rightAlign, leftAlign">
+			<h:outputLabel for="firstName" value="FirstName" />
+			<h:inputText id="firstName" label="First Name" value="#{userBean.firstName}" required="true">
+			
+			</h:inputText>
+			
+			<h:outputLabel for="lastName" value="LastName" />
+			<h:inputText id="lastName" label="Last Name" value="#{userBean.lastName}" required="true">
+			
+			</h:inputText>
+			
+			<h:outputLabel for="userName" value="Username" />
+			<h:inputText id="username" label="Username" value="#{userBean.username}" required="true">
+			
+			</h:inputText>
+			
+			<h:outputLabel for="email" value="Email" />
+			<h:inputText id="email" label="Email" value="#{userBean.email}" required="true">
+			
+			</h:inputText>
+			
+			<h:outputLabel for="city" value="City" />
+			<h:inputText id="city" label="City" value="#{userBean.city}" required="true">
+			
+			</h:inputText>
+			
+			<h:outputLabel for="dob" value="Date of Birth" />
+			<h:inputText id="dob" label="Date of Birth" value="#{userBean.dob}" required="true">
+			
+			</h:inputText>
+			
+			<h:outputLabel for="gender" value="Gender" />
+			<h:inputText id="gender" label="Gender" value="#{userBean.gender}" required="true">
+			
+			</h:inputText>
+			
+			<h:commandButton action="#{userBean.registerNewUser()}" value="Save" />
+		</h:panelGrid>
+
+	</h:form>
+</h:body>
 </html>
