@@ -10,8 +10,6 @@ import javax.inject.Named;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.User;
 
-import sun.reflect.generics.tree.VoidDescriptor;
-
 @Named(value = "userBean")
 @SessionScoped
 public class UserBean implements Serializable{
@@ -26,8 +24,16 @@ public class UserBean implements Serializable{
 	private String gender;
 	private String password;
 	
-	@EJB 
+	@EJB
 	private LocalUser userEJB;
+	
+	public String loginUser(){
+		User user = new User();
+		user.setUsername(username);
+		user.setPassword(password);
+		System.out.print("Login " + username + " " + password);
+		return "";
+	}
 	
 	public String registerNewUser(){
 		User user = new User();

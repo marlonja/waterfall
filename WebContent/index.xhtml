@@ -8,6 +8,16 @@
 
 <h:body>
 	<h1>KOM IGEN DÅRÅ</h1>
+	<h:form>
+		<h:messages></h:messages>
+		<h:panelGrid columns="2">
+			<h:inputText id="userName" placeholder="Username" value="#{userBean.username}"></h:inputText>
+			<h:inputSecret id="password" placeholder="Password" value="#{userBean.password}"></h:inputSecret>
+			
+			<h:commandButton action="#{userBean.loginUser()}" value="Login"></h:commandButton>
+			
+		</h:panelGrid>
 	
+	</h:form>
 </h:body>
 </html>
