@@ -12,7 +12,8 @@ import java.util.Date;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
-	@NamedQuery(name="User.findByUsername", query="SELECT u FROM User u WHERE u.username LIKE :username")
+	@NamedQuery(name="User.findByUsername", query="SELECT u FROM User u WHERE u.username LIKE :username"),
+	@NamedQuery(name="User.findByEmail", query="SELECT u FROM User u WHERE u.email LIKE :email")
 })
 
 public class User implements Serializable {

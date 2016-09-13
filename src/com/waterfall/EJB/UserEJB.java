@@ -8,6 +8,8 @@ import javax.ejb.Stateless;
 import com.waterfall.DAO.UserDAOBean;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.User;
+import com.waterfall.validators.LoginValidator;
+import com.waterfall.validators.RegistrationValidator;
 
 
 @Stateless
@@ -16,11 +18,23 @@ public class UserEJB implements LocalUser {
 	@EJB
 	private UserDAOBean userDaoBean;
 	
+	@EJB
+	private LoginValidator loginValidator;
+	
+	@EJB
+	private RegistrationValidator registrationValidator;
 	
 	@Override
-	public boolean storeUser(User c) {
+	public boolean storeUser(User user) {
 		
-		return userDaoBean.storeUser(c);
+		if(registrationValidator.validateUserForRegistration(user)){
+			System.out.println("validation succeeded");
+			return userDaoBean.storeUser(user);
+		}else{
+			System.out.println("validation is not successfull");
+			return false;
+		}
+		
 	}
 
 	@Override
@@ -34,7 +48,8 @@ public class UserEJB implements LocalUser {
 		
 		System.out.println("Kom in i EJB");
 		
-		userDaoBean.getUserByUsername(userToCheckInDatabase);
+		User userFromDatabase = userDaoBean.getUserByUsername(userToCheckInDatabase);
+		loginValidator.validateUserPassword(userFromDatabase, userToCheckInDatabase);
 		
 		return null;
 	}

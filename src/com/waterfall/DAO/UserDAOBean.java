@@ -33,7 +33,7 @@ public class UserDAOBean {
 		return em.createNamedQuery("User.findAll").getResultList();
 	}
 
-	public User getUserByUsername(User userToCheckInDatabase) {
+	public User getUserByUsername(User userToCheckInDatabase){
 		try{
 			User user = (User)em.createNamedQuery("User.findByUsername")
 			    .setParameter("username", userToCheckInDatabase.getUsername())
@@ -46,6 +46,15 @@ public class UserDAOBean {
 			System.out.println("det fanns inte");
 			return null;
 		}
+	}
+	public boolean isEmailUnique(String userEmail)throws NoResultException{
+			if(em.createNamedQuery("User.findByEmail")
+				.setParameter("email", userEmail).getSingleResult() != null){
+				System.out.println("Email is not unique");
+				return false;
+				}
+			System.out.println("Email is unique");
+			return true;
 		
 	}
 

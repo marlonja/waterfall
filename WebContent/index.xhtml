@@ -24,14 +24,10 @@
 		<h:messages></h:messages>
 			<h:panelGrid columns="2" columnClasses="rightAlign leftAlign">
 				<h:outputLabel for="username" value="Username" />
-				<h:inputText id="username" label="First Name" value="#{userBean.username}" required="true">
-				
-				</h:inputText>
+				<h:inputText id="username" label="First Name" value="#{userBean.username}" required="true" />
 				
 				<h:outputLabel for="password" value="Password" />
-				<h:inputText id="password" label="Password" value="#{userBean.password}" required="true">
-				
-				</h:inputText>
+				<h:inputSecret id="password" label="Password" value="#{userBean.password}" required="true" />
 				
 				<h:commandButton action="#{userBean.loginUser()}" value="Login" />
 			
