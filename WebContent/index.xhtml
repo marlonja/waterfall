@@ -11,17 +11,32 @@
 	
 		
 		<h:form id="searchForm">
-			<h:commandButton action="#{userBean.search()}" value="List All">	
-			</h:commandButton>
-			""
-			<h:commandButton action="reg-new-user.xhtml" value="Create User">	
-			</h:commandButton>
+		
+			<h:commandButton action="#{userBean.search()}" value="List All" />	
 			
-			<h:commandButton action="#{userBean.checkUser()}" value="Check user">	
-			</h:commandButton>
+			<h:commandButton action="reg-new-user.xhtml" value="Create User" />	
+			
+			<h:commandButton action="#{userBean.checkUser()}" value="Check user" />	
 			
 		</h:form>
-	
-	</h:form>
+		
+		<h:form>
+		<h:messages></h:messages>
+			<h:panelGrid columns="2" columnClasses="rightAlign leftAlign">
+				<h:outputLabel for="username" value="Username" />
+				<h:inputText id="username" label="First Name" value="#{userBean.username}" required="true">
+				
+				</h:inputText>
+				
+				<h:outputLabel for="password" value="Password" />
+				<h:inputText id="password" label="Password" value="#{userBean.password}" required="true">
+				
+				</h:inputText>
+				
+				<h:commandButton action="#{userBean.loginUser()}" value="Login" />
+			
+			</h:panelGrid>
+			
+		</h:form>
 </h:body>
 </html>

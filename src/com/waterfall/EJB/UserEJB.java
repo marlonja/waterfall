@@ -28,4 +28,16 @@ public class UserEJB implements LocalUser {
 		return userDaoBean.getAll();
 	}
 
+	@Override
+	public User validateLogin(User userToCheckInDatabase) {
+		
+		System.out.println("Kom in i EJB");
+		
+		userDaoBean.getUserByUsername(userToCheckInDatabase);
+		
+		return null;
+	}
+	
+	
+
 }

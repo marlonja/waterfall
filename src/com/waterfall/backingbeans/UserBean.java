@@ -49,16 +49,6 @@ public class UserBean implements Serializable{
 		return "";
 	}
 	
-	
-	
-	public String loginUser(){
-		User user = new User();
-		user.setUsername(username);
-		user.setPassword(password);
-		System.out.print("Login " + username + " " + password);
-		return "";
-	}
-	
 	public String registerNewUser(){
 		User user = new User();
 		user.setFirstname(firstName);
@@ -84,6 +74,18 @@ public class UserBean implements Serializable{
 		
 		
 		return "index";
+	}
+	
+	public String loginUser() {
+		User userToCheckInDatabase = new User();
+		userToCheckInDatabase.setUsername(username);
+		userToCheckInDatabase.setPassword(password);
+		
+		System.out.println("kom in i loginuser");
+		
+		userEJB.validateLogin(userToCheckInDatabase);
+		
+		return "all";
 	}
 	
 	

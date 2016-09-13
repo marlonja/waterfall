@@ -17,4 +17,6 @@ public interface LocalUser {
 
 	List<User> getAll();
 
+	User validateLogin(User userToCheckInDatabase);
+
 }
