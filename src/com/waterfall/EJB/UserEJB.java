@@ -15,7 +15,8 @@ public class UserEJB implements LocalUser {
 	
 	@EJB
 	private UserDAOBean userDaoBean;
-
+	
+	
 	@Override
 	public boolean storeUser(User c) {
 		

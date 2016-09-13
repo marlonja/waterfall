@@ -5,9 +5,9 @@ import java.util.List;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-import com.sun.xml.wss.impl.policy.verifier.UsernameOrSAMLAlternativeSelector;
 import com.waterfall.models.User;
 
 
@@ -18,7 +18,6 @@ public class UserDAOBean {
 	
 	@PersistenceContext
 	private EntityManager em;
-	
 
 	public boolean storeUser(User c) {
 		if(em.merge(c) != null){
@@ -34,23 +33,20 @@ public class UserDAOBean {
 		return em.createNamedQuery("User.findAll").getResultList();
 	}
 
-
-	public List<User> getUserByUsername(User userToCheckInDatabase) {
-
-		
-		List<User> users = em.createNamedQuery("User.findByUsername")
+	public User getUserByUsername(User userToCheckInDatabase) {
+		try{
+			User user = (User)em.createNamedQuery("User.findByUsername")
 			    .setParameter("username", userToCheckInDatabase.getUsername())
-			    .getResultList();
-		
-		if(users.size() > 0){
-			System.out.println("det fanns");
-			System.out.println(users);
-		}else {
-			System.out.println("det fanns inte");
-		}
+			    .getSingleResult();
+				System.out.println("det fanns");
+				System.out.println(user.getFirstname());
 			
+			return user;
+		}catch(NoResultException e){
+			System.out.println("det fanns inte");
+			return null;
+		}
 		
-		return users;
 	}
 
 }
