@@ -47,14 +47,18 @@ public class UserDAOBean {
 			return null;
 		}
 	}
-	public boolean isEmailUnique(String userEmail)throws NoResultException{
+	public boolean isEmailUnique(String userEmail){
+		try{
 			if(em.createNamedQuery("User.findByEmail")
 				.setParameter("email", userEmail).getSingleResult() != null){
 				System.out.println("Email is not unique");
 				return false;
 				}
+		}catch(NoResultException e){
 			System.out.println("Email is unique");
 			return true;
+		}
+		return true;
 		
 	}
 
