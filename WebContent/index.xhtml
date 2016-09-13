@@ -7,7 +7,20 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <h:body>
-	<h1>KOM IGEN DÅRÅ</h1>
+	<h1>INDEX!!!</h1>
+	
+		
+		<h:form id="searchForm">
+			<h:commandButton action="#{userBean.search()}" value="List All">	
+			</h:commandButton>
+			""
+			<h:commandButton action="reg-new-user.xhtml" value="Create User">	
+			</h:commandButton>
+			
+			<h:commandButton action="#{userBean.checkUser()}" value="Check user">	
+			</h:commandButton>
+			
+		</h:form>
 	
 </h:body>
 </html>
