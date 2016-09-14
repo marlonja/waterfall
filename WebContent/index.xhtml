@@ -23,6 +23,8 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
+
+	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
 
@@ -32,15 +34,13 @@
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">Waterfall</a>
 		</div>
-
 		<ul class="nav navbar-nav">
 			<h:form id="searchForm">
 				<h:commandButton action="#{userBean.search()}"
-						value="List All" />
-				<h:commandButton action="reg-new-user.xhtml"
-						value="Create User" />
+					value="Show list of all users" />
+
 				<h:commandButton action="#{userBean.checkUser()}"
-						value="Check user" />
+					value="Check if user exists" />
 			</h:form>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
@@ -55,10 +55,10 @@
 						value="#{userBean.password}" required="true" />
 
 					<h:commandButton action="#{userBean.loginUser()}" value="Login" />
+					<h:commandButton action="reg-new-user.xhtml" value="Register" />
 				</h:form></li>
 		</ul>
 	</div>
 	</nav>
-	<div></div>
 </h:body>
 </html>
