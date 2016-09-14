@@ -44,10 +44,14 @@
 			
 			</h:inputText>
 			
+			<h:selectOneRadio value="#{userBean.gender}">
 			<h:outputLabel for="gender" value="Gender" />
-			<h:inputText id="gender" label="Gender" value="#{userBean.gender}" required="true">
+		   	<f:selectItem itemValue="Male" itemLabel="Male" />
+		   	<f:selectItem itemValue="Female" itemLabel="Female" />
+		   	<f:selectItem itemValue="Other" itemLabel="Other" />
+			</h:selectOneRadio>
 			
-			</h:inputText>
+			<br></br>
 			
 			<h:outputLabel for="password" value="Password" />
 			<h:inputSecret id="password" label="Password" value="#{userBean.password}" required="true">
