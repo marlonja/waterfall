@@ -28,10 +28,8 @@ public class UserEJB implements LocalUser {
 	public boolean storeUser(User user) {
 		
 		if(registrationValidator.validateUserForRegistration(user)){
-			System.out.println("validation succeeded");
 			return userDaoBean.storeUser(user);
 		}else{
-			System.out.println("validation is not successfull");
 			return false;
 		}
 		
@@ -46,11 +44,11 @@ public class UserEJB implements LocalUser {
 	@Override
 	public User validateLogin(User userToCheckInDatabase) {
 		
-		System.out.println("Kom in i EJB");
-		
 		User userFromDatabase = userDaoBean.getUserByUsername(userToCheckInDatabase);
-		loginValidator.validateUserPassword(userFromDatabase, userToCheckInDatabase);
 		
+		if(userFromDatabase != null) {
+			loginValidator.validateUserPassword(userFromDatabase, userToCheckInDatabase);
+		}
 		return null;
 	}
 	

@@ -51,7 +51,6 @@ public class RegistrationValidator {
 	}
 
 	private boolean validateOnlyLetters(String userInput) {
-		System.out.println("I validateUserFirstName");
 		Pattern pattern = Pattern.compile(regexOnlyLetter);
 		Matcher matcher = pattern.matcher(userInput);
 
