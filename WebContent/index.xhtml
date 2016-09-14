@@ -5,34 +5,60 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+		crossorigin="anonymous" />
 
+	<!-- Optional theme -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+		crossorigin="anonymous" />
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+</h:head>
 <h:body>
-	<h1>INDEX!!!</h1>
-	
-		
-		<h:form id="searchForm">
-		
-			<h:commandButton action="#{userBean.search()}" value="List All" />	
-			
-			<h:commandButton action="reg-new-user.xhtml" value="Create User" />	
-			
-			<h:commandButton action="#{userBean.checkUser()}" value="Check user" />	
-			
-		</h:form>
-		
-		<h:form>
-		<h:messages></h:messages>
-			<h:panelGrid columns="2" columnClasses="rightAlign leftAlign">
-				<h:outputLabel for="username" value="Username" />
-				<h:inputText id="username" label="First Name" value="#{userBean.username}" required="true" />
-				
-				<h:outputLabel for="password" value="Password" />
-				<h:inputSecret id="password" label="Password" value="#{userBean.password}" required="true" />
-				
-				<h:commandButton action="#{userBean.loginUser()}" value="Login" />
-			
-			</h:panelGrid>
-			
-		</h:form>
+
+	<div id="navbar"></div>
+	<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Waterfall</a>
+		</div>
+
+		<ul class="nav navbar-nav">
+			<h:form id="searchForm">
+				<h:commandButton action="#{userBean.search()}"
+						value="List All" />
+				<h:commandButton action="reg-new-user.xhtml"
+						value="Create User" />
+				<h:commandButton action="#{userBean.checkUser()}"
+						value="Check user" />
+			</h:form>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li><h:form>
+					<h:messages></h:messages>
+					<h:outputLabel for="username" value="Username" />
+					<h:inputText id="username" label="First Name"
+						value="#{userBean.username}" required="true" />
+
+					<h:outputLabel for="password" value="Password" />
+					<h:inputSecret id="password" label="Password"
+						value="#{userBean.password}" required="true" />
+
+					<h:commandButton action="#{userBean.loginUser()}" value="Login" />
+				</h:form></li>
+		</ul>
+	</div>
+	</nav>
+	<div></div>
 </h:body>
 </html>
