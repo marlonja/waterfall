@@ -58,6 +58,10 @@
 			
 			</h:inputSecret>
 			
+			<h:selectOneMenu value="Select country">
+				<f:selectItems value="#{userBean.allCountries}" />
+			</h:selectOneMenu>
+			
 			<h:commandButton action="#{userBean.registerNewUser()}" value="Save" />
 		</h:panelGrid>
 

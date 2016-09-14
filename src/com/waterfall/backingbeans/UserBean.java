@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -11,6 +12,7 @@ import javax.inject.Named;
 
 
 import com.waterfall.EJB.interfaces.LocalUser;
+import com.waterfall.locations.CountryService;
 import com.waterfall.models.User;
 import com.waterfall.validators.RegistrationValidator;
 
@@ -28,28 +30,40 @@ public class UserBean implements Serializable{
 	private String gender;
 	private String password;
 	private List<User> userList;
+	private List<String> allCountries;
+	
+	@EJB
+	CountryService countryService;
 	
 	@EJB
 	private LocalUser userEJB;
 	@EJB
 	RegistrationValidator registrationValidator;
 	
+	@PostConstruct
+	public void init() {
+		setAllCountries(countryService.getAllCountries());
+	}
+	
 	public String search(){
 		userList = userEJB.getAll();
+		
 		return "all";
 	}
 	
 	public String checkUser(){
 		String temp = "asdd";
 		userList = userEJB.getAll();
-		for(int i=0; i<userList.size();i++){
-			
-			if(userList.get(i).getUsername().equals(temp)){
-				System.out.println("User found");
-			}else{
-				System.out.println("No user found");
-			}
-		}
+//		for(int i=0; i<userList.size();i++){
+//			
+//			if(userList.get(i).getUsername().equals(temp)){
+//				System.out.println("User found");
+//			}else{
+//				System.out.println("No user found");
+//			}
+//		}
+		
+		
 		return "";
 	}
 	
@@ -196,6 +210,14 @@ public class UserBean implements Serializable{
 
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
+	}
+
+	public List<String> getAllCountries() {
+		return allCountries;
+	}
+
+	public void setAllCountries(List<String> allCountries) {
+		this.allCountries = allCountries;
 	}
 	
 	
