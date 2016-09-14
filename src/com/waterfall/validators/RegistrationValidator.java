@@ -11,68 +11,76 @@ import com.waterfall.models.User;
 
 @Stateful
 public class RegistrationValidator {
-	
+
 	private String regexOnlyLetter = "^[-A-ZÅÄÖa-zåäö]+$";
 	private String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	
+
 	@EJB
 	private UserDAOBean userDAOBean;
-	
-	public boolean validateUserForRegistration(User userToValidate){		
-		
-		if(!validateCorrectFormat(userToValidate.getFirstname())){			
+
+	public boolean validateUserForRegistration(User userToValidate) {
+
+		if (!validateCorrectBasicFormat(userToValidate)) {
 			return false;
 		}
-				
-		if(!validateCorrectFormat(userToValidate.getLastname())){			
-			return false;
-		}		
-		
-		if(!validateCorrectFormat(userToValidate.getCity())){			
-			return false;
-		}
-		
-		
-		if(validateCorrectEmailFormat(userToValidate.getEmail()) && validateUniqueEmail(userToValidate.getEmail())){			
+
+		if (validateCorrectEmailFormat(userToValidate.getEmail()) && validateUniqueEmail(userToValidate.getEmail())) {
 			return true;
-		}else{
+		} else {
 			return false;
-		}	
-		
+		}
+
 	}
-	
-	private boolean validateCorrectFormat(String userInput){
+
+	private boolean validateCorrectBasicFormat(User userToValidate) {
+
+		if (!validateOnlyLetters(userToValidate.getFirstname())) {
+			return false;
+		}
+
+		if (!validateOnlyLetters(userToValidate.getLastname())) {
+			return false;
+		}
+
+		if (!validateOnlyLetters(userToValidate.getCity())) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean validateOnlyLetters(String userInput) {
 		System.out.println("I validateUserFirstName");
 		Pattern pattern = Pattern.compile(regexOnlyLetter);
 		Matcher matcher = pattern.matcher(userInput);
-		
-		if(!userInput.isEmpty()){
-			if(!matcher.matches()){
-				
+
+		if (!userInput.isEmpty()) {
+			if (!matcher.matches()) {
 				return false;
-			
+
 			}
 		}
 		return true;
 	}
-	private boolean validateCorrectEmailFormat(String userEmail){
+
+	private boolean validateCorrectEmailFormat(String userEmail) {
 		Pattern pattern = Pattern.compile(emailRegex);
 		Matcher matcher = pattern.matcher(userEmail);
-		
-		if(!userEmail.isEmpty()){
-			if(!matcher.matches()){
-				
+
+		if (!userEmail.isEmpty()) {
+			System.out.println("email inte tom");
+			if (!matcher.matches()) {
 				return false;
 			}
-			
+
 		}
 		return true;
 	}
-	
-	private boolean validateUniqueEmail(String userEmail){
+
+	private boolean validateUniqueEmail(String userEmail) {
 		return userDAOBean.isEmailUnique(userEmail);
-	
+
 	}
-	
+
 }
