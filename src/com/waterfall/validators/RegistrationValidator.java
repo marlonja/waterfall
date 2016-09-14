@@ -12,7 +12,7 @@ import com.waterfall.models.User;
 @Stateful
 public class RegistrationValidator {
 	
-	private String regexOnlyLetter = "^[-A-ZÅÄÖa-zåäö]+$";
+	private String regexOnlyLetter = "^[-A-Zï¿½ï¿½ï¿½a-zï¿½ï¿½ï¿½]+$";
 	private String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private boolean validationSuccess = true;
@@ -24,37 +24,45 @@ public class RegistrationValidator {
 		validateCorrectFormat(userToValidate.getFirstname());
 		validateCorrectFormat(userToValidate.getLastname());
 		validateCorrectFormat(userToValidate.getCity());
-		validateCorrectEmailFormat(userToValidate.getEmail());
-		validateUniqueEmail(userToValidate.getEmail());
-		
+		if (validateCorrectEmailFormat(userToValidate.getEmail())) {
+			System.out.println("Email format is okey, inne i if:en");
+			validateUniqueEmail(userToValidate.getEmail());
+		}
+		System.out.println(validationSuccess);
 		return validationSuccess;
 		
 	}
 	
 	private void validateCorrectFormat(String userInput){
-		System.out.println("I validateUserFirstName");
+		System.out.println("Validerar korrekt format fÃ¶r inputs...");
 		Pattern pattern = Pattern.compile(regexOnlyLetter);
 		Matcher matcher = pattern.matcher(userInput);
 		
 		if(!userInput.isEmpty()){
+			System.out.println("InputfÃ¤ltet Ã¤r ifyllt...");
 			if(!matcher.matches()){
-				
+				System.out.println("InputfÃ¤ltet Ã¤r ifyllt men av fel format...");
+				System.out.println("Testar");
 				validationSuccess = false;
-			
 			}
 		}
 	}
-	private void validateCorrectEmailFormat(String userEmail){
+	private boolean validateCorrectEmailFormat(String userEmail){
+		System.out.println("Validating email format.....");
 		Pattern pattern = Pattern.compile(emailRegex);
 		Matcher matcher = pattern.matcher(userEmail);
 		
 		if(!userEmail.isEmpty()){
-			if(!matcher.matches()){
-				
-				validationSuccess = false;
+			System.out.println("Email Ã¤r ifyllt...");
+			if(matcher.matches()){
+				System.out.println("Emailen har rÃ¤tt format...");
+				validationSuccess = true;
+				return true;
 			}
-			
+			System.out.println("Email Ã¤r ifyllt men har fel format...");
 		}
+		validationSuccess = false;
+		return false;
 		
 	}
 	

@@ -55,7 +55,7 @@ public class UserDAOBean {
 				return false;
 				}
 		}catch(NoResultException e){
-			System.out.println("Email is unique");
+			System.out.println("Email is unique..............");
 			return true;
 		}
 		return true;
