@@ -12,62 +12,66 @@ import com.waterfall.models.User;
 @Stateful
 public class RegistrationValidator {
 	
-	private String regexOnlyLetter = "^[-A-Zï¿½ï¿½ï¿½a-zï¿½ï¿½ï¿½]+$";
+	private String regexOnlyLetter = "^[-A-ZÅÄÖa-zåäö]+$";
 	private String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	private boolean validationSuccess = true;
+	
 	@EJB
 	private UserDAOBean userDAOBean;
 	
-	public boolean validateUserForRegistration(User userToValidate){
-	
-		validateCorrectFormat(userToValidate.getFirstname());
-		validateCorrectFormat(userToValidate.getLastname());
-		validateCorrectFormat(userToValidate.getCity());
-		if (validateCorrectEmailFormat(userToValidate.getEmail())) {
-			System.out.println("Email format is okey, inne i if:en");
-			validateUniqueEmail(userToValidate.getEmail());
+	public boolean validateUserForRegistration(User userToValidate){		
+		
+		if(!validateCorrectFormat(userToValidate.getFirstname())){			
+			return false;
 		}
-		System.out.println(validationSuccess);
-		return validationSuccess;
+				
+		if(!validateCorrectFormat(userToValidate.getLastname())){			
+			return false;
+		}		
+		
+		if(!validateCorrectFormat(userToValidate.getCity())){			
+			return false;
+		}
+		
+		
+		if(validateCorrectEmailFormat(userToValidate.getEmail()) && validateUniqueEmail(userToValidate.getEmail())){			
+			return true;
+		}else{
+			return false;
+		}	
 		
 	}
 	
-	private void validateCorrectFormat(String userInput){
-		System.out.println("Validerar korrekt format fÃ¶r inputs...");
+	private boolean validateCorrectFormat(String userInput){
+		System.out.println("I validateUserFirstName");
 		Pattern pattern = Pattern.compile(regexOnlyLetter);
 		Matcher matcher = pattern.matcher(userInput);
 		
 		if(!userInput.isEmpty()){
-			System.out.println("InputfÃ¤ltet Ã¤r ifyllt...");
 			if(!matcher.matches()){
-				System.out.println("InputfÃ¤ltet Ã¤r ifyllt men av fel format...");
-				System.out.println("Testar");
-				validationSuccess = false;
+				
+				return false;
+			
 			}
 		}
+		return true;
 	}
 	private boolean validateCorrectEmailFormat(String userEmail){
-		System.out.println("Validating email format.....");
 		Pattern pattern = Pattern.compile(emailRegex);
 		Matcher matcher = pattern.matcher(userEmail);
 		
 		if(!userEmail.isEmpty()){
-			System.out.println("Email Ã¤r ifyllt...");
-			if(matcher.matches()){
-				System.out.println("Emailen har rÃ¤tt format...");
-				validationSuccess = true;
-				return true;
+			if(!matcher.matches()){
+				
+				return false;
 			}
-			System.out.println("Email Ã¤r ifyllt men har fel format...");
+			
 		}
-		validationSuccess = false;
-		return false;
-		
+		return true;
 	}
 	
-	private void validateUniqueEmail(String userEmail){
-		validationSuccess = userDAOBean.isEmailUnique(userEmail);
+	private boolean validateUniqueEmail(String userEmail){
+		return userDAOBean.isEmailUnique(userEmail);
 	
 	}
 	
