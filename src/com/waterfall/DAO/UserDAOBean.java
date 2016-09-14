@@ -19,8 +19,8 @@ public class UserDAOBean {
 	@PersistenceContext
 	private EntityManager em;
 
-	public boolean storeUser(User c) {
-		if(em.merge(c) != null){
+	public boolean storeUser(User user) {
+		if(em.merge(user) != null){
 			return true;
 		}else{
 			return false;
@@ -47,7 +47,7 @@ public class UserDAOBean {
 			return null;
 		}
 	}
-	public boolean isEmailUnique(String userEmail){
+	public boolean isEmailInDatabaseUnique(String userEmail){
 		try{
 			if(em.createNamedQuery("User.findByEmail")
 				.setParameter("email", userEmail).getSingleResult() != null){
@@ -60,6 +60,17 @@ public class UserDAOBean {
 		}
 		return true;
 		
+	}
+
+	public boolean isUsernameInDatabaseUnique(String username) {
+		User user = new User();
+		user.setUsername(username);
+		if(getUserByUsername(user) == null){
+			System.out.println("Användarnamnet fanns inte");
+			return true;
+		}
+		System.out.println("Användarnamnet fanns redan");
+		return false;
 	}
 
 }

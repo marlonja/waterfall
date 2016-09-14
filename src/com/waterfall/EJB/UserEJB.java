@@ -27,11 +27,7 @@ public class UserEJB implements LocalUser {
 	@Override
 	public boolean storeUser(User user) {
 		
-		if(registrationValidator.validateUserForRegistration(user)){
-			return userDaoBean.storeUser(user);
-		}else{
-			return false;
-		}
+		return userDaoBean.storeUser(user);
 		
 	}
 

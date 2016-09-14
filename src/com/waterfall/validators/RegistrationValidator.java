@@ -21,11 +21,19 @@ public class RegistrationValidator {
 
 	public boolean validateUserForRegistration(User userToValidate) {
 
-		if (!validateCorrectBasicFormat(userToValidate)) {
+		if (!isBasicFormatCorrect(userToValidate)) {
+			return false;
+		}
+		if(userToValidate.getGender() == null){
+			System.out.println("You are genderless");
+			return false;
+		}
+		if(!isUsernameUnique(userToValidate.getUsername())){
+			System.out.println("Username exists vi är i validation");
 			return false;
 		}
 
-		if (validateCorrectEmailFormat(userToValidate.getEmail()) && validateUniqueEmail(userToValidate.getEmail())) {
+		if (isEmailFormatCorrect(userToValidate.getEmail()) && isEmailUnique(userToValidate.getEmail())) {
 			return true;
 		} else {
 			return false;
@@ -33,24 +41,24 @@ public class RegistrationValidator {
 
 	}
 
-	private boolean validateCorrectBasicFormat(User userToValidate) {
+	private boolean isBasicFormatCorrect(User userToValidate) {
 
-		if (!validateOnlyLetters(userToValidate.getFirstname())) {
+		if (!isContainingOnlyLetters(userToValidate.getFirstname())) {
 			return false;
 		}
 
-		if (!validateOnlyLetters(userToValidate.getLastname())) {
+		if (!isContainingOnlyLetters(userToValidate.getLastname())) {
 			return false;
 		}
 
-		if (!validateOnlyLetters(userToValidate.getCity())) {
+		if (!isContainingOnlyLetters(userToValidate.getCity())) {
 			return false;
 		}
 
 		return true;
 	}
 
-	private boolean validateOnlyLetters(String userInput) {
+	private boolean isContainingOnlyLetters(String userInput) {
 		Pattern pattern = Pattern.compile(regexOnlyLetter);
 		Matcher matcher = pattern.matcher(userInput);
 
@@ -63,7 +71,7 @@ public class RegistrationValidator {
 		return true;
 	}
 
-	private boolean validateCorrectEmailFormat(String userEmail) {
+	private boolean isEmailFormatCorrect(String userEmail) {
 		Pattern pattern = Pattern.compile(emailRegex);
 		Matcher matcher = pattern.matcher(userEmail);
 
@@ -77,9 +85,13 @@ public class RegistrationValidator {
 		return true;
 	}
 
-	private boolean validateUniqueEmail(String userEmail) {
-		return userDAOBean.isEmailUnique(userEmail);
-
+	private boolean isEmailUnique(String userEmail) {
+		return userDAOBean.isEmailInDatabaseUnique(userEmail);
 	}
+	
+	private boolean isUsernameUnique(String username){
+		return userDAOBean.isUsernameInDatabaseUnique(username);
+	}
+	
 
 }

@@ -9,8 +9,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 
+
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.User;
+import com.waterfall.validators.RegistrationValidator;
 
 @Named(value = "userBean")
 @SessionScoped
@@ -29,6 +31,8 @@ public class UserBean implements Serializable{
 	
 	@EJB
 	private LocalUser userEJB;
+	@EJB
+	RegistrationValidator registrationValidator;
 	
 	public String search(){
 		userList = userEJB.getAll();
@@ -66,8 +70,10 @@ public class UserBean implements Serializable{
 		exampleDate.setMonth(04);
 		
 		user.setBirthdate(exampleDate);
+		if(registrationValidator.validateUserForRegistration(user)){
+			userEJB.storeUser(user);
+		}
 		
-		userEJB.storeUser(user);
 		
 //		System.out.println(user);
 //		System.out.println("I BEAN!");

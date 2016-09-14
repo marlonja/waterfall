@@ -15,7 +15,6 @@ public class LoginBean implements Serializable{
 	private String userName;
 	private String password;
 	
-	
 	public String loginUser(){
 		System.out.println(userName + " " + password);
 		User user = new User();
