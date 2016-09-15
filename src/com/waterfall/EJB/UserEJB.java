@@ -37,24 +37,17 @@ public class UserEJB implements LocalUser {
 	}
 
 	@Override
-	public boolean validateLogin(User userToCheckInDatabase) {
-
-		System.out.println("Validate login");
+	public User validateLogin(User userToCheckInDatabase) {
 
 		User userFromDatabase = userDaoBean.getUserByUsername(userToCheckInDatabase);
 
 		if (userFromDatabase != null) {
-			System.out.println("User finns");
 			if (loginValidator.validateUserPassword(userFromDatabase, userToCheckInDatabase)) {
 				System.out.println("User finns och password stämmer");
-				return true;
+				return userFromDatabase;
 			}
-			System.out.println("Password stämde inte");
-		} else {
-			System.out.println("User fanns ej");
 		}
-
-		return false;
+		return null;
 	}
 
 }

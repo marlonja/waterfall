@@ -3,10 +3,13 @@ package com.waterfall.backingbeans;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 
@@ -30,6 +33,7 @@ public class UserBean implements Serializable{
 	private String gender;
 	private String password;
 	private String country;
+	private User loggedInUser;
 	private List<User> userList;
 	private List<String> allCountries;
 	
@@ -106,13 +110,32 @@ public class UserBean implements Serializable{
 		System.out.println("kom in i loginuser");
 		
 		
-		if(userEJB.validateLogin(userToCheckInDatabase)){
+		if(userEJB.validateLogin(userToCheckInDatabase) != null){
 			System.out.println("Allt var bra, vi kommer lägga user i session");
-			// lägg i session
+			
+			User loggedInUser = userEJB.validateLogin(userToCheckInDatabase);
+			
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			Map<String, Object> sessionLoggedInUser = externalContext.getSessionMap();
+			// Här vill vi lägga user vi får från db
+			try {
+				sessionLoggedInUser.put("loggedInUser", loggedInUser);
+			}catch(Exception e){
+				System.out.println("Fel!!!!");
+				e.printStackTrace();
+			}
+			return "profile-page";
 		}
+			return "index";
+	}
+	
+	public String showLoggedInUser() {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		Map<String, Object> sessionLoggedInUser = externalContext.getSessionMap();
 		
+		loggedInUser = (User)sessionLoggedInUser.get("loggedInUser");
 		
-		return "all";
+		return loggedInUser.getUsername();
 	}
 	
 	

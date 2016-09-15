@@ -38,12 +38,9 @@ public class UserDAOBean {
 			User user = (User)em.createNamedQuery("User.findByUsername")
 			    .setParameter("username", userToCheckInDatabase.getUsername())
 			    .getSingleResult();
-				System.out.println("User fanns");
-				System.out.println(user.getFirstname());
 			
 			return user;
 		}catch(NoResultException e){
-			System.out.println("User fanns inte");
 			return null;
 		}
 	}
@@ -51,11 +48,9 @@ public class UserDAOBean {
 		try{
 			if(em.createNamedQuery("User.findByEmail")
 				.setParameter("email", userEmail).getSingleResult() != null){
-				System.out.println("Email is not unique");
 				return false;
 				}
 		}catch(NoResultException e){
-			System.out.println("Email is unique..............");
 			return true;
 		}
 		return true;
@@ -66,10 +61,8 @@ public class UserDAOBean {
 		User user = new User();
 		user.setUsername(username);
 		if(getUserByUsername(user) == null){
-			System.out.println("Användarnamnet fanns inte");
 			return true;
 		}
-		System.out.println("Användarnamnet fanns redan");
 		return false;
 	}
 
