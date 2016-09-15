@@ -48,14 +48,14 @@
 					<h:messages></h:messages>
 					<h:outputLabel for="username" value="Username" />
 					<h:inputText id="username" label="First Name"
-						value="#{userBean.username}" required="true" />
+						value="#{loginBean.username}" required="true" />
 
 					<h:outputLabel for="password" value="Password" />
 					<h:inputSecret id="password" label="Password"
-						value="#{userBean.password}" required="true" />
+						value="#{loginBean.password}" required="true" />
 
-					<h:commandButton action="#{userBean.loginUser()}" value="Login" />
-					<h:commandButton action="reg-new-user.xhtml" value="Register" />
+					<h:commandButton action="#{loginBean.loginUser()}" value="Login" />
+					<h:commandButton action="reg-new-user" value="Register" />
 				</h:form></li>
 		</ul>
 	</div>
