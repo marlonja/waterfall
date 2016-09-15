@@ -23,8 +23,7 @@ public class User implements Serializable {
 	@Id
 	private String userid;
 
-	@Temporal(TemporalType.DATE)
-	private Date birthdate;
+	private String birthdate;
 
 	private String city;
 
@@ -53,11 +52,11 @@ public class User implements Serializable {
 		this.userid = userid;
 	}
 
-	public Date getBirthdate() {
+	public String getBirthdate() {
 		return this.birthdate;
 	}
 
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
 

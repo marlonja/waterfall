@@ -53,10 +53,13 @@
 					<h:outputLabel for="password" value="Password" />
 					<h:inputSecret id="password" label="Password"
 						value="#{loginBean.password}" required="true" />
-
 					<h:commandButton action="#{loginBean.loginUser()}" value="Login" />
+				</h:form>
+				
+				<h:form>
 					<h:commandButton action="reg-new-user" value="Register" />
-				</h:form></li>
+				</h:form>
+			</li>
 		</ul>
 	</div>
 	</nav>

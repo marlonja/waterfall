@@ -1,6 +1,7 @@
 package com.waterfall.backingbeans;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class RegistrationBean implements Serializable{
 	@PostConstruct
 	public void init() {
 		setAllCountries(countryService.getAllCountries());
+		
 	}
 	
 	public String registerNewUser(){
@@ -50,18 +52,19 @@ public class RegistrationBean implements Serializable{
 		user.setLastname(lastName);
 		user.setUsername(username);
 		user.setEmail(email);
+		user.setBirthdate(dob);
 		user.setCity(city);
 		user.setGender(gender);
 		user.setPassword(password);
 		user.setCountry(country);
 		
-		// temporary date for database purposes
-		Date exampleDate = new Date(0,0,0);
-		exampleDate.setDate(14);
-		exampleDate.setYear(1964);
-		exampleDate.setMonth(04);
-		
-		user.setBirthdate(exampleDate);
+//		// temporary date for database purposes
+//		Date exampleDate = new Date(0,0,0);
+//		exampleDate.setDate(14);
+//		exampleDate.setYear(1964);
+//		exampleDate.setMonth(04);
+		System.out.println(dob);
+//		user.setBirthdate(exampleDate);
 		if(registrationValidator.validateUserForRegistration(user)){
 			userEJB.storeUser(user);
 		}

@@ -3,13 +3,11 @@ package com.waterfall.backingbeans;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.locations.CountryService;
 import com.waterfall.models.User;
 
 @Named(value = "userBean")
