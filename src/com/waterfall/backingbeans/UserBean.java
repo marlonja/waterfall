@@ -105,7 +105,12 @@ public class UserBean implements Serializable{
 		
 		System.out.println("kom in i loginuser");
 		
-		userEJB.validateLogin(userToCheckInDatabase);
+		
+		if(userEJB.validateLogin(userToCheckInDatabase)){
+			System.out.println("Allt var bra, vi kommer lägga user i session");
+			// lägg i session
+		}
+		
 		
 		return "all";
 	}

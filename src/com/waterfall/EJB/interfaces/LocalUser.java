@@ -18,6 +18,6 @@ public interface LocalUser {
 
 	List<User> getAll();
 
-	User validateLogin(User userToCheckInDatabase);
+	boolean validateLogin(User userToCheckInDatabase);
 
 }

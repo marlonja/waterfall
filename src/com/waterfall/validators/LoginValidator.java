@@ -10,10 +10,10 @@ public class LoginValidator {
 	public boolean validateUserPassword(User userFromDatabase,User userToCheckInDatabase) {
 		System.out.println("i validatepass");
 		if(userToCheckInDatabase.getPassword().equals(userFromDatabase.getPassword())){
-			System.out.println("sant");
+			System.out.println("validate password sant");
 			return true;
 		}
-		System.out.println("falskt");
+		System.out.println("validate password falskt");
 		return false;
 	}
 	

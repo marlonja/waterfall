@@ -38,12 +38,12 @@ public class UserDAOBean {
 			User user = (User)em.createNamedQuery("User.findByUsername")
 			    .setParameter("username", userToCheckInDatabase.getUsername())
 			    .getSingleResult();
-				System.out.println("det fanns");
+				System.out.println("User fanns");
 				System.out.println(user.getFirstname());
 			
 			return user;
 		}catch(NoResultException e){
-			System.out.println("det fanns inte");
+			System.out.println("User fanns inte");
 			return null;
 		}
 	}
