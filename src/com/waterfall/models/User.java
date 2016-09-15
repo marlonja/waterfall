@@ -39,6 +39,8 @@ public class User implements Serializable {
 	private String password;
 
 	private String username;
+	
+	private String country;
 
 	public User() {
 	}
@@ -113,6 +115,14 @@ public class User implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 }

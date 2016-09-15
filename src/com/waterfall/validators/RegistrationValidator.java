@@ -25,11 +25,14 @@ public class RegistrationValidator {
 			return false;
 		}
 		if(userToValidate.getGender() == null){
-			System.out.println("You are genderless");
 			return false;
 		}
 		if(!isUsernameUnique(userToValidate.getUsername())){
 			System.out.println("Username exists vi är i validation");
+			return false;
+		}
+		
+		if(userToValidate.getCountry() == null){
 			return false;
 		}
 

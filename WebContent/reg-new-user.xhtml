@@ -24,7 +24,7 @@
 			
 			</h:inputText>
 			
-			<h:outputLabel for="userName" value="Username" />
+			<h:outputLabel for="username" value="Username" />
 			<h:inputText id="username" label="Username" value="#{userBean.username}" required="true">
 			
 			</h:inputText>
@@ -58,7 +58,8 @@
 			
 			</h:inputSecret>
 			
-			<h:selectOneMenu value="Select country">
+			<h:outputLabel value="Select country"/>
+			<h:selectOneMenu value="#{userBean.country}">
 				<f:selectItems value="#{userBean.allCountries}" />
 			</h:selectOneMenu>
 			

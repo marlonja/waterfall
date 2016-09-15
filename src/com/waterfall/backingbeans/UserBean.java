@@ -29,6 +29,7 @@ public class UserBean implements Serializable{
 	private String email;
 	private String gender;
 	private String password;
+	private String country;
 	private List<User> userList;
 	private List<String> allCountries;
 	
@@ -76,6 +77,7 @@ public class UserBean implements Serializable{
 		user.setCity(city);
 		user.setGender(gender);
 		user.setPassword(password);
+		user.setCountry(country);
 		
 		// temporary date for database purposes
 		Date exampleDate = new Date(0,0,0);
@@ -218,6 +220,14 @@ public class UserBean implements Serializable{
 
 	public void setAllCountries(List<String> allCountries) {
 		this.allCountries = allCountries;
+	}
+	
+	public void setCountry(String country){
+		this.country = country;
+	}
+	
+	public String getCountry(){
+		return country;
 	}
 	
 	
