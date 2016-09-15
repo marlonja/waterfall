@@ -8,13 +8,14 @@ import javax.ejb.Stateful;
 @Stateful
 public class CountryService {
 	
-	
 	public ArrayList<String> getAllCountries() {
 		ArrayList<String> countries = new ArrayList<>();
 		String[] countryCodes = Locale.getISOCountries();
 		for(int i = 0; i < countryCodes.length; i++) {
-			Locale country = new Locale("", countryCodes[i]);
+			Locale country = new Locale("en", countryCodes[i]);
+			Locale.setDefault(country);
 			countries.add(country.getDisplayCountry());
+
 		}
 		
 		return countries;
