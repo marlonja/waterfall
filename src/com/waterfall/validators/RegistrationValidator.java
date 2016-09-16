@@ -15,6 +15,7 @@ public class RegistrationValidator {
 	private String regexOnlyLetter = "^[-A-ZÅÄÖa-zåäö]+$";
 	private String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	private String regexOnlyNumbers = "^[0-9-]+$";
 
 	@EJB
 	private UserDAOBean userDAOBean;
@@ -62,32 +63,32 @@ public class RegistrationValidator {
 
 		return true;
 	}
-
-	private boolean isContainingOnlyLetters(String userInput) {
-		Pattern pattern = Pattern.compile(regexOnlyLetter);
+	
+	private boolean isFormatCorrect(String userInput, String regexPattern){
+		Pattern pattern = Pattern.compile(regexPattern);
 		Matcher matcher = pattern.matcher(userInput);
-
-		if (!userInput.isEmpty()) {
-			if (!matcher.matches()) {
-				return false;
-
-			}
+		
+		if(!matcher.matches()){
+			return false;
 		}
 		return true;
 	}
 
-	private boolean isEmailFormatCorrect(String userEmail) {
-		Pattern pattern = Pattern.compile(emailRegex);
-		Matcher matcher = pattern.matcher(userEmail);
-
-		if (!userEmail.isEmpty()) {
-			System.out.println("email inte tom");
-			if (!matcher.matches()) {
+	private boolean isContainingOnlyLetters(String userInput) {
+		
+		if (userInput.isEmpty()) {
 				return false;
-			}
-
 		}
-		return true;
+		return isFormatCorrect(userInput, regexOnlyLetter);	
+		
+	}
+
+	private boolean isEmailFormatCorrect(String userEmail) {	
+
+		if (userEmail.isEmpty()) {
+			return false;			
+		}
+		return isFormatCorrect(userEmail, emailRegex);
 	}
 
 	private boolean isEmailUnique(String userEmail) {

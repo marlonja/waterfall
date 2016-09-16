@@ -66,8 +66,10 @@ public class RegistrationBean implements Serializable {
 		System.out.println(birthdate.toString());
 //		user.setBirthdate(exampleDate);
 		if(registrationValidator.validateUserForRegistration(user)){
+			
 			userEJB.storeUser(user);
-			System.out.println(user);
+			System.out.println("user saved");
+			
 		}
 			
 		return "index";
