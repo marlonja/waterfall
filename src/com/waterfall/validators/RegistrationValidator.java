@@ -20,7 +20,7 @@ public class RegistrationValidator {
 	private UserDAOBean userDAOBean;
 
 	public boolean validateUserForRegistration(User userToValidate) {
-
+		
 		if (!isBasicFormatCorrect(userToValidate)) {
 			return false;
 		}
@@ -46,11 +46,11 @@ public class RegistrationValidator {
 
 	private boolean isBasicFormatCorrect(User userToValidate) {
 
-		if (!isContainingOnlyLetters(userToValidate.getFirstname())) {
+		if (!isContainingOnlyLetters(userToValidate.getFirstName())) {
 			return false;
 		}
 
-		if (!isContainingOnlyLetters(userToValidate.getLastname())) {
+		if (!isContainingOnlyLetters(userToValidate.getLastName())) {
 			return false;
 		}
 

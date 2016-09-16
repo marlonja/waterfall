@@ -17,14 +17,14 @@ import com.waterfall.validators.RegistrationValidator;
 
 @Named(value="registrationBean")
 @SessionScoped
-public class RegistrationBean implements Serializable{
+public class RegistrationBean implements Serializable {
 
 	private static final long serialVersionUID = 5654269423508315837L;
 	private String firstName;
 	private String lastName;
 	private String username;
 	private String city;
-	private String dob;
+	private Date birthdate;
 	private String email;
 	private String gender;
 	private String password;
@@ -48,11 +48,11 @@ public class RegistrationBean implements Serializable{
 	
 	public String registerNewUser(){
 		User user = new User();
-		user.setFirstname(firstName);
-		user.setLastname(lastName);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
 		user.setUsername(username);
 		user.setEmail(email);
-		user.setBirthdate(dob);
+		user.setBirthdate(birthdate);
 		user.setCity(city);
 		user.setGender(gender);
 		user.setPassword(password);
@@ -63,10 +63,11 @@ public class RegistrationBean implements Serializable{
 //		exampleDate.setDate(14);
 //		exampleDate.setYear(1964);
 //		exampleDate.setMonth(04);
-		System.out.println(dob);
+		System.out.println(birthdate.toString());
 //		user.setBirthdate(exampleDate);
 		if(registrationValidator.validateUserForRegistration(user)){
 			userEJB.storeUser(user);
+			System.out.println(user);
 		}
 			
 		return "index";
@@ -112,12 +113,12 @@ public class RegistrationBean implements Serializable{
 		this.city = city;
 	}
 
-	public String getDob() {
-		return dob;
+	public Date getBirthdate() {
+		return birthdate;
 	}
 
-	public void setDob(String dob) {
-		this.dob = dob;
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
 	}
 
 	public String getEmail() {

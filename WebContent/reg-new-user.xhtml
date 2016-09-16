@@ -33,8 +33,10 @@
 			<h:inputText id="city" label="City" value="#{registrationBean.city}" required="true"/>
 			
 			
-			<h:outputLabel for="dob" value="Date of birth (DD-MM-YYYY)" />
-			<h:inputText id="dob" label="Date of Birth" value="#{registrationBean.dob}" required="true"/>
+			<h:outputLabel for="birthdate" value="Date of birth (DD-MM-YYYY)" />
+			<h:inputText id="birthdate" label="Date of Birth" value="#{registrationBean.birthdate}" required="true">
+				<f:convertDateTime pattern="dd-M-yyyy"/>
+			</h:inputText>
 			
 			<br></br>
 			<br></br>

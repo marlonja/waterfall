@@ -22,18 +22,19 @@ public class User implements Serializable {
 
 	@Id
 	private String userid;
-
-	private String birthdate;
+	
+	@Temporal(TemporalType.DATE)
+	private Date birthdate;
 
 	private String city;
 
 	private String email;
 
-	private String firstname;
+	private String firstName;
 
 	private String gender;
 
-	private String lastname;
+	private String lastName;
 
 	private String password;
 
@@ -52,11 +53,11 @@ public class User implements Serializable {
 		this.userid = userid;
 	}
 
-	public String getBirthdate() {
+	public Date getBirthdate() {
 		return this.birthdate;
 	}
 
-	public void setBirthdate(String birthdate) {
+	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}
 
@@ -76,12 +77,12 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public String getFirstname() {
-		return this.firstname;
+	public String getFirstName() {
+		return this.firstName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getGender() {
@@ -92,12 +93,12 @@ public class User implements Serializable {
 		this.gender = gender;
 	}
 
-	public String getLastname() {
-		return this.lastname;
+	public String getLastName() {
+		return this.lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getPassword() {
