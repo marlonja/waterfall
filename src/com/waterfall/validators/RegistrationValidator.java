@@ -29,7 +29,7 @@ public class RegistrationValidator {
 			return false;
 		}
 		if(!isUsernameUnique(userToValidate.getUsername())){
-			System.out.println("Username exists vi är i validation");
+			System.out.println("Username exists vi are i validation");
 			return false;
 		}
 		
