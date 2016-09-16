@@ -35,6 +35,8 @@ public class RegistrationValidator {
 		if(userToValidate.getCountry() == null){
 			return false;
 		}
+		
+		
 
 		if (isEmailFormatCorrect(userToValidate.getEmail()) && isEmailUnique(userToValidate.getEmail())) {
 			return true;

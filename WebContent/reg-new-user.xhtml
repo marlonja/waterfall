@@ -7,61 +7,68 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
+	<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
 	<title>Register new user</title>
 </h:head>
 
 <h:body>
 	<h:form id="userForm">
 		<h:messages></h:messages>
-		<h:panelGrid columns="2" columnsClasses="rightAlign, leftAlign">
-			<h:outputLabel for="firstName" value="FirstName" />
-			<h:inputText id="firstName" label="First Name" value="#{registrationBean.firstName}" required="true"/>
-			
-			<h:outputLabel for="lastName" value="LastName" />
-			<h:inputText id="lastName" label="Last Name" value="#{registrationBean.lastName}" required="true"/>
-		
-			
-			<h:outputLabel for="username" value="Username" />
-			<h:inputText id="username" label="Username" value="#{registrationBean.username}" required="true"/>
+		<h:panelGrid>
 
-			
-			<h:outputLabel for="email" value="Email" />
-			<h:inputText id="email" label="Email" value="#{registrationBean.email}" required="true"/>
-		
-			
-			<h:outputLabel for="city" value="City" />
-			<h:inputText id="city" label="City" value="#{registrationBean.city}" required="true"/>
-			
-			
-			<h:outputLabel for="birthdate" value="Date of birth (DD-MM-YYYY)" />
-			<h:inputText id="birthdate" label="Date of Birth" value="#{registrationBean.birthdate}" required="true">
-				<f:convertDateTime pattern="dd-M-yyyy"/>
+			<h:outputLabel for="firstName" value="First name:"
+				styleClass="reg-form-label" />
+			<h:inputText id="firstName" value="#{registrationBean.firstName}"
+				required="true" styleClass="reg-form-input" />
+
+			<h:outputLabel for="lastName" value="Last name:"
+				styleClass="reg-form-label" />
+			<h:inputText id="lastName" value="#{registrationBean.lastName}"
+				required="true" styleClass="reg-form-input" />
+
+			<h:outputLabel for="username" value="Username"
+				styleClass="reg-form-label" />
+			<h:inputText id="username" value="#{registrationBean.username}"
+				required="true" styleClass="reg-form-input" />
+
+			<h:outputLabel for="email" value="Email" styleClass="reg-form-label" />
+			<h:inputText id="email" value="#{registrationBean.email}"
+				required="true" styleClass="reg-form-input" />
+
+
+			<h:outputLabel for="city" value="City" styleClass="reg-form-label" />
+			<h:inputText id="city" value="#{registrationBean.city}"
+				required="true" styleClass="reg-form-input" />
+
+			<h:outputLabel for="birthdate" value="Date of birth (DD-MM-YYYY)"
+				styleClass="reg-form-label" />
+			<h:inputText id="birthdate" value="#{registrationBean.birthdate}" required="true"
+				styleClass="reg-form-input">
+				<f:convertDateTime pattern="dd-M-yyyy"/>	
 			</h:inputText>
-			
-			<br></br>
-			<br></br>
-			
+
+			<h:outputLabel for="gender" value="Gender"
+				styleClass="reg-form-label" />
 			<h:selectOneRadio value="#{registrationBean.gender}">
-			<h:outputLabel for="gender" value="Gender" />
-		   	<f:selectItem itemValue="Male" itemLabel="Male" />
-		   	<f:selectItem itemValue="Female" itemLabel="Female" />
-		   	<f:selectItem itemValue="Other" itemLabel="Other" />
+				<f:selectItem itemValue="Male" itemLabel="Male" />
+				<f:selectItem itemValue="Female" itemLabel="Female" />
+				<f:selectItem itemValue="Other" itemLabel="Other" />
 			</h:selectOneRadio>
-			
-			<br></br>
-			
-			<h:outputLabel for="password" value="Password" />
-			<h:inputSecret id="password" label="Password" value="#{registrationBean.password}" required="true"/>
-			
-			<h:outputLabel value="Select country"/>
-			<h:selectOneMenu value="#{registrationBean.country}">
+
+			<h:outputLabel for="password" value="Password"
+				styleClass="reg-form-label" />
+			<h:inputSecret id="password" value="#{registrationBean.password}"
+				required="true" styleClass="reg-form-input" />
+
+			<h:outputLabel value="Select country" styleClass="reg-form-label" />
+			<h:selectOneMenu value="#{registrationBean.country}"
+				styleClass="reg-form-input">
 				<f:selectItems value="#{registrationBean.allCountries}" />
 			</h:selectOneMenu>
-			
-			
-			<h:commandButton action="#{registrationBean.registerNewUser()}" value="Save" />
-		</h:panelGrid>
 
+			<h:commandButton action="#{registrationBean.registerNewUser()}"
+				value="Register" styleClass="reg-form-submit-btn" />
+		</h:panelGrid>
 	</h:form>
 </h:body>
 </html>
