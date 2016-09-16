@@ -27,28 +27,28 @@
 			<h:inputText id="lastName" value="#{registrationBean.lastName}"
 				required="true" styleClass="reg-form-input" />
 
-			<h:outputLabel for="username" value="Username"
+			<h:outputLabel for="username" value="Choose a username:"
 				styleClass="reg-form-label" />
 			<h:inputText id="username" value="#{registrationBean.username}"
 				required="true" styleClass="reg-form-input" />
 
-			<h:outputLabel for="email" value="Email" styleClass="reg-form-label" />
+			<h:outputLabel for="email" value="Email:" styleClass="reg-form-label" />
 			<h:inputText id="email" value="#{registrationBean.email}"
 				required="true" styleClass="reg-form-input" />
 
 
-			<h:outputLabel for="city" value="City" styleClass="reg-form-label" />
+			<h:outputLabel for="city" value="City:" styleClass="reg-form-label" />
 			<h:inputText id="city" value="#{registrationBean.city}"
 				required="true" styleClass="reg-form-input" />
 
-			<h:outputLabel for="birthdate" value="Date of birth (DD-MM-YYYY)"
+			<h:outputLabel for="birthdate" value="Date of birth(DD-MM-YYYY):"
 				styleClass="reg-form-label" />
 			<h:inputText id="birthdate" value="#{registrationBean.birthdate}" required="true"
 				styleClass="reg-form-input">
 				<f:convertDateTime pattern="dd-M-yyyy"/>	
 			</h:inputText>
 
-			<h:outputLabel for="gender" value="Gender"
+			<h:outputLabel for="gender" value="Gender:"
 				styleClass="reg-form-label" />
 			<h:selectOneRadio value="#{registrationBean.gender}">
 				<f:selectItem itemValue="Male" itemLabel="Male" />
@@ -56,12 +56,12 @@
 				<f:selectItem itemValue="Other" itemLabel="Other" />
 			</h:selectOneRadio>
 
-			<h:outputLabel for="password" value="Password"
+			<h:outputLabel for="password" value="Choose a password:"
 				styleClass="reg-form-label" />
 			<h:inputSecret id="password" value="#{registrationBean.password}"
 				required="true" styleClass="reg-form-input" />
 
-			<h:outputLabel value="Select country" styleClass="reg-form-label" />
+			<h:outputLabel value="Country:" styleClass="reg-form-label" />
 			<h:selectOneMenu value="#{registrationBean.country}"
 				styleClass="reg-form-input">
 				<f:selectItems value="#{registrationBean.allCountries}" />
