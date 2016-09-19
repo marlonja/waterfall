@@ -12,7 +12,7 @@ import com.waterfall.models.User;
 @Stateful
 public class RegistrationValidator {
 
-	private String regexOnlyLetter = "^[-A-ZÅÄÖa-zåäö]+$";
+	private String regexOnlyLetter = "^[-A-ZÃ…Ã„Ã–a-zÃ¥Ã¤Ã¶]+$";
 	private String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private String regexOnlyNumbers = "^[0-9-]+$";

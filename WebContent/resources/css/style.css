@@ -1,27 +1,77 @@
+h1 {
+	color: steelblue;
+	background: gainsboro;
+	padding: 10px;
+	font-family: Tahoma;
+	text-align: center;
+	border-radius: 10px 10px 0 0;
+	margin-bottom: 5px;
+}
 
+h4 {
+	color: steelblue;
+	font-family: Tahoma;
+	text-align: center;
+	margin-top: 0;
+}
+
+.reg-form-personal-info {
+	border: 2px solid #ccc;
+	padding: 1.5em;
+	margin-bottom: 5px;
+}
+
+.reg-form-user-info {
+	border: 2px solid #ccc;
+	padding: 1.5em;
+	border-radius: 0 0 10px 10px;
+}
 
 .reg-form-label {
-	color: grey;
+	color: steelblue;
+	font-family: Tahoma;
+}
+
+.reg-form-first-name, .reg-form-last-name,
+.reg-form-username, .reg-form-password {
+	display: inline-block;
+}
+
+.first-name-input, .last-name-input,
+.username-input, .password-input {
+	display: block;
+}
+
+.reg-form-select-gender {
+	color: steelblue;
 }
 
 .reg-form-input {
 	width: 100%;
-    padding: 6px 10px;
-    margin: 4px 0;
-    display: inline-block;
+    padding: 5px 8px;
+    margin: 3px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
+    color: steelblue;
+    font-family: Tahoma;
+}
+
+
+
+.reg-form-input:focus {
+	outline: none;
+	border: 1px solid steelblue;
 }
 
 .reg-form-submit-btn {
 	width: 100%;
-    background-color: grey;
+    background-color: steelblue;
     color: white;
     padding:7px 10px;
     margin: 8px 0;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-family: Tahoma;
 }
 
