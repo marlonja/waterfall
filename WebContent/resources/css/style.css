@@ -1,3 +1,5 @@
+/* ----- STYLES FOR REG-NEW-USER.XHTML ----- */
+
 h1 {
 	color: steelblue;
 	background: gainsboro;
@@ -56,8 +58,6 @@ h4 {
     font-family: Tahoma;
 }
 
-
-
 .reg-form-input:focus {
 	outline: none;
 	border: 1px solid steelblue;
@@ -75,3 +75,56 @@ h4 {
     font-family: Tahoma;
 }
 
+/* ----- STYLES FOR INDEX.XHTML ----- */
+
+.link-register-new-user {
+	color: steelblue;
+	font-family: Tahoma;
+	float: right;
+}
+
+.navbar {
+	padding: 10px;
+	margin: 10px;
+}
+
+.login-username, .login-password, .login-btn-div {
+	display: inline-block;
+}
+
+.login-username-input, .login-password-input {
+	display: block;
+}
+
+.login-username-input, .login-password-input {
+	width: 100%;
+    padding: 5px 8px;
+    margin: 3px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: steelblue;
+    font-family: Tahoma;
+}
+
+.login-username-input:focus, 
+.login-password-input:focus {
+	outline: none;
+	border: 1px solid steelblue;
+}
+
+.login-label {
+	color: steelblue;
+	font-family: Tahoma;
+}
+
+.login-btn {
+	width: 100%;
+    background-color: steelblue;
+    color: white;
+    padding:7px 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: Tahoma;
+}

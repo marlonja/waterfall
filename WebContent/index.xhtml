@@ -5,54 +5,66 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
+
 <h:head>
-	<!-- Latest compiled and minified CSS -->
+	<!-- BOOTSTRAP -->
 	<link rel="stylesheet"
 		href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-
-	<!-- jQuery library -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-	<!-- Latest compiled JavaScript -->
 	<script
 		src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type='text/javascript'
+		src="https://cdn.rawgit.com/jamesallardice/Placeholders.js/master/dist/placeholders.min.js"></script>
 
-	<h:outputStylesheet library="css" name="style.css" />
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
+
+	<title>Waterfall Startpage</title>
 </h:head>
 <h:body>
+	<div id="navbar">
+		<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!--  
+			<ul class="nav navbar-nav">
+				<h:form id="searchForm">
+					<h:commandButton action="#{userBean.search()}"
+						value="Show list of all users" />
 
-	<div id="navbar"></div>
-	<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="#">Waterfall</a>
+					<h:commandButton action="#{userBean.checkUser()}"
+						value="Check if user exists" />
+				</h:form>
+			</ul>
+			-->
+			<ul class="nav navbar-nav navbar-right">
+				<li><h:form>
+						<h:messages></h:messages>
+
+						<div class="login-username">
+							<h:outputLabel for="username" value="Username"
+								styleClass="login-label" />
+							<h:inputText id="username" value="#{loginBean.username}"
+								required="true" styleClass="login-username-input" />
+						</div>
+
+						<div class="login-password">
+							<h:outputLabel for="password" value="Password"
+								styleClass="login-label" />
+							<h:inputSecret id="password" value="#{loginBean.password}"
+								required="true" styleClass="login-password-input" />
+						</div>
+						<div class="login-btn-div">
+							<h:commandButton action="#{loginBean.loginUser()}" value="Login"
+								styleClass="login-btn" />
+						</div>
+					</h:form> <h:form target="_blank">
+						<h:commandLink action="reg-new-user" value="Register"
+							styleClass="link-register-new-user" />
+					</h:form></li>
+			</ul>
 		</div>
-		<ul class="nav navbar-nav">
-			<h:form id="searchForm">
-				<h:commandButton action="#{userBean.search()}"
-					value="Show list of all users" />
-
-				<h:commandButton action="#{userBean.checkUser()}"
-					value="Check if user exists" />
-			</h:form>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<li><h:form>
-					<h:messages></h:messages>
-					<h:outputLabel for="username" value="Username" />
-					<h:inputText id="username" label="First Name"
-						value="#{loginBean.username}" required="true" />
-
-					<h:outputLabel for="password" value="Password" />
-					<h:inputSecret id="password" label="Password"
-						value="#{loginBean.password}" required="true" />
-					<h:commandButton action="#{loginBean.loginUser()}" value="Login" />
-				</h:form> <h:form target="_blank">
-					<h:commandButton action="reg-new-user" value="Register" />
-				</h:form></li>
-		</ul>
+		</nav>
 	</div>
-	</nav>
 </h:body>
 </html>
