@@ -3,5 +3,6 @@
 	<persistence-unit name="Waterfall">
 	<jta-data-source>Waterfall_Resource</jta-data-source>
 	<class>com.waterfall.models.User</class>
+	<class>com.waterfall.models.Drop</class>
 	</persistence-unit>
 </persistence>

@@ -2,19 +2,21 @@ package com.waterfall.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.util.List;
 
+import org.eclipse.persistence.internal.oxm.schema.model.All;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * The persistent class for the user database table.
  * 
  */
 @Entity
-@NamedQueries({
-	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
-	@NamedQuery(name="User.findByUsername", query="SELECT u FROM User u WHERE u.username LIKE :username"),
-	@NamedQuery(name="User.findByEmail", query="SELECT u FROM User u WHERE u.email LIKE :email")
-})
+@NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+		@NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username LIKE :username"),
+		@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email LIKE :email") })
 
 public class User implements Serializable {
 
@@ -22,7 +24,7 @@ public class User implements Serializable {
 
 	@Id
 	private Long userid;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date birthdate;
 
@@ -39,10 +41,21 @@ public class User implements Serializable {
 	private String password;
 
 	private String username;
-	
+
 	private String country;
 
+	@OneToMany(mappedBy = "owner")
+	private List<Drop> drops;
+
 	public User() {
+	}
+
+	public List<Drop> getDrops() {
+		return drops;
+	}
+
+	public void setDrops(List<Drop> drops) {
+		this.drops = drops;
 	}
 
 	public Long getUserid() {
