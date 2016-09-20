@@ -24,53 +24,57 @@
 		<h1>#{loginBean.loggedInUser.firstName}
 			#{loginBean.loggedInUser.lastName}</h1>
 
-		<h:form>
-			<h:panelGrid columns="2">
-				<h:outputLabel value="First Name"></h:outputLabel>
-				<h:inputText
-					value="#{loginBean.loggedInUser.firstName}"
-					required="true" />
+		<div class="col-md-4">
+			<h:form>
+				<h1>Update user information</h1>
+				<div class="form-first-name">
+					<h:outputLabel value="First Name"
+						styleClass="label form-first-name" />
+					<h:inputText value="#{loginBean.loggedInUser.firstName}"
+						required="true" styleClass="input first-name-input" />
+				</div>
+				<div  class="form-last-name">
+					<h:outputLabel value="Last Name" styleClass="label form-last-name" />
+					<h:inputText value="#{loginBean.loggedInUser.lastName}"
+						required="true" styleClass="input last-name-input" />
+				</div>
 
-				<h:outputLabel value="Last Name"></h:outputLabel>
-				<h:inputText
-					value="#{loginBean.loggedInUser.lastName}"
-					required="true" />
+				<h:outputLabel value="Email" styleClass="label" />
+				<h:inputText value="#{loginBean.loggedInUser.email}" required="true"
+					styleClass="input" />
 
-				<h:outputLabel value="Email"></h:outputLabel>
-				<h:inputText value="#{loginBean.loggedInUser.email}"
-					required="true" />
+				<h:outputLabel value="City" styleClass="label" />
+				<h:inputText value="#{loginBean.loggedInUser.city}" required="true"
+					styleClass="input" />
 
-				<h:outputLabel value="City"></h:outputLabel>
-				<h:inputText value="#{loginBean.loggedInUser.city}"
-					required="true" />
+				<h:outputLabel value="Username" styleClass="label" />
+				<h:inputText value="#{loginBean.loggedInUser.username}"
+					required="true" styleClass="input" />
 
-				<h:outputLabel value="Username"></h:outputLabel>
-				<h:inputText
-					value="#{loginBean.loggedInUser.username}"
-					required="true" />
+				<h:outputLabel value="Password" styleClass="label" />
+				<h:inputSecret value="#{loginBean.loggedInUser.password}"
+					required="true" styleClass="input" />
 
-				<h:outputLabel value="Password"></h:outputLabel>
-				<h:inputSecret
-					value="#{loginBean.loggedInUser.password}"
-					required="true" />
-
-				<h:outputLabel value="Country" />
-				<h:selectOneMenu value="#{registrationBean.country}">
+				<h:outputLabel value="Country" styleClass="label" />
+				<h:selectOneMenu value="#{registrationBean.country}"
+					styleClass="input">
 					<f:selectItems value="#{registrationBean.allCountries}" />
 				</h:selectOneMenu>
 
-				<h:outputLabel value="Gender" />
-				<h:selectOneMenu value="#{registrationBean.gender}">
+				<h:outputLabel value="Gender" styleClass="label" />
+				<h:selectOneMenu value="#{registrationBean.gender}"
+					styleClass="input">
 					<f:selectItem itemValue="Male" itemLabel="Male" />
 					<f:selectItem itemValue="Female" itemLabel="Female" />
 					<f:selectItem itemValue="Other" itemLabel="Other" />
 				</h:selectOneMenu>
-			</h:panelGrid>
 
-			<h:commandButton action="#{userBean.updateUser(loginBean.loggedInUser)}"
-				value="Save changes" />
+				<h:commandButton
+					action="#{userBean.updateUser(loginBean.loggedInUser)}"
+					value="Save changes" styleClass="submit-btn" />
 
-		</h:form>
+			</h:form>
+		</div>
 	</div>
 </h:body>
 </html>
