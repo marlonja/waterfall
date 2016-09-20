@@ -2,7 +2,7 @@
 
 h1 {
 	color: steelblue;
-	background: gainsboro;
+	background: whitesmoke;
 	padding: 10px;
 	font-family: Tahoma;
 	text-align: center;
@@ -96,7 +96,8 @@ h4 {
 	display: block;
 }
 
-.login-username-input, .login-password-input {
+.login-username-input, .login-password-input, 
+.filter-input {
 	width: 100%;
     padding: 5px 8px;
     margin: 3px 0;
@@ -107,7 +108,8 @@ h4 {
 }
 
 .login-username-input:focus, 
-.login-password-input:focus {
+.login-password-input:focus,
+.filter-input:focus {
 	outline: none;
 	border: 1px solid steelblue;
 }
@@ -127,4 +129,40 @@ h4 {
     border-radius: 4px;
     cursor: pointer;
     font-family: Tahoma;
+}
+
+.waterfall-div {
+	height: 400px;
+	background-color: steelblue;
+	border-radius: 0 0 10px 10px;
+	margin-bottom: 40px;
+}
+
+#add-drops {
+	margin-top: 0;
+	color: white;
+	text-align: center;
+	font-family: Tahoma;
+}
+
+#header {
+	display: inline;
+}
+
+.filter-div {
+	color: steelblue;
+	background: whitesmoke;
+	padding: 10px;
+	font-family: Tahoma;
+	text-align: center;
+	border-radius: 10px 10px 0 0;
+	margin-bottom: 5px;
+}
+
+.navbar-default .navbar-brand {
+	font-size: 5em;
+	color: steelblue;
+	font-family: Tahoma;
+	margin-top: 15px;
+	margin-left: 100px;
 }

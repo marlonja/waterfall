@@ -24,7 +24,10 @@
 </h:head>
 <h:body>
 	<div id="navbar">
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default"> <a class="navbar-brand"
+			href="#">Waterfall</a>
+		<ul class="nav navbar-nav">
+		</ul>
 		<div class="container-fluid">
 			<!--  
 			<ul class="nav navbar-nav">
@@ -40,7 +43,6 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><h:form>
 						<h:messages></h:messages>
-
 						<div class="login-username">
 							<h:outputLabel for="username" value="Username"
 								styleClass="login-label" />
@@ -65,6 +67,16 @@
 			</ul>
 		</div>
 		</nav>
+	</div>
+
+	<div class="container">
+		<div class="filter-div">
+			<h:inputText styleClass="filter-input"></h:inputText>
+			<p>Separate with comma to add multiple filters...</p>
+		</div>
+		<div class="waterfall-div">
+			<h2 id="add-drops">Add drops here...</h2>
+		</div>
 	</div>
 </h:body>
 </html>
