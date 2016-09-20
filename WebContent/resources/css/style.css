@@ -32,6 +32,7 @@ h4 {
 .reg-form-label {
 	color: steelblue;
 	font-family: Tahoma;
+	display: block;
 }
 
 .reg-form-first-name, .reg-form-last-name,
