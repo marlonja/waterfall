@@ -66,4 +66,9 @@ public class UserDAOBean {
 		return false;
 	}
 
+
+	public User getUserById(Long userId) {
+		return em.find(User.class, userId);
+	}
+
 }

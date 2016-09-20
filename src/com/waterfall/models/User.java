@@ -21,7 +21,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 5461470282886888730L;
 
 	@Id
-	private String userid;
+	private Long userid;
 	
 	@Temporal(TemporalType.DATE)
 	private Date birthdate;
@@ -45,11 +45,11 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public String getUserid() {
+	public Long getUserid() {
 		return this.userid;
 	}
 
-	public void setUserid(String userid) {
+	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
 

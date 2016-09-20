@@ -43,11 +43,17 @@ public class UserEJB implements LocalUser {
 
 		if (userFromDatabase != null) {
 			if (loginValidator.validateUserPassword(userFromDatabase, userToCheckInDatabase)) {
-				System.out.println("User finns och password stämmer");
+				System.out.println("User finns och password stï¿½mmer");
 				return userFromDatabase;
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public User getUser(Long userId) {
+		
+		return userDaoBean.getUserById(userId);
 	}
 
 }

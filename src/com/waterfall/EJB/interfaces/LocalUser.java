@@ -20,4 +20,6 @@ public interface LocalUser {
 
 	User validateLogin(User userToCheckInDatabase);
 
+	User getUser(Long userId);
+
 }
