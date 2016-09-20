@@ -12,52 +12,40 @@ import javax.inject.Named;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.User;
 
-@Named(value="loginBean")
+@Named(value = "loginBean")
 @SessionScoped
-public class LoginBean implements Serializable{
-	
+public class LoginBean implements Serializable {
+
 	private static final long serialVersionUID = 3227244787787534047L;
 	private String username;
 	private String password;
 	private User loggedInUser;
-	
+
 	@EJB
 	private LocalUser userEJB;
-	
+
 	public String loginUser() {
 		User userToCheckInDatabase = new User();
 		userToCheckInDatabase.setUsername(username);
 		userToCheckInDatabase.setPassword(password);
+		loggedInUser = userEJB.validateLogin(userToCheckInDatabase);
+
 		
-		System.out.println("kom in i loginuser");
-		
-		
-		if(userEJB.validateLogin(userToCheckInDatabase) != null){
-			System.out.println("Allt var bra, vi kommer lägga user i session");
+		if (loggedInUser != null) {
 			
-			User loggedInUser = userEJB.validateLogin(userToCheckInDatabase);
-			
+			System.out.println("Allt var bra, vi kommer lÃ¤gga user i session");
 			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 			Map<String, Object> sessionLoggedInUser = externalContext.getSessionMap();
-			// Här vill vi lägga user vi får från db
+			
 			try {
 				sessionLoggedInUser.put("loggedInUser", loggedInUser);
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Fel!!!!");
 				e.printStackTrace();
 			}
 			return "profile-page";
 		}
-			return "index";
-	}
-
-	public String showLoggedInUser() {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		Map<String, Object> sessionLoggedInUser = externalContext.getSessionMap();
-		
-		loggedInUser = (User)sessionLoggedInUser.get("loggedInUser");
-		
-		return loggedInUser.getUsername();
+		return "index";
 	}
 
 	public String getUsername() {
@@ -83,6 +71,5 @@ public class LoginBean implements Serializable{
 	public void setLoggedInUser(User loggedInUser) {
 		this.loggedInUser = loggedInUser;
 	}
-	
-	
+
 }

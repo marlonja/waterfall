@@ -25,7 +25,7 @@ public class UserEJB implements LocalUser {
 
 	@Override
 	public boolean storeUser(User user) {
-
+		System.out.println("Inne i store user");
 		return userDaoBean.storeUser(user);
 
 	}

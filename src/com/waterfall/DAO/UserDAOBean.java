@@ -25,9 +25,7 @@ public class UserDAOBean {
 		}else{
 			return false;
 		}
-		
 	}
-
 
 	public List<User> getAll() {
 		return em.createNamedQuery("User.findAll").getResultList();

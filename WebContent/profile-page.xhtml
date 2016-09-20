@@ -5,14 +5,72 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<!-- BOOTSTRAP -->
+	<link rel="stylesheet"
+		href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type='text/javascript'
+		src="https://cdn.rawgit.com/jamesallardice/Placeholders.js/master/dist/placeholders.min.js"></script>
 
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
+</h:head>
 <h:body>
-	<h1>HEJEHJ PROFILE</h1>
+	<div class="container">
+		<h1>#{loginBean.loggedInUser.firstName}
+			#{loginBean.loggedInUser.lastName}</h1>
 
-		<h:panelGrid>
-			<f:facet name="header">Logged in user: </f:facet>
-		#{loginBean.showLoggedInUser()}
-	</h:panelGrid>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="First Name"></h:outputLabel>
+				<h:inputText
+					value="#{loginBean.loggedInUser.firstName}"
+					required="true" />
 
+				<h:outputLabel value="Last Name"></h:outputLabel>
+				<h:inputText
+					value="#{loginBean.loggedInUser.lastName}"
+					required="true" />
+
+				<h:outputLabel value="Email"></h:outputLabel>
+				<h:inputText value="#{loginBean.loggedInUser.email}"
+					required="true" />
+
+				<h:outputLabel value="City"></h:outputLabel>
+				<h:inputText value="#{loginBean.loggedInUser.city}"
+					required="true" />
+
+				<h:outputLabel value="Username"></h:outputLabel>
+				<h:inputText
+					value="#{loginBean.loggedInUser.username}"
+					required="true" />
+
+				<h:outputLabel value="Password"></h:outputLabel>
+				<h:inputSecret
+					value="#{loginBean.loggedInUser.password}"
+					required="true" />
+
+				<h:outputLabel value="Country" />
+				<h:selectOneMenu value="#{registrationBean.country}">
+					<f:selectItems value="#{registrationBean.allCountries}" />
+				</h:selectOneMenu>
+
+				<h:outputLabel value="Gender" />
+				<h:selectOneMenu value="#{registrationBean.gender}">
+					<f:selectItem itemValue="Male" itemLabel="Male" />
+					<f:selectItem itemValue="Female" itemLabel="Female" />
+					<f:selectItem itemValue="Other" itemLabel="Other" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+
+			<h:commandButton action="#{userBean.updateUser(loginBean.loggedInUser)}"
+				value="Save changes" />
+
+		</h:form>
+	</div>
 </h:body>
 </html>
