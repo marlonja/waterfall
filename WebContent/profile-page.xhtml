@@ -5,14 +5,83 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<!-- BOOTSTRAP -->
+	<link rel="stylesheet"
+		href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type='text/javascript'
+		src="https://cdn.rawgit.com/jamesallardice/Placeholders.js/master/dist/placeholders.min.js"></script>
 
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
+</h:head>
 <h:body>
-	<h1>HEJEHJ PROFILE</h1>
+	<div class="container">
+		<h1>#{loginBean.loggedInUser.firstName}
+			#{loginBean.loggedInUser.lastName}</h1>
 
-		<h:panelGrid>
-			<f:facet name="header">Logged in user: </f:facet>
-		#{loginBean.showLoggedInUser()}
-	</h:panelGrid>
+		<div class="col-md-4">
+			<h:form>
+				<h1>Update user information</h1>
+				<h:messages></h:messages>
+				<div class="form-first-name">
+					<h:outputLabel value="First Name"
+						styleClass="label first-name-label" />
+					<h:inputText value="#{loginBean.loggedInUser.firstName}"
+						required="true" styleClass="input first-name-input" />
+				</div>
+				<div class="form-last-name">
+					<h:outputLabel value="Last Name" styleClass="label last-name-label" />
+					<h:inputText value="#{loginBean.loggedInUser.lastName}"
+						required="true" styleClass="input last-name-input" />
+				</div>
 
+				<h:outputLabel value="Email" styleClass="label" />
+				<h:inputText value="#{loginBean.loggedInUser.email}" required="true"
+					styleClass="input" />
+
+				<h:outputLabel value="City" styleClass="label" />
+				<h:inputText value="#{loginBean.loggedInUser.city}" required="true"
+					styleClass="input" />
+
+				<h:outputLabel value="Username" styleClass="label" />
+				<h:inputText value="#{loginBean.loggedInUser.username}"
+					required="true" styleClass="input" />
+
+				<h:outputLabel value="Password" styleClass="label" />
+				<h:inputSecret value="#{loginBean.loggedInUser.password}"
+					required="true" styleClass="input" />
+				
+				<h:outputLabel for="birthdate" value="Date of birth (DD-MM-YYYY):"
+					styleClass="label" />
+				<h:inputText id="birthdate" value="#{loginBean.loggedInUser.birthdate}"
+					required="true" styleClass="input">
+					<f:convertDateTime pattern="dd-M-yyyy" />
+				</h:inputText>
+
+				<h:outputLabel value="Country" styleClass="label" />
+				<h:selectOneMenu value="#{loginBean.loggedInUser.country}"
+					styleClass="input">
+					<f:selectItems value="#{registrationBean.allCountries}" />
+				</h:selectOneMenu>
+
+				<h:outputLabel value="Gender" styleClass="label" />
+				<h:selectOneMenu value="#{loginBean.loggedInUser.gender}"
+					styleClass="input">
+					<f:selectItem itemValue="Male" itemLabel="Male" />
+					<f:selectItem itemValue="Female" itemLabel="Female" />
+					<f:selectItem itemValue="Other" itemLabel="Other" />
+				</h:selectOneMenu>
+
+				<h:commandButton
+					action="#{userBean.updateUser(loginBean.loggedInUser)}"
+					value="Save changes" styleClass="submit-btn" />
+			</h:form>
+		</div>
+	</div>
 </h:body>
 </html>

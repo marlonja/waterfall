@@ -33,68 +33,68 @@
 				<h4>Personal information</h4>
 				<div class="reg-form-first-name">
 					<h:outputLabel for="firstName" value="First name:"
-						styleClass="reg-form-label first-name-label" />
+						styleClass="label first-name-label" />
 					<h:inputText id="firstName" value="#{registrationBean.firstName}"
-						required="true" styleClass="reg-form-input first-name-input" />
+						required="true" styleClass="input first-name-input" />
 				</div>
 				<div class="reg-form-last-name">
 					<h:outputLabel for="lastName" value="Last name:"
-						styleClass="reg-form-label" />
+						styleClass="label" />
 					<h:inputText id="lastName" value="#{registrationBean.lastName}"
-						required="true" styleClass="reg-form-input last-name-input" />
+						required="true" styleClass="input last-name-input" />
 				</div>
 
 				<h:outputLabel for="birthdate" value="Date of birth (DD-MM-YYYY):"
-					styleClass="reg-form-label" />
+					styleClass="label" />
 				<h:inputText id="birthdate" value="#{registrationBean.birthdate}"
-					required="true" styleClass="reg-form-input">
+					required="true" styleClass="input">
 					<f:convertDateTime pattern="dd-M-yyyy" />
 				</h:inputText>
 
 				<h:outputLabel for="gender" value="Gender:"
-					styleClass="reg-form-label" />
+					styleClass="label" />
 				<h:selectOneMenu value="#{registrationBean.gender}"
-					styleClass="reg-form-input">
+					styleClass="input">
 					<f:selectItem itemValue="Male" itemLabel="Male" />
 					<f:selectItem itemValue="Female" itemLabel="Female" />
 					<f:selectItem itemValue="Other" itemLabel="Other" />
 				</h:selectOneMenu>
 
-				<h:outputLabel for="city" value="City:" styleClass="reg-form-label" />
+				<h:outputLabel for="city" value="City:" styleClass="label" />
 				<h:inputText id="city" value="#{registrationBean.city}"
-					required="true" styleClass="reg-form-input" />
+					required="true" styleClass="input" />
 
-				<h:outputLabel value="Country:" styleClass="reg-form-label" />
+				<h:outputLabel value="Country:" styleClass="label" />
 				<h:selectOneMenu value="#{registrationBean.country}"
-					styleClass="reg-form-input">
+					styleClass="input">
 					<f:selectItems value="#{registrationBean.allCountries}" />
 				</h:selectOneMenu>
 
 				<h:outputLabel for="email" value="Email:"
-					styleClass="reg-form-label" />
+					styleClass="label" />
 				<h:inputText id="email" value="#{registrationBean.email}"
-					required="true" styleClass="reg-form-input" />
+					required="true" styleClass="input" />
 			</div>
 
 			<div class="reg-form-user-info">
 				<h4>User information</h4>
 				<div class="reg-form-username">
 					<h:outputLabel for="username" value="Choose a username:"
-						styleClass="reg-form-label" />
+						styleClass="label" />
 					<h:inputText id="username" value="#{registrationBean.username}"
-						required="true" styleClass="reg-form-input username-input" />
+						required="true" styleClass="input username-input" />
 				</div>
 
 				<div class="reg-form-password">
 					<h:outputLabel for="password" value="Choose a password:"
-						styleClass="reg-form-label" />
+						styleClass="label" />
 					<h:inputSecret id="password" value="#{registrationBean.password}"
-						required="true" styleClass="reg-form-input password-input" />
+						required="true" styleClass="input password-input" />
 				</div>
 			</div>
 
 			<h:commandButton action="#{registrationBean.registerNewUser()}"
-				value="Register" styleClass="reg-form-submit-btn" />
+				value="Register" styleClass="submit-btn" />
 
 		</h:form>
 	</div>
