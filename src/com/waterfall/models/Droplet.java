@@ -2,8 +2,10 @@ package com.waterfall.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.*;
+
 
 @Entity
 @NamedQuery(name = "Droplet.findAll", query = "SELECT d FROM Droplet d")
@@ -23,6 +25,10 @@ public class Droplet implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ownerid")
 	private User owner;
+	
+	@OneToMany(mappedBy = "dropletHost")
+	private List<Comment> comments;
+	
 
 	public Droplet() {
 	}
@@ -33,6 +39,16 @@ public class Droplet implements Serializable {
 
 	public void setOwner(User owner) {
 		this.owner = owner;
+	}
+	
+	
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 	public Long getDropletid() {

@@ -38,7 +38,7 @@ public class CommentBean implements Serializable {
 		
 		comment.setContent("Jag tycker det suger bajs");
 		comment.setCreationdate(LocalDateTime.now().toString());
-		
+		comment.setDropletHost(droplet);
 		commentEJB.storeComment(comment);
 		return "create-drop";
 	}

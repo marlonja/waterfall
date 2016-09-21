@@ -16,6 +16,10 @@ public class Comment implements Serializable {
 	private String content;
 
 	private String creationdate;
+	
+	@ManyToOne
+	@JoinColumn(name = "droplethostid")
+	private Droplet dropletHost;
 
 	public Comment() {
 	}
@@ -26,6 +30,14 @@ public class Comment implements Serializable {
 
 	public void setCommentid(Long commentid) {
 		this.commentid = commentid;
+	}
+
+	public Droplet getDropletHost() {
+		return dropletHost;
+	}
+
+	public void setDropletHost(Droplet dropletHost) {
+		this.dropletHost = dropletHost;
 	}
 
 	public String getContent() {
