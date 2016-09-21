@@ -23,7 +23,21 @@ public class LoginBean implements Serializable {
 
 	@EJB
 	private LocalUser userEJB;
-
+	
+	public String logOutUser(){
+		
+		try{
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			if(externalContext != null ){
+				externalContext.getSessionMap().clear();
+				loggedInUser = null;
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return "index";
+	}
+	
 	public String loginUser() {
 		User userToCheckInDatabase = new User();
 		userToCheckInDatabase.setUsername(username);
@@ -43,7 +57,7 @@ public class LoginBean implements Serializable {
 				System.out.println("Fel!!!!");
 				e.printStackTrace();
 			}
-			return "profile-page";
+			return "index";
 		}
 		return "index";
 	}

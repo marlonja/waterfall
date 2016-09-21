@@ -38,29 +38,38 @@
 			</ul>
 			-->
 			<ul class="nav navbar-nav navbar-right">
-				<li><h:form>
-						<h:messages></h:messages>
-						<div class="login-username">
-							<h:outputLabel for="username" value="Username"
-								styleClass="login-label" />
-							<h:inputText id="username" value="#{loginBean.username}"
-								required="true" styleClass="login-username-input" />
-						</div>
+				<li>
+					<p>#{sessionScope.loggedInUser.firstName}</p>
+						<h:form rendered="#{loginBean.loggedInUser != null}">
+							<h:commandButton value="Log out" action="#{loginBean.logOutUser()}" styleClass="submit-btn" />
+						</h:form>
+						<h:form rendered="#{loginBean.loggedInUser == null}">
+							<h:messages></h:messages>
 
-						<div class="login-password">
-							<h:outputLabel for="password" value="Password"
-								styleClass="login-label" />
-							<h:inputSecret id="password" value="#{loginBean.password}"
-								required="true" styleClass="login-password-input" />
-						</div>
-						<div class="login-btn-div">
-							<h:commandButton action="#{loginBean.loginUser()}" value="Login"
-								styleClass="login-btn" />
-						</div>
-					</h:form> <h:form target="_blank">
-						<h:commandLink action="reg-new-user" value="Register"
-							styleClass="link-register-new-user" />
-					</h:form></li>
+							<div class="login-username">
+								<h:outputLabel for="username" value="Username"
+									styleClass="login-label" />
+								<h:inputText id="username" value="#{loginBean.username}"
+									required="true" styleClass="login-username-input" />
+							</div>
+
+							<div class="login-password">
+								<h:outputLabel for="password" value="Password"
+									styleClass="login-label" />
+								<h:inputSecret id="password" value="#{loginBean.password}"
+									required="true" styleClass="login-password-input" />
+							</div>
+							<div class="login-btn-div">
+								<h:commandButton action="#{loginBean.loginUser()}" value="Login"
+									styleClass="login-btn" />
+							</div>
+
+						</h:form>
+						<h:form target="_blank" rendered="#{loginBean.loggedInUser == null}">
+							<h:commandLink action="reg-new-user" value="Register"
+								styleClass="link-register-new-user" />
+						</h:form>
+				</li>
 			</ul>
 		</div>
 		</nav>
