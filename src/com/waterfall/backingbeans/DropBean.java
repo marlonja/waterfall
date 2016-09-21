@@ -10,7 +10,7 @@ import javax.inject.Named;
 import com.waterfall.EJB.UserEJB;
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.models.Drop;
+import com.waterfall.models.Droplet;
 import com.waterfall.models.User;
 
 @Named(value="dropBean")
@@ -28,17 +28,19 @@ public class DropBean implements Serializable{
 	@EJB
 	LocalDrop dropEJB;
 
-	public void createNewDrop() {
+	public String createNewDrop() {
 		
 		User user = userEJB.getUser(26l);
 		
-		Drop drop = new Drop();
-		drop.setContent("Hello hello");
-		drop.setOwner(user);
+		Droplet droplet = new Droplet();
+		droplet.setContent("Hello hello");
+		droplet.setOwner(user);
 		
-		dropEJB.storeDrop(drop);
+		dropEJB.storeDrop(droplet);
 		
 		System.out.println("skapar droppe" + user);
+		
+		return "hej";
 	}
 
 	public String getContent() {

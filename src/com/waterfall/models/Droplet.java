@@ -5,30 +5,29 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the drop database table.
+ * The persistent class for the droplet database table.
  * 
  */
 @Entity
-@NamedQuery(name="Drop.findAll", query="SELECT d FROM Drop d")
-public class Drop implements Serializable {
+@NamedQuery(name="Droplet.findAll", query="SELECT d FROM Droplet d")
+public class Droplet implements Serializable {
 
-	private static final long serialVersionUID = -7384053018675385184L;
+	private static final long serialVersionUID = -2443095827173416242L;
 
 	@Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String dropid;
+	private Long dropletid;
 
 	private String content;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "ownerid")
 	private User owner;
 
-	public Drop() {
+	public Droplet() {
 	}
+	
+	
 
-	
-	
 	public User getOwner() {
 		return owner;
 	}
@@ -41,12 +40,12 @@ public class Drop implements Serializable {
 
 
 
-	public String getDropid() {
-		return this.dropid;
+	public Long getDropletid() {
+		return this.dropletid;
 	}
 
-	public void setDropid(String dropid) {
-		this.dropid = dropid;
+	public void setDropletid(Long dropletid) {
+		this.dropletid = dropletid;
 	}
 
 	public String getContent() {

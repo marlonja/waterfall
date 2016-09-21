@@ -2,10 +2,10 @@ package com.waterfall.EJB.interfaces;
 
 import javax.ejb.Local;
 
-import com.waterfall.models.Drop;
+import com.waterfall.models.Droplet;
 
 @Local
 public interface LocalDrop {
 
-	boolean storeDrop(Drop drop);
+	boolean storeDrop(Droplet droplet);
 }

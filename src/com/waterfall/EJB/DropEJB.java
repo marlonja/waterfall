@@ -5,7 +5,7 @@ import javax.ejb.Stateless;
 
 import com.waterfall.DAO.DropDAOBean;
 import com.waterfall.EJB.interfaces.LocalDrop;
-import com.waterfall.models.Drop;
+import com.waterfall.models.Droplet;
 
 @Stateless
 public class DropEJB implements LocalDrop {
@@ -14,9 +14,9 @@ public class DropEJB implements LocalDrop {
 	private DropDAOBean dropDaoBean;
 
 	@Override
-	public boolean storeDrop(Drop drop) {
+	public boolean storeDrop(Droplet droplet) {
 		System.out.println("EJB: store drop");
-		return dropDaoBean.storeDrop(drop);
+		return dropDaoBean.storeDrop(droplet);
 	}
 	
 	

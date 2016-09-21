@@ -45,18 +45,24 @@ public class User implements Serializable {
 	private String country;
 
 	@OneToMany(mappedBy = "owner")
-	private List<Drop> drops;
+	private List<Droplet> droplets;
 
 	public User() {
 	}
+	
+	
 
-	public List<Drop> getDrops() {
-		return drops;
+	public List<Droplet> getDroplets() {
+		return droplets;
 	}
 
-	public void setDrops(List<Drop> drops) {
-		this.drops = drops;
+
+
+	public void setDroplets(List<Droplet> droplets) {
+		this.droplets = droplets;
 	}
+
+
 
 	public Long getUserid() {
 		return this.userid;
