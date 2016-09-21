@@ -27,6 +27,7 @@
 		<div class="col-md-4">
 			<h:form>
 				<h1>Update user information</h1>
+				<h:messages></h:messages>
 				<div class="form-first-name">
 					<h:outputLabel value="First Name"
 						styleClass="label first-name-label" />
@@ -54,15 +55,22 @@
 				<h:outputLabel value="Password" styleClass="label" />
 				<h:inputSecret value="#{loginBean.loggedInUser.password}"
 					required="true" styleClass="input" />
+				
+				<h:outputLabel for="birthdate" value="Date of birth (DD-MM-YYYY):"
+					styleClass="label" />
+				<h:inputText id="birthdate" value="#{loginBean.loggedInUser.birthdate}"
+					required="true" styleClass="input">
+					<f:convertDateTime pattern="dd-M-yyyy" />
+				</h:inputText>
 
 				<h:outputLabel value="Country" styleClass="label" />
-				<h:selectOneMenu value="#{registrationBean.country}"
+				<h:selectOneMenu value="#{loginBean.loggedInUser.country}"
 					styleClass="input">
 					<f:selectItems value="#{registrationBean.allCountries}" />
 				</h:selectOneMenu>
 
 				<h:outputLabel value="Gender" styleClass="label" />
-				<h:selectOneMenu value="#{registrationBean.gender}"
+				<h:selectOneMenu value="#{loginBean.loggedInUser.gender}"
 					styleClass="input">
 					<f:selectItem itemValue="Male" itemLabel="Male" />
 					<f:selectItem itemValue="Female" itemLabel="Female" />
