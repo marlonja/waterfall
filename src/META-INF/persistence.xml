@@ -4,5 +4,6 @@
 	<jta-data-source>Waterfall_Resource</jta-data-source>
 	<class>com.waterfall.models.User</class>
 	<class>com.waterfall.models.Droplet</class>
+	<class>com.waterfall.models.Comment</class>
 	</persistence-unit>
 </persistence>
