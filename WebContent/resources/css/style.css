@@ -168,3 +168,9 @@ h4 {
 	margin-top: 15px;
 	margin-left: 50px;
 }
+
+.form-update-user {
+	border: 2px solid #ccc;
+	padding: 1.5em;
+	border-radius: 10px;
+}

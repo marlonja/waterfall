@@ -29,12 +29,12 @@
 				<h1>Update user information</h1>
 				<div class="form-first-name">
 					<h:outputLabel value="First Name"
-						styleClass="label form-first-name" />
+						styleClass="label first-name-label" />
 					<h:inputText value="#{loginBean.loggedInUser.firstName}"
 						required="true" styleClass="input first-name-input" />
 				</div>
-				<div  class="form-last-name">
-					<h:outputLabel value="Last Name" styleClass="label form-last-name" />
+				<div class="form-last-name">
+					<h:outputLabel value="Last Name" styleClass="label last-name-label" />
 					<h:inputText value="#{loginBean.loggedInUser.lastName}"
 						required="true" styleClass="input last-name-input" />
 				</div>
@@ -72,7 +72,6 @@
 				<h:commandButton
 					action="#{userBean.updateUser(loginBean.loggedInUser)}"
 					value="Save changes" styleClass="submit-btn" />
-
 			</h:form>
 		</div>
 	</div>
