@@ -4,20 +4,19 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.waterfall.models.Droplet;
+import com.waterfall.models.Comment;
 
 @Stateful
-public class DropDAOBean {
-	
+public class CommentDAOBean {
+
 	@PersistenceContext
 	private EntityManager em;
-	
-	public boolean storeDrop(Droplet droplet) {
-		System.out.println("DAO: store drop");
-		
-		if(em.merge(droplet) != null){
+
+	public boolean storeComment(Comment comment) {
+		System.out.println("DAO: store comment");
+		if (em.merge(comment) != null) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}

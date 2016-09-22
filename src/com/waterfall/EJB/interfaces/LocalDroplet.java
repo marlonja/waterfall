@@ -5,7 +5,9 @@ import javax.ejb.Local;
 import com.waterfall.models.Droplet;
 
 @Local
-public interface LocalDrop {
+public interface LocalDroplet {
 
 	boolean storeDrop(Droplet droplet);
+	
+	Droplet getDroplet(Long dropletId);
 }

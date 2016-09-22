@@ -1,15 +1,15 @@
 package com.waterfall.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the droplet database table.
- * 
- */
 @Entity
-@NamedQuery(name="Droplet.findAll", query="SELECT d FROM Droplet d")
+@NamedQuery(name = "Droplet.findAll", query = "SELECT d FROM Droplet d")
 public class Droplet implements Serializable {
 
 	private static final long serialVersionUID = -2443095827173416242L;
@@ -18,27 +18,43 @@ public class Droplet implements Serializable {
 	private Long dropletid;
 
 	private String content;
-	
+
+	private LocalDateTime creationDate;
+
+	private String location;
+
 	@ManyToOne
 	@JoinColumn(name = "ownerid")
 	private User owner;
+	
+	@OneToMany(mappedBy = "dropletHost")
+	private List<Comment> comments;
+	
 
 	public Droplet() {
 	}
-	
-	
 
 	public User getOwner() {
 		return owner;
 	}
 
-
-
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
+	
+	
 
+	public void setCreationDate(LocalDateTime creationDate) {
+		this.creationDate = creationDate;
+	}
 
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 
 	public Long getDropletid() {
 		return this.dropletid;
@@ -54,6 +70,20 @@ public class Droplet implements Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	
+
+	public LocalDateTime getCreationDate() {
+		return creationDate;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 }

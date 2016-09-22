@@ -1,4 +1,4 @@
-package com.waterfall.locations;
+package com.waterfall.utils;
 
 import java.util.ArrayList;
 import java.util.Locale;
