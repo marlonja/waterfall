@@ -78,7 +78,23 @@ h4 {
 }
 
 /* ----- STYLES FOR INDEX.XHTML ----- */
+.create-drop-div {
+	display: none;
+	background-color: grey;
+	padding: 10px;
+	background: whitesmoke;
+	margin-bottom: 5px;
+}
 
+.create-drop-input {
+	resize: none;
+}
+
+.link-profile-page {
+	color: steelblue;
+	font-family: Tahoma;
+	
+}
 .link-register-new-user {
 	color: steelblue;
 	font-family: Tahoma;
@@ -99,7 +115,7 @@ h4 {
 }
 
 .login-username-input, .login-password-input, 
-.filter-input {
+.filter-input, .create-drop-input {
 	width: 100%;
     padding: 5px 8px;
     margin: 3px 0;
