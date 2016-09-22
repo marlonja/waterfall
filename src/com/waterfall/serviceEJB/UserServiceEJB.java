@@ -1,9 +1,12 @@
 package com.waterfall.serviceEJB;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.UserModel;
@@ -52,8 +55,36 @@ public class UserServiceEJB implements LocalUser {
 
 	@Override
 	public UserModel getUser(Long userId) {
-		
+
 		return userDaoBean.getUserById(userId);
+	}
+
+	@Override
+	public UserModel getUserFromSession(String sessionKey) {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		Map<String, Object> sessionLoggedInUser = externalContext.getSessionMap();
+
+		try {
+			UserModel userModel = (UserModel) sessionLoggedInUser.get(sessionKey);
+			return userModel;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	@Override
+	public void setUserInSession(String sessionKey, UserModel userModel) {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		Map<String, Object> sessionLoggedInUser = externalContext.getSessionMap();
+
+		try {
+			sessionLoggedInUser.put(sessionKey, userModel);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

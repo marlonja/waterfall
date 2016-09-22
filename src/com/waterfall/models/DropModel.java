@@ -15,7 +15,7 @@ public class DropModel implements Serializable {
 	private static final long serialVersionUID = -2443095827173416242L;
 
 	@Id
-	private Long dropModelId;
+	private Long dropid;
 
 	private String content;
 
@@ -56,12 +56,12 @@ public class DropModel implements Serializable {
 		this.comments = comments;
 	}
 
-	public Long getDropModelId() {
-		return this.dropModelId;
+	public Long getDropId() {
+		return this.dropid;
 	}
 
-	public void setDropModelId(Long dropletid) {
-		this.dropModelId = dropletid;
+	public void setDropId(Long dropid) {
+		this.dropid = dropid;
 	}
 
 	public String getContent() {

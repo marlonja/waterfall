@@ -20,7 +20,7 @@ public class CommentModel implements Serializable {
 	private LocalDateTime creationdate;
 	
 	@ManyToOne
-	@JoinColumn(name = "droplethostid")
+	@JoinColumn(name = "drophostid")
 	private DropModel dropHost;
 
 	public CommentModel() {

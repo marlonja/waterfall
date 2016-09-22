@@ -21,4 +21,8 @@ public interface LocalUser {
 
 	UserModel getUser(Long userId);
 
+	UserModel getUserFromSession(String sessionKey);
+	
+	void setUserInSession(String sessionKey, UserModel userModel);
+
 }

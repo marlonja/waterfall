@@ -2,9 +2,12 @@ package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalDrop;
@@ -27,26 +30,23 @@ public class DropControllerBean implements Serializable{
 	
 	@EJB
 	LocalDrop dropEJB;
+	
+	
 
 	public String createNewDrop() {
 		
-		UserModel user = userEJB.getUser(26l);
+		owner = userEJB.getUserFromSession("loggedInUser");
 		
 		DropModel dropModel = new DropModel();
-		dropModel.setContent("Hello hello");
-		dropModel.setOwner(user);
-		
-		// example LocalDateTime
-//		LocalDateTime exampleDate = LocalDateTime.now();
-//		droplet.setCreationDate(exampleDate.toString());
+		dropModel.setContent(content);
+		dropModel.setOwner(owner);
 		dropModel.setLocation("Gothenburg");
-		
 		
 		dropEJB.storeDrop(dropModel);
 		
-		System.out.println("skapar droppe" + user);
+		System.out.println("skapar droppe" + owner);
 		
-		return "hej";
+		return "index";
 	}
 
 	public String getContent() {
