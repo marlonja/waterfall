@@ -1,19 +1,17 @@
 package com.waterfall.backingbeans;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import com.waterfall.EJB.UserEJB;
 import com.waterfall.EJB.interfaces.LocalDroplet;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.Droplet;
 import com.waterfall.models.User;
+import com.waterfall.utils.LocalDateTimeConverter;
 
 @Named(value="dropBean")
 @SessionScoped
@@ -39,8 +37,8 @@ public class DropletBean implements Serializable{
 		droplet.setOwner(user);
 		
 		// example LocalDateTime
-		LocalDateTime exampleDate = LocalDateTime.now();
-		droplet.setCreationDate(exampleDate.toString());
+//		LocalDateTime exampleDate = LocalDateTime.now();
+//		droplet.setCreationDate(exampleDate.toString());
 		droplet.setLocation("Gothenburg");
 		
 		

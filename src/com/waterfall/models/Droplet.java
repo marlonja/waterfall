@@ -1,6 +1,7 @@
 package com.waterfall.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Droplet implements Serializable {
 
 	private String content;
 
-	private String creationDate;
+	private LocalDateTime creationDate;
 
 	private String location;
 
@@ -42,6 +43,10 @@ public class Droplet implements Serializable {
 	}
 	
 	
+
+	public void setCreationDate(LocalDateTime creationDate) {
+		this.creationDate = creationDate;
+	}
 
 	public List<Comment> getComments() {
 		return comments;
@@ -67,12 +72,10 @@ public class Droplet implements Serializable {
 		this.content = content;
 	}
 
-	public String getCreationDate() {
-		return creationDate;
-	}
+	
 
-	public void setCreationDate(String creationDate) {
-		this.creationDate = creationDate;
+	public LocalDateTime getCreationDate() {
+		return creationDate;
 	}
 
 	public String getLocation() {

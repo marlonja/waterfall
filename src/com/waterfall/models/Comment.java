@@ -1,6 +1,8 @@
 package com.waterfall.models;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 
@@ -15,7 +17,7 @@ public class Comment implements Serializable {
 
 	private String content;
 
-	private String creationdate;
+	private LocalDateTime creationdate;
 	
 	@ManyToOne
 	@JoinColumn(name = "droplethostid")
@@ -48,12 +50,14 @@ public class Comment implements Serializable {
 		this.content = content;
 	}
 
-	public String getCreationdate() {
-		return this.creationdate;
+	public LocalDateTime getCreationdate() {
+		return creationdate;
 	}
 
-	public void setCreationdate(String creationdate) {
+	public void setCreationdate(LocalDateTime creationdate) {
 		this.creationdate = creationdate;
 	}
+
+	
 
 }

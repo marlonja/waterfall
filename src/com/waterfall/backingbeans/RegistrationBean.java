@@ -11,8 +11,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.locations.CountryService;
 import com.waterfall.models.User;
+import com.waterfall.utils.CountryService;
 import com.waterfall.validators.RegistrationValidator;
 
 @Named(value="registrationBean")
