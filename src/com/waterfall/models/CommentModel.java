@@ -7,8 +7,8 @@ import javax.persistence.*;
 
 
 @Entity
-@NamedQuery(name="Comment.findAll", query="SELECT c FROM Comment c")
-public class Comment implements Serializable {
+@NamedQuery(name="CommentModel.findAll", query="SELECT c FROM CommentModel c")
+public class CommentModel implements Serializable {
 
 	private static final long serialVersionUID = -2986930687226854493L;
 
@@ -21,9 +21,9 @@ public class Comment implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "droplethostid")
-	private Droplet dropletHost;
+	private DropModel dropHost;
 
-	public Comment() {
+	public CommentModel() {
 	}
 
 	public Long getCommentid() {
@@ -34,12 +34,12 @@ public class Comment implements Serializable {
 		this.commentid = commentid;
 	}
 
-	public Droplet getDropletHost() {
-		return dropletHost;
+	public DropModel getDropHost() {
+		return dropHost;
 	}
 
-	public void setDropletHost(Droplet dropletHost) {
-		this.dropletHost = dropletHost;
+	public void setDropHost(DropModel dropHost) {
+		this.dropHost = dropHost;
 	}
 
 	public String getContent() {

@@ -40,35 +40,35 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li>
 					<p>#{sessionScope.loggedInUser.firstName}</p> <h:form
-						rendered="#{loginBean.loggedInUser != null}">
+						rendered="#{loginControllerBean.loggedInUser != null}">
 						<h:commandLink action="profile-page" value="Profile page"
 							styleClass="link-profile-page" />
-					</h:form> <h:form rendered="#{loginBean.loggedInUser != null}">
+					</h:form> <h:form rendered="#{loginControllerBean.loggedInUser != null}">
 						<h:commandButton value="Log out"
-							action="#{loginBean.logOutUser()}" styleClass="submit-btn" />
-					</h:form> <h:form rendered="#{loginBean.loggedInUser == null}">
+							action="#{loginControllerBean.logOutUser()}" styleClass="submit-btn" />
+					</h:form> <h:form rendered="#{loginControllerBean.loggedInUser == null}">
 						<h:messages></h:messages>
 
 						<div class="login-username">
 							<h:outputLabel for="username" value="Username"
 								styleClass="login-label" />
-							<h:inputText id="username" value="#{loginBean.username}"
+							<h:inputText id="username" value="#{loginControllerBean.username}"
 								required="true" styleClass="login-username-input" />
 						</div>
 
 						<div class="login-password">
 							<h:outputLabel for="password" value="Password"
 								styleClass="login-label" />
-							<h:inputSecret id="password" value="#{loginBean.password}"
+							<h:inputSecret id="password" value="#{loginControllerBean.password}"
 								required="true" styleClass="login-password-input" />
 						</div>
 						<div class="login-btn-div">
-							<h:commandButton action="#{loginBean.loginUser()}" value="Login"
+							<h:commandButton action="#{loginControllerBean.loginUser()}" value="Login"
 								styleClass="login-btn" />
 						</div>
 
 					</h:form> <h:form target="_blank"
-						rendered="#{loginBean.loggedInUser == null}">
+						rendered="#{loginControllerBean.loggedInUser == null}">
 						<h:commandLink action="reg-new-user" value="Register"
 							styleClass="link-register-new-user" />
 					</h:form>
@@ -82,14 +82,13 @@
 		<div class="filter-div">
 			<h:inputText styleClass="filter-input" />
 			<p>Separate with comma to add multiple filters...</p>
-			<button class="show-create-drop-div-btn">Write something</button>
+			<h:commandButton rendered="#{loginControllerBean.loggedInUser != null}" class="show-create-drop-div-btn" value="Write something"/>
 		</div>
 		<div class="create-drop-div">
-			<h:form rendered="#{loginBean.loggedInUser != null}">
+			<h:form>
 				<h:inputTextarea rows="5" styleClass="create-drop-input">
 				</h:inputTextarea>
 				<h:commandButton styleClass="submit-btn" value="Drop it!"></h:commandButton>
-
 			</h:form>
 		</div>
 		<div class="waterfall-div">

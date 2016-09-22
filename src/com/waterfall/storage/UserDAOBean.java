@@ -1,4 +1,4 @@
-package com.waterfall.DAO;
+package com.waterfall.storage;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-import com.waterfall.models.User;
+import com.waterfall.models.UserModel;
 
 
 
@@ -19,32 +19,32 @@ public class UserDAOBean {
 	@PersistenceContext
 	private EntityManager em;
 
-	public boolean storeUser(User user) {
-		if(em.merge(user) != null){
+	public boolean storeUser(UserModel userModel) {
+		if(em.merge(userModel) != null){
 			return true;
 		}else{
 			return false;
 		}
 	}
 
-	public List<User> getAll() {
-		return em.createNamedQuery("User.findAll").getResultList();
+	public List<UserModel> getAll() {
+		return em.createNamedQuery("UserModel.findAll").getResultList();
 	}
 
-	public User getUserByUsername(User userToCheckInDatabase){
+	public UserModel getUserByUsername(UserModel userToCheckInDatabase){
 		try{
-			User user = (User)em.createNamedQuery("User.findByUsername")
+			UserModel userModel = (UserModel)em.createNamedQuery("UserModel.findByUsername")
 			    .setParameter("username", userToCheckInDatabase.getUsername())
 			    .getSingleResult();
 			
-			return user;
+			return userModel;
 		}catch(NoResultException e){
 			return null;
 		}
 	}
 	public boolean isEmailInDatabaseUnique(String userEmail){
 		try{
-			if(em.createNamedQuery("User.findByEmail")
+			if(em.createNamedQuery("UserModel.findByEmail")
 				.setParameter("email", userEmail).getSingleResult() != null){
 				return false;
 				}
@@ -56,17 +56,17 @@ public class UserDAOBean {
 	}
 
 	public boolean isUsernameInDatabaseUnique(String username) {
-		User user = new User();
-		user.setUsername(username);
-		if(getUserByUsername(user) == null){
+		UserModel userModel = new UserModel();
+		userModel.setUsername(username);
+		if(getUserByUsername(userModel) == null){
 			return true;
 		}
 		return false;
 	}
 
 
-	public User getUserById(Long userId) {
-		return em.find(User.class, userId);
+	public UserModel getUserById(Long userId) {
+		return em.find(UserModel.class, userId);
 	}
 
 }

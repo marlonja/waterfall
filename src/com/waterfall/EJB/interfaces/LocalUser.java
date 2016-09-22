@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import com.waterfall.models.User;
+import com.waterfall.models.UserModel;
 
 
 
@@ -13,12 +13,12 @@ import com.waterfall.models.User;
 @Local
 public interface LocalUser {
 
-	boolean storeUser(User c);
+	boolean storeUser(UserModel userModel);
 
-	List<User> getAll();
+	List<UserModel> getAll();
 
-	User validateLogin(User userToCheckInDatabase);
+	UserModel validateLogin(UserModel userToCheckInDatabase);
 
-	User getUser(Long userId);
+	UserModel getUser(Long userId);
 
 }

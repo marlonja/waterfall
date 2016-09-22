@@ -1,22 +1,22 @@
-package com.waterfall.DAO;
+package com.waterfall.storage;
 
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
-import com.waterfall.models.Droplet;
+import com.waterfall.models.DropModel;
 
 @Stateful
-public class DropletDAOBean {
+public class DropDAOBean {
 	
 	@PersistenceContext
 	private EntityManager em;
 	
-	public boolean storeDrop(Droplet droplet) {
+	public boolean storeDrop(DropModel dropModel) {
 		System.out.println("DAO: store drop");
 		
-		if(em.merge(droplet) != null){
+		if(em.merge(dropModel) != null){
 			return true;
 		}else {
 			return false;
@@ -24,7 +24,7 @@ public class DropletDAOBean {
 	}
 
 	
-	public Droplet getDropById(Long dropletId) {
-		return em.find(Droplet.class, dropletId);
+	public DropModel getDropById(Long dropId) {
+		return em.find(DropModel.class, dropId);
 	}
 }

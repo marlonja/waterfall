@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.models.User;
+import com.waterfall.models.UserModel;
 
 
 @Path("/users")
@@ -21,14 +21,14 @@ public class UserResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<User> getUsers() {
+	public List<UserModel> getUsers() {
 		return userEJB.getAll();
 	}
 	
 	@GET
 	@Path("/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public User getUser(@PathParam("userId") Long userId) {
+	public UserModel getUser(@PathParam("userId") Long userId) {
 		return userEJB.getUser(userId);
 	}
 }

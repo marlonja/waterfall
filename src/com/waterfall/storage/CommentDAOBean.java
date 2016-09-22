@@ -1,10 +1,10 @@
-package com.waterfall.DAO;
+package com.waterfall.storage;
 
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.waterfall.models.Comment;
+import com.waterfall.models.CommentModel;
 
 @Stateful
 public class CommentDAOBean {
@@ -12,9 +12,9 @@ public class CommentDAOBean {
 	@PersistenceContext
 	private EntityManager em;
 
-	public boolean storeComment(Comment comment) {
+	public boolean storeComment(CommentModel commentModel) {
 		System.out.println("DAO: store comment");
-		if (em.merge(comment) != null) {
+		if (em.merge(commentModel) != null) {
 			return true;
 		} else {
 			return false;

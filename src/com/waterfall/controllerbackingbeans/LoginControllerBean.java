@@ -1,4 +1,4 @@
-package com.waterfall.backingbeans;
+package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -10,16 +10,16 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.models.User;
+import com.waterfall.models.UserModel;
 
-@Named(value = "loginBean")
+@Named(value = "loginControllerBean")
 @SessionScoped
-public class LoginBean implements Serializable {
+public class LoginControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 3227244787787534047L;
 	private String username;
 	private String password;
-	private User loggedInUser;
+	private UserModel loggedInUser;
 
 	@EJB
 	private LocalUser userEJB;
@@ -39,7 +39,7 @@ public class LoginBean implements Serializable {
 	}
 	
 	public String loginUser() {
-		User userToCheckInDatabase = new User();
+		UserModel userToCheckInDatabase = new UserModel();
 		userToCheckInDatabase.setUsername(username);
 		userToCheckInDatabase.setPassword(password);
 		loggedInUser = userEJB.validateLogin(userToCheckInDatabase);
@@ -78,11 +78,11 @@ public class LoginBean implements Serializable {
 		this.password = password;
 	}
 
-	public User getLoggedInUser() {
+	public UserModel getLoggedInUser() {
 		return loggedInUser;
 	}
 
-	public void setLoggedInUser(User loggedInUser) {
+	public void setLoggedInUser(UserModel loggedInUser) {
 		this.loggedInUser = loggedInUser;
 	}
 

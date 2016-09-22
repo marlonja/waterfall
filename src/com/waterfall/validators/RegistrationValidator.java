@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
-import com.waterfall.DAO.UserDAOBean;
-import com.waterfall.models.User;
+import com.waterfall.models.UserModel;
+import com.waterfall.storage.UserDAOBean;
 
 @Stateful
 public class RegistrationValidator {
@@ -20,7 +20,7 @@ public class RegistrationValidator {
 	@EJB
 	private UserDAOBean userDAOBean;
 
-	public boolean validateUserForRegistration(User userToValidate) {
+	public boolean validateUserForRegistration(UserModel userToValidate) {
 		
 		if (!isBasicFormatCorrect(userToValidate)) {
 			return false;
@@ -47,7 +47,7 @@ public class RegistrationValidator {
 
 	}
 
-	private boolean isBasicFormatCorrect(User userToValidate) {
+	private boolean isBasicFormatCorrect(UserModel userToValidate) {
 
 		if (!isContainingOnlyLetters(userToValidate.getFirstName())) {
 			return false;

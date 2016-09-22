@@ -9,13 +9,13 @@ import javax.persistence.*;
 
 
 @Entity
-@NamedQuery(name = "Droplet.findAll", query = "SELECT d FROM Droplet d")
-public class Droplet implements Serializable {
+@NamedQuery(name = "DropModel.findAll", query = "SELECT d FROM DropModel d")
+public class DropModel implements Serializable {
 
 	private static final long serialVersionUID = -2443095827173416242L;
 
 	@Id
-	private Long dropletid;
+	private Long dropModelId;
 
 	private String content;
 
@@ -25,20 +25,20 @@ public class Droplet implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ownerid")
-	private User owner;
+	private UserModel owner;
 	
-	@OneToMany(mappedBy = "dropletHost")
-	private List<Comment> comments;
+	@OneToMany(mappedBy = "dropHost")
+	private List<CommentModel> comments;
 	
 
-	public Droplet() {
+	public DropModel() {
 	}
 
-	public User getOwner() {
+	public UserModel getOwner() {
 		return owner;
 	}
 
-	public void setOwner(User owner) {
+	public void setOwner(UserModel owner) {
 		this.owner = owner;
 	}
 	
@@ -48,20 +48,20 @@ public class Droplet implements Serializable {
 		this.creationDate = creationDate;
 	}
 
-	public List<Comment> getComments() {
+	public List<CommentModel> getComments() {
 		return comments;
 	}
 
-	public void setComments(List<Comment> comments) {
+	public void setComments(List<CommentModel> comments) {
 		this.comments = comments;
 	}
 
-	public Long getDropletid() {
-		return this.dropletid;
+	public Long getDropModelId() {
+		return this.dropModelId;
 	}
 
-	public void setDropletid(Long dropletid) {
-		this.dropletid = dropletid;
+	public void setDropModelId(Long dropletid) {
+		this.dropModelId = dropletid;
 	}
 
 	public String getContent() {

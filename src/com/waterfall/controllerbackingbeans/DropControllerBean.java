@@ -1,4 +1,4 @@
-package com.waterfall.backingbeans;
+package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -7,42 +7,42 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import com.waterfall.EJB.interfaces.LocalDroplet;
+import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.models.Droplet;
-import com.waterfall.models.User;
+import com.waterfall.models.DropModel;
+import com.waterfall.models.UserModel;
 import com.waterfall.utils.LocalDateTimeConverter;
 
-@Named(value="dropBean")
+@Named(value="dropControllerBean")
 @SessionScoped
-public class DropletBean implements Serializable{
+public class DropControllerBean implements Serializable{
 
 	private static final long serialVersionUID = 2772076160829404613L;
 	
 	private String content;
-	private User owner;
+	private UserModel owner;
 	
 	@EJB
 	LocalUser userEJB;
 	
 	@EJB
-	LocalDroplet dropEJB;
+	LocalDrop dropEJB;
 
 	public String createNewDrop() {
 		
-		User user = userEJB.getUser(26l);
+		UserModel user = userEJB.getUser(26l);
 		
-		Droplet droplet = new Droplet();
-		droplet.setContent("Hello hello");
-		droplet.setOwner(user);
+		DropModel dropModel = new DropModel();
+		dropModel.setContent("Hello hello");
+		dropModel.setOwner(user);
 		
 		// example LocalDateTime
 //		LocalDateTime exampleDate = LocalDateTime.now();
 //		droplet.setCreationDate(exampleDate.toString());
-		droplet.setLocation("Gothenburg");
+		dropModel.setLocation("Gothenburg");
 		
 		
-		dropEJB.storeDrop(droplet);
+		dropEJB.storeDrop(dropModel);
 		
 		System.out.println("skapar droppe" + user);
 		
@@ -57,11 +57,11 @@ public class DropletBean implements Serializable{
 		this.content = content;
 	}
 
-	public User getOwner() {
+	public UserModel getOwner() {
 		return owner;
 	}
 
-	public void setOwner(User owner) {
+	public void setOwner(UserModel owner) {
 		this.owner = owner;
 	}
 	

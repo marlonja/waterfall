@@ -1,4 +1,4 @@
-package com.waterfall.backingbeans;
+package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,19 +12,19 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.models.User;
+import com.waterfall.models.UserModel;
 
-@Named(value = "userBean")
+@Named(value = "userControllerBean")
 @SessionScoped
-public class UserBean implements Serializable {
+public class UserControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 3773988104720989698L;
-	private List<User> userList;
+	private List<UserModel> userList;
 
 	@EJB
 	private LocalUser userEJB;
 
-	public void updateUser(User user) {
+	public void updateUser(UserModel user) {
 		userEJB.storeUser(user);
 	}
 
@@ -34,11 +34,11 @@ public class UserBean implements Serializable {
 		return "all";
 	}
 
-	public List<User> getUserList() {
+	public List<UserModel> getUserList() {
 		return userList;
 	}
 
-	public void setUserList(List<User> userList) {
+	public void setUserList(List<UserModel> userList) {
 		this.userList = userList;
 	}
 

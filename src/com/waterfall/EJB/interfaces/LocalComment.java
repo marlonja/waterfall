@@ -2,10 +2,10 @@ package com.waterfall.EJB.interfaces;
 
 import javax.ejb.Local;
 
-import com.waterfall.models.Comment;
+import com.waterfall.models.CommentModel;
 
 @Local
 public interface LocalComment {
 
-	boolean storeComment(Comment comment);
+	boolean storeComment(CommentModel commentModel);
 }

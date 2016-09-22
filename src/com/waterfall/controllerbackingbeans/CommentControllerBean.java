@@ -1,4 +1,4 @@
-package com.waterfall.backingbeans;
+package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -8,18 +8,18 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalComment;
-import com.waterfall.EJB.interfaces.LocalDroplet;
-import com.waterfall.models.Comment;
-import com.waterfall.models.Droplet;
+import com.waterfall.EJB.interfaces.LocalDrop;
+import com.waterfall.models.CommentModel;
+import com.waterfall.models.DropModel;
 
-@Named(value="commentBean")
+@Named(value="commentControllerBean")
 @SessionScoped
-public class CommentBean implements Serializable {
+public class CommentControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 1085497880359743418L;
 	
 	private String content;
-	private Droplet dropletHost;
+	private DropModel dropHost;
 	private String creationDate;
 	
 	
@@ -27,18 +27,18 @@ public class CommentBean implements Serializable {
 	LocalComment commentEJB;
 	
 	@EJB
-	LocalDroplet dropletEJB;
+	LocalDrop dropEJB;
 	
 	public String createNewComment() {
-		Droplet droplet = dropletEJB.getDroplet(7l);
+		DropModel dropModel = dropEJB.getDrop(7l);
 		
-		System.out.println(droplet.getContent());
+		System.out.println(dropModel.getContent());
 		
-		Comment comment = new Comment();
+		CommentModel commentModel = new CommentModel();
 		
-		comment.setContent("Jag tycker det suger bajs");
-		comment.setDropletHost(droplet);
-		commentEJB.storeComment(comment);
+		commentModel.setContent("Jag tycker det suger bajs");
+		commentModel.setDropHost(dropModel);
+		commentEJB.storeComment(commentModel);
 		return "create-drop";
 	}
 

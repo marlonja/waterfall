@@ -14,11 +14,11 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-		@NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username LIKE :username"),
-		@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email LIKE :email") })
+@NamedQueries({ @NamedQuery(name = "UserModel.findAll", query = "SELECT u FROM UserModel u"),
+		@NamedQuery(name = "UserModel.findByUsername", query = "SELECT u FROM UserModel u WHERE u.username LIKE :username"),
+		@NamedQuery(name = "UserModel.findByEmail", query = "SELECT u FROM UserModel u WHERE u.email LIKE :email") })
 
-public class User implements Serializable {
+public class UserModel implements Serializable {
 
 	private static final long serialVersionUID = 5461470282886888730L;
 
@@ -45,21 +45,21 @@ public class User implements Serializable {
 	private String country;
 
 	@OneToMany(mappedBy = "owner")
-	private List<Droplet> droplets;
+	private List<DropModel> dropList;
 
-	public User() {
+	public UserModel() {
 	}
 	
 	
 
-	public List<Droplet> getDroplets() {
-		return droplets;
+	public List<DropModel> getDrops() {
+		return dropList;
 	}
 
 
 
-	public void setDroplets(List<Droplet> droplets) {
-		this.droplets = droplets;
+	public void setDrops(List<DropModel> dropModels) {
+		this.dropList = dropModels;
 	}
 
 

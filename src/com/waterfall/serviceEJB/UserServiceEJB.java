@@ -1,18 +1,18 @@
-package com.waterfall.EJB;
+package com.waterfall.serviceEJB;
 
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import com.waterfall.DAO.UserDAOBean;
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.models.User;
+import com.waterfall.models.UserModel;
+import com.waterfall.storage.UserDAOBean;
 import com.waterfall.validators.LoginValidator;
 import com.waterfall.validators.RegistrationValidator;
 
 @Stateless
-public class UserEJB implements LocalUser {
+public class UserServiceEJB implements LocalUser {
 
 	@EJB
 	private UserDAOBean userDaoBean;
@@ -24,22 +24,22 @@ public class UserEJB implements LocalUser {
 	private RegistrationValidator registrationValidator;
 
 	@Override
-	public boolean storeUser(User user) {
+	public boolean storeUser(UserModel userModel) {
 		System.out.println("Inne i store user");
-		return userDaoBean.storeUser(user);
+		return userDaoBean.storeUser(userModel);
 
 	}
 
 	@Override
-	public List<User> getAll() {
+	public List<UserModel> getAll() {
 
 		return userDaoBean.getAll();
 	}
 
 	@Override
-	public User validateLogin(User userToCheckInDatabase) {
+	public UserModel validateLogin(UserModel userToCheckInDatabase) {
 
-		User userFromDatabase = userDaoBean.getUserByUsername(userToCheckInDatabase);
+		UserModel userFromDatabase = userDaoBean.getUserByUsername(userToCheckInDatabase);
 
 		if (userFromDatabase != null) {
 			if (loginValidator.validateUserPassword(userFromDatabase, userToCheckInDatabase)) {
@@ -51,7 +51,7 @@ public class UserEJB implements LocalUser {
 	}
 
 	@Override
-	public User getUser(Long userId) {
+	public UserModel getUser(Long userId) {
 		
 		return userDaoBean.getUserById(userId);
 	}
