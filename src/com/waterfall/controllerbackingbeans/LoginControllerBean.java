@@ -25,18 +25,12 @@ public class LoginControllerBean implements Serializable {
 	@EJB
 	private LocalUser userEJB;
 	
-	
 	public String logOutUser(){
 		
-		try{
-			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-			if(externalContext != null ){
-				externalContext.getSessionMap().clear();
-				loggedInUser = null;
-			}
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+		
+		userEJB.removeUserFromSession("loggedInUser");
+		loggedInUser = null;
+		
 		return "index";
 	}
 	
@@ -46,20 +40,8 @@ public class LoginControllerBean implements Serializable {
 		userToCheckInDatabase.setPassword(password);
 		loggedInUser = userEJB.validateLogin(userToCheckInDatabase);
 
-		
 		if (loggedInUser != null) {
-			
-			System.out.println("Allt var bra, vi kommer lägga user i session");
 			userEJB.setUserInSession("loggedInUser", loggedInUser);
-//			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-//			Map<String, Object> sessionLoggedInUser = externalContext.getSessionMap();
-//			
-//			try {
-//				sessionLoggedInUser.put("loggedInUser", loggedInUser);
-//			} catch (Exception e) {
-//				System.out.println("Fel!!!!");
-//				e.printStackTrace();
-//			}
 			return "index";
 		}
 		return "index";

@@ -25,6 +25,10 @@ public class UserServiceEJB implements LocalUser {
 
 	@EJB
 	private RegistrationValidator registrationValidator;
+	
+	private ExternalContext externalContext;
+	
+	private Map<String, Object> currentSession;
 
 	@Override
 	public boolean storeUser(UserModel userModel) {
@@ -61,12 +65,11 @@ public class UserServiceEJB implements LocalUser {
 
 	@Override
 	public UserModel getUserFromSession(String sessionKey) {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		Map<String, Object> sessionLoggedInUser = externalContext.getSessionMap();
+		externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		currentSession = externalContext.getSessionMap();
 
 		try {
-			UserModel userModel = (UserModel) sessionLoggedInUser.get(sessionKey);
-			return userModel;
+			return (UserModel)currentSession.get(sessionKey);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -76,15 +79,28 @@ public class UserServiceEJB implements LocalUser {
 
 	@Override
 	public void setUserInSession(String sessionKey, UserModel userModel) {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		Map<String, Object> sessionLoggedInUser = externalContext.getSessionMap();
+		externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		currentSession = externalContext.getSessionMap();
 
 		try {
-			sessionLoggedInUser.put(sessionKey, userModel);
+			currentSession.put(sessionKey, userModel);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void removeUserFromSession(String sessionKey) {
+		externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		currentSession = externalContext.getSessionMap();
+		
+		try {
+			currentSession.put(sessionKey, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
