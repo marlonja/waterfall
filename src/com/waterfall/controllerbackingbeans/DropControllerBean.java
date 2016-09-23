@@ -40,12 +40,9 @@ public class DropControllerBean implements Serializable{
 	}
 
 	public String createNewDrop() {
-		
-		owner = userEJB.getUserFromSession("loggedInUser");
-		
 		DropModel dropModel = new DropModel();
 		dropModel.setContent(content);
-		dropModel.setOwner(owner);
+		dropModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
 		dropModel.setLocation("Gothenburg");
 		
 		dropEJB.storeDrop(dropModel);
@@ -62,15 +59,6 @@ public class DropControllerBean implements Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-	public UserModel getOwner() {
-		return owner;
-	}
-
-	public void setOwner(UserModel owner) {
-		this.owner = owner;
-	}
-
 	
 	public List<DropModel> getDropList() {
 		return dropList;

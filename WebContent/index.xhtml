@@ -20,7 +20,7 @@
 	<script type='text/javascript' src="resources/script/script.js"></script>
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
-	
+
 	<title>Waterfall Startpage</title>
 </h:head>
 <h:body>
@@ -40,38 +40,41 @@
 			-->
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<p>#{sessionScope.loggedInUser.firstName}</p> <h:form
+					<p>#{loginControllerBean.loggedInUser.firstName}</p> <h:form
 						rendered="#{loginControllerBean.loggedInUser != null}">
 						<h:commandLink action="profile-page" value="Profile page"
 							styleClass="link-profile-page" />
 					</h:form> <h:form rendered="#{loginControllerBean.loggedInUser != null}">
 						<h:commandButton value="Log out"
-							action="#{loginControllerBean.logOutUser()}" styleClass="submit-btn" />
+							action="#{loginControllerBean.logOutUser()}"
+							styleClass="submit-btn" />
 					</h:form> <h:form rendered="#{loginControllerBean.loggedInUser == null}">
 						<h:messages></h:messages>
 
 						<div class="login-username">
 							<h:outputLabel for="username" value="Username"
 								styleClass="login-label" />
-							<h:inputText id="username" value="#{loginControllerBean.username}"
-								required="true" styleClass="login-username-input" />
+							<h:inputText id="username"
+								value="#{loginControllerBean.username}" required="true"
+								styleClass="login-username-input" />
 						</div>
 
 						<div class="login-password">
 							<h:outputLabel for="password" value="Password"
 								styleClass="login-label" />
-							<h:inputSecret id="password" value="#{loginControllerBean.password}"
-								required="true" styleClass="login-password-input" />
+							<h:inputSecret id="password"
+								value="#{loginControllerBean.password}" required="true"
+								styleClass="login-password-input" />
 						</div>
 						<div class="login-btn-div">
-							<h:commandButton action="#{loginControllerBean.loginUser()}" value="Login"
-								styleClass="login-btn" />
+							<h:commandButton action="#{loginControllerBean.loginUser()}"
+								value="Login" styleClass="login-btn" />
 						</div>
 
 					</h:form> <h:form target="_blank"
 						rendered="#{loginControllerBean.loggedInUser == null}">
-						<h:commandLink action="reg-new-user" target="_self" value="Register"
-							styleClass="link-register-new-user" />
+						<h:commandLink action="reg-new-user" target="_self"
+							value="Register" styleClass="link-register-new-user" />
 					</h:form>
 				</li>
 			</ul>
@@ -83,32 +86,41 @@
 		<div class="filter-div">
 			<h:inputText styleClass="filter-input" />
 			<p>Separate with comma to add multiple filters...</p>
-			<h:commandButton rendered="#{loginControllerBean.loggedInUser != null}" class="show-create-drop-div-btn" value="Write something"/>
+			<h:commandButton
+				rendered="#{loginControllerBean.loggedInUser != null}"
+				class="show-create-drop-div-btn" value="Write something" />
 		</div>
 		<div class="create-drop-div">
 			<h:form>
-				<h:inputTextarea rows="5" styleClass="create-drop-input" value="#{dropControllerBean.content}">
+				<h:inputTextarea rows="5" styleClass="create-drop-input"
+					value="#{dropControllerBean.content}">
 				</h:inputTextarea>
-				<h:commandButton styleClass="submit-btn" value="Drop it!" action="#{dropControllerBean.createNewDrop()}" />
+				<h:commandButton styleClass="submit-btn" value="Drop it!"
+					action="#{dropControllerBean.createNewDrop()}" />
 			</h:form>
 		</div>
 		<div class="waterfall-div">
-			
-			<table>
-				<ui:repeat var="drop" value="#{dropControllerBean.getAllDrops()}" varStatus="status">					
-					
-					<tr>
-					
-						<td>#{drop.owner.username}</td>
-						<td>Wrote:</td>
-						<td>#{drop.content}</td>
-						
-										
-					</tr>
-					
-				</ui:repeat>			
-			</table>			
-			
+
+			<h:dataTable value="#{dropControllerBean.getAllDrops()}" var="drop">
+				<h:column>
+					#{drop.owner.username}
+				</h:column>
+				<h:column>
+					Wrote:
+				</h:column>
+				<h:column>
+					#{drop.content}
+				</h:column>
+				<h:column>
+					<h:form>
+						<h:inputText value="#{commentControllerBean.content}" />
+						<h:commandButton value="Comment"
+							action="#{commentControllerBean.createNewComment(drop.getDropId())}">
+						</h:commandButton>
+					</h:form>
+				</h:column>
+			</h:dataTable>
+
 		</div>
 	</div>
 </h:body>
