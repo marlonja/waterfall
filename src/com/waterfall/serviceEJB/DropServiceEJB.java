@@ -1,5 +1,7 @@
 package com.waterfall.serviceEJB;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -23,6 +25,12 @@ public class DropServiceEJB implements LocalDrop {
 	public DropModel getDrop(Long dropId) {
 		System.out.println("EJB: get drop");
 		return dropDaoBean.getDropById(dropId);
+	}
+
+	@Override
+	public List<DropModel> getAllDrops() {
+		
+		return dropDaoBean.getAllDrops();
 	}
 	
 	

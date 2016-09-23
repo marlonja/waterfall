@@ -1,5 +1,7 @@
 package com.waterfall.storage;
 
+import java.util.List;
+
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,5 +28,10 @@ public class DropDAOBean {
 	
 	public DropModel getDropById(Long dropId) {
 		return em.find(DropModel.class, dropId);
+	}
+
+
+	public List<DropModel> getAllDrops() {
+		return em.createNamedQuery("DropModel.findAll").getResultList(); 
 	}
 }

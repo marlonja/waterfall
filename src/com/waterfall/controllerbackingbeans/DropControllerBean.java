@@ -2,6 +2,8 @@ package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -24,14 +26,18 @@ public class DropControllerBean implements Serializable{
 	
 	private String content;
 	private UserModel owner;
+	private List<DropModel> dropList;
 	
 	@EJB
 	LocalUser userEJB;
 	
 	@EJB
 	LocalDrop dropEJB;
-	
-	
+
+	public List<DropModel> getAllDrops(){
+		return (List<DropModel>) dropEJB.getAllDrops();
+		
+	}
 
 	public String createNewDrop() {
 		
@@ -63,6 +69,16 @@ public class DropControllerBean implements Serializable{
 
 	public void setOwner(UserModel owner) {
 		this.owner = owner;
+	}
+
+	
+	public List<DropModel> getDropList() {
+		return dropList;
+	}
+
+	
+	public void setDropList(List<DropModel> dropList) {
+		this.dropList = dropList;
 	}
 	
 	

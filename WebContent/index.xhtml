@@ -4,7 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<!-- BOOTSTRAP -->
@@ -69,7 +70,7 @@
 
 					</h:form> <h:form target="_blank"
 						rendered="#{loginControllerBean.loggedInUser == null}">
-						<h:commandLink action="reg-new-user" value="Register"
+						<h:commandLink action="reg-new-user" target="_self" value="Register"
 							styleClass="link-register-new-user" />
 					</h:form>
 				</li>
@@ -92,7 +93,22 @@
 			</h:form>
 		</div>
 		<div class="waterfall-div">
-			<h2 id="add-drops">Add drops here...</h2>
+			
+			<table>
+				<ui:repeat var="drop" value="#{dropControllerBean.getAllDrops()}" varStatus="status">					
+					
+					<tr>
+					
+						<td>#{drop.owner.username}</td>
+						<td>Wrote:</td>
+						<td>#{drop.content}</td>
+						
+										
+					</tr>
+					
+				</ui:repeat>			
+			</table>			
+			
 		</div>
 	</div>
 </h:body>
