@@ -22,8 +22,20 @@ public class CommentModel implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "drophostid")
 	private DropModel dropHost;
+	
+	@OneToOne
+	@JoinColumn(name = "ownerid")
+	private UserModel owner;
 
 	public CommentModel() {
+	}
+
+	public UserModel getOwner() {
+		return owner;
+	}
+
+	public void setOwner(UserModel owner) {
+		this.owner = owner;
 	}
 
 	public Long getCommentid() {
