@@ -1,22 +1,15 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.DropModel;
-import com.waterfall.models.UserModel;
-import com.waterfall.utils.LocalDateTimeConverter;
 
 @Named(value="dropControllerBean")
 @SessionScoped
@@ -25,7 +18,6 @@ public class DropControllerBean implements Serializable{
 	private static final long serialVersionUID = 2772076160829404613L;
 	
 	private String content;
-	private UserModel owner;
 	private List<DropModel> dropList;
 	
 	@EJB
@@ -47,8 +39,8 @@ public class DropControllerBean implements Serializable{
 		
 		dropEJB.storeDrop(dropModel);
 		
-		System.out.println("skapar droppe" + owner);
-		
+		System.out.println("skapar droppe");
+		content = null;
 		return "index";
 	}
 

@@ -1,15 +1,11 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.UserModel;
 
