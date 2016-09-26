@@ -31,7 +31,10 @@ public class CommentControllerBean implements Serializable {
 	
 	public String createNewComment(Long dropId) {
 		CommentModel commentModel = new CommentModel();
-	
+		System.out.println(content);
+		System.out.println(userEJB.getUserFromSession("loggedInUser"));
+		System.out.println("user id: " + userEJB.getUserFromSession("loggedInUser").getUserid());
+		System.out.println("drop id:" + dropId);
 		commentModel.setContent(content);
 		commentModel.setDropHost(dropEJB.getDrop(dropId));
 		commentModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
