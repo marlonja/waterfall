@@ -3,6 +3,7 @@ package com.waterfall.models;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.persistence.*;
@@ -72,7 +73,10 @@ public class DropModel implements Serializable {
 		this.content = content;
 	}
 
-	
+	public String getCreationDateFormatted() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return formatter.format(creationDate.toLocalDate());
+	}
 
 	public LocalDateTime getCreationDate() {
 		return creationDate;

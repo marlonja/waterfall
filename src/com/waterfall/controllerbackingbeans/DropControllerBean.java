@@ -1,6 +1,7 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -10,6 +11,8 @@ import javax.inject.Named;
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.DropModel;
+
+import jersey.repackaged.com.google.common.collect.Lists;
 
 @Named(value="dropControllerBean")
 @SessionScoped
@@ -27,7 +30,7 @@ public class DropControllerBean implements Serializable{
 	LocalDrop dropEJB;
 
 	public List<DropModel> getAllDrops(){
-		return (List<DropModel>) dropEJB.getAllDrops();
+		return (List<DropModel>) Lists.reverse(dropEJB.getAllDrops());
 		
 	}
 

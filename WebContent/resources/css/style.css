@@ -190,3 +190,20 @@ h4 {
 	padding: 1.5em;
 	border-radius: 10px;
 }
+
+.table-drop {
+	background: light-grey;
+	display: block;
+	border: 0px solid steelblue;
+	font-family: Tahoma;
+	margin-left: 40px;
+	margin-right: 40px;
+}
+.table-header-drop {
+	background: light-grey;
+	display: block;
+	border-bottom: 5px solid steelblue;
+	font-family: Tahoma;
+	margin-left: 40px;
+	margin-right: 40px;
+}

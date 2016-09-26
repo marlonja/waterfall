@@ -101,14 +101,17 @@
 		</div>
 		<div class="waterfall-div">
 
-			<h:dataTable value="#{dropControllerBean.getAllDrops()}" var="drop">
-				<h:column>
+			<h:dataTable value="#{dropControllerBean.getAllDrops()}" var="drop" styleClass="table">
+				<h:column styleClass="table-header-drop">
 					#{drop.owner.username}
+				</h:column>
+				<h:column styleClass="table-drop">
+					#{drop.getCreationDateFormatted()}
 				</h:column>
 				<h:column>
 					Wrote:
 				</h:column>
-				<h:column>
+				<h:column styleClass="table-drop">
 					#{drop.content}
 				</h:column>
 				<h:column>
