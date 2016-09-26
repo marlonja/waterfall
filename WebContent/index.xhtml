@@ -102,9 +102,15 @@
 		<div class="waterfall-div">
 			<ui:repeat var="drop" value="#{dropControllerBean.getAllDrops()}">
 				<div class="test">
-					<p>#{drop.owner.username}</p>
-					<p>#{drop.getCreationDateFormatted()}</p>
-					<p>#{drop.content}</p>
+					<p class="waterfall-username">#{drop.owner.username}</p>
+					<p class="waterfall-creation-date">#{drop.getCreationDateFormatted()}</p>
+
+					<p class="waterfall-drop-content">#{drop.content}</p>
+					<p class="comment-here-description">
+						Wanna say something about this?<img class="arrow-down"
+							src="resources/img/arrow-down.png" />
+					</p>
+
 
 					<h:form rendered="#{loginControllerBean.loggedInUser != null}">
 						<h:inputText value="#{commentControllerBean.content}" />
@@ -112,7 +118,6 @@
 							action="#{commentControllerBean.createNewComment(drop.getDropId())}" />
 					</h:form>
 				</div>
-
 			</ui:repeat>
 		</div>
 	</div>

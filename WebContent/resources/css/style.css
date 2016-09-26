@@ -1,5 +1,4 @@
 /* ----- STYLES FOR REG-NEW-USER.XHTML ----- */
-
 h1 {
 	color: steelblue;
 	background: whitesmoke;
@@ -35,14 +34,12 @@ h4 {
 	display: block;
 }
 
-.reg-form-first-name, .reg-form-last-name,
-.reg-form-username, .reg-form-password,
-.form-first-name, .form-last-name {
+.reg-form-first-name, .reg-form-last-name, .reg-form-username,
+	.reg-form-password, .form-first-name, .form-last-name {
 	display: inline-block;
 }
 
-.first-name-input, .last-name-input,
-.username-input, .password-input {
+.first-name-input, .last-name-input, .username-input, .password-input {
 	display: block;
 }
 
@@ -52,12 +49,12 @@ h4 {
 
 .input {
 	width: 100%;
-    padding: 5px 8px;
-    margin: 3px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: steelblue;
-    font-family: Tahoma;
+	padding: 5px 8px;
+	margin: 3px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: steelblue;
+	font-family: Tahoma;
 }
 
 .input:focus {
@@ -67,14 +64,14 @@ h4 {
 
 .submit-btn {
 	width: 100%;
-    background-color: steelblue;
-    color: white;
-    padding:7px 10px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: Tahoma;
+	background-color: steelblue;
+	color: white;
+	padding: 7px 10px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: Tahoma;
 }
 
 /* ----- STYLES FOR INDEX.XHTML ----- */
@@ -93,8 +90,8 @@ h4 {
 .link-profile-page {
 	color: steelblue;
 	font-family: Tahoma;
-	
 }
+
 .link-register-new-user {
 	color: steelblue;
 	font-family: Tahoma;
@@ -114,20 +111,19 @@ h4 {
 	display: block;
 }
 
-.login-username-input, .login-password-input, 
-.filter-input, .create-drop-input {
+.login-username-input, .login-password-input, .filter-input,
+	.create-drop-input {
 	width: 100%;
-    padding: 5px 8px;
-    margin: 3px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: steelblue;
-    font-family: Tahoma;
+	padding: 5px 8px;
+	margin: 3px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: steelblue;
+	font-family: Tahoma;
 }
 
-.login-username-input:focus, 
-.login-password-input:focus,
-.filter-input:focus {
+.login-username-input:focus, .login-password-input:focus, .filter-input:focus
+	{
 	outline: none;
 	border: 1px solid steelblue;
 }
@@ -139,14 +135,14 @@ h4 {
 
 .login-btn {
 	width: 100%;
-    background-color: steelblue;
-    color: white;
-    padding:7px 10px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: Tahoma;
+	background-color: steelblue;
+	color: white;
+	padding: 7px 10px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: Tahoma;
 }
 
 .waterfall-div {
@@ -154,17 +150,6 @@ h4 {
 	border-radius: 0 0 10px 10px;
 	margin-bottom: 40px;
 	padding: 1em;
-}
-
-#add-drops {
-	margin-top: 0;
-	color: white;
-	text-align: center;
-	font-family: Tahoma;
-}
-
-#header {
-	display: inline;
 }
 
 .filter-div {
@@ -196,4 +181,33 @@ h4 {
 	padding: 1em;
 	border-radius: 10px;
 	background: whitesmoke;
+	border-radius: 10px;
+}
+
+.waterfall-username {
+	font-size: 1.2em;
+	display: inline-block;
+}
+
+.waterfall-creation-date {
+	display: inline;
+	color: dimgrey;
+}
+
+.waterfall-drop-content {
+	background: white;
+	padding: 1em;
+	border-radius: 10px;
+}
+
+.comment-here-description {
+	text-align: center;
+	color: dimgrey;
+	margin: 0;
+	font-size: 0.7em;
+}
+
+.arrow-down {
+	max-width: 20px;
+	align: center;
 }
