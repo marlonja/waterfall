@@ -100,30 +100,20 @@
 			</h:form>
 		</div>
 		<div class="waterfall-div">
+			<ui:repeat var="drop" value="#{dropControllerBean.getAllDrops()}">
+				<div class="test">
+					<p>#{drop.owner.username}</p>
+					<p>#{drop.getCreationDateFormatted()}</p>
+					<p>#{drop.content}</p>
 
-			<h:dataTable value="#{dropControllerBean.getAllDrops()}" var="drop" styleClass="table">
-				<h:column styleClass="table-header-drop">
-					#{drop.owner.username}
-				</h:column>
-				<h:column styleClass="table-drop">
-					#{drop.getCreationDateFormatted()}
-				</h:column>
-				<h:column>
-					Wrote:
-				</h:column>
-				<h:column styleClass="table-drop">
-					#{drop.content}
-				</h:column>
-				<h:column>
-					<h:form>
+					<h:form rendered="#{loginControllerBean.loggedInUser != null}">
 						<h:inputText value="#{commentControllerBean.content}" />
 						<h:commandButton value="Comment"
-							action="#{commentControllerBean.createNewComment(drop.getDropId())}">
-						</h:commandButton>
+							action="#{commentControllerBean.createNewComment(drop.getDropId())}" />
 					</h:form>
-				</h:column>
-			</h:dataTable>
+				</div>
 
+			</ui:repeat>
 		</div>
 	</div>
 </h:body>
