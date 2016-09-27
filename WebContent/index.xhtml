@@ -102,25 +102,29 @@
 		</div>
 		<div class="waterfall-div">
 			<c:forEach var="drop" items="#{dropControllerBean.getAllDrops()}">
-			<ul>
-				<li><p>#{drop.owner.username}</p></li>
-				<li><p>#{drop.content}</p></li>
-			</ul>
-			
-			<c:forEach var="comment" items="#{drop.getComments()}">
-			<ul>
-				<li><p>#{comment.content}</p></li>
-			</ul>
-				
-			</c:forEach>
-			
-			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
+				<div class="test">
+					<p class="waterfall-username">#{drop.owner.username}</p>
+					<p class="waterfall-creation-date">#{drop.getCreationDateFormatted()}</p>
+					<p class="waterfall-drop-content">#{drop.content}</p>
+					<p class="comment-here-description">
+						Wanna say something about this?<img class="arrow-down"
+							src="resources/img/arrow-down.png" />
+					</p>
+					<h:form rendered="#{loginControllerBean.loggedInUser != null}">
 						<h:inputText value="#{commentControllerBean.content}" />
 						<h:commandButton value="Comment"
 							action="#{commentControllerBean.createNewComment(drop.getDropId())}" />
 					</h:form>
-          </c:forEach>
-			
+					
+					<h6>Number of comments: #{drop.getComments().size()}</h6>
+
+<!-- 					<c:forEach var="comment" items="#{drop.getComments()}"> -->
+<!-- 						<p>#{comment.content}</p> -->
+
+<!-- 					</c:forEach> -->
+				</div>
+			</c:forEach>
+
 		</div>
 	</div>
 </h:body>
