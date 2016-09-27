@@ -4,7 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<!-- BOOTSTRAP -->
 	<link rel="stylesheet"
@@ -81,6 +82,22 @@
 					action="#{userControllerBean.updateUser(loginControllerBean.loggedInUser)}"
 					value="Save changes" styleClass="submit-btn" />
 			</h:form>
+		</div>
+		<div class="col-md-4">
+			<h:form>
+				<h:outputLabel value="Search for your friends if you got any" styleClass="label"/>
+				<h:inputText value="#{userControllerBean.usernameSearch}" />
+				<h:commandButton action="#{userControllerBean.searchUserByUsername()}" value="Search" styleClass="submit-btn"/>
+			</h:form>
+			
+			<h:form>
+				#{userControllerBean.userToSearch.firstName}
+				<h:commandButton action="#{userControllerBean.addUserToFriendlist()}" value="Add to friend list"/>
+			</h:form>
+			<h1>My Friends:</h1>
+			<ui:repeat var="friend" value="#{userControllerBean.userList}">
+					<p>#{friend.firstName} #{friend.lastName}</p>
+			</ui:repeat>
 		</div>
 	</div>
 </h:body>

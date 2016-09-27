@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
@@ -14,7 +16,7 @@ import com.waterfall.models.UserModel;
 import com.waterfall.utils.CountryService;
 import com.waterfall.validators.RegistrationValidator;
 
-@Named(value="registrationControllerBean")
+@Named(value = "registrationControllerBean")
 @SessionScoped
 public class RegistrationControllerBean implements Serializable {
 
@@ -29,23 +31,23 @@ public class RegistrationControllerBean implements Serializable {
 	private String password;
 	private String country;
 	private List<String> allCountries;
-	
+
 	@EJB
 	RegistrationValidator registrationValidator;
 
 	@EJB
 	CountryService countryService;
-	
+
 	@EJB
 	private LocalUser userEJB;
-	
+
 	@PostConstruct
 	public void init() {
 		setAllCountries(countryService.getAllCountries());
-		
+
 	}
-	
-	public String registerNewUser(){
+
+	public String registerNewUser() {
 		UserModel userModel = new UserModel();
 		userModel.setFirstName(firstName);
 		userModel.setLastName(lastName);
@@ -56,24 +58,28 @@ public class RegistrationControllerBean implements Serializable {
 		userModel.setGender(gender);
 		userModel.setPassword(password);
 		userModel.setCountry(country);
-		
-//		// temporary date for database purposes
-//		Date exampleDate = new Date(0,0,0);
-//		exampleDate.setDate(14);
-//		exampleDate.setYear(1964);
-//		exampleDate.setMonth(04);
+
+		// // temporary date for database purposes
+		// Date exampleDate = new Date(0,0,0);
+		// exampleDate.setDate(14);
+		// exampleDate.setYear(1964);
+		// exampleDate.setMonth(04);
 		System.out.println(birthdate.toString());
-//		user.setBirthdate(exampleDate);
-		if(registrationValidator.validateUserForRegistration(userModel)){
-			
+		// user.setBirthdate(exampleDate);
+		if (registrationValidator.validateUserForRegistration(userModel)) {
+
 			userEJB.storeUser(userModel);
 			System.out.println("user saved");
-			
+			return "index";
+
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Registration failed, try again!"));
+			return "reg-new-user";
 		}
-			
-		return "index";
+
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -137,13 +143,12 @@ public class RegistrationControllerBean implements Serializable {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
 
-	public void setCountry(String country){
+	public void setCountry(String country) {
 		this.country = country;
 	}
-	
-	public String getCountry(){
+
+	public String getCountry() {
 		return country;
 	}
 
