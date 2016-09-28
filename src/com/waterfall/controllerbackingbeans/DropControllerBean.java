@@ -49,8 +49,9 @@ public class DropControllerBean implements Serializable{
 		dropModel.setLocation("Gothenburg");
 		
 		dropEJB.storeDrop(dropModel);
-		
+		dropList = Lists.reverse(dropEJB.getAllDrops());
 		System.out.println("skapar droppe");
+		
 		content = null;
 		return "index";
 	}

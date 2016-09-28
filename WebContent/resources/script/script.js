@@ -3,4 +3,8 @@ $(document).ready(function(){
 		$(".create-drop-div").stop().toggle('slow');
 	});
 	
+	$(".arrow-down").click(function(){
+		$(".create-comment-div").stop().toggle('slow');
+	});
+	
 });

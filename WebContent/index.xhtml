@@ -54,17 +54,13 @@
 						<h:messages></h:messages>
 
 						<div class="login-username">
-							<h:outputLabel for="username" value="Username"
-								styleClass="login-label" />
-							<h:inputText id="username"
+							<b:inputText placeholder="Username" id="username"
 								value="#{loginControllerBean.username}" required="true"
 								styleClass="login-username-input" />
 						</div>
 
 						<div class="login-password">
-							<h:outputLabel for="password" value="Password"
-								styleClass="login-label" />
-							<h:inputSecret id="password"
+							<b:inputSecret placeholder="Password" id="password"
 								value="#{loginControllerBean.password}" required="true"
 								styleClass="login-password-input" />
 						</div>
@@ -107,21 +103,22 @@
 					<p class="waterfall-creation-date">#{drop.getCreationDateFormatted()}</p>
 					<p class="waterfall-drop-content">#{drop.content}</p>
 					<p class="comment-here-description">
-						Wanna say something about this?<img class="arrow-down"
-							src="resources/img/arrow-down.png" />
+						<img class="arrow-down" src="resources/img/arrow-down.png" />
 					</p>
-					<h:form rendered="#{loginControllerBean.loggedInUser != null}">
-						<h:inputText value="#{dropControllerBean.commentContent}" />
-						<h:commandButton value="Comment"
-							action="#{dropControllerBean.createNewComment(drop.getDropId())}" />
-					</h:form>
-					
+					<div class="create-comment-div">
+						<h:form rendered="#{loginControllerBean.loggedInUser != null}">
+							<b:inputText placeholder="Comment..."
+								value="#{dropControllerBean.commentContent}" />
+							<h:commandButton styleClass="submit-btn" value="Comment"
+								action="#{dropControllerBean.createNewComment(drop.getDropId())}" />
+						</h:form>
+					</div>
 					<h6>Number of comments: #{drop.getComments().size()}</h6>
 
- 					<c:forEach var="comment" items="#{drop.getComments()}"> 
- 						<p>#{comment.content}</p>
+					<c:forEach var="comment" items="#{drop.getComments()}">
+						<p>#{comment.content}</p>
 
- 					</c:forEach> 
+					</c:forEach>
 				</div>
 			</c:forEach>
 
