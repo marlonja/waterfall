@@ -4,7 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
 	<!-- BOOTSTRAP -->
@@ -27,32 +28,24 @@
 
 	<div class="col-md-4 col-md-offset-4">
 		<h:form>
-		<h1 class="header-for-reg-new-user">Register new user</h1>
+			<h1 class="header-for-reg-new-user">Register new user</h1>
 			<h:messages></h:messages>
 			<div class="reg-form-personal-info">
 				<h4>Personal information</h4>
-				<div class="reg-form-first-name">
-					<h:outputLabel for="firstName" value="First name:"
-						styleClass="label first-name-label" />
-					<h:inputText id="firstName" value="#{registrationControllerBean.firstName}"
-						required="true" styleClass="input first-name-input" />
-				</div>
-				<div class="reg-form-last-name">
-					<h:outputLabel for="lastName" value="Last name:"
-						styleClass="label" />
-					<h:inputText id="lastName" value="#{registrationControllerBean.lastName}"
-						required="true" styleClass="input last-name-input" />
-				</div>
+				<b:inputText placeholder="First Name" id="firstName"
+					value="#{registrationControllerBean.firstName}" required="true"
+					styleClass="input first-name-input" />
 
-				<h:outputLabel for="birthdate" value="Date of birth (DD-MM-YYYY):"
-					styleClass="label" />
-				<h:inputText id="birthdate" value="#{registrationControllerBean.birthdate}"
-					required="true" styleClass="input">
+				<b:inputText placeholder="Last Name" id="lastName"
+					value="#{registrationControllerBean.lastName}" required="true"
+					styleClass="input last-name-input" />
+
+				<b:inputText placeholder="Date of birth (DD-MM-YYYY)" id="birthdate"
+					value="#{registrationControllerBean.birthdate}" required="true"
+					styleClass="input">
 					<f:convertDateTime pattern="dd-M-yyyy" />
-				</h:inputText>
+				</b:inputText>
 
-				<h:outputLabel for="gender" value="Gender:"
-					styleClass="label" />
 				<h:selectOneMenu value="#{registrationControllerBean.gender}"
 					styleClass="input">
 					<f:selectItem itemValue="Male" itemLabel="Male" />
@@ -60,40 +53,33 @@
 					<f:selectItem itemValue="Other" itemLabel="Other" />
 				</h:selectOneMenu>
 
-				<h:outputLabel for="city" value="City:" styleClass="label" />
-				<h:inputText id="city" value="#{registrationControllerBean.city}"
-					required="true" styleClass="input" />
+				<b:inputText placeholder="City" id="city"
+					value="#{registrationControllerBean.city}" required="true"
+					styleClass="input" />
 
-				<h:outputLabel value="Country:" styleClass="label" />
 				<h:selectOneMenu value="#{registrationControllerBean.country}"
 					styleClass="input">
 					<f:selectItems value="#{registrationControllerBean.allCountries}" />
 				</h:selectOneMenu>
 
-				<h:outputLabel for="email" value="Email:"
-					styleClass="label" />
-				<h:inputText id="email" value="#{registrationControllerBean.email}"
-					required="true" styleClass="input" />
+				<b:inputText placeholder="Email" id="email"
+					value="#{registrationControllerBean.email}" required="true"
+					styleClass="input" />
 			</div>
 
 			<div class="reg-form-user-info">
 				<h4>User information</h4>
-				<div class="reg-form-username">
-					<h:outputLabel for="username" value="Choose a username:"
-						styleClass="label" />
-					<h:inputText id="username" value="#{registrationControllerBean.username}"
-						required="true" styleClass="input username-input" />
-				</div>
+				<b:inputText placeholder="Choose a username" id="username"
+					value="#{registrationControllerBean.username}" required="true"
+					styleClass="input username-input" />
 
-				<div class="reg-form-password">
-					<h:outputLabel for="password" value="Choose a password:"
-						styleClass="label" />
-					<h:inputSecret id="password" value="#{registrationControllerBean.password}"
-						required="true" styleClass="input password-input" />
-				</div>
+				<b:inputSecret placeholder="Choose a password" id="password"
+					value="#{registrationControllerBean.password}" required="true"
+					styleClass="input password-input" />
 			</div>
 
-			<h:commandButton action="#{registrationControllerBean.registerNewUser()}"
+			<h:commandButton
+				action="#{registrationControllerBean.registerNewUser()}"
 				value="Register" styleClass="submit-btn" />
 
 		</h:form>

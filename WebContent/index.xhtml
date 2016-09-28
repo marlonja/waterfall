@@ -86,8 +86,7 @@
 
 	<div class="container">
 		<div class="filter-div">
-			<h:inputText styleClass="filter-input" />
-			<p>Separate with comma to add multiple filters...</p>
+			<b:inputText placeholder="Filter..." styleClass="filter-input" />
 			<h:commandButton
 				rendered="#{loginControllerBean.loggedInUser != null}"
 				class="show-create-drop-div-btn" value="Write something" />
