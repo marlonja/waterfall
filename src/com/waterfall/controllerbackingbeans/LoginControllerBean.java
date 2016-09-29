@@ -2,8 +2,11 @@ package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
@@ -20,16 +23,15 @@ public class LoginControllerBean implements Serializable {
 
 	@EJB
 	private LocalUser userEJB;
-	
-	public String logOutUser(){
-		
-		
+
+	public String logOutUser() {
+
 		userEJB.removeUserFromSession("loggedInUser");
 		loggedInUser = null;
-		
+
 		return "index";
 	}
-	
+
 	public String loginUser() {
 		UserModel userToCheckInDatabase = new UserModel();
 		userToCheckInDatabase.setUsername(username);
@@ -39,8 +41,11 @@ public class LoginControllerBean implements Serializable {
 		if (loggedInUser != null) {
 			userEJB.setUserInSession("loggedInUser", loggedInUser);
 			return "index";
+		} else {
+			FacesContext.getCurrentInstance().addMessage("search-form",
+					new FacesMessage("Username or password is incorrect"));
+			return "index";
 		}
-		return "index";
 	}
 
 	public String getUsername() {

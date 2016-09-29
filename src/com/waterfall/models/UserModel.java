@@ -1,18 +1,13 @@
 package com.waterfall.models;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
-import org.eclipse.persistence.internal.oxm.schema.model.All;
-
-import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * The persistent class for the user database table.
- * 
- */
 @Entity
 @NamedQueries({ @NamedQuery(name = "UserModel.findAll", query = "SELECT u FROM UserModel u"),
 		@NamedQuery(name = "UserModel.findByUsername", query = "SELECT u FROM UserModel u WHERE u.username LIKE :username"),
@@ -43,11 +38,14 @@ public class UserModel implements Serializable {
 	private String username;
 
 	private String country;
+	
+	private List<UserModel> friendsList;
 
 	@OneToMany(mappedBy = "owner")
 	private List<DropModel> dropList;
-
+	
 	public UserModel() {
+		
 	}
 	
 	
@@ -142,6 +140,18 @@ public class UserModel implements Serializable {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+
+
+	public List<UserModel> getFriendsList() {
+		return friendsList;
+	}
+
+
+
+	public void setFriendsList(List<UserModel> friendsList) {
+		this.friendsList = friendsList;
 	}
 
 }

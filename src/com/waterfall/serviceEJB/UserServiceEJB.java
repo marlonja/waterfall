@@ -103,4 +103,10 @@ public class UserServiceEJB implements LocalUser {
 		
 	}
 
+	@Override
+	public UserModel getUserByUsername(UserModel userByUsername) {
+		
+		return userDaoBean.getUserByUsername(userByUsername);
+	}
+
 }
