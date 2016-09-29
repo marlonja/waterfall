@@ -26,6 +26,8 @@ public class DropControllerBean implements Serializable{
 	private String content;
 	private String commentContent;
 	private List<DropModel> dropList;
+	private String searchWord;
+	private List<DropModel> dropListFromSearch;
 	
 	@EJB
 	LocalUser userEJB;
@@ -40,6 +42,18 @@ public class DropControllerBean implements Serializable{
 	public void init() {
 		dropList = Lists.reverse(dropEJB.getAllDrops());
 		
+		
+	}
+	
+	public String search(){
+		System.out.println("inne i search");
+		System.out.println(searchWord);
+		
+		dropListFromSearch = Lists.reverse(dropEJB.getDropsFromSearch(searchWord));
+		
+		System.out.println(dropListFromSearch);
+		
+		return "index";
 	}
 
 	public String createNewDrop() {
@@ -95,6 +109,22 @@ public class DropControllerBean implements Serializable{
 
 	public void setCommentContent(String commentContent) {
 		this.commentContent = commentContent;
+	}
+
+	public String getSearchWord() {
+		return searchWord;
+	}
+
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
+	}
+
+	public List<DropModel> getDropListFromSearch() {
+		return dropListFromSearch;
+	}
+
+	public void setDropListFromSearch(List<DropModel> dropListFromSearch) {
+		this.dropListFromSearch = dropListFromSearch;
 	}
 	
 	

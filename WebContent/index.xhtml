@@ -72,7 +72,24 @@
 
 	<div class="container">
 		<div class="filter-div">
-			<b:inputText placeholder="Filter..." styleClass="input" />
+
+			
+			<h:form>
+			<b:inputText value="#{dropControllerBean.searchWord}" placeholder="Filter..." styleClass="input" />
+			<h:commandButton value="Search" action="#{dropControllerBean.search()}"></h:commandButton>
+			
+			</h:form>
+			
+			<c:forEach var="drop" items="#{dropControllerBean.dropListFromSearch}">
+				
+					<p>#{drop.owner.username}</p>
+					<p>#{drop.getCreationDateFormatted()}</p>
+					<p>#{drop.content}</p>
+				
+
+ 					</c:forEach> 
+			
+
 			<h:commandButton
 				rendered="#{loginControllerBean.loggedInUser != null}"
 				class="show-create-drop-div-btn" value="Write something" />
