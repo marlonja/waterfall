@@ -86,8 +86,24 @@
 
 	<div class="container">
 		<div class="filter-div">
-			<h:inputText styleClass="filter-input" />
-			<p>Separate with comma to add multiple filters...</p>
+			
+			<h:form>
+			<h:inputText styleClass="filter-input" value="#{dropControllerBean.searchWord}" />
+			<h:commandButton value="Search" action="#{dropControllerBean.search()}"></h:commandButton>
+			
+			</h:form>
+			
+			<c:forEach var="drop" items="#{dropControllerBean.dropListFromSearch}">
+				
+					<p>#{drop.owner.username}</p>
+					<p>#{drop.getCreationDateFormatted()}</p>
+					<p>#{drop.content}</p>
+				
+
+ 					</c:forEach> 
+			
+			
+			
 			<h:commandButton
 				rendered="#{loginControllerBean.loggedInUser != null}"
 				class="show-create-drop-div-btn" value="Write something" />
