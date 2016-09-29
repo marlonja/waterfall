@@ -26,70 +26,60 @@
 	<title>Waterfall Startpage</title>
 </h:head>
 <h:body>
-	<div id="navbar">
-		<nav class="navbar navbar-default"> <a class="navbar-brand"
-			href="#">Waterfall</a>
-		<ul class="nav navbar-nav">
-		</ul>
-		<div class="container-fluid">
-			<!--  
-			<ul class="nav navbar-nav">
-				<h:form id="searchForm">
-					<h:commandButton action="#{userBean.search()}"
-						value="Show list of all users" />
-				</h:form>
-			</ul>
-			-->
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<p>#{loginControllerBean.loggedInUser.firstName}</p> <h:form
-						rendered="#{loginControllerBean.loggedInUser != null}">
-						<h:commandLink action="profile-page" value="Profile page"
-							styleClass="link-profile-page" />
-					</h:form> <h:form rendered="#{loginControllerBean.loggedInUser != null}">
-						<h:commandButton value="Log out"
-							action="#{loginControllerBean.logOutUser()}"
-							styleClass="submit-btn" />
-					</h:form> <h:form rendered="#{loginControllerBean.loggedInUser == null}">
-						<h:messages></h:messages>
 
-						<div class="login-username">
-							<b:inputText placeholder="Username" id="username"
-								value="#{loginControllerBean.username}" required="true"
-								styleClass="login-username-input" />
-						</div>
+	<b:navBar brand="Waterfall">
+		<b:navbarLinks pull="right">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<p>#{loginControllerBean.loggedInUser.firstName}</p> <h:form
+							rendered="#{loginControllerBean.loggedInUser != null}">
+							<h:commandLink action="profile-page" value="Profile page"
+								styleClass="link-profile-page" />
+						</h:form> <h:form rendered="#{loginControllerBean.loggedInUser != null}">
+							<h:commandButton value="Log out"
+								action="#{loginControllerBean.logOutUser()}"
+								styleClass="submit-btn" />
+						</h:form> <h:form rendered="#{loginControllerBean.loggedInUser == null}">
+							<h:messages></h:messages>
 
-						<div class="login-password">
-							<b:inputSecret placeholder="Password" id="password"
-								value="#{loginControllerBean.password}" required="true"
-								styleClass="login-password-input" />
-						</div>
-						<div class="login-btn-div">
-							<h:commandButton action="#{loginControllerBean.loginUser()}"
-								value="Login" styleClass="login-btn" />
-						</div>
+							<div class="login-username">
+								<b:inputText placeholder="Username" id="username"
+									value="#{loginControllerBean.username}" required="true"
+									styleClass="input" />
+							</div>
 
-					</h:form> <h:form target="_blank"
-						rendered="#{loginControllerBean.loggedInUser == null}">
-						<h:commandLink action="reg-new-user" target="_self"
-							value="Register" styleClass="link-register-new-user" />
-					</h:form>
-				</li>
-			</ul>
-		</div>
-		</nav>
-	</div>
+							<div class="login-password">
+								<b:inputSecret placeholder="Password" id="password"
+									value="#{loginControllerBean.password}" required="true"
+									styleClass="input" />
+							</div>
+							<div class="login-btn-div">
+								<h:commandButton action="#{loginControllerBean.loginUser()}"
+									value="Login" styleClass="submit-btn" />
+							</div>
+
+						</h:form> <h:form target="_blank"
+							rendered="#{loginControllerBean.loggedInUser == null}">
+							<h:commandLink action="reg-new-user" target="_self"
+								value="Register" styleClass="link-register-new-user" />
+						</h:form>
+					</li>
+				</ul>
+			</div>
+		</b:navbarLinks>
+	</b:navBar>
 
 	<div class="container">
 		<div class="filter-div">
-			<b:inputText placeholder="Filter..." styleClass="filter-input" />
+			<b:inputText placeholder="Filter..." styleClass="input" />
 			<h:commandButton
 				rendered="#{loginControllerBean.loggedInUser != null}"
 				class="show-create-drop-div-btn" value="Write something" />
 		</div>
 		<div class="create-drop-div">
 			<h:form>
-				<h:inputTextarea rows="5" styleClass="create-drop-input"
+				<h:inputTextarea rows="5" styleClass="input"
 					value="#{dropControllerBean.content}">
 				</h:inputTextarea>
 				<h:commandButton styleClass="submit-btn" value="Drop it!"

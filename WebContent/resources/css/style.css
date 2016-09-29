@@ -28,21 +28,6 @@ h4 {
 	border-radius: 0 0 10px 10px;
 }
 
-.label {
-	color: steelblue;
-	font-family: Tahoma;
-	display: block;
-}
-
-.reg-form-first-name, .reg-form-last-name, .reg-form-username,
-	.reg-form-password, .form-first-name, .form-last-name {
-	display: inline-block;
-}
-
-.first-name-input, .last-name-input, .username-input, .password-input {
-	display: block;
-}
-
 .reg-form-select-gender {
 	color: steelblue;
 }
@@ -115,40 +100,6 @@ h4 {
 	display: block;
 }
 
-.login-username-input, .login-password-input, .filter-input,
-	.create-drop-input {
-	width: 100%;
-	padding: 5px 8px;
-	margin: 3px 0;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	color: steelblue;
-	font-family: Tahoma;
-}
-
-.login-username-input:focus, .login-password-input:focus, .filter-input:focus
-	{
-	outline: none;
-	border: 1px solid steelblue;
-}
-
-.login-label {
-	color: steelblue;
-	font-family: Tahoma;
-}
-
-.login-btn {
-	width: 100%;
-	background-color: steelblue;
-	color: white;
-	padding: 7px 10px;
-	margin: 8px 0;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	font-family: Tahoma;
-}
-
 .waterfall-div {
 	background-color: steelblue;
 	border-radius: 0 0 10px 10px;
@@ -167,7 +118,6 @@ h4 {
 }
 
 .navbar-default .navbar-brand {
-	font-size: 5em;
 	color: steelblue;
 	font-family: Tahoma;
 	margin-top: 15px;
