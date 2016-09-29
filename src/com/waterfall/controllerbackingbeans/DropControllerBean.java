@@ -49,9 +49,9 @@ public class DropControllerBean implements Serializable{
 		System.out.println("inne i search");
 		System.out.println(searchWord);
 		
-		dropListFromSearch = Lists.reverse(dropEJB.getDropsFromSearch(searchWord));
+		dropList = Lists.reverse(dropEJB.getDropsFromSearch(searchWord));
 		
-		System.out.println(dropListFromSearch);
+		System.out.println(dropList);
 		
 		return "index";
 	}
