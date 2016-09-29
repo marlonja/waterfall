@@ -23,7 +23,7 @@ public interface LocalUser {
 
 	UserModel getUserFromSession(String sessionKey);
 	
-	UserModel getUserByUsername(UserModel userByUsername);
+	UserModel getUserByUsername(String username);
 	
 	void setUserInSession(String sessionKey, UserModel userModel);
 

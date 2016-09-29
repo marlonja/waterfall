@@ -2,18 +2,24 @@ package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 import com.waterfall.EJB.interfaces.LocalComment;
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
+import com.waterfall.models.UserModel;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 
@@ -28,6 +34,8 @@ public class DropControllerBean implements Serializable{
 	private List<DropModel> dropList;
 	private String searchWord;
 	private List<DropModel> dropListFromSearch;
+	private UserModel userFromSearch;
+	private LinkedHashSet<DropModel> dropHashSet;
 	
 	@EJB
 	LocalUser userEJB;
@@ -45,14 +53,25 @@ public class DropControllerBean implements Serializable{
 		
 	}
 	
-	public String search(){
-		System.out.println("inne i search");
-		System.out.println(searchWord);
+	public String searchDrop(){
+		dropListFromSearch = new ArrayList<DropModel>();
+		dropHashSet = new LinkedHashSet<DropModel>();
+		String[] searchArray = searchWord.split(" ");
 		
-		dropList = Lists.reverse(dropEJB.getDropsFromSearch(searchWord));
+		for(int i = 0; i < searchArray.length; i++){
+			dropListFromSearch.addAll(dropEJB.getDropsFromSearch(searchArray[i]));
+			System.out.println(searchArray[i] + i);
+			
+			userFromSearch = userEJB.getUserByUsername(searchArray[i]);
+			if(userFromSearch != null){
+				dropListFromSearch.addAll(userFromSearch.getDrops());
+			
+			}
+		}
 		
-		System.out.println(dropList);
 		
+		
+		dropList = dropListFromSearch;
 		return "index";
 	}
 

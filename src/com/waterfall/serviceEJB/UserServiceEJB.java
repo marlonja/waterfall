@@ -46,7 +46,7 @@ public class UserServiceEJB implements LocalUser {
 	@Override
 	public UserModel validateLogin(UserModel userToCheckInDatabase) {
 
-		UserModel userFromDatabase = userDaoBean.getUserByUsername(userToCheckInDatabase);
+		UserModel userFromDatabase = userDaoBean.getUserByUsername(userToCheckInDatabase.getUsername());
 
 		if (userFromDatabase != null) {
 			if (loginValidator.validateUserPassword(userFromDatabase, userToCheckInDatabase)) {
@@ -104,9 +104,9 @@ public class UserServiceEJB implements LocalUser {
 	}
 
 	@Override
-	public UserModel getUserByUsername(UserModel userByUsername) {
+	public UserModel getUserByUsername(String username) {
 		
-		return userDaoBean.getUserByUsername(userByUsername);
+		return userDaoBean.getUserByUsername(username);
 	}
 
 }

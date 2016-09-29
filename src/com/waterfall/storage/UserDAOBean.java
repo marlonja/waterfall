@@ -2,6 +2,7 @@ package com.waterfall.storage;
 
 import java.util.List;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,10 +32,10 @@ public class UserDAOBean {
 		return em.createNamedQuery("UserModel.findAll").getResultList();
 	}
 
-	public UserModel getUserByUsername(UserModel userToCheckInDatabase){
+	public UserModel getUserByUsername(String userToCheckInDatabase){
 		try{
 			UserModel userModel = (UserModel)em.createNamedQuery("UserModel.findByUsername")
-			    .setParameter("username", userToCheckInDatabase.getUsername())
+			    .setParameter("username", "%" + userToCheckInDatabase + "%")
 			    .getSingleResult();
 			
 			return userModel;
@@ -58,7 +59,7 @@ public class UserDAOBean {
 	public boolean isUsernameInDatabaseUnique(String username) {
 		UserModel userModel = new UserModel();
 		userModel.setUsername(username);
-		if(getUserByUsername(userModel) == null){
+		if(getUserByUsername(userModel.getUsername()) == null){
 			return true;
 		}
 		return false;

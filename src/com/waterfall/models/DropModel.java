@@ -92,5 +92,6 @@ public class DropModel implements Serializable {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	
 
 }
