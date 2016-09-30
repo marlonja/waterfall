@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
+import com.waterfall.hashing.SHA512;
 import com.waterfall.models.UserModel;
 import com.waterfall.utils.CountryService;
 import com.waterfall.validators.RegistrationValidator;
@@ -63,7 +64,15 @@ public class RegistrationControllerBean implements Serializable {
 		
 		userModel.setCity(city);
 		userModel.setGender(gender);
-		userModel.setPassword(password);
+		try {
+			salt = SHA512.getSalt();
+			userModel.setSalt(salt.toString());
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		
+		userModel.setPassword(SHA512.get_SHA512(password, salt));
+		
 		userModel.setCountry(country);
 		
 		Date birthDate = new Date((birthYear-1900), (birthMonth-1), birthDay);
@@ -91,16 +100,14 @@ public class RegistrationControllerBean implements Serializable {
 	}
 	
 	public String testHash() throws NoSuchAlgorithmException {
-		System.out.println(userEJB.cryptPassword(hashPassword));
-		System.out.println(userEJB.cryptPassword(hashPassword).length());
-		return "test-hash";
+		return userEJB.cryptPassword(hashPassword, salt);
 	}
 	
 	public String validate() throws NoSuchAlgorithmException {
-		dbPassword = userEJB.cryptPassword("banan");
+		dbPassword = userEJB.cryptPassword("banan", salt);
 		System.out.println("från dbn: " + dbPassword);
 		
-		hashPassword = userEJB.cryptPassword(hashPassword);
+		hashPassword = userEJB.cryptPassword(hashPassword, salt);
 		System.out.println("från test-hash: " + hashPassword);
 		return "test-hash";
 	}

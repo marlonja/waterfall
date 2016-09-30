@@ -118,9 +118,7 @@ public class UserServiceEJB implements LocalUser {
 		
 	}
 	
-	public String cryptPassword(String password) throws NoSuchAlgorithmException {
-		byte[] salt = SHA512.getSalt();
-		System.out.println(SHA512.get_SHA512(password, salt));
+	public String cryptPassword(String password, byte[] salt) throws NoSuchAlgorithmException {
 		return SHA512.get_SHA512(password, salt);
 	}
 

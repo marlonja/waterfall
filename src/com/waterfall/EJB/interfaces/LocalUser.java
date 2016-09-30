@@ -33,6 +33,6 @@ public interface LocalUser {
 
 	void removeUserFromSession(String sessionKey);
 	
-	String cryptPassword(String password) throws NoSuchAlgorithmException;
+	String cryptPassword(String password, byte[] salt) throws NoSuchAlgorithmException;
 
 }

@@ -41,6 +41,8 @@ public class UserModel implements Serializable {
 
 	private String country;
 	
+	private String salt;
+	
 	private List<UserModel> friendsList;
 
 	@OneToMany(mappedBy = "owner")
@@ -155,5 +157,19 @@ public class UserModel implements Serializable {
 	public void setFriendsList(List<UserModel> friendsList) {
 		this.friendsList = friendsList;
 	}
+
+
+
+	public String getSalt() {
+		return salt;
+	}
+
+
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+	
+	
 
 }
