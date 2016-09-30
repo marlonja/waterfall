@@ -1,5 +1,6 @@
 package com.waterfall.EJB.interfaces;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -31,5 +32,7 @@ public interface LocalUser {
 	void setUserInSession(String sessionKey, UserModel userModel);
 
 	void removeUserFromSession(String sessionKey);
+	
+	String cryptPassword(String password) throws NoSuchAlgorithmException;
 
 }

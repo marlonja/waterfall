@@ -1,8 +1,7 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import javax.inject.Named;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.UserModel;
 import com.waterfall.utils.CountryService;
-import com.waterfall.utils.LocalDateTimeConverter;
 import com.waterfall.validators.RegistrationValidator;
 
 @Named(value = "registrationControllerBean")
@@ -35,6 +33,10 @@ public class RegistrationControllerBean implements Serializable {
 	private String gender;
 	private String password;
 	private String country;
+	//for hast test only
+	private String hashPassword;
+	private String dbPassword;
+	private byte[] salt;
 	private List<String> allCountries;
 
 	@EJB
@@ -86,7 +88,21 @@ public class RegistrationControllerBean implements Serializable {
 					new FacesMessage("Registration failed, try again!"));
 			return "reg-new-user";
 		}
-
+	}
+	
+	public String testHash() throws NoSuchAlgorithmException {
+		System.out.println(userEJB.cryptPassword(hashPassword));
+		System.out.println(userEJB.cryptPassword(hashPassword).length());
+		return "test-hash";
+	}
+	
+	public String validate() throws NoSuchAlgorithmException {
+		dbPassword = userEJB.cryptPassword("banan");
+		System.out.println("från dbn: " + dbPassword);
+		
+		hashPassword = userEJB.cryptPassword(hashPassword);
+		System.out.println("från test-hash: " + hashPassword);
+		return "test-hash";
 	}
 
 	public String getPassword() {
@@ -184,4 +200,22 @@ public class RegistrationControllerBean implements Serializable {
 	public void setAllCountries(List<String> allCountries) {
 		this.allCountries = allCountries;
 	}
+
+	public String getHashPassword() {
+		return hashPassword;
+	}
+
+	public void setHashPassword(String hashPassword) {
+		this.hashPassword = hashPassword;
+	}
+
+	public String getDbPassword() {
+		return dbPassword;
+	}
+
+	public void setDbPassword(String dbPassword) {
+		this.dbPassword = dbPassword;
+	}
+	
+	
 }
