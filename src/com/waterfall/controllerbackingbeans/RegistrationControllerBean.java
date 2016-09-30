@@ -58,13 +58,14 @@ public class RegistrationControllerBean implements Serializable {
 		userModel.setLastName(lastName);
 		userModel.setUsername(username);
 		userModel.setEmail(email);
-		//userModel.setBirthdate(birthdate);
+		
 		userModel.setCity(city);
 		userModel.setGender(gender);
 		userModel.setPassword(password);
 		userModel.setCountry(country);
 		
-		Date birthDate = new Date((birthYear-1900), birthMonth, birthDay);
+		Date birthDate = new Date((birthYear-1900), (birthMonth-1), birthDay);
+		userModel.setBirthdate(birthDate);
 		System.out.println(birthDay + " " + birthMonth + " " + birthYear);
 		System.out.println(birthDate);
 
@@ -76,7 +77,7 @@ public class RegistrationControllerBean implements Serializable {
 		// user.setBirthdate(exampleDate);
 		if (registrationValidator.validateUserForRegistration(userModel)) {
 
-			//userEJB.storeUser(userModel);
+			userEJB.storeUser(userModel);
 			System.out.println("user saved");
 			return "index";
 
