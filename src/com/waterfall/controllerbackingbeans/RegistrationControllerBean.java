@@ -1,6 +1,8 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import javax.inject.Named;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.UserModel;
 import com.waterfall.utils.CountryService;
+import com.waterfall.utils.LocalDateTimeConverter;
 import com.waterfall.validators.RegistrationValidator;
 
 @Named(value = "registrationControllerBean")
@@ -25,7 +28,9 @@ public class RegistrationControllerBean implements Serializable {
 	private String lastName;
 	private String username;
 	private String city;
-	private Date birthdate;
+	private int birthYear;
+	private int birthMonth;
+	private int birthDay;
 	private String email;
 	private String gender;
 	private String password;
@@ -53,22 +58,25 @@ public class RegistrationControllerBean implements Serializable {
 		userModel.setLastName(lastName);
 		userModel.setUsername(username);
 		userModel.setEmail(email);
-		userModel.setBirthdate(birthdate);
+		//userModel.setBirthdate(birthdate);
 		userModel.setCity(city);
 		userModel.setGender(gender);
 		userModel.setPassword(password);
 		userModel.setCountry(country);
+		
+		Date birthDate = new Date((birthYear-1900), birthMonth, birthDay);
+		System.out.println(birthDay + " " + birthMonth + " " + birthYear);
+		System.out.println(birthDate);
 
 		// // temporary date for database purposes
 		// Date exampleDate = new Date(0,0,0);
 		// exampleDate.setDate(14);
 		// exampleDate.setYear(1964);
 		// exampleDate.setMonth(04);
-		System.out.println(birthdate.toString());
 		// user.setBirthdate(exampleDate);
 		if (registrationValidator.validateUserForRegistration(userModel)) {
 
-			userEJB.storeUser(userModel);
+			//userEJB.storeUser(userModel);
 			System.out.println("user saved");
 			return "index";
 
@@ -120,14 +128,6 @@ public class RegistrationControllerBean implements Serializable {
 		this.city = city;
 	}
 
-	public Date getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -154,6 +154,30 @@ public class RegistrationControllerBean implements Serializable {
 
 	public List<String> getAllCountries() {
 		return allCountries;
+	}
+
+	public int getBirthYear() {
+		return birthYear;
+	}
+
+	public void setBirthYear(int birthYear) {
+		this.birthYear = birthYear;
+	}
+
+	public int getBirthMonth() {
+		return birthMonth;
+	}
+
+	public void setBirthMonth(int birthMonth) {
+		this.birthMonth = birthMonth;
+	}
+
+	public int getBirthDay() {
+		return birthDay;
+	}
+
+	public void setBirthDay(int birthDay) {
+		this.birthDay = birthDay;
 	}
 
 	public void setAllCountries(List<String> allCountries) {
