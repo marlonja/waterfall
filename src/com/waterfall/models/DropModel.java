@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "DropModel.findAll", query = "SELECT d FROM DropModel d"),
-	@NamedQuery(name = "DropModel.findDropsFromSearch", query = "SELECT d FROM DropModel d WHERE d.content LIKE :content")
+	@NamedQuery(name = "DropModel.findDropContentFromSearch", query = "SELECT d FROM DropModel d WHERE d.content LIKE :content")
 })
 
 public class DropModel implements Serializable {

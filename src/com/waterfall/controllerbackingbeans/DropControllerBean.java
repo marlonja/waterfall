@@ -35,6 +35,7 @@ public class DropControllerBean implements Serializable{
 	private String searchWord;
 	private List<DropModel> dropListFromSearch;
 	private UserModel userFromSearch;
+	private UserModel userCountryFromSearch;
 	private LinkedHashSet<DropModel> dropHashSet;
 	
 	@EJB
@@ -59,13 +60,17 @@ public class DropControllerBean implements Serializable{
 		String[] searchArray = searchWord.split(" ");
 		
 		for(int i = 0; i < searchArray.length; i++){
-			dropListFromSearch.addAll(dropEJB.getDropsFromSearch(searchArray[i]));
+			dropListFromSearch.addAll(dropEJB.findDropContentFromSearch(searchArray[i]));
 			System.out.println(searchArray[i] + i);
+			
+			userCountryFromSearch = userEJB.findByCountry(searchArray[i]);			
+			if(userCountryFromSearch != null){
+				dropListFromSearch.addAll(userCountryFromSearch.getDrops());
+			}
 			
 			userFromSearch = userEJB.getUserByUsername(searchArray[i]);
 			if(userFromSearch != null){
-				dropListFromSearch.addAll(userFromSearch.getDrops());
-			
+				dropListFromSearch.addAll(userFromSearch.getDrops());			
 			}
 		}
 		
@@ -144,6 +149,14 @@ public class DropControllerBean implements Serializable{
 
 	public void setDropListFromSearch(List<DropModel> dropListFromSearch) {
 		this.dropListFromSearch = dropListFromSearch;
+	}
+
+	public UserModel getUserCountryFromSearch() {
+		return userCountryFromSearch;
+	}
+
+	public void setUserCountryFromSearch(UserModel userCountryFromSearch) {
+		this.userCountryFromSearch = userCountryFromSearch;
 	}
 	
 	

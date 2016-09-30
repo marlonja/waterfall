@@ -34,9 +34,9 @@ public class DropServiceEJB implements LocalDrop {
 	}
 
 	@Override
-	public List<DropModel> getDropsFromSearch(String searchWord) {
+	public List<DropModel> findDropContentFromSearch(String searchWord) {
 		
-		return dropDaoBean.getDropsFromSearch(searchWord);
+		return dropDaoBean.findDropContentFromSearch(searchWord);
 	}
 	
 	

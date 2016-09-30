@@ -11,7 +11,9 @@ import java.util.Date;
 @Entity
 @NamedQueries({ @NamedQuery(name = "UserModel.findAll", query = "SELECT u FROM UserModel u"),
 		@NamedQuery(name = "UserModel.findByUsername", query = "SELECT u FROM UserModel u WHERE u.username LIKE :username"),
-		@NamedQuery(name = "UserModel.findByEmail", query = "SELECT u FROM UserModel u WHERE u.email LIKE :email") })
+		@NamedQuery(name = "UserModel.findByEmail", query = "SELECT u FROM UserModel u WHERE u.email LIKE :email"), 
+		@NamedQuery(name = "UserModel.findByCountry", query = "SELECT u FROM UserModel u WHERE u.country LIKE :country")
+})
 
 public class UserModel implements Serializable {
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 
 
@@ -24,6 +25,8 @@ public interface LocalUser {
 	UserModel getUserFromSession(String sessionKey);
 	
 	UserModel getUserByUsername(String username);
+	
+	UserModel findByCountry(String searchWord);
 	
 	void setUserInSession(String sessionKey, UserModel userModel);
 

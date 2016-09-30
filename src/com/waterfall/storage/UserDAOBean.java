@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 
 
@@ -69,5 +70,16 @@ public class UserDAOBean {
 	public UserModel getUserById(Long userId) {
 		return em.find(UserModel.class, userId);
 	}
-
+	
+	public UserModel findByCountry(String userToCheckInDatabase){
+		try{
+			UserModel userModel = (UserModel)em.createNamedQuery("UserModel.findByCountry")
+			    .setParameter("country", "%" + userToCheckInDatabase + "%")
+			    .getSingleResult();
+			
+			return userModel;
+		}catch(NoResultException e){
+			return null;
+		}
+	}
 }

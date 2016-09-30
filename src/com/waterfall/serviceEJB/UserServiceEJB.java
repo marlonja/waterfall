@@ -109,4 +109,10 @@ public class UserServiceEJB implements LocalUser {
 		return userDaoBean.getUserByUsername(username);
 	}
 
+	@Override
+	public UserModel findByCountry(String searchWord) {
+
+		return userDaoBean.findByCountry(searchWord);
+	}
+
 }
