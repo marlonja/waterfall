@@ -1,5 +1,6 @@
 package com.waterfall.serviceEJB;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import com.waterfall.EJB.interfaces.LocalUser;
+import com.waterfall.hashing.SHA512;
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.UserDAOBean;
 import com.waterfall.validators.LoginValidator;
@@ -101,6 +103,13 @@ public class UserServiceEJB implements LocalUser {
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public String cryptPassword(String password) throws NoSuchAlgorithmException {
+		byte[] salt = SHA512.getSalt();
+		System.out.println(SHA512.get_SHA512(password, salt));
+		return SHA512.get_SHA512(password, salt);
 	}
 
 }
