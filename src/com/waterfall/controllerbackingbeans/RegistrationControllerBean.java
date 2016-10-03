@@ -2,6 +2,8 @@ package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.SHA512;
+import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.UserModel;
 import com.waterfall.utils.CountryService;
 import com.waterfall.validators.RegistrationValidator;
@@ -64,14 +67,21 @@ public class RegistrationControllerBean implements Serializable {
 		
 		userModel.setCity(city);
 		userModel.setGender(gender);
+		
 		try {
-			salt = SHA512.getSalt();
-			userModel.setSalt(salt.toString());
-		} catch (NoSuchAlgorithmException e) {
+			userModel.setPasswordhash(PBKDF2.generatePasswordHash(password));
+		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
 			e.printStackTrace();
 		}
 		
-		userModel.setPassword(SHA512.get_SHA512(password, salt));
+//		try {
+//			salt = SHA512.getSalt();
+//			userModel.setSalt(salt.toString());
+//		} catch (NoSuchAlgorithmException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		userModel.setPassword(SHA512.get_SHA512(password, salt));
 		
 		userModel.setCountry(country);
 		
