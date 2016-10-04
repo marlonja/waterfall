@@ -19,6 +19,7 @@ import com.waterfall.hashing.SHA512;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.UserModel;
 import com.waterfall.utils.CountryService;
+import com.waterfall.utils.DateService;
 import com.waterfall.validators.RegistrationValidator;
 
 @Named(value = "registrationControllerBean")
@@ -42,12 +43,16 @@ public class RegistrationControllerBean implements Serializable {
 	private String dbPassword;
 	private byte[] salt;
 	private List<String> allCountries;
+	private List<Integer> years;
 
 	@EJB
 	RegistrationValidator registrationValidator;
 
 	@EJB
 	CountryService countryService;
+	
+	@EJB
+	DateService dateService;
 
 	@EJB
 	private LocalUser userEJB;
@@ -55,7 +60,7 @@ public class RegistrationControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		setAllCountries(countryService.getAllCountries());
-
+		setYears(dateService.years());
 	}
 
 	public String registerNewUser() {
@@ -64,7 +69,7 @@ public class RegistrationControllerBean implements Serializable {
 		userModel.setLastName(lastName);
 		userModel.setUsername(username);
 		userModel.setEmail(email);
-		
+
 		userModel.setCity(city);
 		userModel.setGender(gender);
 		
@@ -84,8 +89,9 @@ public class RegistrationControllerBean implements Serializable {
 //		userModel.setPassword(SHA512.get_SHA512(password, salt));
 		
 		userModel.setCountry(country);
-		
-		Date birthDate = new Date((birthYear-1900), (birthMonth-1), birthDay);
+
+		@SuppressWarnings("deprecation")
+		Date birthDate = new Date((birthYear - 1900), (birthMonth - 1), birthDay);
 		userModel.setBirthdate(birthDate);
 		System.out.println(birthDay + " " + birthMonth + " " + birthYear);
 		System.out.println(birthDate);
@@ -103,8 +109,7 @@ public class RegistrationControllerBean implements Serializable {
 			return "index";
 
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Registration failed, try again!"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registration failed, try again!"));
 			return "reg-new-user";
 		}
 	}
@@ -115,10 +120,10 @@ public class RegistrationControllerBean implements Serializable {
 	
 	public String validate() throws NoSuchAlgorithmException {
 		dbPassword = userEJB.cryptPassword("banan", salt);
-		System.out.println("från dbn: " + dbPassword);
+		System.out.println("frï¿½n dbn: " + dbPassword);
 		
 		hashPassword = userEJB.cryptPassword(hashPassword, salt);
-		System.out.println("från test-hash: " + hashPassword);
+		System.out.println("frï¿½n test-hash: " + hashPassword);
 		return "test-hash";
 	}
 
@@ -233,6 +238,11 @@ public class RegistrationControllerBean implements Serializable {
 	public void setDbPassword(String dbPassword) {
 		this.dbPassword = dbPassword;
 	}
-	
-	
+	public List<Integer> getYears() {
+		return years;
+	}
+
+	public void setYears(List<Integer> years) {
+		this.years = years;
+	}
 }
