@@ -1,16 +1,19 @@
 package com.waterfall.serviceEJB;
 
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.SHA512;
+import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.UserDAOBean;
 import com.waterfall.validators.LoginValidator;
@@ -46,17 +49,29 @@ public class UserServiceEJB implements LocalUser {
 	}
 
 	@Override
-	public UserModel validateLogin(UserModel userToCheckInDatabase) {
+	public UserModel validateLogin(String username, String typedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
-		UserModel userFromDatabase = userDaoBean.getUserByUsername(userToCheckInDatabase.getUsername());
-
-		if (userFromDatabase != null) {
-			if (loginValidator.validateUserPassword(userFromDatabase, userToCheckInDatabase)) {
-				System.out.println("User finns och password st�mmer");
-				return userFromDatabase;
+		UserModel userToCheckInDatabase = getUserByUsername(username);
+		if(userToCheckInDatabase == null) {
+			displayLoginErrorMessage("search-form", "Wrong input");
+			return null;
+		}else {
+			if(PBKDF2.validatePassword(typedPassword, userToCheckInDatabase.getPasswordhash())) {
+				setUserInSession("loggedInUser", userToCheckInDatabase);
+				return userToCheckInDatabase;
+			}else {
+				// Wrong password
+				displayLoginErrorMessage("search-form", "Wrong input");
+				return null;
 			}
 		}
-		return null;
+	}
+	
+	@Override
+	public void displayLoginErrorMessage(String field, String message) {
+		FacesContext.getCurrentInstance().addMessage(field,
+				new FacesMessage(message));
+		
 	}
 
 	@Override

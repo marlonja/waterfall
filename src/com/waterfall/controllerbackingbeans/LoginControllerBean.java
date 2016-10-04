@@ -35,39 +35,10 @@ public class LoginControllerBean implements Serializable {
 		return "index";
 	}
 
-	public String loginUser() {
-//		UserModel userToCheckInDatabase = new UserModel();
-//		userToCheckInDatabase.setUsername(username);
-//		userToCheckInDatabase.setPassword(password);
-//		loggedInUser = userEJB.validateLogin(userToCheckInDatabase);
-//
-//		if (loggedInUser != null) {
-//			userEJB.setUserInSession("loggedInUser", loggedInUser);
-//			return "index";
-//		} else {
-//			FacesContext.getCurrentInstance().addMessage("search-form",
-//					new FacesMessage("Username or password is incorrect"));
-//			return "index";
-//		}
-		UserModel userToCheckInDatabase = userEJB.getUserByUsername(username);
-		if(userToCheckInDatabase == null){
-			FacesContext.getCurrentInstance().addMessage("search-form",
-			new FacesMessage("User does not exist"));
-			return "index";
-		}else {
-			try {
-				if(PBKDF2.validatePassword(password, userToCheckInDatabase.getPasswordhash())){
-					loggedInUser = userToCheckInDatabase;
-					userEJB.setUserInSession("loggedInUser", loggedInUser);
-					return "index";
-				}else {
-					FacesContext.getCurrentInstance().addMessage("search-form",
-					new FacesMessage("Incorrect password"));
-					return "index";
-				}
-			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-				e.printStackTrace();
-			}
+	public String loginUser() throws NoSuchAlgorithmException, InvalidKeySpecException {
+		
+		if(userEJB.validateLogin(username, password) != null){
+			loggedInUser = userEJB.validateLogin(username, password);
 		}
 		return "index";
 		
