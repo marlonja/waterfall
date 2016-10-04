@@ -59,21 +59,16 @@ public class RegistrationControllerBean implements Serializable {
 		setYears(dateService.years());
 	}
 
-	public String registerNewUser() {
+	public String registerNewUser() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 		UserModel userModel = new UserModel();
 		userModel.setFirstName(firstName);
 		userModel.setLastName(lastName);
 		userModel.setUsername(username);
 		userModel.setEmail(email);
-
 		userModel.setCity(city);
 		userModel.setGender(gender);
+		userModel.setPassword(PBKDF2.generatePasswordHash(password));
 		
-		try {
-			userModel.setPassword(PBKDF2.generatePasswordHash(password));
-		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
-			e.printStackTrace();
-		}
 		
 		userModel.setCountry(country);
 
