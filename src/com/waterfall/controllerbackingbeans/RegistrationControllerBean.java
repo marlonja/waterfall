@@ -1,8 +1,6 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +14,7 @@ import javax.inject.Named;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.UserModel;
 import com.waterfall.utils.CountryService;
-import com.waterfall.utils.LocalDateTimeConverter;
+import com.waterfall.utils.DateService;
 import com.waterfall.validators.RegistrationValidator;
 
 @Named(value = "registrationControllerBean")
@@ -36,12 +34,16 @@ public class RegistrationControllerBean implements Serializable {
 	private String password;
 	private String country;
 	private List<String> allCountries;
+	private List<Integer> years;
 
 	@EJB
 	RegistrationValidator registrationValidator;
 
 	@EJB
 	CountryService countryService;
+	
+	@EJB
+	DateService dateService;
 
 	@EJB
 	private LocalUser userEJB;
@@ -49,7 +51,7 @@ public class RegistrationControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		setAllCountries(countryService.getAllCountries());
-
+		setYears(dateService.years());
 	}
 
 	public String registerNewUser() {
@@ -58,13 +60,14 @@ public class RegistrationControllerBean implements Serializable {
 		userModel.setLastName(lastName);
 		userModel.setUsername(username);
 		userModel.setEmail(email);
-		
+
 		userModel.setCity(city);
 		userModel.setGender(gender);
 		userModel.setPassword(password);
 		userModel.setCountry(country);
-		
-		Date birthDate = new Date((birthYear-1900), (birthMonth-1), birthDay);
+
+		@SuppressWarnings("deprecation")
+		Date birthDate = new Date((birthYear - 1900), (birthMonth - 1), birthDay);
 		userModel.setBirthdate(birthDate);
 		System.out.println(birthDay + " " + birthMonth + " " + birthYear);
 		System.out.println(birthDate);
@@ -82,8 +85,7 @@ public class RegistrationControllerBean implements Serializable {
 			return "index";
 
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Registration failed, try again!"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registration failed, try again!"));
 			return "reg-new-user";
 		}
 
@@ -183,5 +185,13 @@ public class RegistrationControllerBean implements Serializable {
 
 	public void setAllCountries(List<String> allCountries) {
 		this.allCountries = allCountries;
+	}
+
+	public List<Integer> getYears() {
+		return years;
+	}
+
+	public void setYears(List<Integer> years) {
+		this.years = years;
 	}
 }

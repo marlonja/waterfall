@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<!-- CSS -->
@@ -35,40 +35,38 @@
 				</b:row>
 				<b:row>
 					<b:column span="2">
-						<b:selectOneMenu label="Year" value="#{registrationControllerBean.birthYear}">
-							<f:selectItem itemLabel="1986" itemValue="1986"/>
-							<f:selectItem itemLabel="1987" itemValue="1987"/>
-							<f:selectItem itemLabel="1988" itemValue="1988"/>
-							<f:selectItem itemLabel="1989" itemValue="1989"/>
-							<f:selectItem itemLabel="1990" itemValue="1990"/>
-							<f:selectItem itemLabel="1991" itemValue="1991"/>
-							<f:selectItem itemLabel="1992" itemValue="1992"/>
-							<f:selectItem itemLabel="1993" itemValue="1993"/>
-							<f:selectItem itemLabel="1994" itemValue="1994"/>
+						<b:selectOneMenu label="Year"
+							value="#{registrationControllerBean.birthYear}">
+							<f:selectItems value="#{registrationControllerBean.years}"
+								var="year" itemValue="#{year}" itemLabel="#{year}"></f:selectItems>
 						</b:selectOneMenu>
 					</b:column>
 					<b:column span="2">
-						<b:selectOneMenu label="Month" value="#{registrationControllerBean.birthMonth}">
-							<f:selectItem itemLabel="January" itemValue="01"/>
-							<f:selectItem itemLabel="February" itemValue="02"/>
-							<f:selectItem itemLabel="Mars" itemValue="03"/>
-							<f:selectItem itemLabel="April" itemValue="04"/>
-							<f:selectItem itemLabel="May" itemValue="05"/>
-							<f:selectItem itemLabel="June" itemValue="06"/>
-							<f:selectItem itemLabel="July" itemValue="07"/>
-							<f:selectItem itemLabel="August" itemValue="08"/>
-							<f:selectItem itemLabel="September" itemValue="09"/>
-							<f:selectItem itemLabel="October" itemValue="10"/>
+						<b:selectOneMenu label="Month"
+							value="#{registrationControllerBean.birthMonth}">
+							<f:selectItem itemLabel="January" itemValue="01" />
+							<f:selectItem itemLabel="February" itemValue="02" />
+							<f:selectItem itemLabel="March" itemValue="03" />
+							<f:selectItem itemLabel="April" itemValue="04" />
+							<f:selectItem itemLabel="May" itemValue="05" />
+							<f:selectItem itemLabel="June" itemValue="06" />
+							<f:selectItem itemLabel="July" itemValue="07" />
+							<f:selectItem itemLabel="August" itemValue="08" />
+							<f:selectItem itemLabel="September" itemValue="09" />
+							<f:selectItem itemLabel="October" itemValue="10" />
+							<f:selectItem itemLabel="November" itemValue="11" />
+							<f:selectItem itemLabel="December" itemValue="12" />
 						</b:selectOneMenu>
 					</b:column>
 					<b:column span="2">
-						<b:selectOneMenu label="Day" value="#{registrationControllerBean.birthDay}">
-						 <f:selectItem itemLabel="1" itemValue="1"/>
-						 <f:selectItem itemLabel="2" itemValue="2"/>
-						 <f:selectItem itemLabel="3" itemValue="3"/>
-						 <f:selectItem itemLabel="4" itemValue="4"/>
-						 <f:selectItem itemLabel="5" itemValue="5"/>
-						 <f:selectItem itemLabel="6" itemValue="6"/>
+						<b:selectOneMenu label="Day"
+							value="#{registrationControllerBean.birthDay}">
+							<f:selectItem itemLabel="1" itemValue="1" />
+							<f:selectItem itemLabel="2" itemValue="2" />
+							<f:selectItem itemLabel="3" itemValue="3" />
+							<f:selectItem itemLabel="4" itemValue="4" />
+							<f:selectItem itemLabel="5" itemValue="5" />
+							<f:selectItem itemLabel="6" itemValue="6" />
 						</b:selectOneMenu>
 					</b:column>
 				</b:row>
@@ -120,8 +118,6 @@
 			<h:commandButton
 				action="#{registrationControllerBean.registerNewUser()}"
 				value="Register" styleClass="submit-btn" />
-
-
 		</b:container>
 	</h:form>
 </h:body>
