@@ -126,12 +126,7 @@ public class UserServiceEJB implements LocalUser {
 		return userDaoBean.getUserByUsername(username);
 	}
 
-	@Override
-	public UserModel findByCountry(String searchWord) {
-
-		return userDaoBean.findByCountry(searchWord);
-		
-	}
+	
 	
 	public String cryptPassword(String password, byte[] salt) throws NoSuchAlgorithmException {
 		return SHA512.get_SHA512(password, salt);

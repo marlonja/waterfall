@@ -15,5 +15,5 @@ public interface LocalDrop {
 
 	List<DropModel> getAllDrops();
 	
-	List<DropModel> findDropContentFromSearch(String searchWord);
+	
 }
