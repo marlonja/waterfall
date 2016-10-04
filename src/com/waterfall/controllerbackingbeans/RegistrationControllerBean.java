@@ -37,9 +37,6 @@ public class RegistrationControllerBean implements Serializable {
 	private String gender;
 	private String password;
 	private String country;
-	//for hast test only
-	private String hashPassword;
-	private String dbPassword;
 	private byte[] salt;
 	private List<String> allCountries;
 	private List<Integer> years;
@@ -194,21 +191,6 @@ public class RegistrationControllerBean implements Serializable {
 		this.allCountries = allCountries;
 	}
 
-	public String getHashPassword() {
-		return hashPassword;
-	}
-
-	public void setHashPassword(String hashPassword) {
-		this.hashPassword = hashPassword;
-	}
-
-	public String getDbPassword() {
-		return dbPassword;
-	}
-
-	public void setDbPassword(String dbPassword) {
-		this.dbPassword = dbPassword;
-	}
 	public List<Integer> getYears() {
 		return years;
 	}

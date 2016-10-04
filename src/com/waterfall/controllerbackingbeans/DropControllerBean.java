@@ -39,10 +39,10 @@ public class DropControllerBean implements Serializable {
 	private UserModel userFromSearch;
 	private UserModel userCountryFromSearch;
 	private LinkedHashSet<DropModel> dropHashSet;
-	
+
 	@EJB
 	LocalDropSearch dropSearchEJB;
-	
+
 	@EJB
 	LocalUser userEJB;
 
@@ -65,14 +65,12 @@ public class DropControllerBean implements Serializable {
 		String[] searchArray = searchWord.split(" ");
 
 		for (int i = 0; i < searchArray.length; i++) {
-			
+
 			dropListFromSearch.addAll(dropSearchEJB.searchDropsByContent(searchArray[i]));
 
 			dropListFromSearch.addAll(dropSearchEJB.searchDropsByUserCountry(searchArray[i]));
-			
-			dropListFromSearch.addAll(dropSearchEJB.searchDropsByUserName(searchArray[i]));
-			
 
+			dropListFromSearch.addAll(dropSearchEJB.searchDropsByUserName(searchArray[i]));
 
 		}
 
@@ -108,10 +106,7 @@ public class DropControllerBean implements Serializable {
 
 	public String createNewComment(Long dropId) {
 		CommentModel commentModel = new CommentModel();
-		System.out.println(commentContent);
-		System.out.println(userEJB.getUserFromSession("loggedInUser"));
-		System.out.println("user id: " + userEJB.getUserFromSession("loggedInUser").getUserid());
-		System.out.println("drop id:" + dropId);
+		
 		commentModel.setContent(commentContent);
 		commentModel.setDropHost(dropEJB.getDrop(dropId));
 		commentModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
