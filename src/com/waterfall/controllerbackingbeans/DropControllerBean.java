@@ -23,61 +23,70 @@ import com.waterfall.models.UserModel;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 
-@Named(value="dropControllerBean")
+@Named(value = "dropControllerBean")
 @SessionScoped
-public class DropControllerBean implements Serializable{
+public class DropControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 2772076160829404613L;
-	
+
 	private String content;
 	private String commentContent;
 	private List<DropModel> dropList;
 	private String searchWord;
-	private List<DropModel> dropListFromSearch;
+	private ArrayList<DropModel> dropListFromSearch;
 	private UserModel userFromSearch;
 	private UserModel userCountryFromSearch;
 	private LinkedHashSet<DropModel> dropHashSet;
-	
+
 	@EJB
 	LocalUser userEJB;
-	
+
 	@EJB
 	LocalDrop dropEJB;
-	
+
 	@EJB
 	LocalComment commentEJB;
-	
+
 	@PostConstruct
 	public void init() {
 		dropList = Lists.reverse(dropEJB.getAllDrops());
-		
-		
+
 	}
-	
-	public String searchDrop(){
+
+	public String searchDrop() {
 		dropListFromSearch = new ArrayList<DropModel>();
 		dropHashSet = new LinkedHashSet<DropModel>();
 		String[] searchArray = searchWord.split(" ");
-		
-		for(int i = 0; i < searchArray.length; i++){
+
+		for (int i = 0; i < searchArray.length; i++) {
 			dropListFromSearch.addAll(dropEJB.findDropContentFromSearch(searchArray[i]));
 			System.out.println(searchArray[i] + i);
-			
-			userCountryFromSearch = userEJB.findByCountry(searchArray[i]);			
-			if(userCountryFromSearch != null){
+
+			userCountryFromSearch = userEJB.findByCountry(searchArray[i]);
+			if (userCountryFromSearch != null) {
 				dropListFromSearch.addAll(userCountryFromSearch.getDrops());
 			}
-			
+
 			userFromSearch = userEJB.getUserByUsername(searchArray[i]);
-			if(userFromSearch != null){
-				dropListFromSearch.addAll(userFromSearch.getDrops());			
+			if (userFromSearch != null) {
+				dropListFromSearch.addAll(userFromSearch.getDrops());
 			}
 		}
-		
-		
-		
-		dropList = dropListFromSearch;
+
+		dropList = removeDuplicatesFromSearchList(dropListFromSearch);
 		return "index";
+	}
+
+	private List<DropModel> removeDuplicatesFromSearchList(ArrayList<DropModel> dropListFromSearch) {
+		for (int i = 0; i < dropListFromSearch.size(); i++) {
+			for (int j = i + 1; j < dropListFromSearch.size(); j++) {
+				if (dropListFromSearch.get(i).getDropId().equals(dropListFromSearch.get(j).getDropId())) {
+					dropListFromSearch.remove(j);
+					j = j - 1;
+				}
+			}
+		}
+		return dropListFromSearch;
 	}
 
 	public String createNewDrop() {
@@ -85,15 +94,15 @@ public class DropControllerBean implements Serializable{
 		dropModel.setContent(content);
 		dropModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
 		dropModel.setLocation("Gothenburg");
-		
+
 		dropEJB.storeDrop(dropModel);
 		dropList = Lists.reverse(dropEJB.getAllDrops());
 		System.out.println("skapar droppe");
-		
+
 		content = null;
 		return "index";
 	}
-	
+
 	public String createNewComment(Long dropId) {
 		CommentModel commentModel = new CommentModel();
 		System.out.println(commentContent);
@@ -107,7 +116,7 @@ public class DropControllerBean implements Serializable{
 		dropList = Lists.reverse(dropEJB.getAllDrops());
 		commentContent = null;
 		return "/index.xhtml?faces-redirect=true";
-		
+
 	}
 
 	public String getContent() {
@@ -117,12 +126,11 @@ public class DropControllerBean implements Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	public List<DropModel> getDropList() {
 		return dropList;
 	}
 
-	
 	public void setDropList(List<DropModel> dropList) {
 		this.dropList = dropList;
 	}
@@ -147,7 +155,7 @@ public class DropControllerBean implements Serializable{
 		return dropListFromSearch;
 	}
 
-	public void setDropListFromSearch(List<DropModel> dropListFromSearch) {
+	public void setDropListFromSearch(ArrayList<DropModel> dropListFromSearch) {
 		this.dropListFromSearch = dropListFromSearch;
 	}
 
@@ -158,6 +166,5 @@ public class DropControllerBean implements Serializable{
 	public void setUserCountryFromSearch(UserModel userCountryFromSearch) {
 		this.userCountryFromSearch = userCountryFromSearch;
 	}
-	
-	
+
 }
