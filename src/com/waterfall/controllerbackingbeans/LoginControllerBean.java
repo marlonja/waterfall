@@ -1,6 +1,8 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -10,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
+import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.UserModel;
 
 @Named(value = "loginControllerBean")
@@ -33,19 +36,41 @@ public class LoginControllerBean implements Serializable {
 	}
 
 	public String loginUser() {
-		UserModel userToCheckInDatabase = new UserModel();
-		userToCheckInDatabase.setUsername(username);
-		userToCheckInDatabase.setPassword(password);
-		loggedInUser = userEJB.validateLogin(userToCheckInDatabase);
-
-		if (loggedInUser != null) {
-			userEJB.setUserInSession("loggedInUser", loggedInUser);
-			return "index";
-		} else {
+//		UserModel userToCheckInDatabase = new UserModel();
+//		userToCheckInDatabase.setUsername(username);
+//		userToCheckInDatabase.setPassword(password);
+//		loggedInUser = userEJB.validateLogin(userToCheckInDatabase);
+//
+//		if (loggedInUser != null) {
+//			userEJB.setUserInSession("loggedInUser", loggedInUser);
+//			return "index";
+//		} else {
+//			FacesContext.getCurrentInstance().addMessage("search-form",
+//					new FacesMessage("Username or password is incorrect"));
+//			return "index";
+//		}
+		UserModel userToCheckInDatabase = userEJB.getUserByUsername(username);
+		if(userToCheckInDatabase == null){
 			FacesContext.getCurrentInstance().addMessage("search-form",
-					new FacesMessage("Username or password is incorrect"));
+			new FacesMessage("User does not exist"));
 			return "index";
+		}else {
+			try {
+				if(PBKDF2.validatePassword(password, userToCheckInDatabase.getPasswordhash())){
+					loggedInUser = userToCheckInDatabase;
+					userEJB.setUserInSession("loggedInUser", loggedInUser);
+					return "index";
+				}else {
+					FacesContext.getCurrentInstance().addMessage("search-form",
+					new FacesMessage("Incorrect password"));
+					return "index";
+				}
+			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+				e.printStackTrace();
+			}
 		}
+		return "index";
+		
 	}
 
 	public String getUsername() {
