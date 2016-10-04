@@ -15,7 +15,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.hashing.SHA512;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.UserModel;
 import com.waterfall.utils.CountryService;
@@ -79,15 +78,6 @@ public class RegistrationControllerBean implements Serializable {
 			e.printStackTrace();
 		}
 		
-//		try {
-//			salt = SHA512.getSalt();
-//			userModel.setSalt(salt.toString());
-//		} catch (NoSuchAlgorithmException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		userModel.setPassword(SHA512.get_SHA512(password, salt));
-		
 		userModel.setCountry(country);
 
 		@SuppressWarnings("deprecation")
@@ -95,13 +85,7 @@ public class RegistrationControllerBean implements Serializable {
 		userModel.setBirthdate(birthDate);
 		System.out.println(birthDay + " " + birthMonth + " " + birthYear);
 		System.out.println(birthDate);
-
-		// // temporary date for database purposes
-		// Date exampleDate = new Date(0,0,0);
-		// exampleDate.setDate(14);
-		// exampleDate.setYear(1964);
-		// exampleDate.setMonth(04);
-		// user.setBirthdate(exampleDate);
+		
 		if (registrationValidator.validateUserForRegistration(userModel)) {
 
 			userEJB.storeUser(userModel);
@@ -112,19 +96,6 @@ public class RegistrationControllerBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registration failed, try again!"));
 			return "reg-new-user";
 		}
-	}
-	
-	public String testHash() throws NoSuchAlgorithmException {
-		return userEJB.cryptPassword(hashPassword, salt);
-	}
-	
-	public String validate() throws NoSuchAlgorithmException {
-		dbPassword = userEJB.cryptPassword("banan", salt);
-		System.out.println("fr�n dbn: " + dbPassword);
-		
-		hashPassword = userEJB.cryptPassword(hashPassword, salt);
-		System.out.println("fr�n test-hash: " + hashPassword);
-		return "test-hash";
 	}
 
 	public String getPassword() {

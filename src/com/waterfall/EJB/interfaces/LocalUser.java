@@ -35,7 +35,5 @@ public interface LocalUser {
 	void removeUserFromSession(String sessionKey);
 	
 	void displayLoginErrorMessage(String field, String message);
-	
-	String cryptPassword(String password, byte[] salt) throws NoSuchAlgorithmException;
 
 }

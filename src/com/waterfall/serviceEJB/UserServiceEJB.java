@@ -12,7 +12,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.hashing.SHA512;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.UserDAOBean;
@@ -131,10 +130,6 @@ public class UserServiceEJB implements LocalUser {
 
 		return userDaoBean.findByCountry(searchWord);
 		
-	}
-	
-	public String cryptPassword(String password, byte[] salt) throws NoSuchAlgorithmException {
-		return SHA512.get_SHA512(password, salt);
 	}
 
 }
