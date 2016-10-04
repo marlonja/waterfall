@@ -35,13 +35,11 @@ public class UserModel implements Serializable {
 
 	private String lastName;
 
-	private String password;
+	private String passwordhash;
 
 	private String username;
 
 	private String country;
-	
-	private String salt;
 	
 	private List<UserModel> friendsList;
 
@@ -122,14 +120,6 @@ public class UserModel implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getUsername() {
 		return this.username;
 	}
@@ -160,15 +150,16 @@ public class UserModel implements Serializable {
 
 
 
-	public String getSalt() {
-		return salt;
+	public String getPasswordhash() {
+		return passwordhash;
 	}
 
 
 
-	public void setSalt(String salt) {
-		this.salt = salt;
+	public void setPasswordhash(String passwordhash) {
+		this.passwordhash = passwordhash;
 	}
+
 	
 	
 

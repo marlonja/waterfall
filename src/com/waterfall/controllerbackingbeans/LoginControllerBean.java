@@ -1,6 +1,8 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -10,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
+import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.UserModel;
 
 @Named(value = "loginControllerBean")
@@ -32,20 +35,13 @@ public class LoginControllerBean implements Serializable {
 		return "index";
 	}
 
-	public String loginUser() {
-		UserModel userToCheckInDatabase = new UserModel();
-		userToCheckInDatabase.setUsername(username);
-		userToCheckInDatabase.setPassword(password);
-		loggedInUser = userEJB.validateLogin(userToCheckInDatabase);
-
-		if (loggedInUser != null) {
-			userEJB.setUserInSession("loggedInUser", loggedInUser);
-			return "index";
-		} else {
-			FacesContext.getCurrentInstance().addMessage("search-form",
-					new FacesMessage("Username or password is incorrect"));
-			return "index";
+	public String loginUser() throws NoSuchAlgorithmException, InvalidKeySpecException {
+		
+		if(userEJB.validateLogin(username, password) != null){
+			loggedInUser = userEJB.validateLogin(username, password);
 		}
+		return "index";
+		
 	}
 
 	public String getUsername() {
