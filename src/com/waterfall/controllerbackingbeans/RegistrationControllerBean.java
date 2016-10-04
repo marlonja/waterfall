@@ -74,7 +74,7 @@ public class RegistrationControllerBean implements Serializable {
 		userModel.setGender(gender);
 		
 		try {
-			userModel.setPasswordhash(PBKDF2.generatePasswordHash(password));
+			userModel.setPassword(PBKDF2.generatePasswordHash(password));
 		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
 			e.printStackTrace();
 		}

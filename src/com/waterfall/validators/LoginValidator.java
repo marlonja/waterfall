@@ -8,7 +8,7 @@ import com.waterfall.models.UserModel;
 public class LoginValidator {
 
 	public boolean validateUserPassword(UserModel userFromDatabase,UserModel userToCheckInDatabase) {
-		if(userToCheckInDatabase.getPasswordhash().equals(userFromDatabase.getPasswordhash())){
+		if(userToCheckInDatabase.getPassword().equals(userFromDatabase.getPassword())){
 			return true;
 		}
 		return false;

@@ -35,7 +35,7 @@ public class UserModel implements Serializable {
 
 	private String lastName;
 
-	private String passwordhash;
+	private String password;
 
 	private String username;
 
@@ -150,14 +150,14 @@ public class UserModel implements Serializable {
 
 
 
-	public String getPasswordhash() {
-		return passwordhash;
+	public String getPassword() {
+		return password;
 	}
 
 
 
-	public void setPasswordhash(String passwordhash) {
-		this.passwordhash = passwordhash;
+	public void setPassword(String passwordhash) {
+		this.password = passwordhash;
 	}
 
 	

@@ -56,7 +56,7 @@ public class UserServiceEJB implements LocalUser {
 			displayLoginErrorMessage("search-form", "Wrong input");
 			return null;
 		}else {
-			if(PBKDF2.validatePassword(typedPassword, userToCheckInDatabase.getPasswordhash())) {
+			if(PBKDF2.validatePassword(typedPassword, userToCheckInDatabase.getPassword())) {
 				setUserInSession("loggedInUser", userToCheckInDatabase);
 				return userToCheckInDatabase;
 			}else {
