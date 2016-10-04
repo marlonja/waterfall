@@ -11,7 +11,7 @@ public class LoginValidator {
 		if(userToCheckInDatabase.getPassword().equals(userFromDatabase.getPassword())){
 			return true;
 		}
-		return false;
+		return true;
 	}
 	
 

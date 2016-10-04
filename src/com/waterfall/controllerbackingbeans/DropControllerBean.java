@@ -16,6 +16,7 @@ import javax.inject.Named;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 import com.waterfall.EJB.interfaces.LocalComment;
 import com.waterfall.EJB.interfaces.LocalDrop;
+import com.waterfall.EJB.interfaces.LocalDropSearch;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
@@ -34,10 +35,14 @@ public class DropControllerBean implements Serializable {
 	private List<DropModel> dropList;
 	private String searchWord;
 	private ArrayList<DropModel> dropListFromSearch;
+	private ArrayList<UserModel> userListFromSearch;
 	private UserModel userFromSearch;
 	private UserModel userCountryFromSearch;
 	private LinkedHashSet<DropModel> dropHashSet;
-
+	
+	@EJB
+	LocalDropSearch dropSearchEJB;
+	
 	@EJB
 	LocalUser userEJB;
 
@@ -55,22 +60,20 @@ public class DropControllerBean implements Serializable {
 
 	public String searchDrop() {
 		dropListFromSearch = new ArrayList<DropModel>();
+		userListFromSearch = new ArrayList<UserModel>();
 		dropHashSet = new LinkedHashSet<DropModel>();
 		String[] searchArray = searchWord.split(" ");
 
 		for (int i = 0; i < searchArray.length; i++) {
-			dropListFromSearch.addAll(dropEJB.findDropContentFromSearch(searchArray[i]));
-			System.out.println(searchArray[i] + i);
+			
+			dropListFromSearch.addAll(dropSearchEJB.searchDropsByContent(searchArray[i]));
 
-			userCountryFromSearch = userEJB.findByCountry(searchArray[i]);
-			if (userCountryFromSearch != null) {
-				dropListFromSearch.addAll(userCountryFromSearch.getDrops());
-			}
+			dropListFromSearch.addAll(dropSearchEJB.searchDropsByUserCountry(searchArray[i]));
+			
+			dropListFromSearch.addAll(dropSearchEJB.searchDropsByUserName(searchArray[i]));
+			
 
-			userFromSearch = userEJB.getUserByUsername(searchArray[i]);
-			if (userFromSearch != null) {
-				dropListFromSearch.addAll(userFromSearch.getDrops());
-			}
+
 		}
 
 		dropList = removeDuplicatesFromSearchList(dropListFromSearch);
