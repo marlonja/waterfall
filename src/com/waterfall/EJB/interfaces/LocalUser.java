@@ -25,9 +25,7 @@ public interface LocalUser {
 
 	UserModel getUserFromSession(String sessionKey);
 	
-	UserModel getUserByUsername(String username);
-	
-	UserModel findByCountry(String searchWord);
+	UserModel getUserByUsername(String username);	
 	
 	void setUserInSession(String sessionKey, UserModel userModel);
 

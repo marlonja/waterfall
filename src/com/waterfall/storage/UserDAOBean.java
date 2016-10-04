@@ -36,7 +36,7 @@ public class UserDAOBean {
 	public UserModel getUserByUsername(String userToCheckInDatabase){
 		try{
 			UserModel userModel = (UserModel)em.createNamedQuery("UserModel.findByUsername")
-			    .setParameter("username", "%" + userToCheckInDatabase + "%")
+			    .setParameter("username", userToCheckInDatabase)
 			    .getSingleResult();
 			
 			return userModel;
@@ -71,13 +71,25 @@ public class UserDAOBean {
 		return em.find(UserModel.class, userId);
 	}
 	
-	public UserModel findByCountry(String userToCheckInDatabase){
+	public List<UserModel> findByCountry(String userToCheckInDatabase){
 		try{
-			UserModel userModel = (UserModel)em.createNamedQuery("UserModel.findByCountry")
+			return em.createNamedQuery("UserModel.findByCountry")
 			    .setParameter("country", "%" + userToCheckInDatabase + "%")
-			    .getSingleResult();
+			    .getResultList();
 			
-			return userModel;
+			
+		}catch(NoResultException e){
+			return null;
+		}
+	}
+	
+	public List<UserModel> findUsersByUserName(String userToCheckInDatabase){
+		try{
+			return em.createNamedQuery("UserModel.findByUsername")
+			    .setParameter("username", "%" + userToCheckInDatabase + "%")
+			    .getResultList();
+			
+			
 		}catch(NoResultException e){
 			return null;
 		}
