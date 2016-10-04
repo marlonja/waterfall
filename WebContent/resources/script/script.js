@@ -7,4 +7,8 @@ $(document).ready(function(){
 		$(".create-comment-div").stop().toggle('slow');
 	});
 	
+	$(".clear-button").click(function(){
+		$(".search-field").val("");
+	});
+	
 });
