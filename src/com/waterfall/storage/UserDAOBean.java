@@ -86,7 +86,15 @@ public class UserDAOBean {
 	 
 		 userModels.addAll(em.createNamedQuery("UserModel.findByCity")
 		 .setParameter("city", "%" + searchWord + "%")
-		 .getResultList());		
+		 .getResultList());
+		 
+		 userModels.addAll(em.createNamedQuery("UserModel.findByFirstName")
+				 .setParameter("firstname", searchWord)
+				 .getResultList());
+		 
+		 userModels.addAll(em.createNamedQuery("UserModel.findByLastName")
+				 .setParameter("lastname", searchWord)
+				 .getResultList());
 		
 		 }catch(NoResultException e){
 		 return null;
