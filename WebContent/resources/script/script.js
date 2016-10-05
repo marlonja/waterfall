@@ -7,4 +7,6 @@ $(document).ready(function(){
 		$(".create-comment-div").stop().toggle('slow');
 	});
 	
+	
+	
 });
