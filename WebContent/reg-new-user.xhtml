@@ -36,14 +36,14 @@
 				<b:row>
 					<b:column span="4">
 						<b:selectOneMenu value="#{registrationControllerBean.birthYear}">
-							<f:selectItem itemLabel="- Choose year -" itemValue=""/>
+							<f:selectItem itemLabel="- Choose year -" itemValue="" />
 							<f:selectItems value="#{registrationControllerBean.years}"
 								var="year" itemValue="#{year}" itemLabel="#{year}" />
 						</b:selectOneMenu>
 					</b:column>
 					<b:column span="4">
 						<b:selectOneMenu value="#{registrationControllerBean.birthMonth}">
-							<f:selectItem itemLabel="- Choose month -" itemValue=""/>
+							<f:selectItem itemLabel="- Choose month -" itemValue="" />
 							<f:selectItem itemLabel="January" itemValue="01" />
 							<f:selectItem itemLabel="February" itemValue="02" />
 							<f:selectItem itemLabel="March" itemValue="03" />
@@ -60,7 +60,7 @@
 					</b:column>
 					<b:column span="4">
 						<b:selectOneMenu value="#{registrationControllerBean.birthDay}">
-							<f:selectItem itemLabel="- Choose date -" itemValue=""/>
+							<f:selectItem itemLabel="- Choose date -" itemValue="" />
 							<f:selectItems value="#{registrationControllerBean.days}"
 								var="day" itemValue="#{day}" itemLabel="#{day}" />
 						</b:selectOneMenu>

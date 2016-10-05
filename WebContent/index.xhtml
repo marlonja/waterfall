@@ -73,17 +73,33 @@
 	<div class="container">
 		<div class="filter-div">
 
-			
+
 			<h:form>
-			<b:inputText value="#{dropControllerBean.searchWord}" placeholder="Filter..." styleClass="input" class="search-field" />
-			<h:commandButton value="Search" action="#{dropControllerBean.searchDrop()}"></h:commandButton>
-			<h:commandButton class="clear-button" value="Clear" action="#{dropControllerBean.init()}"></h:commandButton>
-			
+				<b:inputText value="#{dropControllerBean.searchWord}"
+					placeholder="Filter..." styleClass="input" class="search-field" />
+				<b:row>
+					<b:column span="1">
+						<b:selectBooleanCheckbox caption="Male" value="#{filterControllerBean.isFilteredByMale}"/>
+					</b:column>
+					<b:column span="1">
+						<b:selectBooleanCheckbox caption="Female" value="#{filterControllerBean.isFilteredByFemale}"/>
+					</b:column>
+					<b:column span="1">
+						<b:selectBooleanCheckbox caption="Other" value="#{filterControllerBean.isFilteredByOther}"/>
+					</b:column>
+				</b:row>
+				<h:commandButton value="Search"
+					action="#{dropControllerBean.searchDrop()}"></h:commandButton>
+				<h:commandButton class="clear-button" value="Clear"
+					action="#{dropControllerBean.init()}"></h:commandButton>
+
 			</h:form>
 
 			<h:commandButton
 				rendered="#{loginControllerBean.loggedInUser != null}"
 				class="show-create-drop-div-btn" value="Write something" />
+
+
 		</div>
 		<div class="create-drop-div">
 			<h:form>
