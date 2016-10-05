@@ -37,9 +37,9 @@ public class RegistrationControllerBean implements Serializable {
 	private String gender;
 	private String password;
 	private String country;
-	private byte[] salt;
 	private List<String> allCountries;
 	private List<Integer> years;
+	private List<Integer> days;
 
 	@EJB
 	RegistrationValidator registrationValidator;
@@ -57,6 +57,7 @@ public class RegistrationControllerBean implements Serializable {
 	public void init() {
 		setAllCountries(countryService.getAllCountries());
 		setYears(dateService.years());
+		setDays(dateService.days());
 	}
 
 	public String registerNewUser() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
@@ -66,18 +67,33 @@ public class RegistrationControllerBean implements Serializable {
 		userModel.setUsername(username);
 		userModel.setEmail(email);
 		userModel.setCity(city);
+		userModel.setCountry(country);
 		userModel.setGender(gender);
 		userModel.setPassword(PBKDF2.generatePasswordHash(password));
 		
-		
-		userModel.setCountry(country);
-
 		@SuppressWarnings("deprecation")
 		Date birthDate = new Date((birthYear - 1900), (birthMonth - 1), birthDay);
 		userModel.setBirthdate(birthDate);
-		System.out.println(birthDay + " " + birthMonth + " " + birthYear);
-		System.out.println(birthDate);
+		try {
+			userModel.setPassword(PBKDF2.generatePasswordHash(password));
+		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
 		
+//		try {
+//			salt = SHA512.getSalt();
+//			userModel.setSalt(salt.toString());
+//		} catch (NoSuchAlgorithmException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		userModel.setPassword(SHA512.get_SHA512(password, salt));
+		// // temporary date for database purposes
+		// Date exampleDate = new Date(0,0,0);
+		// exampleDate.setDate(14);
+		// exampleDate.setYear(1964);
+		// exampleDate.setMonth(04);
+		// user.setBirthdate(exampleDate);
 		if (registrationValidator.validateUserForRegistration(userModel)) {
 
 			userEJB.storeUser(userModel);
@@ -192,5 +208,13 @@ public class RegistrationControllerBean implements Serializable {
 
 	public void setYears(List<Integer> years) {
 		this.years = years;
+	}
+
+	public List<Integer> getDays() {
+		return days;
+	}
+
+	public void setDays(List<Integer> days) {
+		this.days = days;
 	}
 }

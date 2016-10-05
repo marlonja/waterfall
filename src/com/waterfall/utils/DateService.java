@@ -7,13 +7,21 @@ import javax.ejb.Stateful;
 
 @Stateful
 public class DateService {
-	
+
 	public List<Integer> years() {
 		List<Integer> yearList = new ArrayList<Integer>();
-		for(int i = 1900; i <= 2016; i++) {
+		for (int i = 1900; i <= 2016; i++) {
 			yearList.add(i);
 		}
 		return yearList;
+	}
+
+	public List<Integer> days() {
+		List<Integer> dayList = new ArrayList<Integer>();
+		for (int i = 1; i <= 31; i++) {
+			dayList.add(i);
+		}
+		return dayList;
 	}
 
 }
