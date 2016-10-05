@@ -1,5 +1,6 @@
 package com.waterfall.storage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJBTransactionRolledbackException;
@@ -12,19 +13,16 @@ import javax.persistence.PersistenceContext;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 
-
-
-
 @Stateful
 public class UserDAOBean {
-	
+
 	@PersistenceContext
 	private EntityManager em;
 
 	public boolean storeUser(UserModel userModel) {
-		if(em.merge(userModel) != null){
+		if (em.merge(userModel) != null) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -33,65 +31,69 @@ public class UserDAOBean {
 		return em.createNamedQuery("UserModel.findAll").getResultList();
 	}
 
-	public UserModel getUserByUsername(String userToCheckInDatabase){
-		try{
-			UserModel userModel = (UserModel)em.createNamedQuery("UserModel.findByUsername")
-			    .setParameter("username", userToCheckInDatabase)
-			    .getSingleResult();
-			
+	public UserModel getUserByUsername(String userToCheckInDatabase) {
+		try {
+			UserModel userModel = (UserModel) em.createNamedQuery("UserModel.findByUsername")
+					.setParameter("username", userToCheckInDatabase).getSingleResult();
+
 			return userModel;
-		}catch(NoResultException e){
+		} catch (NoResultException e) {
 			return null;
 		}
 	}
-	public boolean isEmailInDatabaseUnique(String userEmail){
-		try{
-			if(em.createNamedQuery("UserModel.findByEmail")
-				.setParameter("email", userEmail).getSingleResult() != null){
+
+	public boolean isEmailInDatabaseUnique(String userEmail) {
+		try {
+			if (em.createNamedQuery("UserModel.findByEmail").setParameter("email", userEmail)
+					.getSingleResult() != null) {
 				return false;
-				}
-		}catch(NoResultException e){
+			}
+		} catch (NoResultException e) {
 			return true;
 		}
 		return true;
-		
+
 	}
 
 	public boolean isUsernameInDatabaseUnique(String username) {
 		UserModel userModel = new UserModel();
 		userModel.setUsername(username);
-		if(getUserByUsername(userModel.getUsername()) == null){
+		if (getUserByUsername(userModel.getUsername()) == null) {
 			return true;
 		}
 		return false;
 	}
 
-
 	public UserModel getUserById(Long userId) {
 		return em.find(UserModel.class, userId);
 	}
+
 	
-	public List<UserModel> findByCountry(String userToCheckInDatabase){
-		try{
-			return em.createNamedQuery("UserModel.findByCountry")
-			    .setParameter("country", "%" + userToCheckInDatabase + "%")
-			    .getResultList();
-			
-			
-		}catch(NoResultException e){
-			return null;
-		}
-	}
+
+
+
+	 public List<UserModel> searchDropsByInput(String searchWord){
+	 List<UserModel> userModels = new ArrayList<UserModel>();
+	 
+	 try{
+		 userModels.addAll(em.createNamedQuery("UserModel.findByUsername")
+		 .setParameter("username", "%" + searchWord + "%")
+		 .getResultList());	
 	
-	public List<UserModel> findUsersByUserName(String userToCheckInDatabase){
-		try{
-			return em.createNamedQuery("UserModel.findByUsername")
-			    .setParameter("username", "%" + userToCheckInDatabase + "%")
-			    .getResultList();
-			
-			
-		}catch(NoResultException e){
-			return null;
-		}
-	}
+		 userModels.addAll(em.createNamedQuery("UserModel.findByCountry")
+		 .setParameter("country", "%" + searchWord + "%")
+		 .getResultList());	
+	 
+		 userModels.addAll(em.createNamedQuery("UserModel.findByCity")
+		 .setParameter("city", "%" + searchWord + "%")
+		 .getResultList());		
+		
+		 }catch(NoResultException e){
+		 return null;
+		 }	
+	 
+	 return userModels;
+	
+	 }
+
 }

@@ -66,11 +66,13 @@ public class DropControllerBean implements Serializable {
 
 		for (int i = 0; i < searchArray.length; i++) {
 
-			dropListFromSearch.addAll(dropSearchEJB.searchDropsByContent(searchArray[i]));
+			dropListFromSearch.addAll(dropSearchEJB.searchDropsFromDropTable(searchArray[i]));
+			dropListFromSearch.addAll(dropSearchEJB.searchDropsFromUserTable(searchArray[i]));
 
-			dropListFromSearch.addAll(dropSearchEJB.searchDropsByUserCountry(searchArray[i]));
-
-			dropListFromSearch.addAll(dropSearchEJB.searchDropsByUserName(searchArray[i]));
+			//dropListFromSearch.addAll(dropSearchEJB.searchDropsByUserCountry(searchArray[i]));
+			//dropListFromSearch.addAll(dropSearchEJB.searchDropsByUserName(searchArray[i]));
+			
+			
 
 		}
 
