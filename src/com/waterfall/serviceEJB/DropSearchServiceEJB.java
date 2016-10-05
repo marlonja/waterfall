@@ -22,29 +22,23 @@ public class DropSearchServiceEJB implements LocalDropSearch{
 	private DropDAOBean dropDAOBean;
 
 	@Override
-	public List<DropModel> searchDropsByContent(String searchWord) {
+	public List<DropModel> searchDropsFromDropTable(String searchWord) {
 		
 		return dropDAOBean.findDropsByContent(searchWord);
 	}
 
-	@Override
-	public List<DropModel> searchDropsByUserName(String searchWord) {
-		List<DropModel> dropModelList = new ArrayList<DropModel>();
-		for(UserModel userModel : userDAOBean.findUsersByUserName(searchWord)){
-			dropModelList.addAll(userModel.getDrops());
-		}
-		return dropModelList;
-		
-	}
+	
+
 
 	@Override
-	public List<DropModel> searchDropsByUserCountry(String searchWord) {
+	public List<DropModel> searchDropsFromUserTable(String searchWord) {
 		List<DropModel> dropModelList = new ArrayList<DropModel>();
-		for(UserModel userModel : userDAOBean.findByCountry(searchWord)){
+		for(UserModel userModel : userDAOBean.searchDropsByInput(searchWord)){
 			dropModelList.addAll(userModel.getDrops());
 		}
 		return dropModelList;
-		
 	}
+	
+	
 
 }
