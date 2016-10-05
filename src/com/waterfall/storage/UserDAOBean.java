@@ -72,7 +72,7 @@ public class UserDAOBean {
 
 
 
-	 public List<UserModel> searchDropsByInput(String searchWord){
+	 public List<UserModel> searchDropsFromUserTable(String searchWord){
 	 List<UserModel> userModels = new ArrayList<UserModel>();
 	 
 	 try{

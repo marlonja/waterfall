@@ -13,10 +13,8 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 import com.waterfall.EJB.interfaces.LocalComment;
 import com.waterfall.EJB.interfaces.LocalDrop;
-import com.waterfall.EJB.interfaces.LocalDropSearch;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
@@ -33,12 +31,6 @@ public class DropControllerBean implements Serializable {
 	private String content;
 	private String commentContent;
 	private List<DropModel> dropList;
-	private String searchWord;
-	private ArrayList<DropModel> dropListFromSearch;
-	private UserModel userCountryFromSearch;
-
-	@EJB
-	LocalDropSearch dropSearchEJB;
 
 	@EJB
 	LocalUser userEJB;
@@ -55,37 +47,6 @@ public class DropControllerBean implements Serializable {
 
 	}
 
-	public String searchDrop() {
-		dropListFromSearch = new ArrayList<DropModel>();
-		String[] searchArray = searchWord.split(" ");
-
-		for (int i = 0; i < searchArray.length; i++) {
-
-			dropListFromSearch.addAll(dropSearchEJB.searchDropsFromDropTable(searchArray[i]));
-			dropListFromSearch.addAll(dropSearchEJB.searchDropsFromUserTable(searchArray[i]));
-
-			//dropListFromSearch.addAll(dropSearchEJB.searchDropsByUserCountry(searchArray[i]));
-			//dropListFromSearch.addAll(dropSearchEJB.searchDropsByUserName(searchArray[i]));
-			
-			
-
-		}
-
-		dropList = removeDuplicatesFromSearchList(dropListFromSearch);
-		return "index";
-	}
-
-	private List<DropModel> removeDuplicatesFromSearchList(ArrayList<DropModel> dropListFromSearch) {
-		for (int i = 0; i < dropListFromSearch.size(); i++) {
-			for (int j = i + 1; j < dropListFromSearch.size(); j++) {
-				if (dropListFromSearch.get(i).getDropId().equals(dropListFromSearch.get(j).getDropId())) {
-					dropListFromSearch.remove(j);
-					j = j - 1;
-				}
-			}
-		}
-		return dropListFromSearch;
-	}
 
 	public String createNewDrop() {
 		DropModel dropModel = new DropModel();
@@ -138,28 +99,6 @@ public class DropControllerBean implements Serializable {
 		this.commentContent = commentContent;
 	}
 
-	public String getSearchWord() {
-		return searchWord;
-	}
 
-	public void setSearchWord(String searchWord) {
-		this.searchWord = searchWord;
-	}
-
-	public List<DropModel> getDropListFromSearch() {
-		return dropListFromSearch;
-	}
-
-	public void setDropListFromSearch(ArrayList<DropModel> dropListFromSearch) {
-		this.dropListFromSearch = dropListFromSearch;
-	}
-
-	public UserModel getUserCountryFromSearch() {
-		return userCountryFromSearch;
-	}
-
-	public void setUserCountryFromSearch(UserModel userCountryFromSearch) {
-		this.userCountryFromSearch = userCountryFromSearch;
-	}
 
 }
