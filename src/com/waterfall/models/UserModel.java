@@ -53,19 +53,14 @@ public class UserModel implements Serializable {
 		
 	}
 	
-	
 
 	public List<DropModel> getDrops() {
 		return dropList;
 	}
 
-
-
 	public void setDrops(List<DropModel> dropModels) {
 		this.dropList = dropModels;
 	}
-
-
 
 	public Long getUserid() {
 		return this.userid;
@@ -139,31 +134,21 @@ public class UserModel implements Serializable {
 		this.country = country;
 	}
 
-
-
 	public List<UserModel> getFriendsList() {
 		return friendsList;
 	}
-
-
 
 	public void setFriendsList(List<UserModel> friendsList) {
 		this.friendsList = friendsList;
 	}
 
-
-
 	public String getPassword() {
 		return password;
 	}
-
-
 
 	public void setPassword(String passwordhash) {
 		this.password = passwordhash;
 	}
 
-	
-	
 
 }

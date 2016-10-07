@@ -9,10 +9,13 @@ import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 import com.sun.xml.bind.v2.schemagen.xmlschema.List;
+import com.waterfall.controllerbackingbeans.RegistrationControllerBean;
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.UserDAOBean;
+import com.waterfall.utils.ErrorMessageService;
 
 @Stateful
 public class RegistrationValidator {
@@ -25,53 +28,52 @@ public class RegistrationValidator {
 	@EJB
 	private UserDAOBean userDAOBean;
 	
-	private ExternalContext externalContext;
-	
-	private Map<String, Object> validationErrorSession;
+	@EJB
+	private ErrorMessageService errorMessageService;
 
-	public ArrayList<String> validateUserForRegistration(UserModel userToValidate) {
+	public ArrayList<String> validateUserForRegistration(UserModel userToValidate, ArrayList<String> validationErrorMessages) {
 		
-		isBasicFormatCorrect(userToValidate);
+		isBasicFormatCorrect(userToValidate, validationErrorMessages);
 		
-//		if(userToValidate.getGender() == null){
-//			return false;
-//		}
-//		if(!isUsernameUnique(userToValidate.getUsername())){
-//			System.out.println("Username exists vi are i validation");
-//			return false;
-//		}
-//		
-//		if(userToValidate.getCountry() == null){
-//			return false;
-//		}
-//		
-//		
-//
-//		if (isEmailFormatCorrect(userToValidate.getEmail()) && isEmailUnique(userToValidate.getEmail())) {
-//			return true;
-//		} else {
-//			return false;
-//		}
+		if(userToValidate.getGender() == null){
+			errorMessageService.setValidationErrorMessage("gender", validationErrorMessages);
+		}
+		if(!isUsernameUnique(userToValidate.getUsername())){
+			errorMessageService.setValidationErrorMessage("usernameNotUnique", validationErrorMessages);
+		}
+		if(userToValidate.getUsername() == null) {
+			errorMessageService.setValidationErrorMessage("usernameIsNull", validationErrorMessages);
+		}
 		
-		return getValidationErrorMessages();
+		if(userToValidate.getCountry() == null){
+			errorMessageService.setValidationErrorMessage("countryIsNull", validationErrorMessages);
+		}
+
+		if (!isEmailFormatCorrect(userToValidate.getEmail())) {
+			errorMessageService.setValidationErrorMessage("emailFormatIncorrect", validationErrorMessages);
+		} 
+		if(!isEmailUnique(userToValidate.getEmail())){
+			errorMessageService.setValidationErrorMessage("emailNotUnique", validationErrorMessages);
+		}
+		return errorMessageService.getValidationErrorMessages();
 
 	}
 
-	private ArrayList<String> isBasicFormatCorrect(UserModel userToValidate) {
+	private ArrayList<String> isBasicFormatCorrect(UserModel userToValidate, ArrayList<String> validationErrorMessages) {
 
 		if (!isContainingOnlyLetters(userToValidate.getFirstName())) {
-			setValidationErrorMessage("firstName");
+			errorMessageService.setValidationErrorMessage("firstName", validationErrorMessages);
 		}
 
 		if (!isContainingOnlyLetters(userToValidate.getLastName())) {
-			setValidationErrorMessage("lastName");
+			errorMessageService.setValidationErrorMessage("lastName", validationErrorMessages);
 		}
 
 		if (!isContainingOnlyLetters(userToValidate.getCity())) {
-			setValidationErrorMessage("city");
+			errorMessageService.setValidationErrorMessage("city", validationErrorMessages);
 		}
 
-		return getValidationErrorMessages();
+		return errorMessageService.getValidationErrorMessages();
 	}
 	
 	private boolean isFormatCorrect(String userInput, String regexPattern){
@@ -108,34 +110,5 @@ public class RegistrationValidator {
 	private boolean isUsernameUnique(String username){
 		return userDAOBean.isUsernameInDatabaseUnique(username);
 	}
-	
-	public ArrayList<String> setValidationErrorMessage(String validationErrorMessage) {
-		externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		validationErrorSession = externalContext.getSessionMap();
-		
-		ArrayList<String> validationErrorMessages = getValidationErrorMessages();
-		
-//		if(validationErrorMessages == null) {
-//			validationErrorMessages = new ArrayList<String>();
-//		}
-		
-		validationErrorMessages.add(validationErrorMessage);
-		
-		validationErrorSession.put("validationErrorMessages", validationErrorMessages);
-		return validationErrorMessages;
-	} 
-	
-	public ArrayList<String> getValidationErrorMessages() {
-		externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		validationErrorSession = externalContext.getSessionMap();
-		
-		if(validationErrorSession.get("validationErrorMessages") == null) {
-			ArrayList<String> validationErrorMessages = new ArrayList<String>();
-			validationErrorSession.put("validationErrorMessages", validationErrorMessages);
-		}
-		
-		return (ArrayList<String>) validationErrorSession.get("validationErrorMessages");
-	}
-	
 
 }

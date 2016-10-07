@@ -41,6 +41,7 @@ public class RegistrationControllerBean implements Serializable {
 	private List<String> allCountries;
 	private List<Integer> years;
 	private List<Integer> days;
+	private ArrayList<String> errorMessages;
 
 	@EJB
 	RegistrationValidator registrationValidator;
@@ -81,9 +82,13 @@ public class RegistrationControllerBean implements Serializable {
 			e.printStackTrace();
 		}
 		
-		// SKIT I SESSION OCH GÖR BACKINGBÖNA ATTRIBUT
+		if(errorMessages == null) {
+			errorMessages = new ArrayList<>();
+		}
 		
-		if (registrationValidator.validateUserForRegistration(userModel).isEmpty()) {
+		errorMessages = registrationValidator.validateUserForRegistration(userModel, errorMessages);
+		
+		if (errorMessages.isEmpty()) {
 
 			userEJB.storeUser(userModel);
 			System.out.println("user saved");
@@ -91,11 +96,11 @@ public class RegistrationControllerBean implements Serializable {
 
 		} else {
 			
-			for(int i = 0; i < registrationValidator.getValidationErrorMessages().size(); i++) {
-				System.out.println(registrationValidator.getValidationErrorMessages().get(i));
+			for(int i = 0; i < errorMessages.size(); i++) {
+				System.out.println(errorMessages.get(i));
 			}
 			
-			registrationValidator.getValidationErrorMessages().clear();
+			errorMessages.clear();
 
 			return "reg-new-user";
 		}
@@ -212,4 +217,14 @@ public class RegistrationControllerBean implements Serializable {
 	public void setDays(List<Integer> days) {
 		this.days = days;
 	}
+
+	public ArrayList<String> getErrorMessages() {
+		return errorMessages;
+	}
+
+	public void setErrorMessages(ArrayList<String> errorMessages) {
+		this.errorMessages = errorMessages;
+	}
+	
+	
 }
