@@ -29,51 +29,49 @@ public class RegistrationValidator {
 	
 	private Map<String, Object> validationErrorSession;
 
-	public boolean validateUserForRegistration(UserModel userToValidate) {
+	public ArrayList<String> validateUserForRegistration(UserModel userToValidate) {
 		
-		if (!isBasicFormatCorrect(userToValidate)) {
-			return false;
-		}
-		if(userToValidate.getGender() == null){
-			return false;
-		}
-		if(!isUsernameUnique(userToValidate.getUsername())){
-			System.out.println("Username exists vi are i validation");
-			return false;
-		}
+		isBasicFormatCorrect(userToValidate);
 		
-		if(userToValidate.getCountry() == null){
-			return false;
-		}
+//		if(userToValidate.getGender() == null){
+//			return false;
+//		}
+//		if(!isUsernameUnique(userToValidate.getUsername())){
+//			System.out.println("Username exists vi are i validation");
+//			return false;
+//		}
+//		
+//		if(userToValidate.getCountry() == null){
+//			return false;
+//		}
+//		
+//		
+//
+//		if (isEmailFormatCorrect(userToValidate.getEmail()) && isEmailUnique(userToValidate.getEmail())) {
+//			return true;
+//		} else {
+//			return false;
+//		}
 		
-		
-
-		if (isEmailFormatCorrect(userToValidate.getEmail()) && isEmailUnique(userToValidate.getEmail())) {
-			return true;
-		} else {
-			return false;
-		}
+		return getValidationErrorMessages();
 
 	}
 
-	private boolean isBasicFormatCorrect(UserModel userToValidate) {
+	private ArrayList<String> isBasicFormatCorrect(UserModel userToValidate) {
 
 		if (!isContainingOnlyLetters(userToValidate.getFirstName())) {
 			setValidationErrorMessage("firstName");
-			return false;
 		}
 
 		if (!isContainingOnlyLetters(userToValidate.getLastName())) {
 			setValidationErrorMessage("lastName");
-			return false;
 		}
 
 		if (!isContainingOnlyLetters(userToValidate.getCity())) {
 			setValidationErrorMessage("city");
-			return false;
 		}
 
-		return true;
+		return getValidationErrorMessages();
 	}
 	
 	private boolean isFormatCorrect(String userInput, String regexPattern){
@@ -117,9 +115,9 @@ public class RegistrationValidator {
 		
 		ArrayList<String> validationErrorMessages = getValidationErrorMessages();
 		
-		if(validationErrorMessages == null) {
-			validationErrorMessages = new ArrayList<String>();
-		}
+//		if(validationErrorMessages == null) {
+//			validationErrorMessages = new ArrayList<String>();
+//		}
 		
 		validationErrorMessages.add(validationErrorMessage);
 		
@@ -130,6 +128,11 @@ public class RegistrationValidator {
 	public ArrayList<String> getValidationErrorMessages() {
 		externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		validationErrorSession = externalContext.getSessionMap();
+		
+		if(validationErrorSession.get("validationErrorMessages") == null) {
+			ArrayList<String> validationErrorMessages = new ArrayList<String>();
+			validationErrorSession.put("validationErrorMessages", validationErrorMessages);
+		}
 		
 		return (ArrayList<String>) validationErrorSession.get("validationErrorMessages");
 	}

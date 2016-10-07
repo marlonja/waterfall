@@ -80,23 +80,23 @@ public class RegistrationControllerBean implements Serializable {
 		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
 			e.printStackTrace();
 		}
-
-		if (registrationValidator.validateUserForRegistration(userModel)) {
+		
+		// SKIT I SESSION OCH GÖR BACKINGBÖNA ATTRIBUT
+		
+		if (registrationValidator.validateUserForRegistration(userModel).isEmpty()) {
 
 			userEJB.storeUser(userModel);
 			System.out.println("user saved");
 			return "index";
 
 		} else {
-
-			ArrayList<String> errorMessages = registrationValidator.getValidationErrorMessages();
 			
-			for(int i = 0; i < errorMessages.size(); i++) {
-				System.out.println(errorMessages.get(i));
+			for(int i = 0; i < registrationValidator.getValidationErrorMessages().size(); i++) {
+				System.out.println(registrationValidator.getValidationErrorMessages().get(i));
 			}
 			
 			registrationValidator.getValidationErrorMessages().clear();
-			
+
 			return "reg-new-user";
 		}
 	}
