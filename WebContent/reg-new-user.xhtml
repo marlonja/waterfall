@@ -35,11 +35,11 @@
 				<h:outputLabel value="Birthdate" />
 				<b:row>
 					<b:column span="4">
-						<p:selectOneMenu value="#{registrationControllerBean.birthYear}">
+						<b:selectOneMenu value="#{registrationControllerBean.birthYear}">
 							<f:selectItem itemLabel="- Choose year -" itemValue="" />
 							<f:selectItems value="#{registrationControllerBean.years}"
 								var="year" itemValue="#{year}" itemLabel="#{year}" />
-						</p:selectOneMenu>
+						</b:selectOneMenu>
 					</b:column>
 					<b:column span="4">
 						<b:selectOneMenu value="#{registrationControllerBean.birthMonth}">
@@ -59,11 +59,11 @@
 						</b:selectOneMenu>
 					</b:column>
 					<b:column span="4">
-						<p:selectOneMenu value="#{registrationControllerBean.birthDay}">
+						<b:selectOneMenu value="#{registrationControllerBean.birthDay}">
 							<f:selectItem itemLabel="- Choose date -" itemValue="" />
 							<f:selectItems value="#{registrationControllerBean.days}"
 								var="day" itemValue="#{day}" itemLabel="#{day}" />
-						</p:selectOneMenu>
+						</b:selectOneMenu>
 					</b:column>
 				</b:row>
 				<b:row>

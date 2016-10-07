@@ -60,6 +60,13 @@ public class RegistrationControllerBean implements Serializable {
 		setAllCountries(countryService.getAllCountries());
 		setYears(dateService.years());
 		setDays(dateService.days());
+		if(errorMessages == null) {
+			errorMessages = new ArrayList<>();
+		}
+		
+		birthYear = 0;
+		birthMonth = 0;
+		birthDay = 0;
 	}
 
 	public String registerNewUser() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
@@ -76,16 +83,11 @@ public class RegistrationControllerBean implements Serializable {
 		@SuppressWarnings("deprecation")
 		Date birthDate = new Date((birthYear - 1900), (birthMonth - 1), birthDay);
 		userModel.setBirthdate(birthDate);
-		try {
-			userModel.setPassword(PBKDF2.generatePasswordHash(password));
-		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
-			e.printStackTrace();
-		}
 		
-		if(errorMessages == null) {
-			errorMessages = new ArrayList<>();
-		}
-		
+		return storeUser(userModel);
+	}
+	
+	private String storeUser(UserModel userModel) {
 		errorMessages = registrationValidator.validateUserForRegistration(userModel, errorMessages);
 		
 		if (errorMessages.isEmpty()) {
@@ -93,17 +95,13 @@ public class RegistrationControllerBean implements Serializable {
 			userEJB.storeUser(userModel);
 			System.out.println("user saved");
 			return "index";
-
-		} else {
-			
-			for(int i = 0; i < errorMessages.size(); i++) {
-				System.out.println(errorMessages.get(i));
-			}
-			
-			errorMessages.clear();
-
-			return "reg-new-user";
 		}
+		
+		for(int i = 0; i < errorMessages.size(); i++) {
+			System.out.println(errorMessages.get(i));
+		}
+		errorMessages.clear();
+		return "reg-new-user";
 	}
 
 	public String getPassword() {
