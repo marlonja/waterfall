@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -79,21 +80,7 @@ public class RegistrationControllerBean implements Serializable {
 		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
 			e.printStackTrace();
 		}
-		
-//		try {
-//			salt = SHA512.getSalt();
-//			userModel.setSalt(salt.toString());
-//		} catch (NoSuchAlgorithmException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		userModel.setPassword(SHA512.get_SHA512(password, salt));
-		// // temporary date for database purposes
-		// Date exampleDate = new Date(0,0,0);
-		// exampleDate.setDate(14);
-		// exampleDate.setYear(1964);
-		// exampleDate.setMonth(04);
-		// user.setBirthdate(exampleDate);
+
 		if (registrationValidator.validateUserForRegistration(userModel)) {
 
 			userEJB.storeUser(userModel);
@@ -101,7 +88,15 @@ public class RegistrationControllerBean implements Serializable {
 			return "index";
 
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registration failed, try again!"));
+
+			ArrayList<String> errorMessages = registrationValidator.getValidationErrorMessages();
+			
+			for(int i = 0; i < errorMessages.size(); i++) {
+				System.out.println(errorMessages.get(i));
+			}
+			
+			registrationValidator.getValidationErrorMessages().clear();
+			
 			return "reg-new-user";
 		}
 	}
