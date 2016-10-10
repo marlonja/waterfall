@@ -26,21 +26,27 @@ public class FilterServiceEJB implements LocalFilter {
 	private ArrayList<DropModel> dropListFromSearch;
 
 	@Override
-	public List<DropModel> filterDrops(String[] tagArray) {
+	public List<DropModel> filterDrops(String[] tagArray, boolean filteredByMale, 
+			boolean filteredByFemale, boolean filteredByOther) {
 		dropListFromSearch = new ArrayList<DropModel>();
 
 		for (int i = 0; i < tagArray.length; i++) {
 
 			dropListFromSearch.addAll(dropDAOBean.searchDropsFromDropTable(tagArray[i]));
+			
 			for (UserModel userModel : userDAOBean.searchDropsFromUserTable(tagArray[i])) {
 				dropListFromSearch.addAll(userModel.getDrops());
 			}
 
-			if (i > 0) {
+			if (tagArray.length > 1) {
+				System.out.println("nu är den större");
 				dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, tagArray[i]);
+			}else {
+				System.out.println("inte nu");
 			}
 		}
 
+		filterByGender(filteredByMale, filteredByFemale, filteredByOther);
 		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList(dropListFromSearch);
 
 		return dropListFromSearch;
@@ -48,48 +54,51 @@ public class FilterServiceEJB implements LocalFilter {
 	}
 
 	public List<DropModel> filterByGender(boolean filteredByMale, boolean filteredByFemale, boolean filteredByOther) {
-		dropListFromSearch.clear();
 		if (filteredByMale) {
-			dropListFromSearch.addAll(filterByMale());
+			filterByMale();
 		}
 		if (filteredByFemale) {
-			dropListFromSearch.addAll(filterByFemale());
+			filterByFemale();
 		}
 		if (filteredByOther) {
-			dropListFromSearch.addAll(filterByOther());
+			filterByOther();
 		}
 
 		return dropListFromSearch;
 	}
 
-	private List<DropModel> filterByMale() {
-		List<UserModel> listOfMaleUsers = userDAOBean.getUsersByGender("male");
-		List<DropModel> listOfMaleDrops = new ArrayList<DropModel>();
-
-		for (int i = 0; i < listOfMaleUsers.size(); i++) {
-			listOfMaleDrops = listOfMaleUsers.get(i).getDrops();
+	private void filterByMale() {
+		
+		for(int i = 0; i < dropListFromSearch.size(); i++) {
+			if(!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("male")){
+				dropListFromSearch.remove(i);
+				System.out.println("Nu var det inte en man, tog bort!");
+			}
 		}
-		return listOfMaleDrops;
 	}
 
-	private List<DropModel> filterByFemale() {
-		List<UserModel> listOfFemaleUsers = userDAOBean.getUsersByGender("female");
-		List<DropModel> listOfFemaleDrops = new ArrayList<DropModel>();
-
-		for (int i = 0; i < listOfFemaleUsers.size(); i++) {
-			listOfFemaleDrops = listOfFemaleUsers.get(i).getDrops();
+	private void filterByFemale() {
+		
+		for(int i = 0; i < dropListFromSearch.size(); i++) {
+			if(!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("female")){
+				dropListFromSearch.remove(dropListFromSearch.get(i));
+				System.out.println("Nu var det inte en kvinna, tog bort!");
+			}
 		}
-		return listOfFemaleDrops;
+		
+		for(int i = 0; i < dropListFromSearch.size(); i++) {
+			System.out.println(dropListFromSearch.get(i).getOwner().getGender());
+		}
 	}
 
-	private List<DropModel> filterByOther() {
-		List<UserModel> listOfOtherUsers = userDAOBean.getUsersByGender("other");
-		List<DropModel> listOfOtherDrops = new ArrayList<DropModel>();
-
-		for (int i = 0; i < listOfOtherUsers.size(); i++) {
-			listOfOtherDrops = listOfOtherUsers.get(i).getDrops();
+	private void filterByOther() {
+		
+		for(int i = 0; i < dropListFromSearch.size(); i++) {
+			if(!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("other")){
+				dropListFromSearch.remove(i);
+				System.out.println("Nu var det inte en annan typ, tog bort!");
+			}
 		}
-		return listOfOtherDrops;
 	}
 
 	private List<DropModel> removeDuplicatesFromSearchList(ArrayList<DropModel> dropListFromSearch) {
@@ -108,7 +117,7 @@ public class FilterServiceEJB implements LocalFilter {
 		List<DropModel> filteredList = new ArrayList<DropModel>();
 		for (int i = 0; i < dropListFromSearch.size(); i++) {
 			if (dropListFromSearch.get(i).getContent().contains(currentWord)) {
-				System.out.println("Ja jï¿½ttebra!!! " + dropListFromSearch.get(i).getContent());
+				System.out.println("droppen innehåller ordet: " + currentWord + " och har innehållet: " + dropListFromSearch.get(i).getContent());
 				filteredList.add(dropListFromSearch.get(i));
 			}
 		}

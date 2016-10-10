@@ -9,7 +9,8 @@ import com.waterfall.models.DropModel;
 @Local
 public interface LocalFilter {
 	
-	List<DropModel> filterDrops(String[] tagArray);
+	List<DropModel> filterDrops(String[] tagArray, boolean filteredByMale, 
+			boolean filteredByFemale, boolean filteredByOther);
 
 	List<DropModel> filterByGender(boolean filterByMale, boolean filterByFemale, boolean filterByOther);
 
