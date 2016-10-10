@@ -15,7 +15,8 @@ import java.util.Date;
 		@NamedQuery(name = "UserModel.findByCountry", query = "SELECT u FROM UserModel u WHERE u.country LIKE :country"),
 		@NamedQuery(name = "UserModel.findByCity", query = "SELECT u FROM UserModel u WHERE u.city LIKE :city"),
 		@NamedQuery(name = "UserModel.findByFirstName", query = "SELECT u FROM UserModel u WHERE u.firstName LIKE :firstname"),
-		@NamedQuery(name = "UserModel.findByLastName", query = "SELECT u FROM UserModel u WHERE u.lastName LIKE :lastname")
+		@NamedQuery(name = "UserModel.findByLastName", query = "SELECT u FROM UserModel u WHERE u.lastName LIKE :lastname"),
+		@NamedQuery(name = "UserModel.findByGender", query = "SELECT u FROM UserModel u WHERE u.gender LIKE :gender")
 })
 
 public class UserModel implements Serializable {
@@ -52,8 +53,6 @@ public class UserModel implements Serializable {
 	public UserModel() {
 		
 	}
-	
-
 	public List<DropModel> getDrops() {
 		return dropList;
 	}
