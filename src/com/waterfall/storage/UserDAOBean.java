@@ -68,40 +68,36 @@ public class UserDAOBean {
 		return em.find(UserModel.class, userId);
 	}
 
-	
+	public List<UserModel> searchDropsFromUserTable(String searchWord) {
+		List<UserModel> userModels = new ArrayList<UserModel>();
 
+		try {
+			userModels.addAll(em.createNamedQuery("UserModel.findByUsername")
+					.setParameter("username", "%" + searchWord + "%").getResultList());
 
+			userModels.addAll(em.createNamedQuery("UserModel.findByCountry")
+					.setParameter("country", "%" + searchWord + "%").getResultList());
 
-	 public List<UserModel> searchDropsFromUserTable(String searchWord){
-	 List<UserModel> userModels = new ArrayList<UserModel>();
-	 
-	 try{
-		 userModels.addAll(em.createNamedQuery("UserModel.findByUsername")
-		 .setParameter("username", "%" + searchWord + "%")
-		 .getResultList());	
-	
-		 userModels.addAll(em.createNamedQuery("UserModel.findByCountry")
-		 .setParameter("country", "%" + searchWord + "%")
-		 .getResultList());	
-	 
-		 userModels.addAll(em.createNamedQuery("UserModel.findByCity")
-		 .setParameter("city", "%" + searchWord + "%")
-		 .getResultList());
-		 
-		 userModels.addAll(em.createNamedQuery("UserModel.findByFirstName")
-				 .setParameter("firstname", searchWord)
-				 .getResultList());
-		 
-		 userModels.addAll(em.createNamedQuery("UserModel.findByLastName")
-				 .setParameter("lastname", searchWord)
-				 .getResultList());
-		
-		 }catch(NoResultException e){
-		 return null;
-		 }	
-	 
-	 return userModels;
-	
-	 }
+			userModels.addAll(em.createNamedQuery("UserModel.findByCity").setParameter("city", "%" + searchWord + "%")
+					.getResultList());
+
+			userModels.addAll(em.createNamedQuery("UserModel.findByFirstName").setParameter("firstname", searchWord)
+					.getResultList());
+
+			userModels.addAll(em.createNamedQuery("UserModel.findByLastName").setParameter("lastname", searchWord)
+					.getResultList());
+
+		} catch (NoResultException e) {
+			return null;
+		}
+
+		return userModels;
+
+	}
+
+	public List<UserModel> getUsersByGender(String string) {
+		return em.createNamedQuery("UserModel.findByGender").setParameter("gender", string).getResultList();
+
+	}
 
 }

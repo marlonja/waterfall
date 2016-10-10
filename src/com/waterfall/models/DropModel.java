@@ -8,11 +8,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
-
 @Entity
 @NamedQueries({ @NamedQuery(name = "DropModel.findAll", query = "SELECT d FROM DropModel d"),
-	@NamedQuery(name = "DropModel.findDropContentFromSearch", query = "SELECT d FROM DropModel d WHERE d.content LIKE :content")
-})
+		@NamedQuery(name = "DropModel.findDropContentFromSearch", query = "SELECT d FROM DropModel d WHERE d.content LIKE :content") })
 
 public class DropModel implements Serializable {
 
@@ -30,10 +28,9 @@ public class DropModel implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ownerid")
 	private UserModel owner;
-	
+
 	@OneToMany(mappedBy = "dropHost")
 	private List<CommentModel> comments;
-	
 
 	public DropModel() {
 	}
@@ -45,8 +42,6 @@ public class DropModel implements Serializable {
 	public void setOwner(UserModel owner) {
 		this.owner = owner;
 	}
-	
-	
 
 	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
@@ -92,6 +87,5 @@ public class DropModel implements Serializable {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	
 
 }

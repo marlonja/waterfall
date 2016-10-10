@@ -88,10 +88,11 @@
 						<b:selectBooleanCheckbox caption="Other" value="#{filterControllerBean.filteredByOther}"/>
 					</b:column>
 				</b:row>
+				<h:commandButton value="Sort by gender" action="#{filterControllerBean.filterByGender()}"/>
 				<h:commandButton value="Search"
-					action="#{filterControllerBean.getTagList()}"></h:commandButton>
+					action="#{filterControllerBean.getTagList()}" />
 				<h:commandButton class="clear-button" value="Clear"
-					action="#{dropControllerBean.init()}"></h:commandButton>
+					action="#{dropControllerBean.init()}"/>
 
 			</h:form>
 
@@ -114,6 +115,7 @@
 			<c:forEach var="drop" items="#{dropControllerBean.dropList}">
 				<div class="test">
 					<p class="waterfall-username">#{drop.owner.username}</p>
+					<p>#{drop.owner.gender}</p>
 					<p class="waterfall-creation-date">#{drop.getCreationDateFormatted()}</p>
 					<p class="waterfall-drop-content">#{drop.content}</p>
 					<p class="comment-here-description">

@@ -11,4 +11,6 @@ public interface LocalFilter {
 	
 	List<DropModel> filterDrops(String[] tagArray);
 
+	List<DropModel> filterByGender(boolean filterByMale, boolean filterByFemale, boolean filterByOther);
+
 }
