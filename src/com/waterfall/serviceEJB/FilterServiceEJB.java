@@ -7,6 +7,9 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.eclipse.persistence.jpa.rs.util.ResourceLocalTransactionWrapper;
+
+import com.sun.xml.rpc.processor.modeler.j2ee.xml.iconType;
 import com.waterfall.EJB.interfaces.LocalFilter;
 import com.waterfall.controllerbackingbeans.DropControllerBean;
 import com.waterfall.models.DropModel;
@@ -28,29 +31,31 @@ public class FilterServiceEJB implements LocalFilter {
 	@Override
 	public List<DropModel> filterDrops(String[] tagArray, boolean filteredByMale, 
 			boolean filteredByFemale, boolean filteredByOther) {
-		dropListFromSearch = new ArrayList<DropModel>();
-
-		for (int i = 0; i < tagArray.length; i++) {
-
-			dropListFromSearch.addAll(dropDAOBean.searchDropsFromDropTable(tagArray[i]));
-			
-			for (UserModel userModel : userDAOBean.searchDropsFromUserTable(tagArray[i])) {
-				dropListFromSearch.addAll(userModel.getDrops());
-			}
-
-			if (tagArray.length > 1) {
-				System.out.println("nu är den större");
-				dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, tagArray[i]);
-			}else {
-				System.out.println("inte nu");
-			}
-		}
-
+		
+		dropListFromSearch = (ArrayList<DropModel>) getInitialList(tagArray);
 		filterByGender(filteredByMale, filteredByFemale, filteredByOther);
 		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList(dropListFromSearch);
 
 		return dropListFromSearch;
 
+	}
+	
+	public List<DropModel> getInitialList(String[] tagArray) {
+		dropListFromSearch = new ArrayList<DropModel>();
+		
+		for (int i = 0; i < tagArray.length; i++) {
+
+			dropListFromSearch.addAll(dropDAOBean.findDropsByContent(tagArray[i]));
+			
+//			for (UserModel userModel : userDAOBean.searchDropsFromUserTable(tagArray[i])) {
+//				dropListFromSearch.addAll(userModel.getDrops());
+//			}
+
+			dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, tagArray);
+
+		}
+		
+		return dropListFromSearch;
 	}
 
 	public List<DropModel> filterByGender(boolean filteredByMale, boolean filteredByFemale, boolean filteredByOther) {
@@ -85,10 +90,6 @@ public class FilterServiceEJB implements LocalFilter {
 				System.out.println("Nu var det inte en kvinna, tog bort!");
 			}
 		}
-		
-		for(int i = 0; i < dropListFromSearch.size(); i++) {
-			System.out.println(dropListFromSearch.get(i).getOwner().getGender());
-		}
 	}
 
 	private void filterByOther() {
@@ -113,15 +114,31 @@ public class FilterServiceEJB implements LocalFilter {
 		return dropListFromSearch;
 	}
 
-	private List<DropModel> filterList(ArrayList<DropModel> dropListFromSearch, String currentWord) {
+	private List<DropModel> filterList(ArrayList<DropModel> dropListFromSearch,  String[] tagArray) {
 		List<DropModel> filteredList = new ArrayList<DropModel>();
 		for (int i = 0; i < dropListFromSearch.size(); i++) {
-			if (dropListFromSearch.get(i).getContent().contains(currentWord)) {
-				System.out.println("droppen innehåller ordet: " + currentWord + " och har innehållet: " + dropListFromSearch.get(i).getContent());
+			if(dropContainsAllSearchWords(dropListFromSearch.get(i), tagArray)) {
 				filteredList.add(dropListFromSearch.get(i));
 			}
 		}
 		return filteredList;
+	}
+	
+	private boolean dropContainsAllSearchWords(DropModel drop, String[] tagArray) {
+		
+		for(int i = 0; i < tagArray.length; i++) {
+			if(!drop.getContent().contains(tagArray[i])){
+				System.out.println("dropmodel: " + drop.getContent() + "innehöll inte: " + tagArray[i]);
+				return false;
+			}
+		}
+		
+//		System.out.println("dropmodel: " + drop.getContent() + "innehöll: ");
+//		for(int i = 0; i < tagArray.length; i++) {
+//			System.out.println(tagArray[i]);
+//		}
+		return true;
+
 	}
 
 }

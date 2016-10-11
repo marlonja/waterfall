@@ -35,7 +35,7 @@ public class DropDAOBean {
 		return em.createNamedQuery("DropModel.findAll").getResultList();
 	}
 
-	public List<DropModel> searchDropsFromDropTable(String searchWord) {
+	public List<DropModel> findDropsByContent(String searchWord) {
 		return em.createNamedQuery("DropModel.findDropContentFromSearch")
 				.setParameter("content", "%" + searchWord + "%").getResultList();
 	}

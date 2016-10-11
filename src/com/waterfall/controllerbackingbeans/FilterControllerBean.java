@@ -27,11 +27,11 @@ public class FilterControllerBean {
 		
 		String[] tagArray = tagList.split(",");
 		
-		for(int i = 0; i < tagArray.length; i++) {
-			System.out.println(tagArray[i]);
-		}
-		
 		dropControllerBean.setDropList(filterServiceEJB.filterDrops(tagArray, filteredByMale, filteredByFemale, filteredByOther));
+		
+		for(int i = 0; i < dropControllerBean.getDropList().size(); i++) {
+			System.out.println("listan: " + dropControllerBean.getDropList().get(i).getContent());
+		}
 		
 		return "index";
 	}
@@ -71,8 +71,6 @@ public class FilterControllerBean {
 
 	public void setTagList(String tags) {
 		this.tagList = tags;
-		filter();
-		System.out.println("nu filtrerar vi via get");
 	}
 
 }
