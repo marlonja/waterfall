@@ -10,10 +10,12 @@
 <h:head>
 	<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"/>
+	<script src="resources/script/regscript.js" type="text/javascript" />
 	<title>Register new user</title>
 </h:head>
 
 <h:body>
+<p id="error-msg">#{registrationControllerBean.errorAsJson}</p>
 	<h:form id="reg-form">
 		<b:container>
 			<h1 class="header-for-reg-new-user">Register new user</h1>
@@ -37,7 +39,7 @@
 						<b:selectOneMenu value="#{registrationControllerBean.birthYear}">
 							<f:selectItem itemLabel="- Choose year -" itemValue="" />
 							<f:selectItems value="#{registrationControllerBean.years}"
-								var="year" itemValue="#{year}" itemLabel="#{year}" />
+								var="year" itemValue="#{year}" itemLabel="#{year}"/>
 						</b:selectOneMenu>
 					</b:column>
 					<b:column span="4">
@@ -67,7 +69,7 @@
 				</b:row>
 				<b:row>
 					<b:column>
-						<h:selectOneMenu value="#{registrationControllerBean.gender}"
+						<h:selectOneMenu id="gender" value="#{registrationControllerBean.gender}"
 							styleClass="input">
 							<f:selectItem itemValue="Male" itemLabel="Male" />
 							<f:selectItem itemValue="Female" itemLabel="Female" />

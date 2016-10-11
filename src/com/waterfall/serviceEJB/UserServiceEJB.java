@@ -100,6 +100,7 @@ public class UserServiceEJB implements LocalUser {
 
 		try {
 			currentSession.put(sessionKey, userModel);
+			System.out.println("User put in session");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
