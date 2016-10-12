@@ -33,8 +33,8 @@ public class FilterServiceEJB implements LocalFilter {
 			boolean filteredByFemale, boolean filteredByOther) {
 		
 		dropListFromSearch = (ArrayList<DropModel>) getInitialList(searchWords);
-		filterByGender(filteredByMale, filteredByFemale, filteredByOther);
-		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList(dropListFromSearch);
+		dropListFromSearch = (ArrayList<DropModel>) filterByGender(filteredByMale, filteredByFemale, filteredByOther);
+		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList();
 
 		return dropListFromSearch;
 
@@ -50,56 +50,61 @@ public class FilterServiceEJB implements LocalFilter {
 			for (UserModel userModel : userDAOBean.searchDropsFromUserTable(searchWords[i])) {
 				dropListFromSearch.addAll(userModel.getDrops());
 			}
-
-			dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
-
 		}
+		
+		dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
 		
 		return dropListFromSearch;
 	}
 
 	public List<DropModel> filterByGender(boolean filteredByMale, boolean filteredByFemale, boolean filteredByOther) {
 		if (filteredByMale) {
-			filterByMale();
+			dropListFromSearch = (ArrayList<DropModel>) filterByMale();
 		}
 		if (filteredByFemale) {
-			filterByFemale();
+			dropListFromSearch = (ArrayList<DropModel>) filterByFemale();
 		}
 		if (filteredByOther) {
-			filterByOther();
+			dropListFromSearch = (ArrayList<DropModel>) filterByOther();
 		}
 
 		return dropListFromSearch;
 	}
 
-	private void filterByMale() {
+	private List<DropModel> filterByMale() {
 		
 		for(int i = 0; i < dropListFromSearch.size(); i++) {
 			if(!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("male")){
 				dropListFromSearch.remove(i);
 			}
 		}
+		
+		return dropListFromSearch;
 	}
 
-	private void filterByFemale() {
+	private List<DropModel> filterByFemale() {
 		
 		for(int i = 0; i < dropListFromSearch.size(); i++) {
 			if(!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("female")){
 				dropListFromSearch.remove(dropListFromSearch.get(i));
 			}
 		}
+		
+		return dropListFromSearch;
 	}
 
-	private void filterByOther() {
+	private List<DropModel> filterByOther() {
 		
 		for(int i = 0; i < dropListFromSearch.size(); i++) {
 			if(!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("other")){
 				dropListFromSearch.remove(i);
 			}
 		}
+		
+		return dropListFromSearch;
 	}
 
-	private List<DropModel> removeDuplicatesFromSearchList(ArrayList<DropModel> dropListFromSearch) {
+	private List<DropModel> removeDuplicatesFromSearchList() {
 		for (int i = 0; i < dropListFromSearch.size(); i++) {
 			for (int j = i + 1; j < dropListFromSearch.size(); j++) {
 				if (dropListFromSearch.get(i).getDropId().equals(dropListFromSearch.get(j).getDropId())) {
@@ -181,6 +186,13 @@ public class FilterServiceEJB implements LocalFilter {
 						"innehöll ordet: " + searchWords[i] +
 						" var " + userInformationContainsSearchWords(drop.getOwner(), searchWords[i]));
 				return false;
+			}else {
+				System.out.println("Att dropmodel med content: " + drop.getContent() +
+						"innehöll ordet: " + searchWords[i] +
+						" var " + drop.getContent().contains(searchWords[i]));
+				System.out.println("Att dropmodel med username: " + drop.getOwner().getUsername() +
+						"innehöll ordet: " + searchWords[i] +
+						" var " + userInformationContainsSearchWords(drop.getOwner(), searchWords[i]));
 			}
 		}
 		return true;
