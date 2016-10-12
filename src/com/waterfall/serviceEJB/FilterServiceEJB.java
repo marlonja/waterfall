@@ -56,7 +56,7 @@ public class FilterServiceEJB implements LocalFilter {
 	@SuppressWarnings("deprecation")
 	@Override
 	public List<DropModel> filterByAgeSpan(int startAge, int endAge) {
-
+		dropListFromSearch.clear();
 		List<UserModel> listOfUserstest = new ArrayList<UserModel>();
 		List<DropModel> listofDropsFilteredByAge = new ArrayList<DropModel>();
 		
@@ -75,7 +75,7 @@ public class FilterServiceEJB implements LocalFilter {
 		}
 		
 		System.out.println(listofDropsFilteredByAge.size());
-		dropListFromSearch = (ArrayList<DropModel>) listofDropsFilteredByAge;
+		dropListFromSearch.addAll(listofDropsFilteredByAge);
 		return dropListFromSearch;
 
 	}
