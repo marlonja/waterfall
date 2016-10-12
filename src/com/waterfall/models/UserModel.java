@@ -17,7 +17,7 @@ import java.util.Date;
 		@NamedQuery(name = "UserModel.findByFirstName", query = "SELECT u FROM UserModel u WHERE u.firstName LIKE :firstname"),
 		@NamedQuery(name = "UserModel.findByLastName", query = "SELECT u FROM UserModel u WHERE u.lastName LIKE :lastname"),
 		@NamedQuery(name = "UserModel.findByGender", query = "SELECT u FROM UserModel u WHERE u.gender LIKE :gender"),
-		@NamedQuery(name = "UserModel.findByAge" , query = "SELECT u FROM UserModel u WHERE u.birthdate LIKE :birthdate")
+		@NamedQuery(name = "UserModel.findByBirthdate" , query = "SELECT u FROM UserModel u WHERE u.birthdate BETWEEN :enddate AND :startdate")
 })
 
 public class UserModel implements Serializable {

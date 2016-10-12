@@ -101,9 +101,8 @@ public class UserDAOBean {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<UserModel> getUsersByAge(Date startAge, Date endAge) {
-		return em.createQuery("SELECT * FROM waterfalldb.usermodel WHERE birthdate BETWEEN '" + startAge + "' AND '" + endAge + "'").getResultList();
-		
+	public List<UserModel> getUsersByAge(Date endAge, Date startAge) {
+		return em.createNamedQuery("UserModel.findByBirthdate").setParameter("enddate", endAge).setParameter("startdate", startAge).getResultList();
 	}
 
 }
