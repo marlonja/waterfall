@@ -3,6 +3,7 @@ package com.waterfall.controllerbackingbeans;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -14,6 +15,7 @@ import javax.inject.Named;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.UserModel;
+import com.waterfall.utils.DateService;
 
 @Named(value = "loginControllerBean")
 @SessionScoped

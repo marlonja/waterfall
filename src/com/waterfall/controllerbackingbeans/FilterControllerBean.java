@@ -1,12 +1,17 @@
 package com.waterfall.controllerbackingbeans;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalFilter;
+import com.waterfall.utils.DateService;
 
 @Named(value = "filterControllerBean")
 @RequestScoped
@@ -15,7 +20,18 @@ public class FilterControllerBean {
 	private boolean filteredByMale;
 	private boolean filteredByFemale;
 	private boolean filteredByOther;
+	private int startAge;
+	private int endAge;
 	private String tagList;
+	private List<Integer> ageList;
+
+	@PostConstruct
+	public void init() {
+		setAgeList(dateService.ageList());
+	}
+	
+	@EJB
+	DateService dateService;
 
 	@Inject
 	DropControllerBean dropControllerBean;
@@ -23,6 +39,12 @@ public class FilterControllerBean {
 	@EJB
 	LocalFilter filterServiceEJB;
 
+	public void filterByAge() {
+		System.out.println(startAge + " " + endAge);
+		
+		filterServiceEJB.filterByAgeSpan(startAge, endAge);
+	}
+	
 	public String filterByGender() {
 		filterServiceEJB.filterByGender(filteredByMale, filteredByFemale, filteredByOther);
 		return "index";
@@ -60,6 +82,30 @@ public class FilterControllerBean {
 		String[] tagArray = tagList.split(",");
 		dropControllerBean.setDropList(filterServiceEJB.filterDrops(tagArray));
 		this.tagList = tagList;
+	}
+	
+	public List<Integer> getAgeList() {
+		return ageList;
+	}
+
+	public void setAgeList(List<Integer> ageList) {
+		this.ageList = ageList;
+	}
+
+	public int getStartAge() {
+		return startAge;
+	}
+
+	public void setStartAge(int startAge) {
+		this.startAge = startAge;
+	}
+
+	public int getEndAge() {
+		return endAge;
+	}
+
+	public void setEndAge(int endAge) {
+		this.endAge = endAge;
 	}
 
 }

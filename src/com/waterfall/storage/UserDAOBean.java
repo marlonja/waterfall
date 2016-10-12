@@ -100,4 +100,9 @@ public class UserDAOBean {
 
 	}
 
+	public List<UserModel> getUsersByAge(int birthYear) {
+		return em.createNamedQuery("UserModel.findByAge").setParameter("birthdate", birthYear + "%").getResultList();
+		
+	}
+
 }

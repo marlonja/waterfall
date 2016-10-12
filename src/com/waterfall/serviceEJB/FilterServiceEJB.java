@@ -1,18 +1,18 @@
 package com.waterfall.serviceEJB;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 import com.waterfall.EJB.interfaces.LocalFilter;
-import com.waterfall.controllerbackingbeans.DropControllerBean;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.DropDAOBean;
 import com.waterfall.storage.UserDAOBean;
+import com.waterfall.utils.DateService;
 
 @Stateless
 public class FilterServiceEJB implements LocalFilter {
@@ -24,6 +24,9 @@ public class FilterServiceEJB implements LocalFilter {
 	UserDAOBean userDAOBean;
 
 	private ArrayList<DropModel> dropListFromSearch;
+	
+	@EJB
+	DateService dateService;
 
 	@Override
 	public List<DropModel> filterDrops(String[] tagArray) {
@@ -45,6 +48,20 @@ public class FilterServiceEJB implements LocalFilter {
 
 		return dropListFromSearch;
 
+	}
+	
+	@Override
+	public void filterByAgeSpan(int startAge, int endAge) {
+		
+		List<UserModel> listOfUserstest = new ArrayList<UserModel>();
+		
+		startAge = dateService.getCurrentDate().getYear() - startAge;
+		endAge = dateService.getCurrentDate().getYear() - endAge;
+		for(int i = endAge; i <= startAge; i++) {
+			listOfUserstest.addAll(userDAOBean.getUsersByAge(i));
+		}
+		System.out.println(listOfUserstest);
+		
 	}
 
 	public List<DropModel> filterByGender(boolean filteredByMale, boolean filteredByFemale, boolean filteredByOther) {
@@ -114,5 +131,7 @@ public class FilterServiceEJB implements LocalFilter {
 		}
 		return filteredList;
 	}
+
+	
 
 }
