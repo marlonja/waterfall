@@ -6,6 +6,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.stream.JsonParser;
 
 import org.eclipse.persistence.jpa.rs.util.ResourceLocalTransactionWrapper;
 
@@ -140,7 +142,7 @@ public class FilterServiceEJB implements LocalFilter {
 		}
 		
 		if(containsSearchWord) {
-			System.out.println("Nu stämde allt, droppens ägare hade ordet: ");
+			System.out.println("Droppens ägare hade ordet: ");
 			System.out.println(searchWord);
 		}
 		
@@ -151,23 +153,11 @@ public class FilterServiceEJB implements LocalFilter {
 	
 	private boolean containsSearchWord(UserModel user, String searchWord) {
 		
-		if(user.getFirstName().equalsIgnoreCase(searchWord)) {
-			return true;
-		}
+		String userInfo = user.getFirstName() + user.getLastName() + user.getUsername() + user.getCity() + user.getCountry();
 		
-		if(user.getLastName().equalsIgnoreCase(searchWord)) {
-			return true;
-		}
+		System.out.println(userInfo);
 		
-		if(user.getUsername().equalsIgnoreCase(searchWord)) {
-			return true;
-		}
-		
-		if(user.getCity().equalsIgnoreCase(searchWord)) {
-			return true;
-		}
-		
-		if(user.getCountry().equalsIgnoreCase(searchWord)) {
+		if(userInfo.toLowerCase().contains(searchWord.toLowerCase())){
 			return true;
 		}
 		
@@ -176,23 +166,25 @@ public class FilterServiceEJB implements LocalFilter {
 	
 	private boolean dropContainsAllSearchWords(DropModel drop, String[] searchWords) {
 		
+		// Fixa toLowerCase
+		
 		for(int i = 0; i < searchWords.length; i++) {
 			if(!drop.getContent().contains(searchWords[i]) && !userInformationContainsSearchWords(drop.getOwner(), searchWords[i])){
 				
-				System.out.println("Att dropmodel med content: " + drop.getContent() +
-						"innehöll ordet: " + searchWords[i] +
-						" var " + drop.getContent().contains(searchWords[i]));
-				System.out.println("Att dropmodel med username: " + drop.getOwner().getUsername() +
-						"innehöll ordet: " + searchWords[i] +
-						" var " + userInformationContainsSearchWords(drop.getOwner(), searchWords[i]));
+//				System.out.println("Att dropmodel med content: " + drop.getContent() +
+//						"innehöll ordet: " + searchWords[i] +
+//						" var " + drop.getContent().contains(searchWords[i]));
+//				System.out.println("Att dropmodel med username: " + drop.getOwner().getUsername() +
+//						"innehöll ordet: " + searchWords[i] +
+//						" var " + userInformationContainsSearchWords(drop.getOwner(), searchWords[i]));
 				return false;
 			}else {
-				System.out.println("Att dropmodel med content: " + drop.getContent() +
-						"innehöll ordet: " + searchWords[i] +
-						" var " + drop.getContent().contains(searchWords[i]));
-				System.out.println("Att dropmodel med username: " + drop.getOwner().getUsername() +
-						"innehöll ordet: " + searchWords[i] +
-						" var " + userInformationContainsSearchWords(drop.getOwner(), searchWords[i]));
+//				System.out.println("Att dropmodel med content: " + drop.getContent() +
+//						"innehöll ordet: " + searchWords[i] +
+//						" var " + drop.getContent().contains(searchWords[i]));
+//				System.out.println("Att dropmodel med username: " + drop.getOwner().getUsername() +
+//						"innehöll ordet: " + searchWords[i] +
+//						" var " + userInformationContainsSearchWords(drop.getOwner(), searchWords[i]));
 			}
 		}
 		return true;
