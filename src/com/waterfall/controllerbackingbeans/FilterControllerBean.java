@@ -29,10 +29,6 @@ public class FilterControllerBean {
 		
 		dropControllerBean.setDropList(filterServiceEJB.filterDrops(searchWords, filteredByMale, filteredByFemale, filteredByOther));
 		
-//		for(int i = 0; i < dropControllerBean.getDropList().size(); i++) {
-//			System.out.println("listan: " + dropControllerBean.getDropList().get(i).getContent());
-//		}
-		
 		return "index";
 	}
 
