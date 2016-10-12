@@ -116,33 +116,36 @@ public class FilterServiceEJB implements LocalFilter {
 		List<DropModel> filteredList = new ArrayList<DropModel>();
 		for (int i = 0; i < dropListFromSearch.size(); i++) {
 			boolean dropContainsAllWords = dropContainsAllSearchWords(dropListFromSearch.get(i), searchWords);
-			boolean userInformationContainsAllWords = userInformationContainsAllSearchWords(dropListFromSearch.get(i), searchWords);
+//			boolean userInformationContainsAllWords = userInformationContainsAllSearchWords(dropListFromSearch.get(i), searchWords);
 			
-			if(dropContainsAllWords || userInformationContainsAllWords) {
+			if(dropContainsAllWords) {
 				filteredList.add(dropListFromSearch.get(i));
 			}
+			
 		}
-		
 		
 		return filteredList;
 	}
 	
-	private boolean userInformationContainsAllSearchWords(DropModel drop, String[] searchWords) {
+	private boolean userInformationContainsSearchWords(UserModel owner, String searchWord) {
 		
-		boolean containsAllSearchWords = false;
+		boolean containsSearchWord = false;
 		
-		for(int i = 0; i < searchWords.length; i++) {
-			containsAllSearchWords = containsSearchWord(drop.getOwner(), searchWords[i]);
+		if(containsSearchWord(owner, searchWord)){
+			containsSearchWord = true;
 		}
 		
-		if(containsAllSearchWords) {
-			System.out.println("Nu stämde allt, droppens ägare hade orden: ");
-			for (String searchWord : searchWords) {
-				System.out.println(searchWord);
-			}
+//		
+//		for(int i = 0; i < searchWords.length; i++) {
+//			containsAllSearchWords = containsSearchWord(drop.getOwner(), searchWords[i]);
+//		}
+		
+		if(containsSearchWord) {
+			System.out.println("Nu stämde allt, droppens ägare hade ordet: ");
+			System.out.println(searchWord);
 		}
 		
-		return containsAllSearchWords;
+		return containsSearchWord;
 		
 
 	}
@@ -175,7 +178,7 @@ public class FilterServiceEJB implements LocalFilter {
 	private boolean dropContainsAllSearchWords(DropModel drop, String[] searchWords) {
 		
 		for(int i = 0; i < searchWords.length; i++) {
-			if(!drop.getContent().contains(searchWords[i])){
+			if(!drop.getContent().contains(searchWords[i]) && !userInformationContainsSearchWords(drop.getOwner(), searchWords[i])){
 				System.out.println("dropmodel: " + drop.getContent() + "innehöll inte: " + searchWords[i]);
 				return false;
 			}
