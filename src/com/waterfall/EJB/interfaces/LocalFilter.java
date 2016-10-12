@@ -13,6 +13,6 @@ public interface LocalFilter {
 
 	List<DropModel> filterByGender(boolean filterByMale, boolean filterByFemale, boolean filterByOther);
 
-	void filterByAgeSpan(int startAge, int endAge);
+	List<DropModel> filterByAgeSpan(int startAge, int endAge);
 
 }

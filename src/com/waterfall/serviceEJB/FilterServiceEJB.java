@@ -55,9 +55,11 @@ public class FilterServiceEJB implements LocalFilter {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void filterByAgeSpan(int startAge, int endAge) {
+	public List<DropModel> filterByAgeSpan(int startAge, int endAge) {
 
 		List<UserModel> listOfUserstest = new ArrayList<UserModel>();
+		List<DropModel> listofDropsFilteredByAge = new ArrayList<DropModel>();
+		
 		int month = dateService.getCurrentDate().getMonthValue();
 		int day = dateService.getCurrentDate().getDayOfMonth();
 		startAge = dateService.getCurrentDate().getYear() - startAge;
@@ -67,8 +69,14 @@ public class FilterServiceEJB implements LocalFilter {
 		Date endDate = new Date(endAge - 1900, month, day);
 		
 		listOfUserstest.addAll(userDAOBean.getUsersByAge(endDate, startDate));
-
-		System.out.println(listOfUserstest.size());
+		
+		for(int i = 0; i < listOfUserstest.size(); i++) {
+			listofDropsFilteredByAge.addAll(listOfUserstest.get(i).getDrops());
+		}
+		
+		System.out.println(listofDropsFilteredByAge.size());
+		dropListFromSearch = (ArrayList<DropModel>) listofDropsFilteredByAge;
+		return dropListFromSearch;
 
 	}
 

@@ -39,10 +39,10 @@ public class FilterControllerBean {
 	@EJB
 	LocalFilter filterServiceEJB;
 
-	public void filterByAge() {
-		System.out.println(startAge + " " + endAge);
-		
+	public String filterByAge() {
+		System.out.println("i controllerbean: " + startAge + " " + endAge);
 		filterServiceEJB.filterByAgeSpan(startAge, endAge);
+		return "index";
 	}
 	
 	public String filterByGender() {
