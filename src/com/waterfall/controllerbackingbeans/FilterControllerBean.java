@@ -25,13 +25,13 @@ public class FilterControllerBean {
 	
 	public String filter() {
 		
-		String[] tagArray = tagList.split(",");
+		String[] searchWords = tagList.split(",");
 		
-		dropControllerBean.setDropList(filterServiceEJB.filterDrops(tagArray, filteredByMale, filteredByFemale, filteredByOther));
+		dropControllerBean.setDropList(filterServiceEJB.filterDrops(searchWords, filteredByMale, filteredByFemale, filteredByOther));
 		
-		for(int i = 0; i < dropControllerBean.getDropList().size(); i++) {
-			System.out.println("listan: " + dropControllerBean.getDropList().get(i).getContent());
-		}
+//		for(int i = 0; i < dropControllerBean.getDropList().size(); i++) {
+//			System.out.println("listan: " + dropControllerBean.getDropList().get(i).getContent());
+//		}
 		
 		return "index";
 	}
