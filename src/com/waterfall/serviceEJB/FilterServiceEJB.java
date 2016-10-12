@@ -166,14 +166,12 @@ public class FilterServiceEJB implements LocalFilter {
 	
 	private boolean dropContainsAllSearchWords(DropModel drop, String[] searchWords) {
 		
-		// Fixa toLowerCase
-		
 		for(int i = 0; i < searchWords.length; i++) {
-			if(!drop.getContent().contains(searchWords[i]) && !userInformationContainsSearchWords(drop.getOwner(), searchWords[i])){
+			if(!drop.getContent().toLowerCase().contains(searchWords[i].toLowerCase()) && !userInformationContainsSearchWords(drop.getOwner(), searchWords[i])){
 				
 //				System.out.println("Att dropmodel med content: " + drop.getContent() +
 //						"innehöll ordet: " + searchWords[i] +
-//						" var " + drop.getContent().contains(searchWords[i]));
+//						" var " + drop.getContent().toLowerCase().contains(searchWords[i].toLowerCase()));
 //				System.out.println("Att dropmodel med username: " + drop.getOwner().getUsername() +
 //						"innehöll ordet: " + searchWords[i] +
 //						" var " + userInformationContainsSearchWords(drop.getOwner(), searchWords[i]));
@@ -181,7 +179,7 @@ public class FilterServiceEJB implements LocalFilter {
 			}else {
 //				System.out.println("Att dropmodel med content: " + drop.getContent() +
 //						"innehöll ordet: " + searchWords[i] +
-//						" var " + drop.getContent().contains(searchWords[i]));
+//						" var " + drop.getContent().toLowerCase().contains(searchWords[i].toLowerCase()));
 //				System.out.println("Att dropmodel med username: " + drop.getOwner().getUsername() +
 //						"innehöll ordet: " + searchWords[i] +
 //						" var " + userInformationContainsSearchWords(drop.getOwner(), searchWords[i]));
