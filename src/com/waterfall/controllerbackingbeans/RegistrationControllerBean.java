@@ -11,10 +11,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.New;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.google.gson.Gson;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.UserModel;
@@ -42,7 +45,11 @@ public class RegistrationControllerBean implements Serializable {
 	private List<Integer> years;
 	private List<Integer> days;
 	private ArrayList<String> errorMessages;
+	private String errorAsJson;
 
+	@Inject
+	LoginControllerBean loginControllerBean;
+	
 	@EJB
 	RegistrationValidator registrationValidator;
 
@@ -68,7 +75,7 @@ public class RegistrationControllerBean implements Serializable {
 		birthMonth = 0;
 		birthDay = 0;
 	}
-
+	
 	public String registerNewUser() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 		UserModel userModel = new UserModel();
 		userModel.setFirstName(firstName);
@@ -78,13 +85,21 @@ public class RegistrationControllerBean implements Serializable {
 		userModel.setCity(city);
 		userModel.setCountry(country);
 		userModel.setGender(gender);
-		userModel.setPassword(PBKDF2.generatePasswordHash(password));
+		if(registrationValidator.isBirthdateIncorrect(birthDay, birthMonth, birthYear, errorMessages).isEmpty() || !registrationValidator.isPasswordEmpty(password, errorMessages)) {
+			userModel.setPassword(PBKDF2.generatePasswordHash(password));
+			@SuppressWarnings("deprecation")
+			Date birthDate = new Date((birthYear - 1900), (birthMonth - 1), birthDay);
+			userModel.setBirthdate(birthDate);
+			System.out.println(birthDate.toString());
+			
+			return storeUser(userModel);
 		
-		@SuppressWarnings("deprecation")
-		Date birthDate = new Date((birthYear - 1900), (birthMonth - 1), birthDay);
-		userModel.setBirthdate(birthDate);
+		}else{
+			setErrorAsJson(new Gson().toJson(errorMessages));
+			errorMessages.clear();
+			return "reg-new-user-error";
+		}
 		
-		return storeUser(userModel);
 	}
 	
 	private String storeUser(UserModel userModel) {
@@ -94,14 +109,15 @@ public class RegistrationControllerBean implements Serializable {
 
 			userEJB.storeUser(userModel);
 			System.out.println("user saved");
+			userEJB.setUserInSession("loggedInUser", userModel);
+			loginControllerBean.setLoggedInUser(userModel);
 			return "index";
 		}
 		
-		for(int i = 0; i < errorMessages.size(); i++) {
-			System.out.println(errorMessages.get(i));
-		}
+		setErrorAsJson(new Gson().toJson(errorMessages));
+		
 		errorMessages.clear();
-		return "reg-new-user";
+		return "reg-new-user-error";
 	}
 
 	public String getPassword() {
@@ -223,6 +239,15 @@ public class RegistrationControllerBean implements Serializable {
 	public void setErrorMessages(ArrayList<String> errorMessages) {
 		this.errorMessages = errorMessages;
 	}
-	
+
+	public String getErrorAsJson() {
+		return errorAsJson;
+	}
+
+	public void setErrorAsJson(String errorAsJson) {
+		this.errorAsJson = errorAsJson;
+	}
+
+
 	
 }

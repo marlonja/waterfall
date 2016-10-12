@@ -1,6 +1,11 @@
 package com.waterfall.validators;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +16,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import com.sun.el.parser.ParseException;
 import com.sun.xml.bind.v2.schemagen.xmlschema.List;
+import com.sun.xml.ws.security.opt.api.tokens.Timestamp;
 import com.waterfall.controllerbackingbeans.RegistrationControllerBean;
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.UserDAOBean;
@@ -20,7 +27,7 @@ import com.waterfall.utils.ErrorMessageService;
 @Stateful
 public class RegistrationValidator {
 
-	private String regexOnlyLetter = "^[-A-ZÃ…Ã„Ã–a-zÃ¥Ã¤Ã¶]+$";
+	private String regexOnlyLetter = "^[-A-ZÅÄÖa-zåäö]+$";
 	private String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private String regexOnlyNumbers = "^[0-9-]+$";
@@ -39,22 +46,23 @@ public class RegistrationValidator {
 			errorMessageService.setValidationErrorMessage("gender", validationErrorMessages);
 		}
 		if(!isUsernameUnique(userToValidate.getUsername())){
-			errorMessageService.setValidationErrorMessage("usernameNotUnique", validationErrorMessages);
+			errorMessageService.setValidationErrorMessage("username", validationErrorMessages);
 		}
-		if(userToValidate.getUsername() == null) {
-			errorMessageService.setValidationErrorMessage("usernameIsNull", validationErrorMessages);
+		if(userToValidate.getUsername() == null || userToValidate.getUsername().trim().isEmpty()) {
+			errorMessageService.setValidationErrorMessage("username", validationErrorMessages);
 		}
 		
 		if(userToValidate.getCountry() == null){
-			errorMessageService.setValidationErrorMessage("countryIsNull", validationErrorMessages);
+			errorMessageService.setValidationErrorMessage("country", validationErrorMessages);
 		}
 
 		if (!isEmailFormatCorrect(userToValidate.getEmail())) {
-			errorMessageService.setValidationErrorMessage("emailFormatIncorrect", validationErrorMessages);
+			errorMessageService.setValidationErrorMessage("email", validationErrorMessages);
 		} 
 		if(!isEmailUnique(userToValidate.getEmail())){
-			errorMessageService.setValidationErrorMessage("emailNotUnique", validationErrorMessages);
+			errorMessageService.setValidationErrorMessage("email", validationErrorMessages);
 		}
+		
 		return errorMessageService.getValidationErrorMessages();
 
 	}
@@ -110,5 +118,44 @@ public class RegistrationValidator {
 	private boolean isUsernameUnique(String username){
 		return userDAOBean.isUsernameInDatabaseUnique(username);
 	}
+	
+	public boolean isPasswordEmpty(String password, ArrayList<String> validationErrorMessages){
+		if(password == null || password.trim().isEmpty()){
+			errorMessageService.setValidationErrorMessage("password", validationErrorMessages);
+			return true;
+		}
+		return false;
+	}
+
+	public ArrayList<String> isBirthdateIncorrect(int birthDay, int birthMonth, int birthYear, ArrayList<String> validationErrorMessages) {
+		System.out.println("day " + birthDay);
+		System.out.println("month " + birthMonth);
+		System.out.println("year " + birthYear);
+		if(birthDay == 0){
+			errorMessageService.setValidationErrorMessage("birthday", validationErrorMessages);
+		}
+		if(birthMonth == 0){
+			errorMessageService.setValidationErrorMessage("birthmonth", validationErrorMessages);
+		}
+		if(birthYear == 0){
+			errorMessageService.setValidationErrorMessage("birthyear", validationErrorMessages);
+		}
+		return validationErrorMessages;
+	}
+	
+	
+//	private boolean isUserBirthdateCorrect(Date birthdate){
+//		DateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
+//		try {
+//			formatter.parse(birthdate.toString());
+//			System.out.println("formatter " + formatter.parse(birthdate.toString()));
+//		} catch (java.text.ParseException e) {
+//			e.printStackTrace();
+//			return false;
+//		}
+//		
+//		return true;
+//		
+//	}
 
 }
