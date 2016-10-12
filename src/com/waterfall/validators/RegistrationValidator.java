@@ -118,6 +118,32 @@ public class RegistrationValidator {
 	private boolean isUsernameUnique(String username){
 		return userDAOBean.isUsernameInDatabaseUnique(username);
 	}
+	
+	public boolean isPasswordEmpty(String password, ArrayList<String> validationErrorMessages){
+		if(password == null || password.trim().isEmpty()){
+			errorMessageService.setValidationErrorMessage("password", validationErrorMessages);
+			return true;
+		}
+		return false;
+	}
+
+	public ArrayList<String> isBirthdateIncorrect(int birthDay, int birthMonth, int birthYear, ArrayList<String> validationErrorMessages) {
+		System.out.println("day " + birthDay);
+		System.out.println("month " + birthMonth);
+		System.out.println("year " + birthYear);
+		if(birthDay == 0){
+			errorMessageService.setValidationErrorMessage("birthday", validationErrorMessages);
+		}
+		if(birthMonth == 0){
+			errorMessageService.setValidationErrorMessage("birthmonth", validationErrorMessages);
+		}
+		if(birthYear == 0){
+			errorMessageService.setValidationErrorMessage("birthyear", validationErrorMessages);
+		}
+		return validationErrorMessages;
+	}
+	
+	
 //	private boolean isUserBirthdateCorrect(Date birthdate){
 //		DateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
 //		try {

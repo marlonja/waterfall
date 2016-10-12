@@ -85,14 +85,21 @@ public class RegistrationControllerBean implements Serializable {
 		userModel.setCity(city);
 		userModel.setCountry(country);
 		userModel.setGender(gender);
-		userModel.setPassword(PBKDF2.generatePasswordHash(password));
+		if(registrationValidator.isBirthdateIncorrect(birthDay, birthMonth, birthYear, errorMessages).isEmpty() || !registrationValidator.isPasswordEmpty(password, errorMessages)) {
+			userModel.setPassword(PBKDF2.generatePasswordHash(password));
+			@SuppressWarnings("deprecation")
+			Date birthDate = new Date((birthYear - 1900), (birthMonth - 1), birthDay);
+			userModel.setBirthdate(birthDate);
+			System.out.println(birthDate.toString());
+			
+			return storeUser(userModel);
 		
-		@SuppressWarnings("deprecation")
-		Date birthDate = new Date((birthYear - 1900), (birthMonth - 1), birthDay);
-		userModel.setBirthdate(birthDate);
-		System.out.println(birthDate.toString());
+		}else{
+			setErrorAsJson(new Gson().toJson(errorMessages));
+			errorMessages.clear();
+			return "reg-new-user-error";
+		}
 		
-		return storeUser(userModel);
 	}
 	
 	private String storeUser(UserModel userModel) {
