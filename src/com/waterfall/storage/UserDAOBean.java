@@ -1,16 +1,14 @@
 package com.waterfall.storage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 
 @Stateful
@@ -27,6 +25,7 @@ public class UserDAOBean {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<UserModel> getAll() {
 		return em.createNamedQuery("UserModel.findAll").getResultList();
 	}
@@ -68,6 +67,7 @@ public class UserDAOBean {
 		return em.find(UserModel.class, userId);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<UserModel> searchDropsFromUserTable(String searchWord) {
 		List<UserModel> userModels = new ArrayList<UserModel>();
 
@@ -90,18 +90,19 @@ public class UserDAOBean {
 		} catch (NoResultException e) {
 			return null;
 		}
-
 		return userModels;
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<UserModel> getUsersByGender(String string) {
 		return em.createNamedQuery("UserModel.findByGender").setParameter("gender", string).getResultList();
 
 	}
 
-	public List<UserModel> getUsersByAge(int birthYear) {
-		return em.createNamedQuery("UserModel.findByAge").setParameter("birthdate", birthYear + "%").getResultList();
+	@SuppressWarnings("unchecked")
+	public List<UserModel> getUsersByAge(Date startAge, Date endAge) {
+		return em.createQuery("SELECT * FROM waterfalldb.usermodel WHERE birthdate BETWEEN '" + startAge + "' AND '" + endAge + "'").getResultList();
 		
 	}
 

@@ -1,5 +1,7 @@
 package com.waterfall.serviceEJB;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +26,7 @@ public class FilterServiceEJB implements LocalFilter {
 	UserDAOBean userDAOBean;
 
 	private ArrayList<DropModel> dropListFromSearch;
-	
+
 	@EJB
 	DateService dateService;
 
@@ -49,19 +51,30 @@ public class FilterServiceEJB implements LocalFilter {
 		return dropListFromSearch;
 
 	}
-	
+
 	@Override
 	public void filterByAgeSpan(int startAge, int endAge) {
-		
+
 		List<UserModel> listOfUserstest = new ArrayList<UserModel>();
+		SimpleDateFormat birthDate = new SimpleDateFormat("yyyy-MM-dd");
+
+		
 		
 		startAge = dateService.getCurrentDate().getYear() - startAge;
 		endAge = dateService.getCurrentDate().getYear() - endAge;
-		for(int i = endAge; i <= startAge; i++) {
-			listOfUserstest.addAll(userDAOBean.getUsersByAge(i));
-		}
-		System.out.println(listOfUserstest);
 		
+		Date startDate = new Date();
+		startDate.setYear(startAge - 1900);
+		
+		
+		
+		Date endDate = new Date();
+		endDate.setYear(endAge - 1900);
+		
+		listOfUserstest.addAll(userDAOBean.getUsersByAge(startDate, endDate));
+
+		System.out.println(listOfUserstest);
+
 	}
 
 	public List<DropModel> filterByGender(boolean filteredByMale, boolean filteredByFemale, boolean filteredByOther) {
@@ -131,7 +144,5 @@ public class FilterServiceEJB implements LocalFilter {
 		}
 		return filteredList;
 	}
-
-	
 
 }
