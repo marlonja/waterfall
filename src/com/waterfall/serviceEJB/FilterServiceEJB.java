@@ -31,15 +31,18 @@ public class FilterServiceEJB implements LocalFilter {
 	private boolean filterByMale;
 	private boolean filterByFemale;
 	private boolean filterByOther;
+	private int startAge;
+	private int endAge;
 
 	@Override
-	public List<DropModel> filterDrops(String[] searchWords, boolean filteredByMale, boolean filteredByFemale,
-			boolean filteredByOther) {
+	public List<DropModel> filterDrops(String[] searchWords, boolean filterByMale, boolean filterByFemale,
+			boolean filterByOther, int startAge, int endAge) {
 
-		filterByMale = filteredByMale;
-		filterByFemale = filteredByFemale;
-		filterByOther = filteredByOther;
-
+		this.filterByMale = filterByMale;
+		this.filterByFemale = filterByFemale;
+		this.filterByOther = filterByOther;
+		this.startAge = startAge;
+		this.endAge = endAge;
 		dropListFromSearch = (ArrayList<DropModel>) getInitialList(searchWords);
 
 		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList();
@@ -56,26 +59,30 @@ public class FilterServiceEJB implements LocalFilter {
 			dropListFromSearch = new ArrayList<DropModel>();
 		}
 
-		dropListFromSearch.clear();
-		List<UserModel> listOfUserstest = new ArrayList<UserModel>();
-		List<DropModel> listofDropsFilteredByAge = new ArrayList<DropModel>();
 
-		int month = dateService.getCurrentDate().getMonthValue();
+		int month = dateService.getCurrentDate().getMonthValue() -1;
 		int day = dateService.getCurrentDate().getDayOfMonth();
 		startAge = dateService.getCurrentDate().getYear() - startAge;
 		endAge = dateService.getCurrentDate().getYear() - endAge;
 
-		Date startDate = new Date(startAge - 1900, month, day);
-		Date endDate = new Date(endAge - 1900, month, day);
-
-		listOfUserstest.addAll(userDAOBean.getUsersByAge(endDate, startDate));
-
-		for (int i = 0; i < listOfUserstest.size(); i++) {
-			listofDropsFilteredByAge.addAll(listOfUserstest.get(i).getDrops());
+		Date endDate = new Date(startAge - 1900, month, day);
+		Date startDate = new Date(endAge - 1900, month, day);
+		System.out.println("enddate: " + endDate);
+		System.out.println("startdate " + startDate);
+		
+		for(int i = 0; i < dropListFromSearch.size(); i++){
+			int birthYear = dropListFromSearch.get(i).getOwner().getBirthdate().getYear();
+			int birthMonth = dropListFromSearch.get(i).getOwner().getBirthdate().getMonth();
+			int birthDay = dropListFromSearch.get(i).getOwner().getBirthdate().getDate();
+			
+			Date userBirthDate = new Date(birthYear, birthMonth, birthDay);
+			if(userBirthDate.before(startDate) || userBirthDate.after(endDate)){
+				dropListFromSearch.remove(i);
+				i--;
+			}
+				
 		}
-
-		System.out.println(listofDropsFilteredByAge.size());
-		dropListFromSearch.addAll(listofDropsFilteredByAge);
+		
 		return dropListFromSearch;
 
 	}
@@ -88,7 +95,9 @@ public class FilterServiceEJB implements LocalFilter {
 		} else {
 			dropListFromSearch.addAll(dropDAOBean.getAllDrops());
 		}
-
+		if(startAge != 0 && endAge !=0){
+			dropListFromSearch = (ArrayList<DropModel>) filterByAgeSpan(startAge, endAge);
+		}
 		if (!searchWords[0].isEmpty()) {
 			dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
 		}
@@ -124,7 +133,7 @@ public class FilterServiceEJB implements LocalFilter {
 			for (int j = i + 1; j < dropListFromSearch.size(); j++) {
 				if (dropListFromSearch.get(i).getDropId().equals(dropListFromSearch.get(j).getDropId())) {
 					dropListFromSearch.remove(j);
-					j = j - 1;
+					j--;
 				}
 			}
 		}
@@ -183,10 +192,5 @@ public class FilterServiceEJB implements LocalFilter {
 
 	}
 
-	@Override
-	public List<DropModel> filterByGender(boolean filterByMale, boolean filterByFemale, boolean filterByOther) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

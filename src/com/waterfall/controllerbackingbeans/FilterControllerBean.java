@@ -42,23 +42,17 @@ public class FilterControllerBean {
 		
 		String[] searchWords = tagList.split(",");
 		
-		dropControllerBean.setDropList(filterServiceEJB.filterDrops(searchWords, filteredByMale, filteredByFemale, filteredByOther));
+		dropControllerBean.setDropList(filterServiceEJB.filterDrops(searchWords, filteredByMale, filteredByFemale, filteredByOther, startAge, endAge));
 		
 		return "index";
 	}
 
-	public String filterByAge() {
-		System.out.println("i controllerbean: " + startAge + " " + endAge);
-		filterServiceEJB.filterByAgeSpan(startAge, endAge);
-		return "index";
-	}
-	
-	public String filterByGender() {
-		
-		System.out.println("Nu kör vi från backingbean, filterByGender");
-//		filterServiceEJB.filterByGender(filteredByMale, filteredByFemale, filteredByOther);
-		return "index";
-	}
+//	public String filterByAge() {
+//		System.out.println("i controllerbean: " + startAge + " " + endAge);
+//		filterServiceEJB.filterByAgeSpan(startAge, endAge);
+//		return "index";
+//	}
+
 
 	public boolean isFilteredByMale() {
 		return filteredByMale;
