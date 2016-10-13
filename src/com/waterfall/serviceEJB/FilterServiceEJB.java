@@ -1,21 +1,12 @@
 package com.waterfall.serviceEJB;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.sql.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import javax.inject.Inject;
-
-
-import org.eclipse.persistence.jpa.rs.util.ResourceLocalTransactionWrapper;
-
-import com.sun.xml.rpc.processor.modeler.j2ee.xml.iconType;
 import com.waterfall.EJB.interfaces.LocalFilter;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
