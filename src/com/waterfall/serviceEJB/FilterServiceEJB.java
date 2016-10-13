@@ -10,6 +10,12 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import javax.inject.Inject;
+
+
+import org.eclipse.persistence.jpa.rs.util.ResourceLocalTransactionWrapper;
+
+import com.sun.xml.rpc.processor.modeler.j2ee.xml.iconType;
 import com.waterfall.EJB.interfaces.LocalFilter;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
@@ -31,31 +37,35 @@ public class FilterServiceEJB implements LocalFilter {
 	@EJB
 	DateService dateService;
 
+	private boolean filterByMale;
+	private boolean filterByFemale;
+	private boolean filterByOther;
+
 	@Override
-	public List<DropModel> filterDrops(String[] tagArray) {
-		dropListFromSearch = new ArrayList<DropModel>();
+	public List<DropModel> filterDrops(String[] searchWords, boolean filteredByMale, boolean filteredByFemale,
+			boolean filteredByOther) {
 
-		for (int i = 0; i < tagArray.length; i++) {
+		filterByMale = filteredByMale;
+		filterByFemale = filteredByFemale;
+		filterByOther = filteredByOther;
 
-			dropListFromSearch.addAll(dropDAOBean.searchDropsFromDropTable(tagArray[i]));
-			for (UserModel userModel : userDAOBean.searchDropsFromUserTable(tagArray[i])) {
-				dropListFromSearch.addAll(userModel.getDrops());
-			}
+		dropListFromSearch = (ArrayList<DropModel>) getInitialList(searchWords);
 
-			if (i > 0) {
-				dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, tagArray[i]);
-			}
-		}
-
-		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList(dropListFromSearch);
+		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList();
 
 		return dropListFromSearch;
 
 	}
 
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public List<DropModel> filterByAgeSpan(int startAge, int endAge) {
+		
+		if(dropListFromSearch == null) {
+			dropListFromSearch = new ArrayList<DropModel>();
+		}
+		
 		dropListFromSearch.clear();
 		List<UserModel> listOfUserstest = new ArrayList<UserModel>();
 		List<DropModel> listofDropsFilteredByAge = new ArrayList<DropModel>();
@@ -78,54 +88,94 @@ public class FilterServiceEJB implements LocalFilter {
 		dropListFromSearch.addAll(listofDropsFilteredByAge);
 		return dropListFromSearch;
 
+}
+	public List<DropModel> getInitialList(String[] searchWords) {
+		dropListFromSearch = new ArrayList<DropModel>();
+
+		if(filterByMale || filterByFemale || filterByOther) {
+		dropListFromSearch = (ArrayList<DropModel>) getDropsByGender();
+		}else {
+			dropListFromSearch.addAll(dropDAOBean.getAllDrops());
+		}
+		
+		if(!searchWords[0].isEmpty()){
+		dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
+		}
+
+		return (ArrayList<DropModel>) dropListFromSearch;
+	}
+
+	private List<DropModel> getDropsByGender() {
+		List<UserModel> users = new ArrayList<UserModel>();
+		List<DropModel> drops =  new ArrayList<DropModel>();
+		if (filterByMale) {
+			users.addAll(userDAOBean.getUsersByGender("Male"));
+		}
+
+		if (filterByFemale) {
+			users.addAll(userDAOBean.getUsersByGender("Female"));
+		}
+
+		if (filterByOther) {
+			users.addAll(userDAOBean.getUsersByGender("Other"));
+		}
+		
+		for (UserModel user : users) {
+			drops.addAll(user.getDrops());
+		}
+
+		return (ArrayList<DropModel>) drops;
+
 	}
 
 	public List<DropModel> filterByGender(boolean filteredByMale, boolean filteredByFemale, boolean filteredByOther) {
-		dropListFromSearch.clear();
 		if (filteredByMale) {
-			dropListFromSearch.addAll(filterByMale());
+			dropListFromSearch = (ArrayList<DropModel>) filterByMale();
 		}
 		if (filteredByFemale) {
-			dropListFromSearch.addAll(filterByFemale());
+			dropListFromSearch = (ArrayList<DropModel>) filterByFemale();
 		}
 		if (filteredByOther) {
-			dropListFromSearch.addAll(filterByOther());
+			dropListFromSearch = (ArrayList<DropModel>) filterByOther();
 		}
 
 		return dropListFromSearch;
 	}
 
 	private List<DropModel> filterByMale() {
-		List<UserModel> listOfMaleUsers = userDAOBean.getUsersByGender("male");
-		List<DropModel> listOfMaleDrops = new ArrayList<DropModel>();
 
-		for (int i = 0; i < listOfMaleUsers.size(); i++) {
-			listOfMaleDrops = listOfMaleUsers.get(i).getDrops();
+		for (int i = 0; i < dropListFromSearch.size(); i++) {
+			if (!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("male")) {
+				dropListFromSearch.remove(i);
+			}
 		}
-		return listOfMaleDrops;
+
+		return dropListFromSearch;
 	}
 
 	private List<DropModel> filterByFemale() {
-		List<UserModel> listOfFemaleUsers = userDAOBean.getUsersByGender("female");
-		List<DropModel> listOfFemaleDrops = new ArrayList<DropModel>();
 
-		for (int i = 0; i < listOfFemaleUsers.size(); i++) {
-			listOfFemaleDrops = listOfFemaleUsers.get(i).getDrops();
+		for (int i = 0; i < dropListFromSearch.size(); i++) {
+			if (!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("female")) {
+				dropListFromSearch.remove(dropListFromSearch.get(i));
+			}
 		}
-		return listOfFemaleDrops;
+
+		return dropListFromSearch;
 	}
 
 	private List<DropModel> filterByOther() {
-		List<UserModel> listOfOtherUsers = userDAOBean.getUsersByGender("other");
-		List<DropModel> listOfOtherDrops = new ArrayList<DropModel>();
 
-		for (int i = 0; i < listOfOtherUsers.size(); i++) {
-			listOfOtherDrops = listOfOtherUsers.get(i).getDrops();
+		for (int i = 0; i < dropListFromSearch.size(); i++) {
+			if (!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("other")) {
+				dropListFromSearch.remove(i);
+			}
 		}
-		return listOfOtherDrops;
+
+		return dropListFromSearch;
 	}
 
-	private List<DropModel> removeDuplicatesFromSearchList(ArrayList<DropModel> dropListFromSearch) {
+	private List<DropModel> removeDuplicatesFromSearchList() {
 		for (int i = 0; i < dropListFromSearch.size(); i++) {
 			for (int j = i + 1; j < dropListFromSearch.size(); j++) {
 				if (dropListFromSearch.get(i).getDropId().equals(dropListFromSearch.get(j).getDropId())) {
@@ -137,15 +187,56 @@ public class FilterServiceEJB implements LocalFilter {
 		return dropListFromSearch;
 	}
 
-	private List<DropModel> filterList(ArrayList<DropModel> dropListFromSearch, String currentWord) {
+	private List<DropModel> filterList(ArrayList<DropModel> dropListFromSearch, String[] searchWords) {
+
 		List<DropModel> filteredList = new ArrayList<DropModel>();
 		for (int i = 0; i < dropListFromSearch.size(); i++) {
-			if (dropListFromSearch.get(i).getContent().contains(currentWord)) {
-				System.out.println("Ja j�ttebra!!! " + dropListFromSearch.get(i).getContent());
+			boolean dropContainsAllWords = dropContainsAllSearchWords(dropListFromSearch.get(i), searchWords);
+
+			if (dropContainsAllWords) {
 				filteredList.add(dropListFromSearch.get(i));
 			}
+
 		}
+
 		return filteredList;
+	}
+
+	private boolean userInformationContainsSearchWords(UserModel owner, String searchWord) {
+
+		boolean containsSearchWord = false;
+
+		if (containsSearchWord(owner, searchWord)) {
+			containsSearchWord = true;
+		}
+
+		return containsSearchWord;
+
+	}
+
+	private boolean containsSearchWord(UserModel user, String searchWord) {
+
+		String userInfo = user.getFirstName() + user.getLastName() + user.getUsername() + user.getCity()
+				+ user.getCountry();
+
+		if (userInfo.toLowerCase().contains(searchWord.toLowerCase())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean dropContainsAllSearchWords(DropModel drop, String[] searchWords) {
+
+		for (int i = 0; i < searchWords.length; i++) {
+			if (!drop.getContent().toLowerCase().contains(searchWords[i].toLowerCase())
+					&& !userInformationContainsSearchWords(drop.getOwner(), searchWords[i])) {
+
+				return false;
+			}
+		}
+		return true;
+
 	}
 
 }

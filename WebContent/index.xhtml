@@ -101,12 +101,11 @@
 						</b:selectOneMenu>
 					</b:column>
 				</b:row>
+
 				<h:commandButton value="Sort by age-span"
 					action="#{filterControllerBean.filterByAge()}" />
-				<h:commandButton value="Sort by gender"
-					action="#{filterControllerBean.filterByGender()}" />
 				<h:commandButton value="Search"
-					action="#{filterControllerBean.getTagList()}" />
+					action="#{filterControllerBean.filter()}" />
 				<h:commandButton class="clear-button" value="Clear"
 					action="#{dropControllerBean.init()}" />
 

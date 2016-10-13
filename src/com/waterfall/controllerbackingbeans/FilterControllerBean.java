@@ -38,6 +38,15 @@ public class FilterControllerBean {
 
 	@EJB
 	LocalFilter filterServiceEJB;
+	
+	public String filter() {
+		
+		String[] searchWords = tagList.split(",");
+		
+		dropControllerBean.setDropList(filterServiceEJB.filterDrops(searchWords, filteredByMale, filteredByFemale, filteredByOther));
+		
+		return "index";
+	}
 
 	public String filterByAge() {
 		System.out.println("i controllerbean: " + startAge + " " + endAge);
@@ -46,7 +55,9 @@ public class FilterControllerBean {
 	}
 	
 	public String filterByGender() {
-		filterServiceEJB.filterByGender(filteredByMale, filteredByFemale, filteredByOther);
+		
+		System.out.println("Nu kör vi från backingbean, filterByGender");
+//		filterServiceEJB.filterByGender(filteredByMale, filteredByFemale, filteredByOther);
 		return "index";
 	}
 
@@ -78,10 +89,8 @@ public class FilterControllerBean {
 		return tagList;
 	}
 
-	public void setTagList(String tagList) {
-		String[] tagArray = tagList.split(",");
-		dropControllerBean.setDropList(filterServiceEJB.filterDrops(tagArray));
-		this.tagList = tagList;
+	public void setTagList(String tags) {
+		this.tagList = tags;
 	}
 	
 	public List<Integer> getAgeList() {
