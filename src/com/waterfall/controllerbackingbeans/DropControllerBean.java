@@ -1,12 +1,7 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -18,7 +13,6 @@ import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
-import com.waterfall.models.UserModel;
 import com.waterfall.validators.CreateDropValidator;
 
 import jersey.repackaged.com.google.common.collect.Lists;
