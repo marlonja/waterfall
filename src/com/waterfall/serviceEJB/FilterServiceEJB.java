@@ -170,11 +170,6 @@ public class FilterServiceEJB implements LocalFilter {
 			containsSearchWord = true;
 		}
 
-		if (containsSearchWord) {
-			System.out.println("Droppens ägare hade ordet: ");
-			System.out.println(searchWord);
-		}
-
 		return containsSearchWord;
 
 	}
@@ -183,8 +178,6 @@ public class FilterServiceEJB implements LocalFilter {
 
 		String userInfo = user.getFirstName() + user.getLastName() + user.getUsername() + user.getCity()
 				+ user.getCountry();
-
-		System.out.println(userInfo);
 
 		if (userInfo.toLowerCase().contains(searchWord.toLowerCase())) {
 			return true;
@@ -199,28 +192,7 @@ public class FilterServiceEJB implements LocalFilter {
 			if (!drop.getContent().toLowerCase().contains(searchWords[i].toLowerCase())
 					&& !userInformationContainsSearchWords(drop.getOwner(), searchWords[i])) {
 
-				// System.out.println("Att dropmodel med content: " +
-				// drop.getContent() +
-				// "innehöll ordet: " + searchWords[i] +
-				// " var " +
-				// drop.getContent().toLowerCase().contains(searchWords[i].toLowerCase()));
-				// System.out.println("Att dropmodel med username: " +
-				// drop.getOwner().getUsername() +
-				// "innehöll ordet: " + searchWords[i] +
-				// " var " + userInformationContainsSearchWords(drop.getOwner(),
-				// searchWords[i]));
 				return false;
-			} else {
-				// System.out.println("Att dropmodel med content: " +
-				// drop.getContent() +
-				// "innehöll ordet: " + searchWords[i] +
-				// " var " +
-				// drop.getContent().toLowerCase().contains(searchWords[i].toLowerCase()));
-				// System.out.println("Att dropmodel med username: " +
-				// drop.getOwner().getUsername() +
-				// "innehöll ordet: " + searchWords[i] +
-				// " var " + userInformationContainsSearchWords(drop.getOwner(),
-				// searchWords[i]));
 			}
 		}
 		return true;
