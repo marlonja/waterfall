@@ -80,7 +80,7 @@ public class FilterServiceEJB implements LocalFilter {
 
 	}
 
-	public List<DropModel> getInitialList(String[] searchWords) {
+	private List<DropModel> getInitialList(String[] searchWords) {
 		dropListFromSearch = new ArrayList<DropModel>();
 
 		if (filterByMale || filterByFemale || filterByOther) {
