@@ -39,8 +39,6 @@ public class UserControllerBean implements Serializable {
 		userToCheckInDatabase.setUsername(usernameSearch);
 		userToSearch = userEJB.getUserByUsername(usernameSearch);
 		friendList = new ArrayList<UserModel>();
-		// friendList.add(userEJB.getUser(46l));
-		// friendList.add(userEJB.getUser(45l));
 
 		return "profile-page";
 	}

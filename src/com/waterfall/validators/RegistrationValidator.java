@@ -38,9 +38,11 @@ public class RegistrationValidator {
 	@EJB
 	private ErrorMessageService errorMessageService;
 
-	public ArrayList<String> validateUserForRegistration(UserModel userToValidate, ArrayList<String> validationErrorMessages) {
+	public ArrayList<String> validateUserForRegistration(int birthYear, int birthMonth, int birthDay, UserModel userToValidate, ArrayList<String> validationErrorMessages) {
 		
 		isBasicFormatCorrect(userToValidate, validationErrorMessages);
+		
+		isBirthdateCorrect(birthYear, birthMonth, birthDay, validationErrorMessages);
 		
 		if(userToValidate.getGender() == null){
 			errorMessageService.setValidationErrorMessage("gender", validationErrorMessages);
@@ -61,6 +63,9 @@ public class RegistrationValidator {
 		} 
 		if(!isEmailUnique(userToValidate.getEmail())){
 			errorMessageService.setValidationErrorMessage("email", validationErrorMessages);
+		}
+		if(!isPasswordCorrect(userToValidate.getPassword())){
+			errorMessageService.setValidationErrorMessage("password", validationErrorMessages);
 		}
 		
 		return errorMessageService.getValidationErrorMessages();
@@ -119,15 +124,15 @@ public class RegistrationValidator {
 		return userDAOBean.isUsernameInDatabaseUnique(username);
 	}
 	
-	public boolean isPasswordEmpty(String password, ArrayList<String> validationErrorMessages){
+	private boolean isPasswordCorrect(String password){
 		if(password == null || password.trim().isEmpty()){
-			errorMessageService.setValidationErrorMessage("password", validationErrorMessages);
-			return true;
+			
+			return false;
 		}
-		return false;
+		return true;
 	}
 
-	public ArrayList<String> isBirthdateIncorrect(int birthDay, int birthMonth, int birthYear, ArrayList<String> validationErrorMessages) {
+	private ArrayList<String> isBirthdateCorrect(int birthYear, int birthMonth, int birthDay, ArrayList<String> validationErrorMessages) {
 		System.out.println("day " + birthDay);
 		System.out.println("month " + birthMonth);
 		System.out.println("year " + birthYear);
@@ -142,20 +147,6 @@ public class RegistrationValidator {
 		}
 		return validationErrorMessages;
 	}
-	
-	
-//	private boolean isUserBirthdateCorrect(Date birthdate){
-//		DateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
-//		try {
-//			formatter.parse(birthdate.toString());
-//			System.out.println("formatter " + formatter.parse(birthdate.toString()));
-//		} catch (java.text.ParseException e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-//		
-//		return true;
-//		
-//	}
+
 
 }

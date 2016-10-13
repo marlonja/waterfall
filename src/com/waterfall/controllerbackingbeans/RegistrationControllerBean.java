@@ -11,9 +11,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.New;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -49,13 +46,13 @@ public class RegistrationControllerBean implements Serializable {
 
 	@Inject
 	LoginControllerBean loginControllerBean;
-	
+
 	@EJB
 	RegistrationValidator registrationValidator;
 
 	@EJB
 	CountryService countryService;
-	
+
 	@EJB
 	DateService dateService;
 
@@ -67,16 +64,40 @@ public class RegistrationControllerBean implements Serializable {
 		setAllCountries(countryService.getAllCountries());
 		setYears(dateService.years());
 		setDays(dateService.days());
-		if(errorMessages == null) {
+		if (errorMessages == null) {
 			errorMessages = new ArrayList<>();
 		}
-		
+
 		birthYear = 0;
 		birthMonth = 0;
 		birthDay = 0;
 	}
-	
+
 	public String registerNewUser() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
+		UserModel userToValidate = new UserModel();
+		userToValidate.setFirstName(firstName);
+		userToValidate.setLastName(lastName);
+		userToValidate.setUsername(username);
+		userToValidate.setEmail(email);
+		userToValidate.setCity(city);
+		userToValidate.setCountry(country);
+		userToValidate.setGender(gender);
+		userToValidate.setPassword(password);
+		errorMessages = registrationValidator.validateUserForRegistration(birthYear, birthMonth, birthDay,
+				userToValidate, errorMessages);
+		if (errorMessages.isEmpty()) {
+			return storeUser(createUserToSave());
+
+		} else {
+			setErrorAsJson(new Gson().toJson(errorMessages));
+			errorMessages.clear();
+			return "reg-new-user";
+		}
+
+	}
+
+	private UserModel createUserToSave()
+			throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 		UserModel userModel = new UserModel();
 		userModel.setFirstName(firstName);
 		userModel.setLastName(lastName);
@@ -85,39 +106,21 @@ public class RegistrationControllerBean implements Serializable {
 		userModel.setCity(city);
 		userModel.setCountry(country);
 		userModel.setGender(gender);
-		if(registrationValidator.isBirthdateIncorrect(birthDay, birthMonth, birthYear, errorMessages).isEmpty() || !registrationValidator.isPasswordEmpty(password, errorMessages)) {
-			userModel.setPassword(PBKDF2.generatePasswordHash(password));
-			@SuppressWarnings("deprecation")
-			Date birthDate = new Date((birthYear - 1900), (birthMonth - 1), birthDay);
-			userModel.setBirthdate(birthDate);
-			System.out.println(birthDate.toString());
-			
-			return storeUser(userModel);
-		
-		}else{
-			setErrorAsJson(new Gson().toJson(errorMessages));
-			errorMessages.clear();
-			return "reg-new-user-error";
-		}
-		
+		userModel.setPassword(PBKDF2.generatePasswordHash(password));
+		@SuppressWarnings("deprecation")
+		Date birthDate = new Date((birthYear - 1900), (birthMonth - 1), birthDay);
+		userModel.setBirthdate(birthDate);
+		return userModel;
 	}
-	
-	private String storeUser(UserModel userModel) {
-		errorMessages = registrationValidator.validateUserForRegistration(userModel, errorMessages);
-		
-		if (errorMessages.isEmpty()) {
 
-			userEJB.storeUser(userModel);
-			System.out.println("user saved");
-			userEJB.setUserInSession("loggedInUser", userModel);
-			loginControllerBean.setLoggedInUser(userModel);
-			return "index";
-		}
-		
-		setErrorAsJson(new Gson().toJson(errorMessages));
-		
+	private String storeUser(UserModel userModel) {
+
+		userEJB.storeUser(userModel);
+		System.out.println("user saved");
+		userEJB.setUserInSession("loggedInUser", userModel);
+		loginControllerBean.setLoggedInUser(userModel);
 		errorMessages.clear();
-		return "reg-new-user-error";
+		return "index";
 	}
 
 	public String getPassword() {
@@ -248,6 +251,4 @@ public class RegistrationControllerBean implements Serializable {
 		this.errorAsJson = errorAsJson;
 	}
 
-
-	
 }
