@@ -33,7 +33,9 @@ public class FilterControllerBean {
 	}
 
 	public String filterByGender() {
-		filterServiceEJB.filterByGender(filteredByMale, filteredByFemale, filteredByOther);
+		
+		System.out.println("Nu kör vi från backingbean, filterByGender");
+//		filterServiceEJB.filterByGender(filteredByMale, filteredByFemale, filteredByOther);
 		return "index";
 	}
 
