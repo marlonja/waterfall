@@ -48,49 +48,49 @@ public class FilterServiceEJB implements LocalFilter {
 
 	}
 
-
 	@SuppressWarnings("deprecation")
 	@Override
 	public List<DropModel> filterByAgeSpan(int startAge, int endAge) {
-		
-		if(dropListFromSearch == null) {
+
+		if (dropListFromSearch == null) {
 			dropListFromSearch = new ArrayList<DropModel>();
 		}
-		
+
 		dropListFromSearch.clear();
 		List<UserModel> listOfUserstest = new ArrayList<UserModel>();
 		List<DropModel> listofDropsFilteredByAge = new ArrayList<DropModel>();
-		
+
 		int month = dateService.getCurrentDate().getMonthValue();
 		int day = dateService.getCurrentDate().getDayOfMonth();
 		startAge = dateService.getCurrentDate().getYear() - startAge;
 		endAge = dateService.getCurrentDate().getYear() - endAge;
-		
+
 		Date startDate = new Date(startAge - 1900, month, day);
 		Date endDate = new Date(endAge - 1900, month, day);
-		
+
 		listOfUserstest.addAll(userDAOBean.getUsersByAge(endDate, startDate));
-		
-		for(int i = 0; i < listOfUserstest.size(); i++) {
+
+		for (int i = 0; i < listOfUserstest.size(); i++) {
 			listofDropsFilteredByAge.addAll(listOfUserstest.get(i).getDrops());
 		}
-		
+
 		System.out.println(listofDropsFilteredByAge.size());
 		dropListFromSearch.addAll(listofDropsFilteredByAge);
 		return dropListFromSearch;
 
-}
+	}
+
 	public List<DropModel> getInitialList(String[] searchWords) {
 		dropListFromSearch = new ArrayList<DropModel>();
 
-		if(filterByMale || filterByFemale || filterByOther) {
-		dropListFromSearch = (ArrayList<DropModel>) getDropsByGender();
-		}else {
+		if (filterByMale || filterByFemale || filterByOther) {
+			dropListFromSearch = (ArrayList<DropModel>) getDropsByGender();
+		} else {
 			dropListFromSearch.addAll(dropDAOBean.getAllDrops());
 		}
-		
-		if(!searchWords[0].isEmpty()){
-		dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
+
+		if (!searchWords[0].isEmpty()) {
+			dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
 		}
 
 		return (ArrayList<DropModel>) dropListFromSearch;
@@ -98,7 +98,7 @@ public class FilterServiceEJB implements LocalFilter {
 
 	private List<DropModel> getDropsByGender() {
 		List<UserModel> users = new ArrayList<UserModel>();
-		List<DropModel> drops =  new ArrayList<DropModel>();
+		List<DropModel> drops = new ArrayList<DropModel>();
 		if (filterByMale) {
 			users.addAll(userDAOBean.getUsersByGender("Male"));
 		}
@@ -110,60 +110,13 @@ public class FilterServiceEJB implements LocalFilter {
 		if (filterByOther) {
 			users.addAll(userDAOBean.getUsersByGender("Other"));
 		}
-		
+
 		for (UserModel user : users) {
 			drops.addAll(user.getDrops());
 		}
 
 		return (ArrayList<DropModel>) drops;
 
-	}
-
-	public List<DropModel> filterByGender(boolean filteredByMale, boolean filteredByFemale, boolean filteredByOther) {
-		if (filteredByMale) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByMale();
-		}
-		if (filteredByFemale) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByFemale();
-		}
-		if (filteredByOther) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByOther();
-		}
-
-		return dropListFromSearch;
-	}
-
-	private List<DropModel> filterByMale() {
-
-		for (int i = 0; i < dropListFromSearch.size(); i++) {
-			if (!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("male")) {
-				dropListFromSearch.remove(i);
-			}
-		}
-
-		return dropListFromSearch;
-	}
-
-	private List<DropModel> filterByFemale() {
-
-		for (int i = 0; i < dropListFromSearch.size(); i++) {
-			if (!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("female")) {
-				dropListFromSearch.remove(dropListFromSearch.get(i));
-			}
-		}
-
-		return dropListFromSearch;
-	}
-
-	private List<DropModel> filterByOther() {
-
-		for (int i = 0; i < dropListFromSearch.size(); i++) {
-			if (!dropListFromSearch.get(i).getOwner().getGender().equalsIgnoreCase("other")) {
-				dropListFromSearch.remove(i);
-			}
-		}
-
-		return dropListFromSearch;
 	}
 
 	private List<DropModel> removeDuplicatesFromSearchList() {
@@ -228,6 +181,12 @@ public class FilterServiceEJB implements LocalFilter {
 		}
 		return true;
 
+	}
+
+	@Override
+	public List<DropModel> filterByGender(boolean filterByMale, boolean filterByFemale, boolean filterByOther) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
