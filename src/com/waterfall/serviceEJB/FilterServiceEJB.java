@@ -95,13 +95,8 @@ public class FilterServiceEJB implements LocalFilter {
 		} else {
 			dropListFromSearch.addAll(dropDAOBean.getAllDrops());
 		}
-		System.out.println(startAge);
-		System.out.println(endAge);
-		System.out.println(!(startAge == 0 && endAge ==0));
 		
 		if(!(startAge == 0 && endAge ==0) && !(startAge > endAge)){
-			
-			System.out.println("nu var båda sanna, nu sorterar vi på age");
 			
 			dropListFromSearch = (ArrayList<DropModel>) filterByAgeSpan(startAge, endAge);
 		}
