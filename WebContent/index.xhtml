@@ -57,11 +57,14 @@
 	<b:container>
 		<div class="filter-div">
 			<h:form>
-				<b:row span="12">
-					<b:inputText value="#{filterControllerBean.tagList}" tags="true"
-						render-label="true" placeholder="Filter..." styleClass="input"
-						class="search-field" />
+				<b:row>
+					<b:column>
+						<b:inputText value="#{filterControllerBean.tagList}" tags="true"
+							render-label="true" placeholder="Filter..." styleClass="input"
+							class="search-field" />
+					</b:column>
 				</b:row>
+
 				<b:row>
 					<b:column span="1">
 						<b:selectBooleanCheckbox caption="Male"
