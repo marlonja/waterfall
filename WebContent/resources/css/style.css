@@ -142,6 +142,7 @@ h4 {
 }
 
 .filter-div {
+	width: 100%;
 	color: steelblue;
 	background: whitesmoke;
 	padding: 10px;
