@@ -94,6 +94,11 @@ h4 {
 }
 
 /* ----- STYLES FOR INDEX.XHTML ----- */
+.show-more-filters {
+	display:none;
+}
+
+
 .create-drop-div {
 	display: none;
 	background-color: grey;

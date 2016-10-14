@@ -13,6 +13,7 @@
 </h:head>
 <h:body>
 	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<h:outputScript library="script" name="script.js"></h:outputScript>
 	<b:navBar brand="Waterfall">
 		<b:navbarLinks pull="right">
 			<div class="container-fluid">
@@ -56,54 +57,65 @@
 
 	<b:container>
 		<div class="filter-div">
-			<h:form>
-				<b:row>
-					<b:column>
-						<b:inputText value="#{filterControllerBean.tagList}" tags="true"
-							render-label="true" placeholder="Filter..." styleClass="input"
-							class="search-field" />
-					</b:column>
-				</b:row>
+		<h:commandButton class="more-filters-button" value="More filters" />
+<h:form>
+			<b:row>
+				<b:column span="6">
+					<b:inputText value="#{filterControllerBean.tagList}" tags="true"
+						render-label="true" placeholder="Filter..."
+						styleClass="filter-input" class="search-field" />
+				</b:column>
+				<b:column span="1">
+					<h:commandButton value="Filter"
+						action="#{filterControllerBean.filter()}" styleClass="filter-btn" />
+				</b:column>
+				<b:column span="2">
+					<h:commandButton class="clear-button" value="Restore filters"
+						action="#{dropControllerBean.init()}" styleClass="filter-btn" />
+				</b:column>
+				
+			</b:row>
 
-				<b:row>
-					<b:column span="1">
-						<b:selectBooleanCheckbox caption="Male"
-							value="#{filterControllerBean.filteredByMale}"
-							styleClass="checkbox" />
-					</b:column>
-					<b:column span="1">
-						<b:selectBooleanCheckbox caption="Female"
-							value="#{filterControllerBean.filteredByFemale}"
-							styleClass="checkbox" />
-					</b:column>
-					<b:column span="1">
-						<b:selectBooleanCheckbox caption="Other"
-							value="#{filterControllerBean.filteredByOther}"
-							styleClass="checkbox" />
-					</b:column>
-					<b:column span="6">
-						<b:selectOneMenu large-screen="one-fourth"
-							value="#{filterControllerBean.startAge}"
-							styleClass="dropdown-age">
-							<f:selectItem itemLabel="- Start age -" itemValue="" />
-							<f:selectItems value="#{filterControllerBean.ageList}" var="year"
-								itemValue="#{year}" itemLabel="#{year}" />
-						</b:selectOneMenu>
-						<b:selectOneMenu large-screen="one-fourth"
-							value="#{filterControllerBean.endAge}" styleClass="dropdown-age">
-							<f:selectItem itemLabel="- End age -" itemValue="" />
-							<f:selectItems value="#{filterControllerBean.ageList}" var="year"
-								itemValue="#{year}" itemLabel="#{year}" />
-						</b:selectOneMenu>
-					</b:column>
-				</b:row>
 
-				<h:commandButton value="Filter"
-					action="#{filterControllerBean.filter()}" styleClass="filter-btn" />
-				<h:commandButton class="clear-button" value="Restore filters"
-					action="#{dropControllerBean.init()}" styleClass="filter-btn" />
+			<div class="show-more-filters">
+				
+					<b:row>
+						<b:column span="1">
+							<b:selectBooleanCheckbox caption="Male"
+								value="#{filterControllerBean.filteredByMale}"
+								styleClass="checkbox" />
+						</b:column>
+						<b:column span="1">
+							<b:selectBooleanCheckbox caption="Female"
+								value="#{filterControllerBean.filteredByFemale}"
+								styleClass="checkbox" />
+						</b:column>
+						<b:column span="1">
+							<b:selectBooleanCheckbox caption="Other"
+								value="#{filterControllerBean.filteredByOther}"
+								styleClass="checkbox" />
+						</b:column>
+						<b:column span="6">
+							<b:selectOneMenu large-screen="one-fourth"
+								value="#{filterControllerBean.startAge}"
+								styleClass="dropdown-age">
+								<f:selectItem itemLabel="- Start age -" itemValue="" />
+								<f:selectItems value="#{filterControllerBean.ageList}"
+									var="year" itemValue="#{year}" itemLabel="#{year}" />
+							</b:selectOneMenu>
+							<b:selectOneMenu large-screen="one-fourth"
+								value="#{filterControllerBean.endAge}" styleClass="dropdown-age">
+								<f:selectItem itemLabel="- End age -" itemValue="" />
+								<f:selectItems value="#{filterControllerBean.ageList}"
+									var="year" itemValue="#{year}" itemLabel="#{year}" />
+							</b:selectOneMenu>
+						</b:column>
+					</b:row>
+					</div>
+				</h:form>
+			
 
-			</h:form>
+
 
 			<h:commandButton
 				rendered="#{loginControllerBean.loggedInUser != null}"

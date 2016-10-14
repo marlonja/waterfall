@@ -12,4 +12,8 @@ $(document).ready(function(){
 		$(".search-field").val("");
 	});
 	
+	$(".more-filters-button").click(function(){
+		$(".show-more-filters").stop().toggle('slow');
+	});
+	
 });
