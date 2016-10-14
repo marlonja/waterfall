@@ -8,24 +8,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:b="http://bootsfaces.net/ui">
-
 <h:head>
-	<!-- BOOTSTRAP -->
-	<link rel="stylesheet"
-		href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script
-		src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type='text/javascript'
-		src="https://cdn.rawgit.com/jamesallardice/Placeholders.js/master/dist/placeholders.min.js"></script>
-	<script type='text/javascript' src="resources/script/script.js"></script>
-	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
-
 	<title>Waterfall Startpage</title>
 </h:head>
 <h:body>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
 	<b:navBar brand="Waterfall">
 		<b:navbarLinks pull="right">
 			<div class="container-fluid">
@@ -44,14 +31,12 @@
 
 							<div class="login-username">
 								<b:inputText placeholder="Username" id="username"
-									value="#{loginControllerBean.username}"
-									styleClass="input" />
+									value="#{loginControllerBean.username}" styleClass="input" />
 							</div>
 
 							<div class="login-password">
 								<b:inputSecret placeholder="Password" id="password"
-									value="#{loginControllerBean.password}"
-									styleClass="input" />
+									value="#{loginControllerBean.password}" styleClass="input" />
 							</div>
 							<div class="login-btn-div">
 								<h:commandButton action="#{loginControllerBean.loginUser()}"
@@ -72,9 +57,11 @@
 	<b:container>
 		<div class="filter-div">
 			<h:form>
-				<b:inputText value="#{filterControllerBean.tagList}" tags="true"
-					render-label="true" placeholder="Filter..." styleClass="input"
-					class="search-field" />
+				<b:row>
+					<b:inputText value="#{filterControllerBean.tagList}" tags="true"
+						render-label="true" placeholder="Filter..." styleClass="input"
+						class="search-field" />
+				</b:row>
 				<b:row>
 					<b:column span="1">
 						<b:selectBooleanCheckbox caption="Male"
@@ -89,23 +76,25 @@
 							value="#{filterControllerBean.filteredByOther}" />
 					</b:column>
 					<b:column>
-						<b:selectOneMenu large-screen="one-fourth" value="#{filterControllerBean.startAge}">
+						<b:selectOneMenu large-screen="one-fourth"
+							value="#{filterControllerBean.startAge}">
 							<f:selectItem itemLabel="- Start age -" itemValue="" />
-							<f:selectItems value="#{filterControllerBean.ageList}"
-								var="year" itemValue="#{year}" itemLabel="#{year}" />
+							<f:selectItems value="#{filterControllerBean.ageList}" var="year"
+								itemValue="#{year}" itemLabel="#{year}" />
 						</b:selectOneMenu>
-						<b:selectOneMenu large-screen="one-fourth" value="#{filterControllerBean.endAge}">
+						<b:selectOneMenu large-screen="one-fourth"
+							value="#{filterControllerBean.endAge}">
 							<f:selectItem itemLabel="- End age -" itemValue="" />
-							<f:selectItems value="#{filterControllerBean.ageList}"
-								var="year" itemValue="#{year}" itemLabel="#{year}" />
+							<f:selectItems value="#{filterControllerBean.ageList}" var="year"
+								itemValue="#{year}" itemLabel="#{year}" />
 						</b:selectOneMenu>
 					</b:column>
 				</b:row>
 
-				<h:commandButton value="Search"
-					action="#{filterControllerBean.filter()}" />
-				<h:commandButton class="clear-button" value="Clear"
-					action="#{dropControllerBean.init()}" />
+				<h:commandButton value="Filter"
+					action="#{filterControllerBean.filter()}" styleClass="filter-btn" />
+				<h:commandButton class="clear-button" value="Restore filters"
+					action="#{dropControllerBean.init()}" styleClass="filter-btn" />
 
 			</h:form>
 

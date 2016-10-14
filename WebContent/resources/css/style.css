@@ -31,9 +31,11 @@ h4 {
 .reg-form-select-gender {
 	color: steelblue;
 }
-#error-msg{
-	display:none;
+
+#error-msg {
+	display: none;
 }
+
 .input {
 	width: 100%;
 	padding: 5px 8px;
@@ -66,6 +68,17 @@ h4 {
 	color: white;
 	padding: 7px 10px;
 	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: Tahoma;
+}
+
+.filter-btn {
+	background-color: steelblue;
+	color: white;
+	padding: 7px 10px;
+	margin: 8px 5px;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
