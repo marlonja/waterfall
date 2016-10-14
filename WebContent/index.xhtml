@@ -13,6 +13,7 @@
 </h:head>
 <h:body>
 	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<h:outputScript library="script" name="script.js"></h:outputScript>
 	<b:navBar brand="Waterfall">
 		<b:navbarLinks pull="right">
 			<div class="container-fluid">
@@ -138,7 +139,7 @@
 						</h:form>
 					</div>
 					<h6>Number of comments: #{drop.getComments().size()}</h6>
-
+					
 					<c:forEach var="comment" items="#{drop.getComments()}">
 						<p>#{comment.content}</p>
 

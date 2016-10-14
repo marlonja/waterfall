@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -13,7 +14,7 @@ import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
 
 @Named(value="commentControllerBean")
-@SessionScoped
+@RequestScoped
 public class CommentControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 1085497880359743418L;

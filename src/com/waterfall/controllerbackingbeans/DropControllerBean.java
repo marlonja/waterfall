@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -18,7 +19,7 @@ import com.waterfall.validators.CreateDropValidator;
 import jersey.repackaged.com.google.common.collect.Lists;
 
 @Named(value = "dropControllerBean")
-@SessionScoped
+@RequestScoped
 public class DropControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 2772076160829404613L;
@@ -42,6 +43,7 @@ public class DropControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		dropList = Lists.reverse(dropEJB.getAllDrops());
+		System.out.println("Nu är vi i drop innit");
 	}
 
 
@@ -69,9 +71,11 @@ public class DropControllerBean implements Serializable {
 		commentModel.setDropHost(dropEJB.getDrop(dropId));
 		commentModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
 		commentEJB.storeComment(commentModel);
-		dropList = Lists.reverse(dropEJB.getAllDrops());
+		//dropList = Lists.reverse(dropEJB.getAllDrops());
 		commentContent = null;
-		return "/index.xhtml?faces-redirect=true";
+		init();
+		//return "/index.xhtml?faces-redirect=true";
+		return "index";
 
 	}
 

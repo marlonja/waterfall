@@ -5,7 +5,7 @@ $(document).ready(function(){
 	});
 	
 	$(".arrow-down").click(function(){
-		$(".create-comment-div").stop().toggle('slow');
+		$(this).parent().next().toggle('fast');
 	});
 	
 	$(".clear-button").click(function(){
