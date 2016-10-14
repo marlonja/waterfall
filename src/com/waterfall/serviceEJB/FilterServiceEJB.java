@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 
 import com.waterfall.EJB.interfaces.LocalFilter;
 import com.waterfall.models.DropModel;
+import com.waterfall.models.FilterModel;
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.DropDAOBean;
 import com.waterfall.storage.UserDAOBean;
@@ -35,15 +36,14 @@ public class FilterServiceEJB implements LocalFilter {
 	private int endAge;
 
 	@Override
-	public List<DropModel> filterDrops(String[] searchWords, boolean filterByMale, boolean filterByFemale,
-			boolean filterByOther, int startAge, int endAge) {
+	public List<DropModel> filterDrops(FilterModel filterModel) {
 
-		this.filterByMale = filterByMale;
-		this.filterByFemale = filterByFemale;
-		this.filterByOther = filterByOther;
-		this.startAge = startAge;
-		this.endAge = endAge;
-		dropListFromSearch = (ArrayList<DropModel>) getInitialList(searchWords);
+		this.filterByMale = filterModel.isFilterByMale();
+		this.filterByFemale = filterModel.isFilterByFemale();
+		this.filterByOther = filterModel.isFilterByOther();
+		this.startAge = filterModel.getAgeSpanStartDate();
+		this.endAge = filterModel.getAgeSpanEndDate();
+		dropListFromSearch = (ArrayList<DropModel>) getInitialList(filterModel.getSearchWords());
 
 		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList();
 

@@ -5,12 +5,12 @@ import java.util.List;
 import javax.ejb.Local;
 
 import com.waterfall.models.DropModel;
+import com.waterfall.models.FilterModel;
 
 @Local
 public interface LocalFilter {
 	
-	List<DropModel> filterDrops(String[] tagArray, boolean filteredByMale, 
-			boolean filteredByFemale, boolean filteredByOther, int startAge, int endAge);
+	List<DropModel> filterDrops(FilterModel filterModel);
 
 	List<DropModel> filterByAgeSpan(int startAge, int endAge);
 

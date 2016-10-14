@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalFilter;
+import com.waterfall.models.FilterModel;
 import com.waterfall.utils.DateService;
 
 @Named(value = "filterControllerBean")
@@ -38,11 +39,26 @@ public class FilterControllerBean {
 	@EJB
 	LocalFilter filterServiceEJB;
 	
-	public String filter() {
+	private FilterModel createNewFilter() {
+		FilterModel filterModel = new FilterModel();
+		
+		filterModel.setAgeSpanEndAge(endAge);
+		filterModel.setAgeSpanStartAge(startAge);
+		filterModel.setFilterByFemale(filteredByFemale);
+		filterModel.setFilterByMale(filteredByMale);
+		filterModel.setFilterByOther(filteredByOther);
 		
 		String[] searchWords = tagList.split(",");
+		filterModel.setSearchWords(searchWords);
 		
-		dropControllerBean.setDropList(filterServiceEJB.filterDrops(searchWords, filteredByMale, filteredByFemale, filteredByOther, startAge, endAge));
+		return filterModel;
+		
+	}
+	
+	public String filter() {
+		FilterModel filterModel = createNewFilter();
+		
+		dropControllerBean.setDropList(filterServiceEJB.filterDrops(filterModel));
 		
 		return "index";
 	}
