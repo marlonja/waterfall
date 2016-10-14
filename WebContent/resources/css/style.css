@@ -85,6 +85,14 @@ h4 {
 	font-family: Tahoma;
 }
 
+.dropdown-age {
+	display: inline;
+}
+
+.checkbox {
+	display: inline;
+}
+
 /* ----- STYLES FOR INDEX.XHTML ----- */
 .create-drop-div {
 	display: none;

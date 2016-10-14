@@ -57,7 +57,7 @@
 	<b:container>
 		<div class="filter-div">
 			<h:form>
-				<b:row>
+				<b:row span="12">
 					<b:inputText value="#{filterControllerBean.tagList}" tags="true"
 						render-label="true" placeholder="Filter..." styleClass="input"
 						class="search-field" />
@@ -65,25 +65,29 @@
 				<b:row>
 					<b:column span="1">
 						<b:selectBooleanCheckbox caption="Male"
-							value="#{filterControllerBean.filteredByMale}" />
+							value="#{filterControllerBean.filteredByMale}"
+							styleClass="checkbox" />
 					</b:column>
 					<b:column span="1">
 						<b:selectBooleanCheckbox caption="Female"
-							value="#{filterControllerBean.filteredByFemale}" />
+							value="#{filterControllerBean.filteredByFemale}"
+							styleClass="checkbox" />
 					</b:column>
 					<b:column span="1">
 						<b:selectBooleanCheckbox caption="Other"
-							value="#{filterControllerBean.filteredByOther}" />
+							value="#{filterControllerBean.filteredByOther}"
+							styleClass="checkbox" />
 					</b:column>
-					<b:column>
+					<b:column span="6">
 						<b:selectOneMenu large-screen="one-fourth"
-							value="#{filterControllerBean.startAge}">
+							value="#{filterControllerBean.startAge}"
+							styleClass="dropdown-age">
 							<f:selectItem itemLabel="- Start age -" itemValue="" />
 							<f:selectItems value="#{filterControllerBean.ageList}" var="year"
 								itemValue="#{year}" itemLabel="#{year}" />
 						</b:selectOneMenu>
 						<b:selectOneMenu large-screen="one-fourth"
-							value="#{filterControllerBean.endAge}">
+							value="#{filterControllerBean.endAge}" styleClass="dropdown-age">
 							<f:selectItem itemLabel="- End age -" itemValue="" />
 							<f:selectItems value="#{filterControllerBean.ageList}" var="year"
 								itemValue="#{year}" itemLabel="#{year}" />
