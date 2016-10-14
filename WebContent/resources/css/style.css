@@ -173,6 +173,14 @@ h4 {
 	border-radius: 10px;
 }
 
+.test-comment {
+	margin: 1em;
+	padding: 1em;
+	border-radius: 10px;
+	background-color: whitesmoke;
+	border-radius: 10px;
+}
+
 .waterfall-username {
 	font-size: 1.2em;
 	display: inline-block;

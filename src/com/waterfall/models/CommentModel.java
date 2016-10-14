@@ -2,6 +2,7 @@ package com.waterfall.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.*;
 
@@ -64,6 +65,11 @@ public class CommentModel implements Serializable {
 
 	public LocalDateTime getCreationdate() {
 		return creationdate;
+	}
+	
+	public String getCreationDateFormatted() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return formatter.format(creationdate.toLocalDate());
 	}
 
 	public void setCreationdate(LocalDateTime creationdate) {
