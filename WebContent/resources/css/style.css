@@ -223,7 +223,7 @@ h4 {
 	display: inline-block;
 }
 
-.more-filters-button {
+.more-filters-button, .comment-btn {
 	background-color: steelblue;
 	color: white;
 	padding: 7px 10px;

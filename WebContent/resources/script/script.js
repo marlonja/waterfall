@@ -15,7 +15,7 @@ $(document).ready(function(){
 	});
 	
 	$(".more-filters-button").click(function(){
-		$(".show-more-filters").stop().toggle('slow');
+		$(".show-more-filters").stop().toggle();
 	});
 	
 	$(function() {

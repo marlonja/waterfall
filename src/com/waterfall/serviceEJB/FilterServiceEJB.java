@@ -103,7 +103,7 @@ public class FilterServiceEJB implements LocalFilter {
 			dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
 		}
 		
-		if(filterByFirstName != null) {
+		if(!filterByFirstName.isEmpty()) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByFirstName(filterByFirstName);
 		}
 

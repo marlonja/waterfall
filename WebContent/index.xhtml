@@ -60,7 +60,7 @@
 
 	<b:container>
 		<div class="filter-div">
-			<h:commandButton class="more-filters-button" value="More filters" />
+
 			<h:form id="filter-form">
 				<b:row>
 					<b:column span="6">
@@ -75,6 +75,9 @@
 					<b:column span="2">
 						<h:commandButton class="clear-button" value="Restore filters"
 							action="#{dropControllerBean.init()}" styleClass="filter-btn" />
+					</b:column>
+					<b:column span="2">
+						<b:button class="more-filters-button" value="More filters" />
 					</b:column>
 				</b:row>
 
@@ -113,10 +116,10 @@
 					<b:column class="show-more-filters" span="2">
 						<b:inputText styleClass="input" placeholder="Country" />
 					</b:column>
-					<b:column class="show-more-filters">
+					<b:column class="show-more-filters" span="6">
 						<p id="age-tag">
 							<label for="ageSpan">Age span: </label>
-							<h:inputText id="ageSpan" value="#{filterControllerBean.ageSpan}" />
+							<h:inputText styleClass="input" id="ageSpan" value="#{filterControllerBean.ageSpan}" />
 						</p>
 						<div id="slider-range"></div>
 					</b:column>
@@ -151,23 +154,23 @@
 						<h:form rendered="#{loginControllerBean.loggedInUser != null}">
 							<b:inputText placeholder="Comment..."
 								value="#{dropControllerBean.commentContent}" />
-							<h:commandButton styleClass="submit-btn" value="Comment"
+							<h:commandButton styleClass="comment-btn" value="Comment"
 								action="#{dropControllerBean.createNewComment(drop.getDropId())}" />
 						</h:form>
 						<div class="test-comment">
-						<c:forEach var="comment" items="#{drop.getComments()}">
-					<p class="waterfall-username">#{comment.owner.username}</p>
-					<p>#{comment.owner.gender}</p>
-					<p>wrote at #{comment.getCreationDateFormatted()}</p>
-					
-						<p class="waterfall-drop-content">#{comment.content}</p>
+							<c:forEach var="comment" items="#{drop.getComments()}">
+								<p class="waterfall-username">#{comment.owner.username}</p>
+								<p>#{comment.owner.gender}</p>
+								<p>wrote at #{comment.getCreationDateFormatted()}</p>
 
-					</c:forEach>
-					</div>
+								<p class="waterfall-drop-content">#{comment.content}</p>
+
+							</c:forEach>
+						</div>
 					</div>
 					<h6>#{drop.getComments().size()} comments</h6>
-					
-					
+
+
 				</div>
 			</c:forEach>
 
