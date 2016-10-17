@@ -10,6 +10,9 @@
 	xmlns:b="http://bootsfaces.net/ui">
 <h:head>
 	<title>Waterfall Startpage</title>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet"
+		href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 </h:head>
 <h:body>
 	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
@@ -58,7 +61,7 @@
 	<b:container>
 		<div class="filter-div">
 			<h:commandButton class="more-filters-button" value="More filters" />
-			<h:form>
+			<h:form id="filter-form">
 				<b:row>
 					<b:column span="6">
 						<b:inputText value="#{filterControllerBean.tagList}" tags="true"
@@ -91,25 +94,12 @@
 							value="#{filterControllerBean.filteredByOther}"
 							styleClass="checkbox" />
 					</b:column>
-					<b:column span="6" class="show-more-filters">
-						<b:selectOneMenu large-screen="one-fourth"
-							value="#{filterControllerBean.startAge}"
-							styleClass="dropdown-age">
-							<f:selectItem itemLabel="- Start age -" itemValue="" />
-							<f:selectItems value="#{filterControllerBean.ageList}" var="year"
-								itemValue="#{year}" itemLabel="#{year}" />
-						</b:selectOneMenu>
-						<b:selectOneMenu large-screen="one-fourth"
-							value="#{filterControllerBean.endAge}" styleClass="dropdown-age">
-							<f:selectItem itemLabel="- End age -" itemValue="" />
-							<f:selectItems value="#{filterControllerBean.ageList}" var="year"
-								itemValue="#{year}" itemLabel="#{year}" />
-						</b:selectOneMenu>
-					</b:column>
+
 				</b:row>
 				<b:row>
 					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="First name" value="#{filterControllerBean.filterFirstName}"/>
+						<b:inputText styleClass="input" placeholder="First name"
+							value="#{filterControllerBean.filterFirstName}" />
 					</b:column>
 					<b:column class="show-more-filters" span="2">
 						<b:inputText styleClass="input" placeholder="Last name" />
@@ -123,7 +113,15 @@
 					<b:column class="show-more-filters" span="2">
 						<b:inputText styleClass="input" placeholder="Country" />
 					</b:column>
+					<b:column class="show-more-filters">
+						<p id="age-tag">
+							<label for="ageSpan">Age span: </label>
+							<h:inputText id="ageSpan" value="#{filterControllerBean.ageSpan}" />
+						</p>
+						<div id="slider-range"></div>
+					</b:column>
 				</b:row>
+
 			</h:form>
 			<h:commandButton
 				rendered="#{loginControllerBean.loggedInUser != null}"

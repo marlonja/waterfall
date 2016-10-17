@@ -25,6 +25,7 @@ public class FilterControllerBean {
 	private String tagList;
 	private List<Integer> ageList;
 	private String filterFirstName;
+	private String ageSpan;
 
 	@PostConstruct
 	public void init() {
@@ -42,6 +43,10 @@ public class FilterControllerBean {
 	
 	private FilterModel createNewFilter() {
 		FilterModel filterModel = new FilterModel();
+		
+		String[] ageSpanList = ageSpan.split("-");
+		startAge = Integer.parseInt(ageSpanList[0].trim());
+		endAge = Integer.parseInt(ageSpanList[1].trim());
 		
 		filterModel.setAgeSpanEndAge(endAge);
 		filterModel.setAgeSpanStartAge(startAge);
@@ -134,6 +139,14 @@ public class FilterControllerBean {
 
 	public void setFilterFirstName(String filterFirstName) {
 		this.filterFirstName = filterFirstName;
+	}
+
+	public String getAgeSpan() {
+		return ageSpan;
+	}
+
+	public void setAgeSpan(String ageSpan) {
+		this.ageSpan = ageSpan;
 	}
 
 }
