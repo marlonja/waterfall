@@ -8,6 +8,7 @@ public class FilterModel {
 	private Boolean filterByOther;
 	private Integer ageSpanStartDate;
 	private Integer ageSpanEndDate;
+	private String filterFirstName;
 
 	public String[] getSearchWords() {
 		return searchWords;
@@ -55,6 +56,14 @@ public class FilterModel {
 
 	public void setAgeSpanEndAge(Integer ageSpanEndDate) {
 		this.ageSpanEndDate = ageSpanEndDate;
+	}
+
+	public String getFilterFirstName() {
+		return filterFirstName;
+	}
+
+	public void setFilterFirstName(String filterFirstName) {
+		this.filterFirstName = filterFirstName;
 	}
 	
 	

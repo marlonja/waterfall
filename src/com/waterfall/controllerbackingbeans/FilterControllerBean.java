@@ -48,6 +48,7 @@ public class FilterControllerBean {
 		filterModel.setFilterByFemale(filteredByFemale);
 		filterModel.setFilterByMale(filteredByMale);
 		filterModel.setFilterByOther(filteredByOther);
+		filterModel.setFilterFirstName(filterFirstName);
 		
 		String[] searchWords = tagList.split(",");
 		filterModel.setSearchWords(searchWords);

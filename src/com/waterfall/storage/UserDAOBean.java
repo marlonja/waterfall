@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 
 @Stateful
@@ -103,6 +104,12 @@ public class UserDAOBean {
 	@SuppressWarnings("unchecked")
 	public List<UserModel> getUsersByAge(Date endAge, Date startAge) {
 		return em.createNamedQuery("UserModel.findByBirthdate").setParameter("enddate", endAge).setParameter("startdate", startAge).getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<UserModel> getUserByFirstName(String firstName) {
+		return em.createNamedQuery("UserModel.findByFirstName").setParameter("firstname", firstName)
+				.getResultList();
 	}
 
 }
