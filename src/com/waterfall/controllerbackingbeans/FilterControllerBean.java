@@ -23,6 +23,7 @@ public class FilterControllerBean {
 	private int endAge;
 	private String tagList;
 	private List<Integer> ageList;
+	private String filterFirstName;
 
 	@PostConstruct
 	public void init() {
@@ -108,6 +109,14 @@ public class FilterControllerBean {
 
 	public void setEndAge(int endAge) {
 		this.endAge = endAge;
+	}
+
+	public String getFilterFirstName() {
+		return filterFirstName;
+	}
+
+	public void setFilterFirstName(String filterFirstName) {
+		this.filterFirstName = filterFirstName;
 	}
 
 }
