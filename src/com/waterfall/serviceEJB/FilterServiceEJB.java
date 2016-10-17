@@ -35,16 +35,18 @@ public class FilterServiceEJB implements LocalFilter {
 	private int startAge;
 	private int endAge;
 	private String filterByFirstName;
+	private String filterByLastName;
 
 	@Override
 	public List<DropModel> filterDrops(FilterModel filterModel) {
 
-		this.filterByMale = filterModel.isFilterByMale();
-		this.filterByFemale = filterModel.isFilterByFemale();
-		this.filterByOther = filterModel.isFilterByOther();
-		this.startAge = filterModel.getAgeSpanStartDate();
-		this.endAge = filterModel.getAgeSpanEndDate();
-		this.filterByFirstName = filterModel.getFilterFirstName();
+		filterByMale = filterModel.isFilterByMale();
+		filterByFemale = filterModel.isFilterByFemale();
+		filterByOther = filterModel.isFilterByOther();
+		startAge = filterModel.getAgeSpanStartDate();
+		endAge = filterModel.getAgeSpanEndDate();
+		filterByFirstName = filterModel.getFilterFirstName();
+		filterByLastName = filterModel.getFilterLastName();
 		dropListFromSearch = (ArrayList<DropModel>) getInitialList(filterModel.getSearchWords());
 
 		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList();
@@ -103,11 +105,29 @@ public class FilterServiceEJB implements LocalFilter {
 			dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
 		}
 		
-		if(!filterByFirstName.isEmpty()) {
+		if(!filterByFirstName.equalsIgnoreCase("")) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByFirstName(filterByFirstName);
+		}
+		
+		if(!filterByLastName.equalsIgnoreCase("")) {
+			dropListFromSearch = (ArrayList<DropModel>) filterByLastName(filterByLastName);
 		}
 
 		return (ArrayList<DropModel>) dropListFromSearch;
+	}
+	
+	
+
+	private List<DropModel> filterByLastName(String lastName) {
+		List<UserModel> users = new ArrayList<UserModel>();
+		List<DropModel> drops = new ArrayList<DropModel>();
+		
+		users.addAll(userDAOBean.getUserByLastName(lastName));
+		
+		for(UserModel user : users) {
+			drops.addAll(user.getDrops());
+		}
+		return drops;
 	}
 
 	private List<DropModel> filterByFirstName(String firstName) {

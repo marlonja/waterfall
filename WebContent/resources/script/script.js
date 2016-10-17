@@ -23,7 +23,7 @@ $(document).ready(function(){
 	      range: true,
 	      min: 0,
 	      max: 116,
-	      values: [ 40, 60 ],
+	      values: [ 0, 116 ],
 	      slide: function( event, ui ) {
 	    	$(document.getElementById("filter-form:ageSpan")).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 	        var age = ((ui.values[ 0 ] + " " + ui.values[ 1 ]));

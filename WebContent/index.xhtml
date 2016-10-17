@@ -105,7 +105,8 @@
 							value="#{filterControllerBean.filterFirstName}" />
 					</b:column>
 					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="Last name" />
+						<b:inputText styleClass="input" placeholder="Last name"
+							value="#{filterControllerBean.filterLastName}" />
 					</b:column>
 					<b:column class="show-more-filters" span="2">
 						<b:inputText styleClass="input" placeholder="Username" />
@@ -119,7 +120,8 @@
 					<b:column class="show-more-filters" span="6">
 						<p id="age-tag">
 							<label for="ageSpan">Age span: </label>
-							<h:inputText styleClass="input" id="ageSpan" value="#{filterControllerBean.ageSpan}" />
+							<h:inputText styleClass="input" id="ageSpan"
+								value="#{filterControllerBean.ageSpan}" />
 						</p>
 						<div id="slider-range"></div>
 					</b:column>

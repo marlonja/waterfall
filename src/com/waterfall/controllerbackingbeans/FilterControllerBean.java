@@ -25,6 +25,7 @@ public class FilterControllerBean {
 	private String tagList;
 	private List<Integer> ageList;
 	private String filterFirstName;
+	private String filterLastName;
 	private String ageSpan;
 
 	@PostConstruct
@@ -54,6 +55,7 @@ public class FilterControllerBean {
 		filterModel.setFilterByMale(filteredByMale);
 		filterModel.setFilterByOther(filteredByOther);
 		filterModel.setFilterFirstName(filterFirstName);
+		filterModel.setFilterLastName(filterLastName);
 		
 		String[] searchWords = tagList.split(",");
 		filterModel.setSearchWords(searchWords);
@@ -147,6 +149,14 @@ public class FilterControllerBean {
 
 	public void setAgeSpan(String ageSpan) {
 		this.ageSpan = ageSpan;
+	}
+
+	public String getFilterLastName() {
+		return filterLastName;
+	}
+
+	public void setFilterLastName(String filterLastName) {
+		this.filterLastName = filterLastName;
 	}
 
 }

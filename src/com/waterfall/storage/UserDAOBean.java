@@ -1,6 +1,7 @@
 package com.waterfall.storage;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -109,6 +110,12 @@ public class UserDAOBean {
 	@SuppressWarnings("unchecked")
 	public List<UserModel> getUserByFirstName(String firstName) {
 		return em.createNamedQuery("UserModel.findByFirstName").setParameter("firstname", firstName)
+				.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<UserModel> getUserByLastName(String lastName) {
+		return em.createNamedQuery("UserModel.findByLastName").setParameter("lastname", lastName)
 				.getResultList();
 	}
 
