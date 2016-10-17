@@ -29,7 +29,7 @@ public class DropModel implements Serializable {
 	@JoinColumn(name = "ownerid")
 	private UserModel owner;
 
-	@OneToMany(mappedBy = "dropHost")
+	@OneToMany(mappedBy = "dropHost", fetch=FetchType.EAGER)
 	private List<CommentModel> comments;
 
 	public DropModel() {
