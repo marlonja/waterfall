@@ -1,6 +1,7 @@
 package com.waterfall.storage;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -119,6 +120,12 @@ public class UserDAOBean {
 	@SuppressWarnings("unchecked")
 	public List<UserModel> getUserByCity(String city) {
 		return em.createNamedQuery("UserModel.findByCity").setParameter("city", city).getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<UserModel> getUserByCountry(String country) {
+		return em.createNamedQuery("UserModel.findByCountry")
+				.setParameter("country", country).getResultList();
 	}
 
 }

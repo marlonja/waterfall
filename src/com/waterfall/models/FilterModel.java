@@ -12,6 +12,7 @@ public class FilterModel {
 	private String filterLastName;
 	private String filterUsername;
 	private String filterCity;
+	private String filterCountry;
 
 	public String[] getSearchWords() {
 		return searchWords;
@@ -91,6 +92,14 @@ public class FilterModel {
 
 	public void setFilterCity(String filterCity) {
 		this.filterCity = filterCity;
+	}
+
+	public String getFilterCountry() {
+		return filterCountry;
+	}
+
+	public void setFilterCountry(String filterCountry) {
+		this.filterCountry = filterCountry;
 	}
 	
 	

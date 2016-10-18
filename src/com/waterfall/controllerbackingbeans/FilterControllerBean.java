@@ -17,18 +17,20 @@ import com.waterfall.utils.DateService;
 @RequestScoped
 public class FilterControllerBean {
 
-	private boolean filteredByMale;
 	private boolean filteredByFemale;
+	private boolean filteredByMale;
 	private boolean filteredByOther;
-	private int startAge;
-	private int endAge;
-	private String tagList;
 	private List<Integer> ageList;
 	private String filterFirstName;
 	private String filterLastName;
 	private String filterUsername;
 	private String filterCity;
+	private String filterCountry;
+	private String tagList;
 	private String ageSpan;
+	private int startAge;
+	private int endAge;
+	
 
 	@PostConstruct
 	public void init() {
@@ -60,6 +62,7 @@ public class FilterControllerBean {
 		filterModel.setFilterLastName(filterLastName);
 		filterModel.setFilterUsername(filterUsername);
 		filterModel.setFilterCity(filterCity);
+		filterModel.setFilterCountry(filterCountry);
 		
 		String[] searchWords = tagList.split(",");
 		filterModel.setSearchWords(searchWords);
@@ -169,6 +172,14 @@ public class FilterControllerBean {
 
 	public void setFilterCity(String filterCity) {
 		this.filterCity = filterCity;
+	}
+
+	public String getFilterCountry() {
+		return filterCountry;
+	}
+
+	public void setFilterCountry(String filterCountry) {
+		this.filterCountry = filterCountry;
 	}
 
 }
