@@ -1,7 +1,6 @@
 package com.waterfall.storage;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 
 @Stateful
@@ -104,19 +102,23 @@ public class UserDAOBean {
 
 	@SuppressWarnings("unchecked")
 	public List<UserModel> getUsersByAge(Date endAge, Date startAge) {
-		return em.createNamedQuery("UserModel.findByBirthdate").setParameter("enddate", endAge).setParameter("startdate", startAge).getResultList();
+		return em.createNamedQuery("UserModel.findByBirthdate").setParameter("enddate", endAge)
+				.setParameter("startdate", startAge).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<UserModel> getUserByFirstName(String firstName) {
-		return em.createNamedQuery("UserModel.findByFirstName").setParameter("firstname", firstName)
-				.getResultList();
+		return em.createNamedQuery("UserModel.findByFirstName").setParameter("firstname", firstName).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<UserModel> getUserByLastName(String lastName) {
-		return em.createNamedQuery("UserModel.findByLastName").setParameter("lastname", lastName)
-				.getResultList();
+		return em.createNamedQuery("UserModel.findByLastName").setParameter("lastname", lastName).getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<UserModel> getUserByCity(String city) {
+		return em.createNamedQuery("UserModel.findByCity").setParameter("city", city).getResultList();
 	}
 
 }

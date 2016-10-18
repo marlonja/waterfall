@@ -36,6 +36,7 @@ public class FilterServiceEJB implements LocalFilter {
 	private String filterByFirstName;
 	private String filterByLastName;
 	private String filterByUsername;
+	private String filterByCity;
 
 	@Override
 	public List<DropModel> filterDrops(FilterModel filterModel) {
@@ -48,6 +49,7 @@ public class FilterServiceEJB implements LocalFilter {
 		filterByFirstName = filterModel.getFilterFirstName();
 		filterByLastName = filterModel.getFilterLastName();
 		filterByUsername = filterModel.getFilterUsername();
+		filterByCity = filterModel.getFilterCity();
 
 		dropListFromSearch = (ArrayList<DropModel>) getInitialList(filterModel.getSearchWords());
 		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList();
@@ -115,8 +117,24 @@ public class FilterServiceEJB implements LocalFilter {
 		if (!filterByUsername.equalsIgnoreCase("")) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByUsername(filterByUsername);
 		}
+		
+		if (!filterByCity.equalsIgnoreCase("")) {
+			dropListFromSearch = (ArrayList<DropModel>) filterByCity(filterByCity);
+		}
 
 		return (ArrayList<DropModel>) dropListFromSearch;
+	}
+
+	private List<DropModel> filterByCity(String city) {
+		List<UserModel> users = new ArrayList<UserModel>();
+		List<DropModel> drops = new ArrayList<DropModel>();
+
+		users.addAll(userDAOBean.getUserByCity(city));
+
+		for (UserModel user : users) {
+			drops.addAll(user.getDrops());
+		}
+		return drops;
 	}
 
 	private List<DropModel> filterByUsername(String username) {
@@ -124,7 +142,6 @@ public class FilterServiceEJB implements LocalFilter {
 		List<DropModel> drops = new ArrayList<DropModel>();
 
 		user = userDAOBean.getUserByUsername(username);
-
 		drops.addAll(user.getDrops());
 
 		return drops;
