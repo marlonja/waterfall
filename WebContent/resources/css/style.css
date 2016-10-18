@@ -78,7 +78,7 @@ h4 {
 	background-color: steelblue;
 	color: white;
 	padding: 7px 10px;
-	margin: 8px 5px;
+	margin: 8px 0;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
@@ -97,7 +97,6 @@ h4 {
 .show-more-filters {
 	display:none;
 }
-
 
 .create-drop-div {
 	display: none;
@@ -217,13 +216,14 @@ h4 {
 #slider-range {
 	width: 50%;
 	display: inline-block;
+	margin-left: 1em;
 }
 
 #age-tag {
 	display: inline-block;
 }
 
-.more-filters-button, .comment-btn {
+.comment-btn {
 	background-color: steelblue;
 	color: white;
 	padding: 7px 10px;
@@ -232,4 +232,20 @@ h4 {
 	border-radius: 4px;
 	cursor: pointer;
 	font-family: Tahoma;
+}
+
+.more-filters-link {
+	padding-top: 0;
+}
+
+.bootstrap-tagsinput {
+	width: 100%;
+	margin: 8px 0;
+	padding: 10px;
+	font-size: 1.2em;
+}
+
+.label-info {
+	background-color: steelblue;
+	margin: 2px;
 }

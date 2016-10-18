@@ -15,8 +15,9 @@
 		href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 </h:head>
 <h:body>
-	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="style.css" position="last" />
 	<h:outputScript library="script" name="script.js"></h:outputScript>
+	
 	<b:navBar brand="Waterfall">
 		<b:navbarLinks pull="right">
 			<div class="container-fluid">
@@ -60,10 +61,9 @@
 
 	<b:container>
 		<div class="filter-div">
-
 			<h:form id="filter-form">
 				<b:row>
-					<b:column span="6">
+					<b:column span="11">
 						<b:inputText value="#{filterControllerBean.tagList}" tags="true"
 							render-label="true" placeholder="Filter..."
 							styleClass="filter-input" class="search-field" />
@@ -72,12 +72,15 @@
 						<h:commandButton value="Filter"
 							action="#{filterControllerBean.filter()}" styleClass="filter-btn" />
 					</b:column>
-					<b:column span="2">
-						<h:commandButton class="clear-button" value="Restore filters"
-							action="#{dropControllerBean.init()}" styleClass="filter-btn" />
+				</b:row>
+				<b:row>
+					<b:column span="2" offset="8">
+						<h:commandLink class="clear-button" value="Restore filters"
+							action="#{dropControllerBean.init()}" />
 					</b:column>
 					<b:column span="2">
-						<b:button class="more-filters-button" value="More filters" />
+						<b:button class="more-filters-link" value="More filters"
+							look="link" />
 					</b:column>
 				</b:row>
 

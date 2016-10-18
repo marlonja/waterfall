@@ -14,7 +14,7 @@ $(document).ready(function(){
 		$(".search-field").val("");
 	});
 	
-	$(".more-filters-button").click(function(){
+	$(".more-filters-link").click(function(){
 		$(".show-more-filters").stop().toggle();
 	});
 	
