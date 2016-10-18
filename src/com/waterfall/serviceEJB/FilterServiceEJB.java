@@ -87,7 +87,6 @@ public class FilterServiceEJB implements LocalFilter {
 				i--;
 			}
 		}
-
 		return dropListFromSearch;
 	}
 
@@ -119,12 +118,12 @@ public class FilterServiceEJB implements LocalFilter {
 		if (!filterByUsername.equalsIgnoreCase("")) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByUsername(filterByUsername);
 		}
-		
+
 		if (!filterByCity.equalsIgnoreCase("")) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByCity(filterByCity);
 		}
-		
-		if(!filterByCountry.isEmpty()) {
+
+		if (!filterByCountry.isEmpty()) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByCountry(filterByCountry);
 		}
 
@@ -203,13 +202,11 @@ public class FilterServiceEJB implements LocalFilter {
 		if (filterByOther) {
 			users.addAll(userDAOBean.getUsersByGender("Other"));
 		}
-
+		
 		for (UserModel user : users) {
 			drops.addAll(user.getDrops());
 		}
-
 		return (ArrayList<DropModel>) drops;
-
 	}
 
 	private List<DropModel> removeDuplicatesFromSearchList() {
@@ -225,7 +222,6 @@ public class FilterServiceEJB implements LocalFilter {
 	}
 
 	private List<DropModel> filterList(ArrayList<DropModel> dropListFromSearch, String[] searchWords) {
-
 		List<DropModel> filteredList = new ArrayList<DropModel>();
 		for (int i = 0; i < dropListFromSearch.size(); i++) {
 			boolean dropContainsAllWords = dropContainsAllSearchWords(dropListFromSearch.get(i), searchWords);
@@ -233,47 +229,36 @@ public class FilterServiceEJB implements LocalFilter {
 			if (dropContainsAllWords) {
 				filteredList.add(dropListFromSearch.get(i));
 			}
-
 		}
-
 		return filteredList;
 	}
 
 	private boolean userInformationContainsSearchWords(UserModel owner, String searchWord) {
-
 		boolean containsSearchWord = false;
 
 		if (containsSearchWord(owner, searchWord)) {
 			containsSearchWord = true;
 		}
-
 		return containsSearchWord;
-
 	}
 
 	private boolean containsSearchWord(UserModel user, String searchWord) {
-
 		String userInfo = user.getFirstName() + user.getLastName() + user.getUsername() + user.getCity()
 				+ user.getCountry();
 
 		if (userInfo.toLowerCase().contains(searchWord.toLowerCase())) {
 			return true;
 		}
-
 		return false;
 	}
 
 	private boolean dropContainsAllSearchWords(DropModel drop, String[] searchWords) {
-
 		for (int i = 0; i < searchWords.length; i++) {
 			if (!drop.getContent().toLowerCase().contains(searchWords[i].toLowerCase())
 					&& !userInformationContainsSearchWords(drop.getOwner(), searchWords[i])) {
-
 				return false;
 			}
 		}
 		return true;
-
 	}
-
 }
