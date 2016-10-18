@@ -77,7 +77,7 @@ h4 {
 .filter-btn {
 	background-color: steelblue;
 	color: white;
-	padding: 7px 10px;
+	padding: 10px;
 	margin: 8px 0;
 	border: none;
 	border-radius: 4px;
@@ -178,7 +178,6 @@ h4 {
 }
 
 .test-comment {
-	margin: 1em;
 	padding: 1em;
 	border-radius: 10px;
 	background-color: whitesmoke;
@@ -188,24 +187,34 @@ h4 {
 .waterfall-username {
 	font-size: 1.2em;
 	display: inline-block;
+	font-weight: bold; 
+	color: steelblue;
+	font-family: Tahoma;
+}
+
+span {
+	font-weight: normal;
+	font-size: 0.8em;
 }
 
 .waterfall-creation-date {
-	display: inline;
 	color: dimgrey;
+	display: inline;
+	font-family: Tahoma;
+	color: steelblue;
+	float: right;
 }
 
 .waterfall-drop-content {
 	background: white;
 	padding: 1em;
 	border-radius: 10px;
+	font-family: Tahoma;
+	color: steelblue;
 }
 
 .comment-here-description {
 	text-align: center;
-	color: dimgrey;
-	margin: 0;
-	font-size: 0.7em;
 }
 
 .arrow-down {
@@ -232,10 +241,6 @@ h4 {
 	border-radius: 4px;
 	cursor: pointer;
 	font-family: Tahoma;
-}
-
-.more-filters-link {
-	padding-top: 0;
 }
 
 .bootstrap-tagsinput {

@@ -6,7 +6,7 @@ $(document).ready(function(){
 		$(".create-drop-div").stop().toggle('slow');
 	});
 	
-	$(".arrow-down").click(function(){
+	$(".comment-link").click(function(){
 		$(this).parent().next().toggle('fast');
 	});
 	

@@ -43,7 +43,7 @@ public class DropControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		dropList = Lists.reverse(dropEJB.getAllDrops());
-		System.out.println("Nu är vi i drop innit");
+		System.out.println("Nu ï¿½r vi i drop innit");
 	}
 
 
