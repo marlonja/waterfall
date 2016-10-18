@@ -24,11 +24,10 @@ public class FilterServiceEJB implements LocalFilter {
 	@EJB
 	UserDAOBean userDAOBean;
 
-	private ArrayList<DropModel> dropListFromSearch;
-
 	@EJB
 	DateService dateService;
 
+	private ArrayList<DropModel> dropListFromSearch;
 	private boolean filterByMale;
 	private boolean filterByFemale;
 	private boolean filterByOther;
@@ -36,6 +35,7 @@ public class FilterServiceEJB implements LocalFilter {
 	private int endAge;
 	private String filterByFirstName;
 	private String filterByLastName;
+	private String filterByUsername;
 
 	@Override
 	public List<DropModel> filterDrops(FilterModel filterModel) {
@@ -47,8 +47,9 @@ public class FilterServiceEJB implements LocalFilter {
 		endAge = filterModel.getAgeSpanEndDate();
 		filterByFirstName = filterModel.getFilterFirstName();
 		filterByLastName = filterModel.getFilterLastName();
-		dropListFromSearch = (ArrayList<DropModel>) getInitialList(filterModel.getSearchWords());
+		filterByUsername = filterModel.getFilterUsername();
 
+		dropListFromSearch = (ArrayList<DropModel>) getInitialList(filterModel.getSearchWords());
 		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList();
 
 		return dropListFromSearch;
@@ -81,11 +82,9 @@ public class FilterServiceEJB implements LocalFilter {
 				dropListFromSearch.remove(i);
 				i--;
 			}
-
 		}
 
 		return dropListFromSearch;
-
 	}
 
 	private List<DropModel> getInitialList(String[] searchWords) {
@@ -104,27 +103,40 @@ public class FilterServiceEJB implements LocalFilter {
 		if (!searchWords[0].isEmpty()) {
 			dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
 		}
-		
-		if(!filterByFirstName.equalsIgnoreCase("")) {
+
+		if (!filterByFirstName.equalsIgnoreCase("")) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByFirstName(filterByFirstName);
 		}
-		
-		if(!filterByLastName.equalsIgnoreCase("")) {
+
+		if (!filterByLastName.equalsIgnoreCase("")) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByLastName(filterByLastName);
+		}
+
+		if (!filterByUsername.equalsIgnoreCase("")) {
+			dropListFromSearch = (ArrayList<DropModel>) filterByUsername(filterByUsername);
 		}
 
 		return (ArrayList<DropModel>) dropListFromSearch;
 	}
-	
-	
+
+	private List<DropModel> filterByUsername(String username) {
+		UserModel user = new UserModel();
+		List<DropModel> drops = new ArrayList<DropModel>();
+
+		user = userDAOBean.getUserByUsername(username);
+
+		drops.addAll(user.getDrops());
+
+		return drops;
+	}
 
 	private List<DropModel> filterByLastName(String lastName) {
 		List<UserModel> users = new ArrayList<UserModel>();
 		List<DropModel> drops = new ArrayList<DropModel>();
-		
+
 		users.addAll(userDAOBean.getUserByLastName(lastName));
-		
-		for(UserModel user : users) {
+
+		for (UserModel user : users) {
 			drops.addAll(user.getDrops());
 		}
 		return drops;
@@ -133,10 +145,10 @@ public class FilterServiceEJB implements LocalFilter {
 	private List<DropModel> filterByFirstName(String firstName) {
 		List<UserModel> users = new ArrayList<UserModel>();
 		List<DropModel> drops = new ArrayList<DropModel>();
-		
+
 		users.addAll(userDAOBean.getUserByFirstName(firstName));
-		
-		for(UserModel user : users) {
+
+		for (UserModel user : users) {
 			drops.addAll(user.getDrops());
 		}
 		return drops;

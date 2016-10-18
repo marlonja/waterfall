@@ -26,6 +26,7 @@ public class FilterControllerBean {
 	private List<Integer> ageList;
 	private String filterFirstName;
 	private String filterLastName;
+	private String filterUsername;
 	private String ageSpan;
 
 	@PostConstruct
@@ -56,12 +57,12 @@ public class FilterControllerBean {
 		filterModel.setFilterByOther(filteredByOther);
 		filterModel.setFilterFirstName(filterFirstName);
 		filterModel.setFilterLastName(filterLastName);
+		filterModel.setFilterUsername(filterUsername);
 		
 		String[] searchWords = tagList.split(",");
 		filterModel.setSearchWords(searchWords);
 		
 		return filterModel;
-		
 	}
 	
 	public String filter() {
@@ -71,13 +72,6 @@ public class FilterControllerBean {
 		
 		return "index";
 	}
-
-//	public String filterByAge() {
-//		System.out.println("i controllerbean: " + startAge + " " + endAge);
-//		filterServiceEJB.filterByAgeSpan(startAge, endAge);
-//		return "index";
-//	}
-
 
 	public boolean isFilteredByMale() {
 		return filteredByMale;
@@ -157,6 +151,14 @@ public class FilterControllerBean {
 
 	public void setFilterLastName(String filterLastName) {
 		this.filterLastName = filterLastName;
+	}
+
+	public String getFilterUsername() {
+		return filterUsername;
+	}
+
+	public void setFilterUsername(String filterUsername) {
+		this.filterUsername = filterUsername;
 	}
 
 }

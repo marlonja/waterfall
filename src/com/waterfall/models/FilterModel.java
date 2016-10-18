@@ -10,6 +10,7 @@ public class FilterModel {
 	private Integer ageSpanEndDate;
 	private String filterFirstName;
 	private String filterLastName;
+	private String filterUsername;
 
 	public String[] getSearchWords() {
 		return searchWords;
@@ -73,6 +74,14 @@ public class FilterModel {
 
 	public void setFilterLastName(String filterLastName) {
 		this.filterLastName = filterLastName;
+	}
+
+	public String getFilterUsername() {
+		return filterUsername;
+	}
+
+	public void setFilterUsername(String filterUsername) {
+		this.filterUsername = filterUsername;
 	}
 	
 	
