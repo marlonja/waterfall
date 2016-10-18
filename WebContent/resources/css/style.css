@@ -108,6 +108,7 @@ h4 {
 
 .create-comment-div {
 	display: none;
+	width: 50%;
 }
 
 .create-drop-input {
@@ -190,6 +191,19 @@ h4 {
 	font-weight: bold; 
 	color: steelblue;
 	font-family: Tahoma;
+}
+
+.comment-username {
+	color: steelblue;
+	font-family: Tahoma;
+}
+
+.comment-creation-date {
+	color: dimgrey;
+	display: inline;
+	font-family: Tahoma;
+	color: steelblue;
+	float: right;
 }
 
 span {

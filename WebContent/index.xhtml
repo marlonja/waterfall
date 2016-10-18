@@ -165,15 +165,14 @@
 							<h:commandButton styleClass="comment-btn" value="Comment"
 								action="#{dropControllerBean.createNewComment(drop.getDropId())}" />
 						</h:form>
-						<div class="test-comment">
-							<c:forEach var="comment" items="#{drop.getComments()}">
-								<p class="waterfall-username">#{comment.owner.username}</p>
-								<p>wrote at #{comment.getCreationDateFormatted()}</p>
+						<c:forEach var="comment" items="#{drop.getComments()}">
+							<p class="comment-username">
+								#{comment.owner.username} <span>#{comment.getCreationDateFormatted()}</span>
+							</p>
+							<p class="waterfall-drop-content">#{comment.content}</p>
 
-								<p class="waterfall-drop-content">#{comment.content}</p>
+						</c:forEach>
 
-							</c:forEach>
-						</div>
 					</div>
 
 
