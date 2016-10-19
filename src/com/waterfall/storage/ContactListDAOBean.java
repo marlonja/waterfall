@@ -1,11 +1,14 @@
 package com.waterfall.storage;
 
 
+import java.util.List;
+
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.waterfall.models.ContactListModel;
+import com.waterfall.models.DropModel;
 
 @Stateful
 public class ContactListDAOBean {
@@ -26,5 +29,9 @@ public class ContactListDAOBean {
 	
 	public ContactListModel getContactListById(Long contactListId) {
 		return em.find(ContactListModel.class, contactListId);
+	}
+	
+	public List<ContactListModel> getAllContactLists() {
+		return em.createNamedQuery("ContactListModel.findAll").getResultList();
 	}
 }

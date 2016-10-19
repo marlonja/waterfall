@@ -2,6 +2,8 @@ package com.waterfall.serviceEJB;
 
 
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -25,6 +27,11 @@ public class ContactListServiceEJB implements LocalContactList{
 	@Override
 	public ContactListModel getContactListById(Long contactListId) {
 		return contactListDAOBean.getContactListById(contactListId);
+	}
+
+	@Override
+	public List<ContactListModel> getAllContactLists() {
+		return contactListDAOBean.getAllContactLists();
 	}
 	
 	

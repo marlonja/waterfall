@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 
@@ -18,6 +20,8 @@ import com.waterfall.models.ContactListModel;
 import com.waterfall.models.ContactModel;
 import com.waterfall.models.UserModel;
 
+
+
 @Named(value = "userControllerBean")
 @SessionScoped
 public class UserControllerBean implements Serializable {
@@ -27,6 +31,10 @@ public class UserControllerBean implements Serializable {
 	private String usernameSearch;
 	private UserModel userToSearch;
 	private UserModel loggedInUser;
+	private String contactListName;
+	private List<ContactListModel> myContactLists;
+	
+	
 	
 	@EJB
 	private LocalContact contactEJB;
@@ -37,7 +45,6 @@ public class UserControllerBean implements Serializable {
 	@EJB
 	private LocalContactList contactListEJB;
 	
-
 	public void updateUser(UserModel user) {
 		userEJB.storeUser(user);
 	}	
@@ -47,39 +54,46 @@ public class UserControllerBean implements Serializable {
 		userToCheckInDatabase.setUsername(usernameSearch);
 		userToSearch = userEJB.getUserByUsername(usernameSearch);
 		contactList = new ArrayList<UserModel>();
+		
 
 		return "profile-page";
 	}
 
 	public String createNewContactlist() {
+		myContactLists = contactListEJB.getAllContactLists();
+		System.out.println(myContactLists);
+		
+		
 		loggedInUser = userEJB.getUserFromSession("loggedInUser");		
 
 		ContactListModel contactListModel = new ContactListModel();	
 		
-		contactListModel.setContactListName("My flends");
-		contactListModel.setContactListOwner(loggedInUser);	
+		contactListModel.setContactListName(contactListName);
+		contactListModel.setContactListOwner(loggedInUser);
+
+
 		
 		contactListEJB.storeContactList(contactListModel);
 		System.out.println(contactListModel.getContactListId());
 		
-		addContactToList(contactListModel);
+		//addContactToList(contactListModel);
 	
 		return "profile-page";
 	}
 	
-	private List<ContactModel> addContactToList(ContactListModel contactListModel){
+	public String addContactToList(){
 		ContactModel contactModel = new ContactModel();
-		List<ContactModel> listOfContacts = new ArrayList<ContactModel>();
+		//List<ContactModel> listOfContacts = new ArrayList<ContactModel>();
 		
-		contactModel.setUserId(userToSearch.getUserid());
+		contactModel.setUserId(userToSearch.getUserid());		
+		contactModel.setContactListModel(contactListEJB.getContactListById(34L));
 		
-		contactModel.setContactListModel(contactListEJB.getContactListById(31L));
 		
-		listOfContacts.add(contactModel);
+		//listOfContacts.add(contactModel);
 		contactEJB.storeContact(contactModel);
 		
-		return listOfContacts;
-		
+		//return listOfContacts;
+		return "profile-page";
 	}
 
 //	private List<UserModel> controlUserFriendList(List<UserModel> friendList) {
@@ -133,6 +147,22 @@ public class UserControllerBean implements Serializable {
 
 	public void setLoggedInUser(UserModel loggedInUser) {
 		this.loggedInUser = loggedInUser;
+	}
+
+	public String getContactListName() {
+		return contactListName;
+	}
+
+	public void setContactListName(String contactListName) {
+		this.contactListName = contactListName;
+	}
+
+	public List<ContactListModel> getMyContactLists() {
+		return myContactLists;
+	}
+
+	public void setMyContactLists(List<ContactListModel> myContactLists) {
+		this.myContactLists = myContactLists;
 	}
 
 }

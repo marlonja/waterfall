@@ -42,12 +42,12 @@
 				</div>
 
 				<h:outputLabel value="Email" styleClass="label" />
-				<h:inputText value="#{loginControllerBean.loggedInUser.email}" required="true"
-					styleClass="input" />
+				<h:inputText value="#{loginControllerBean.loggedInUser.email}"
+					required="true" styleClass="input" />
 
 				<h:outputLabel value="City" styleClass="label" />
-				<h:inputText value="#{loginControllerBean.loggedInUser.city}" required="true"
-					styleClass="input" />
+				<h:inputText value="#{loginControllerBean.loggedInUser.city}"
+					required="true" styleClass="input" />
 
 				<h:outputLabel value="Username" styleClass="label" />
 				<h:inputText value="#{loginControllerBean.loggedInUser.username}"
@@ -56,10 +56,11 @@
 				<h:outputLabel value="Password" styleClass="label" />
 				<h:inputSecret value="#{loginControllerBean.loggedInUser.password}"
 					required="true" styleClass="input" />
-				
+
 				<h:outputLabel for="birthdate" value="Date of birth (DD-MM-YYYY):"
 					styleClass="label" />
-				<h:inputText id="birthdate" value="#{loginControllerBean.loggedInUser.birthdate}"
+				<h:inputText id="birthdate"
+					value="#{loginControllerBean.loggedInUser.birthdate}"
 					required="true" styleClass="input">
 					<f:convertDateTime pattern="dd-M-yyyy" />
 				</h:inputText>
@@ -85,24 +86,35 @@
 		</div>
 		<div class="col-md-4">
 			<h:form>
-				<h:inputText value="#{contactListControllerBean.contactListName}" />
-				<h:commandButton action="#{contactListControllerBean.createNewContactlist()}" value="Create new Contactlist"/>			
+				<h:inputText value="#{userControllerBean.contactListName}"></h:inputText>
+				<h:commandButton
+					action="#{userControllerBean.createNewContactlist()}"
+					value="Create new Contactlist" />
 			
 			</h:form>
-		
-<!-- 			<h:form> -->
-<!-- 				<h:outputLabel value="Search for your friends if you got any" styleClass="label"/> -->
-<!-- 				<h:inputText value="#{userControllerBean.usernameSearch}" /> -->
-<!-- 				<h:commandButton action="#{userControllerBean.searchUserByUsername()}" value="Search" styleClass="submit-btn"/> -->
-<!-- 			</h:form> -->
+			<hr></hr>
+			<h:form>				
+				<h:inputText value="#{userControllerBean.usernameSearch}" />
+				<h:commandButton
+					action="#{userControllerBean.searchUserByUsername()}"
+					value="Search" styleClass="submit-btn" />
+			</h:form>
+
+			<h:form>
+				<h3>Results: </h3>#{userControllerBean.userToSearch.firstName}  #{userControllerBean.userToSearch.lastName}<br />
+				<h:commandButton
+					action="#{userControllerBean.addContactToList()}"
+					value="Add to contactlist" />
+			</h:form>
 			
+			<h1>My Contactlists</h1>
 			
-			
-			
-			<h1>My Friends:</h1>
-			<ui:repeat var="contact" value="#{userControllerBean.contactList}">
-					<p>#{contact.firstName} #{contact.lastName}</p>
+			<ui:repeat var="contactList" value="#{userControllerBean.myContactLists}">
+				#{contactList.contactListName}<br></br>
 			</ui:repeat>
+			
+				
+
 		</div>
 	</div>
 </h:body>
