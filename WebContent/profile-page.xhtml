@@ -5,27 +5,51 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
 <h:head>
-	<!-- BOOTSTRAP -->
-	<link rel="stylesheet"
-		href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script
-		src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type='text/javascript'
-		src="https://cdn.rawgit.com/jamesallardice/Placeholders.js/master/dist/placeholders.min.js"></script>
-
-	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
+	<title>Profile Page</title>
 </h:head>
 <h:body>
-	<div class="container">
-		<h1>#{loginControllerBean.loggedInUser.firstName}
-			#{loginControllerBean.loggedInUser.lastName}</h1>
+	<h:outputStylesheet library="css" name="style.css" position="last" />
+	<b:navBar brand="Waterfall" brandHref="#">
+		<b:navbarLinks pull="right">
+			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
+				<h:commandLink action="profile-page"
+					value="#{loginControllerBean.loggedInUser.firstName} #{loginControllerBean.loggedInUser.lastName}"
+					styleClass="link-profile-page" />
+			</h:form>
+			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
+				<h:commandButton value="Log out"
+					action="#{loginControllerBean.logOutUser()}"
+					styleClass="submit-btn" />
+			</h:form>
+			<h:form rendered="#{loginControllerBean.loggedInUser == null}">
+				<h:messages></h:messages>
 
-		<div class="col-md-4">
+				<div class="login-username">
+					<b:inputText placeholder="Username" id="username"
+						value="#{loginControllerBean.username}" styleClass="input" />
+				</div>
+
+				<div class="login-password">
+					<b:inputSecret placeholder="Password" id="password"
+						value="#{loginControllerBean.password}" styleClass="input" />
+				</div>
+				<div class="login-btn-div">
+					<h:commandButton action="#{loginControllerBean.loginUser()}"
+						value="Login" styleClass="submit-btn" />
+				</div>
+			</h:form>
+			<h:form target="_blank"
+				rendered="#{loginControllerBean.loggedInUser == null}">
+				<h:commandLink action="reg-new-user" target="_self" value="Register"
+					styleClass="link-register-new-user" />
+			</h:form>
+		</b:navbarLinks>
+	</b:navBar>
+	<b:container>
+		<b:column span="4">
 			<h:form>
 				<h1>Update user information</h1>
 				<h:messages></h:messages>
@@ -42,12 +66,12 @@
 				</div>
 
 				<h:outputLabel value="Email" styleClass="label" />
-				<h:inputText value="#{loginControllerBean.loggedInUser.email}" required="true"
-					styleClass="input" />
+				<h:inputText value="#{loginControllerBean.loggedInUser.email}"
+					required="true" styleClass="input" />
 
 				<h:outputLabel value="City" styleClass="label" />
-				<h:inputText value="#{loginControllerBean.loggedInUser.city}" required="true"
-					styleClass="input" />
+				<h:inputText value="#{loginControllerBean.loggedInUser.city}"
+					required="true" styleClass="input" />
 
 				<h:outputLabel value="Username" styleClass="label" />
 				<h:inputText value="#{loginControllerBean.loggedInUser.username}"
@@ -56,10 +80,11 @@
 				<h:outputLabel value="Password" styleClass="label" />
 				<h:inputSecret value="#{loginControllerBean.loggedInUser.password}"
 					required="true" styleClass="input" />
-				
+
 				<h:outputLabel for="birthdate" value="Date of birth (DD-MM-YYYY):"
 					styleClass="label" />
-				<h:inputText id="birthdate" value="#{loginControllerBean.loggedInUser.birthdate}"
+				<h:inputText id="birthdate"
+					value="#{loginControllerBean.loggedInUser.birthdate}"
 					required="true" styleClass="input">
 					<f:convertDateTime pattern="dd-M-yyyy" />
 				</h:inputText>
@@ -82,23 +107,28 @@
 					action="#{userControllerBean.updateUser(loginControllerBean.loggedInUser)}"
 					value="Save changes" styleClass="submit-btn" />
 			</h:form>
-		</div>
+		</b:column>
 		<div class="col-md-4">
 			<h:form>
-				<h:outputLabel value="Search for your friends if you got any" styleClass="label"/>
+				<h:outputLabel value="Search for your friends if you got any"
+					styleClass="label" />
 				<h:inputText value="#{userControllerBean.usernameSearch}" />
-				<h:commandButton action="#{userControllerBean.searchUserByUsername()}" value="Search" styleClass="submit-btn"/>
+				<h:commandButton
+					action="#{userControllerBean.searchUserByUsername()}"
+					value="Search" styleClass="submit-btn" />
 			</h:form>
-			
+
 			<h:form>
 				#{userControllerBean.userToSearch.firstName}
-				<h:commandButton action="#{userControllerBean.addUserToFriendlist()}" value="Add to friend list"/>
+				<h:commandButton
+					action="#{userControllerBean.addUserToFriendlist()}"
+					value="Add to friend list" />
 			</h:form>
 			<h1>My Friends:</h1>
 			<ui:repeat var="friend" value="#{userControllerBean.userList}">
-					<p>#{friend.firstName} #{friend.lastName}</p>
+				<p>#{friend.firstName} #{friend.lastName}</p>
 			</ui:repeat>
 		</div>
-	</div>
+	</b:container>
 </h:body>
 </html>

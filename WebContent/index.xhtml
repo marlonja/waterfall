@@ -17,12 +17,11 @@
 <h:body>
 	<h:outputStylesheet library="css" name="style.css" position="last" />
 	<h:outputScript library="script" name="script.js"></h:outputScript>
-
-	<b:navBar brand="Waterfall" brandHref="#">
+	<b:navBar brand="Waterfall" brandHref="index.xhtml">
 		<b:navbarLinks pull="right">
 			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
 				<h:commandLink action="profile-page"
-					value="#{loginControllerBean.loggedInUser.firstName}"
+					value="#{loginControllerBean.loggedInUser.firstName} #{loginControllerBean.loggedInUser.lastName}"
 					styleClass="link-profile-page" />
 			</h:form>
 			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
