@@ -7,18 +7,18 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-import com.waterfall.EJB.interfaces.LocalFriendsList;
-import com.waterfall.models.FriendsListModel;
+import com.waterfall.EJB.interfaces.LocalContactList;
+import com.waterfall.models.ContactListModel;
 import com.waterfall.serviceEJB.UserServiceEJB;
 
-@Named(value = "friendsListControllerBean")
+@Named(value = "contactListControllerBean")
 @RequestScoped
-public class FriendsListControllerBean implements Serializable {
+public class ContactListControllerBean implements Serializable {
 
 	private static final long serialVersionUID = -1370625496866002066L;
 	
 	@EJB
-	private LocalFriendsList friendsListEJB;
+	private LocalContactList contactListEJB;
 	
 	@EJB
 	private UserServiceEJB userEJB;

@@ -13,33 +13,33 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
 	
 })
-public class FriendsModel implements Serializable{
+public class ContactModel implements Serializable{
 
 	private static final long serialVersionUID = -6304416512235154119L;
 	
 	@Id
-	private Long friendsId;
+	private Long contactId;
 	
 	@ManyToOne
-	@JoinColumn(name = "friendslistmodelid")
-	private FriendsListModel friendsListModel;
+	@JoinColumn(name = "contactlistmodelid")
+	private ContactListModel contactListModel;
 	
 	private Long userId;
 
-	public Long getFriendsId() {
-		return friendsId;
+	public Long getContactId() {
+		return contactId;
 	}
 
-	public void setFriendsId(Long friendsId) {
-		this.friendsId = friendsId;
+	public void setContactId(Long contactId) {
+		this.contactId = contactId;
 	}
 
-	public FriendsListModel getFriendsListModel() {
-		return friendsListModel;
+	public ContactListModel getContactListModel() {
+		return contactListModel;
 	}
 
-	public void setFriendsListModel(FriendsListModel friendsListModel) {
-		this.friendsListModel = friendsListModel;
+	public void setContactListModel(ContactListModel contactListModel) {
+		this.contactListModel = contactListModel;
 	}
 
 	public Long getUserId() {
@@ -49,7 +49,5 @@ public class FriendsModel implements Serializable{
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	
-	
 
 }

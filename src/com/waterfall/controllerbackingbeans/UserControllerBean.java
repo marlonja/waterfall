@@ -10,11 +10,11 @@ import javax.inject.Named;
 
 import org.eclipse.persistence.annotations.PrivateOwned;
 
-import com.waterfall.EJB.interfaces.LocalFriendsList;
+import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.DropModel;
-import com.waterfall.models.FriendsListModel;
-import com.waterfall.models.FriendsModel;
+import com.waterfall.models.ContactListModel;
+import com.waterfall.models.ContactModel;
 import com.waterfall.models.UserModel;
 
 @Named(value = "userControllerBean")
@@ -30,7 +30,7 @@ public class UserControllerBean implements Serializable {
 	@EJB
 	private LocalUser userEJB;
 	@EJB
-	private LocalFriendsList friendsListEJB;
+	private LocalContactList friendsListEJB;
 
 	public void updateUser(UserModel user) {
 		userEJB.storeUser(user);
@@ -54,10 +54,10 @@ public class UserControllerBean implements Serializable {
 	public String addUserToFriendlist() {
 		
 		loggedInUser = userEJB.getUserFromSession("loggedInUser");
-		FriendsListModel friendsListModel = new FriendsListModel();
-		friendsListModel.setFriendsListOwner(loggedInUser);
-		friendsListModel.setListName("New friends list");
-		friendsListEJB.storeFriendsList(friendsListModel);
+		ContactListModel friendsListModel = new ContactListModel();
+//		friendsListModel.setFriendsListOwner(loggedInUser);
+//		friendsListModel.setListName("New friends list");
+		friendsListEJB.storeContactList(friendsListModel);
 		return "profile-page";
 	}
 
