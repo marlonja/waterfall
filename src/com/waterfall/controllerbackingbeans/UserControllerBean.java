@@ -8,11 +8,12 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import org.eclipse.persistence.annotations.PrivateOwned;
 
+
+import com.waterfall.EJB.interfaces.LocalContact;
 import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.models.DropModel;
+
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.ContactModel;
 import com.waterfall.models.UserModel;
@@ -22,70 +23,92 @@ import com.waterfall.models.UserModel;
 public class UserControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 3773988104720989698L;
-	private List<UserModel> friendList;
+	private List<UserModel> contactList;
 	private String usernameSearch;
 	private UserModel userToSearch;
 	private UserModel loggedInUser;
+	
+	@EJB
+	private LocalContact contactEJB;
 
 	@EJB
 	private LocalUser userEJB;
+	
 	@EJB
-	private LocalContactList friendsListEJB;
+	private LocalContactList contactListEJB;
+	
 
 	public void updateUser(UserModel user) {
 		userEJB.storeUser(user);
-	}
-
-	public String search() {
-		friendList = userEJB.getAll();
-
-		return "all";
-	}
+	}	
 
 	public String searchUserByUsername() {
 		UserModel userToCheckInDatabase = new UserModel();
 		userToCheckInDatabase.setUsername(usernameSearch);
 		userToSearch = userEJB.getUserByUsername(usernameSearch);
-		friendList = new ArrayList<UserModel>();
+		contactList = new ArrayList<UserModel>();
 
 		return "profile-page";
 	}
 
-	public String addUserToFriendlist() {
+	public String createNewContactlist() {
+		loggedInUser = userEJB.getUserFromSession("loggedInUser");		
+
+		ContactListModel contactListModel = new ContactListModel();	
 		
-		loggedInUser = userEJB.getUserFromSession("loggedInUser");
-		ContactListModel friendsListModel = new ContactListModel();
-//		friendsListModel.setFriendsListOwner(loggedInUser);
-//		friendsListModel.setListName("New friends list");
-		friendsListEJB.storeContactList(friendsListModel);
+		contactListModel.setContactListName("My flends");
+		contactListModel.setContactListOwner(loggedInUser);	
+		
+		contactListEJB.storeContactList(contactListModel);
+		System.out.println(contactListModel.getContactListId());
+		
+		addContactToList(contactListModel);
+	
 		return "profile-page";
 	}
-
-	private List<UserModel> controlUserFriendList(List<UserModel> friendList) {
-		if (usernameSearch.equals(loggedInUser.getUsername())) {
-			System.out.println("Cannot add yourself");
-		} else {
-			for (UserModel userModel : friendList) {
-				if (userModel.getUsername().equals(usernameSearch)) {
-					System.out.println("This friend is already in list");
-
-					return friendList;
-				}
-			}
-			friendList.add(userToSearch);
-			System.out.println("addded friend");
-
-		}
-
-		return friendList;
+	
+	private List<ContactModel> addContactToList(ContactListModel contactListModel){
+		ContactModel contactModel = new ContactModel();
+		List<ContactModel> listOfContacts = new ArrayList<ContactModel>();
+		
+		contactModel.setUserId(userToSearch.getUserid());
+		
+		contactModel.setContactListModel(contactListEJB.getContactListById(31L));
+		
+		listOfContacts.add(contactModel);
+		contactEJB.storeContact(contactModel);
+		
+		return listOfContacts;
+		
 	}
 
-	public List<UserModel> getUserList() {
-		return friendList;
+//	private List<UserModel> controlUserFriendList(List<UserModel> friendList) {
+//		if (usernameSearch.equals(loggedInUser.getUsername())) {
+//			System.out.println("Cannot add yourself");
+//		} else {
+//			for (UserModel userModel : friendList) {
+//				if (userModel.getUsername().equals(usernameSearch)) {
+//					System.out.println("This friend is already in list");
+//
+//					return friendList;
+//				}
+//			}
+//			friendList.add(userToSearch);
+//			System.out.println("addded friend");
+//
+//		}
+//
+//		return friendList;
+//	}
+
+
+
+	public List<UserModel> getContactList() {
+		return contactList;
 	}
 
-	public void setUserList(List<UserModel> userList) {
-		this.friendList = userList;
+	public void setContactList(List<UserModel> contactList) {
+		this.contactList = contactList;
 	}
 
 	public String getUsernameSearch() {

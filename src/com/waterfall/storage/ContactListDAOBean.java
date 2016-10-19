@@ -14,7 +14,7 @@ public class ContactListDAOBean {
 	private EntityManager em;
 	
 
-	public boolean storeFriendsList(ContactListModel contactListModel) {
+	public boolean storeContactList(ContactListModel contactListModel) {
 		System.out.println("DAO: store friendslist");
 		if (em.merge(contactListModel) != null) {
 			return true;
@@ -22,5 +22,9 @@ public class ContactListDAOBean {
 			return false;
 		}
 		
+	}
+	
+	public ContactListModel getContactListById(Long contactListId) {
+		return em.find(ContactListModel.class, contactListId);
 	}
 }

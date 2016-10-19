@@ -19,7 +19,12 @@ public class ContactListServiceEJB implements LocalContactList{
 	@Override
 	public boolean storeContactList(ContactListModel contactListModel) {
 		
-		return contactListDAOBean.storeFriendsList(contactListModel);
+		return contactListDAOBean.storeContactList(contactListModel);
+	}
+
+	@Override
+	public ContactListModel getContactListById(Long contactListId) {
+		return contactListDAOBean.getContactListById(contactListId);
 	}
 	
 	

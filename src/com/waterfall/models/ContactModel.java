@@ -21,7 +21,7 @@ public class ContactModel implements Serializable{
 	private Long contactId;
 	
 	@ManyToOne
-	@JoinColumn(name = "contactlistmodelid")
+	@JoinColumn(name = "contactlistid")
 	private ContactListModel contactListModel;
 	
 	private Long userId;

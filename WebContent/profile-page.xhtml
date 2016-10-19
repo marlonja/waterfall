@@ -85,18 +85,23 @@
 		</div>
 		<div class="col-md-4">
 			<h:form>
-				<h:outputLabel value="Search for your friends if you got any" styleClass="label"/>
-				<h:inputText value="#{userControllerBean.usernameSearch}" />
-				<h:commandButton action="#{userControllerBean.searchUserByUsername()}" value="Search" styleClass="submit-btn"/>
-			</h:form>
+				<h:inputText value="#{contactListControllerBean.contactListName}" />
+				<h:commandButton action="#{contactListControllerBean.createNewContactlist()}" value="Create new Contactlist"/>			
 			
-			<h:form>
-				#{userControllerBean.userToSearch.firstName}
-				<h:commandButton action="#{userControllerBean.addUserToFriendlist()}" value="Add to friend list"/>
 			</h:form>
+		
+<!-- 			<h:form> -->
+<!-- 				<h:outputLabel value="Search for your friends if you got any" styleClass="label"/> -->
+<!-- 				<h:inputText value="#{userControllerBean.usernameSearch}" /> -->
+<!-- 				<h:commandButton action="#{userControllerBean.searchUserByUsername()}" value="Search" styleClass="submit-btn"/> -->
+<!-- 			</h:form> -->
+			
+			
+			
+			
 			<h1>My Friends:</h1>
-			<ui:repeat var="friend" value="#{userControllerBean.userList}">
-					<p>#{friend.firstName} #{friend.lastName}</p>
+			<ui:repeat var="contact" value="#{userControllerBean.contactList}">
+					<p>#{contact.firstName} #{contact.lastName}</p>
 			</ui:repeat>
 		</div>
 	</div>
