@@ -18,44 +18,40 @@
 	<h:outputStylesheet library="css" name="style.css" position="last" />
 	<h:outputScript library="script" name="script.js"></h:outputScript>
 
-	<b:navBar brand="Waterfall">
+	<b:navBar brand="Waterfall" brandHref="#">
 		<b:navbarLinks pull="right">
-			<div class="container-fluid">
-				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<p>#{loginControllerBean.loggedInUser.firstName}</p> <h:form
-							rendered="#{loginControllerBean.loggedInUser != null}">
-							<h:commandLink action="profile-page" value="Profile page"
-								styleClass="link-profile-page" />
-						</h:form> <h:form rendered="#{loginControllerBean.loggedInUser != null}">
-							<h:commandButton value="Log out"
-								action="#{loginControllerBean.logOutUser()}"
-								styleClass="submit-btn" />
-						</h:form> <h:form rendered="#{loginControllerBean.loggedInUser == null}">
-							<h:messages></h:messages>
+			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
+				<h:commandLink action="profile-page"
+					value="#{loginControllerBean.loggedInUser.firstName}"
+					styleClass="link-profile-page" />
+			</h:form>
+			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
+				<h:commandButton value="Log out"
+					action="#{loginControllerBean.logOutUser()}"
+					styleClass="submit-btn" />
+			</h:form>
+			<h:form rendered="#{loginControllerBean.loggedInUser == null}">
+				<h:messages></h:messages>
 
-							<div class="login-username">
-								<b:inputText placeholder="Username" id="username"
-									value="#{loginControllerBean.username}" styleClass="input" />
-							</div>
+				<div class="login-username">
+					<b:inputText placeholder="Username" id="username"
+						value="#{loginControllerBean.username}" styleClass="input" />
+				</div>
 
-							<div class="login-password">
-								<b:inputSecret placeholder="Password" id="password"
-									value="#{loginControllerBean.password}" styleClass="input" />
-							</div>
-							<div class="login-btn-div">
-								<h:commandButton action="#{loginControllerBean.loginUser()}"
-									value="Login" styleClass="submit-btn" />
-							</div>
-
-						</h:form> <h:form target="_blank"
-							rendered="#{loginControllerBean.loggedInUser == null}">
-							<h:commandLink action="reg-new-user" target="_self"
-								value="Register" styleClass="link-register-new-user" />
-						</h:form>
-					</li>
-				</ul>
-			</div>
+				<div class="login-password">
+					<b:inputSecret placeholder="Password" id="password"
+						value="#{loginControllerBean.password}" styleClass="input" />
+				</div>
+				<div class="login-btn-div">
+					<h:commandButton action="#{loginControllerBean.loginUser()}"
+						value="Login" styleClass="submit-btn" />
+				</div>
+			</h:form>
+			<h:form target="_blank"
+				rendered="#{loginControllerBean.loggedInUser == null}">
+				<h:commandLink action="reg-new-user" target="_self" value="Register"
+					styleClass="link-register-new-user" />
+			</h:form>
 		</b:navbarLinks>
 	</b:navBar>
 
@@ -121,10 +117,10 @@
 						<b:inputText styleClass="input" placeholder="Country"
 							value="#{filterControllerBean.filterCountry}" />
 					</b:column>
-					<b:column class="show-more-filters" span="6">
+					<b:column class="show-more-filters" span="4">
 						<p id="age-tag">
 							<label for="ageSpan">Age span: </label>
-							<h:inputText styleClass="input" id="ageSpan"
+							<h:inputText styleClass="" id="ageSpan"
 								value="#{filterControllerBean.ageSpan}" />
 						</p>
 						<div id="slider-range"></div>
@@ -150,7 +146,7 @@
 			<c:forEach var="drop" items="#{dropControllerBean.dropList}">
 				<div class="test">
 					<p class="waterfall-username">
-						#{drop.owner.username} <span>#{drop.owner.gender}</span>
+						#{drop.owner.username} <span id="gender-span">#{drop.owner.gender}</span>
 					</p>
 					<p class="waterfall-creation-date">#{drop.getCreationDateFormatted()}</p>
 					<p class="waterfall-drop-content">#{drop.content}</p>
@@ -166,13 +162,13 @@
 								action="#{dropControllerBean.createNewComment(drop.getDropId())}" />
 						</h:form>
 						<c:forEach var="comment" items="#{drop.getComments()}">
-							<p class="comment-username">
-								#{comment.owner.username} <span>#{comment.getCreationDateFormatted()}</span>
-							</p>
-							<p class="waterfall-drop-content">#{comment.content}</p>
-
+							<div class="comment-content">
+								<p class="comment-username">
+									#{comment.owner.username} <span id="date-span">#{comment.getCreationDateFormatted()}</span>
+								</p>
+								<p>#{comment.content}</p>
+							</div>
 						</c:forEach>
-
 					</div>
 
 

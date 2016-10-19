@@ -107,19 +107,19 @@ public class FilterServiceEJB implements LocalFilter {
 			dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
 		}
 
-		if (!filterByFirstName.equalsIgnoreCase("")) {
+		if (!filterByFirstName.isEmpty()) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByFirstName(filterByFirstName);
 		}
 
-		if (!filterByLastName.equalsIgnoreCase("")) {
+		if (!filterByLastName.isEmpty()) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByLastName(filterByLastName);
 		}
 
-		if (!filterByUsername.equalsIgnoreCase("")) {
+		if (!filterByUsername.isEmpty()) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByUsername(filterByUsername);
 		}
 
-		if (!filterByCity.equalsIgnoreCase("")) {
+		if (!filterByCity.isEmpty()) {
 			dropListFromSearch = (ArrayList<DropModel>) filterByCity(filterByCity);
 		}
 
