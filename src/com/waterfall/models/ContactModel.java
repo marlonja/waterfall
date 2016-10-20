@@ -11,19 +11,19 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-	
+
 })
-public class ContactModel implements Serializable{
+public class ContactModel implements Serializable {
 
 	private static final long serialVersionUID = -6304416512235154119L;
-	
+
 	@Id
 	private Long contactId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "contactlistid")
 	private ContactListModel contactListModel;
-	
+
 	private Long userId;
 
 	public Long getContactId() {
