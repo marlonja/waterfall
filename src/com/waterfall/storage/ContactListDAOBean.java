@@ -31,6 +31,7 @@ public class ContactListDAOBean {
 		return em.find(ContactListModel.class, contactListId);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<ContactListModel> getAllContactLists() {
 		return em.createNamedQuery("ContactListModel.findAll").getResultList();
 	}

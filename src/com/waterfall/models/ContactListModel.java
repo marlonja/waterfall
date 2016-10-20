@@ -21,7 +21,7 @@ public class ContactListModel implements Serializable{
 	private static final long serialVersionUID = -6426647291204634601L;
 	
 	@Id
-	private long contactListId;
+	private Long contactListId;
 	
 	@ManyToOne
 	@JoinColumn(name = "ownerid")
@@ -32,11 +32,11 @@ public class ContactListModel implements Serializable{
 	@OneToMany(mappedBy = "contactListModel")
 	private List<ContactModel> contacts;
 
-	public long getContactListId() {
+	public Long getContactListId() {
 		return contactListId;
 	}
 
-	public void setContactListId(long contactListId) {
+	public void setContactListId(Long contactListId) {
 		this.contactListId = contactListId;
 	}
 

@@ -74,7 +74,6 @@ public class UserControllerBean implements Serializable {
 
 		
 		contactListEJB.storeContactList(contactListModel);
-		System.out.println(contactListModel.getContactListId());
 		
 		//addContactToList(contactListModel);
 	
