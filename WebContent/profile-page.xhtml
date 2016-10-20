@@ -121,6 +121,17 @@
 			<c:forEach var="contactList"
 				items="#{userControllerBean.getContactLists()}">
 				<p>#{contactList.contactListName}</p>
+				<div>
+					<h:form>
+						<b:inputText placeholder="Search by username" value="#{userControllerBean.usernameSearch}"/>
+						<b:commandButton value="Search" action="#{userControllerBean.searchUserByUsername()}"/>
+					</h:form>
+					Result: #{userControllerBean.userToSearch.getUsername()}
+					<h:form>
+						<b:commandButton value="Add user to list" action="#{userControllerBean.addContactToList(contactList)}"/>
+					</h:form>
+					<p>____________________________________________________</p>
+				</div>
 			</c:forEach>
 		</b:column>
 	</b:container>
