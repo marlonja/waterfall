@@ -7,11 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
+
 import javax.inject.Named;
-
-
-
 import com.waterfall.EJB.interfaces.LocalContact;
 import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalUser;
@@ -19,10 +16,6 @@ import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.ContactModel;
 import com.waterfall.models.UserModel;
-
-import jersey.repackaged.com.google.common.collect.Lists;
-
-
 
 @Named(value = "userControllerBean")
 @SessionScoped
@@ -47,6 +40,7 @@ public class UserControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		loggedInUser = userEJB.getUserFromSession("loggedInUser");
+		loggedInUser.getContactList();
 	}
 	
 	public void updateUser(UserModel user) {
@@ -62,7 +56,9 @@ public class UserControllerBean implements Serializable {
 	}
 	
 	public List<ContactListModel> getContactLists() {
+		init();
 		return loggedInUser.getContactList();
+		
 	}
 
 	public String createNewContactlist() {
@@ -73,28 +69,20 @@ public class UserControllerBean implements Serializable {
 		contactListModel.setContactListOwner(loggedInUser);
 		
 		contactListEJB.storeContactList(contactListModel);
-		loggedInUser.getContactList().add(contactListModel);
-		
-		
-		//addContactToList(contactListModel);
+		loggedInUser.getContactList().add(contactListModel);		
 	
 		return "profile-page";
 	}
 	
 	public String addContactToList(ContactListModel contactListModel){
-		ContactModel contactModel = new ContactModel();
-		//List<ContactModel> listOfContacts = new ArrayList<ContactModel>();
+		ContactModel contactModel = new ContactModel();		
 		
-		contactModel.setUserId(userToSearch.getUserid());	
+		contactModel.setUserId(userToSearch.getUserid());		
 		
+		contactModel.setContactListModel(contactListModel);		
 		
-		contactModel.setContactListModel(contactListModel);
-		
-		
-		//listOfContacts.add(contactModel);
 		contactEJB.storeContact(contactModel);
 		
-		//return listOfContacts;
 		return "profile-page";
 	}
 
