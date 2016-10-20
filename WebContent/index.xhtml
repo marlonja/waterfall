@@ -17,17 +17,12 @@
 <h:body>
 	<h:outputStylesheet library="css" name="style.css" position="last" />
 	<h:outputScript library="script" name="script.js"></h:outputScript>
-	<b:navBar brand="Waterfall" brandHref="index.xhtml">
+	<b:navBar brand="Waterfall" brandHref="#">
 		<b:navbarLinks pull="right">
 			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
 				<h:commandLink action="profile-page"
 					value="#{loginControllerBean.loggedInUser.firstName} #{loginControllerBean.loggedInUser.lastName}"
 					styleClass="link-profile-page" />
-			</h:form>
-			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
-				<h:commandButton value="Log out"
-					action="#{loginControllerBean.logOutUser()}"
-					styleClass="submit-btn" />
 			</h:form>
 			<h:form rendered="#{loginControllerBean.loggedInUser == null}">
 				<h:messages></h:messages>
@@ -69,11 +64,13 @@
 					</b:column>
 				</b:row>
 				<b:row>
-					<b:column span="3" offset="9">
+					<b:column span="4" offset="8">
 						<h:commandLink class="clear-button" value="Restore filters"
 							action="#{dropControllerBean.init()}" />
 						<b:button class="more-filters-link" value="More filters"
 							look="link" />
+						<b:button rendered="#{loginControllerBean.loggedInUser != null}"
+							class="show-create-drop-div-btn" value="Drop something!" />
 					</b:column>
 				</b:row>
 
@@ -125,11 +122,8 @@
 						<div id="slider-range"></div>
 					</b:column>
 				</b:row>
-
 			</h:form>
-			<h:commandButton
-				rendered="#{loginControllerBean.loggedInUser != null}"
-				class="show-create-drop-div-btn" value="Write something" />
+
 
 		</div>
 		<div class="create-drop-div">
@@ -154,12 +148,6 @@
 							value="#{drop.getComments().size()} comments" look="link" />
 					</p>
 					<div class="create-comment-div">
-						<h:form rendered="#{loginControllerBean.loggedInUser != null}">
-							<b:inputText placeholder="Comment..."
-								value="#{dropControllerBean.commentContent}" />
-							<h:commandButton styleClass="comment-btn" value="Comment"
-								action="#{dropControllerBean.createNewComment(drop.getDropId())}" />
-						</h:form>
 						<c:forEach var="comment" items="#{drop.getComments()}">
 							<div class="comment-content">
 								<p class="comment-username">
@@ -168,10 +156,13 @@
 								<p>#{comment.content}</p>
 							</div>
 						</c:forEach>
+						<h:form rendered="#{loginControllerBean.loggedInUser != null}">
+							<b:inputText placeholder="Comment..."
+								value="#{dropControllerBean.commentContent}" />
+							<h:commandButton styleClass="comment-btn" value="Comment"
+								action="#{dropControllerBean.createNewComment(drop.getDropId())}" />
+						</h:form>
 					</div>
-
-
-
 				</div>
 			</c:forEach>
 

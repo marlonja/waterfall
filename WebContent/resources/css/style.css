@@ -44,6 +44,7 @@ h4 {
 	border-radius: 4px;
 	color: steelblue;
 	font-family: Tahoma;
+	resize: none;
 }
 
 .age-span-input {
@@ -72,22 +73,10 @@ h4 {
 	border: 1px solid steelblue;
 }
 
-.submit-btn {
-	width: 100%;
+.submit-btn, .filter-btn {
 	background-color: steelblue;
 	color: white;
-	padding: 7px 10px;
-	margin: 8px 0;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	font-family: Tahoma;
-}
-
-.filter-btn {
-	background-color: steelblue;
-	color: white;
-	padding: 10px;
+	padding: 6px 10px;
 	margin: 8px 0;
 	border: none;
 	border-radius: 4px;
@@ -118,7 +107,6 @@ h4 {
 
 .create-comment-div {
 	display: none;
-	width: 50%;
 }
 
 .create-drop-input {
@@ -297,4 +285,16 @@ h4 {
 	font-family: Tahoma;
 	color: steelblue;
 	margin: 5px;
+}
+
+.show-create-drop-div-btn {
+	background-color: steelblue;
+	color: white;
+	padding: 7px 10px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: Tahoma;
+	
 }
