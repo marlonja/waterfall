@@ -46,7 +46,8 @@ public class UserModel implements Serializable {
 
 	private String country;
 	
-	private List<UserModel> friendsList;
+	@OneToMany(mappedBy = "contactListOwner")
+	private List<ContactListModel> contactList;
 
 	@OneToMany(mappedBy = "owner")
 	private List<DropModel> dropList;
@@ -134,14 +135,6 @@ public class UserModel implements Serializable {
 		this.country = country;
 	}
 
-	public List<UserModel> getFriendsList() {
-		return friendsList;
-	}
-
-	public void setFriendsList(List<UserModel> friendsList) {
-		this.friendsList = friendsList;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -149,6 +142,14 @@ public class UserModel implements Serializable {
 	public void setPassword(String passwordhash) {
 		this.password = passwordhash;
 	}
+	public List<ContactListModel> getContactList() {
+		return contactList;
+	}
+	public void setContactList(List<ContactListModel> contactList) {
+		this.contactList = contactList;
+	}
+	
+	
 
 
 }

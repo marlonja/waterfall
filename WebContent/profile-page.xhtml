@@ -6,12 +6,14 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:b="http://bootsfaces.net/ui">
 <h:head>
 	<title>Profile Page</title>
 </h:head>
 <h:body>
 	<h:outputStylesheet library="css" name="style.css" position="last" />
+
 	<b:navBar brand="Waterfall" brandHref="index.xhtml">
 		<b:navbarLinks pull="right">
 			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
@@ -31,11 +33,6 @@
 					<b:inputText placeholder="Username" id="username"
 						value="#{loginControllerBean.username}" styleClass="input" />
 				</div>
-
-				<div class="login-password">
-					<b:inputSecret placeholder="Password" id="password"
-						value="#{loginControllerBean.password}" styleClass="input" />
-				</div>
 				<div class="login-btn-div">
 					<h:commandButton action="#{loginControllerBean.loginUser()}"
 						value="Login" styleClass="submit-btn" />
@@ -48,6 +45,8 @@
 			</h:form>
 		</b:navbarLinks>
 	</b:navBar>
+
+
 	<b:container>
 		<b:column span="4">
 			<h:form>
@@ -108,27 +107,22 @@
 					value="Save changes" styleClass="submit-btn" />
 			</h:form>
 		</b:column>
-		<div class="col-md-4">
+		<b:column span="4">
+			<h1>Create contact list</h1>
 			<h:form>
-				<h:outputLabel value="Search for your friends if you got any"
-					styleClass="label" />
-				<h:inputText value="#{userControllerBean.usernameSearch}" />
-				<h:commandButton
-					action="#{userControllerBean.searchUserByUsername()}"
-					value="Search" styleClass="submit-btn" />
+				<b:inputText value="#{userControllerBean.contactListName}"
+					placeholder="Name your list" />
+				<b:commandButton value="Save list"
+					action="#{userControllerBean.createNewContactlist()}" />
 			</h:form>
-
-			<h:form>
-				#{userControllerBean.userToSearch.firstName}
-				<h:commandButton
-					action="#{userControllerBean.addUserToFriendlist()}"
-					value="Add to friend list" />
-			</h:form>
-			<h1>My Friends:</h1>
-			<ui:repeat var="friend" value="#{userControllerBean.userList}">
-				<p>#{friend.firstName} #{friend.lastName}</p>
-			</ui:repeat>
-		</div>
+		</b:column>
+		<b:column span="4">
+			<h1>My lists</h1>
+			<c:forEach var="contactList"
+				items="#{userControllerBean.getContactLists()}">
+				<p>#{contactList.contactListName}</p>
+			</c:forEach>
+		</b:column>
 	</b:container>
 </h:body>
 </html>

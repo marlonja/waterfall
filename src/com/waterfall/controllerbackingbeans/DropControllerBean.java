@@ -10,9 +10,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalComment;
+import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
+import com.waterfall.models.ContactListModel;
 import com.waterfall.models.DropModel;
 import com.waterfall.validators.CreateDropValidator;
 
@@ -28,6 +30,7 @@ public class DropControllerBean implements Serializable {
 	private String commentContent;
 	private List<DropModel> dropList;
 	
+	
 	@EJB
 	CreateDropValidator createDropValidator;
 
@@ -36,6 +39,9 @@ public class DropControllerBean implements Serializable {
 
 	@EJB
 	LocalDrop dropEJB;
+	
+	@EJB
+	LocalContactList contactListEJB;
 
 	@EJB
 	LocalComment commentEJB;
@@ -102,6 +108,8 @@ public class DropControllerBean implements Serializable {
 	public void setCommentContent(String commentContent) {
 		this.commentContent = commentContent;
 	}
+
+
 
 
 
