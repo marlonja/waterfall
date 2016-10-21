@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Date;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "UserModel.findAll", query = "SELECT u FROM UserModel u"),
+@NamedQueries({
+		@NamedQuery(name = "UserModel.findAll", query = "SELECT u FROM UserModel u"),
 		@NamedQuery(name = "UserModel.findByUsername", query = "SELECT u FROM UserModel u WHERE u.username LIKE :username"),
 		@NamedQuery(name = "UserModel.findByEmail", query = "SELECT u FROM UserModel u WHERE u.email LIKE :email"), 
 		@NamedQuery(name = "UserModel.findByCountry", query = "SELECT u FROM UserModel u WHERE u.country LIKE :country"),
@@ -46,7 +47,7 @@ public class UserModel implements Serializable {
 
 	private String country;
 	
-	@OneToMany(mappedBy = "contactListOwner")
+	@OneToMany(mappedBy = "owner")
 	private List<ContactListModel> contactList;
 
 	@OneToMany(mappedBy = "owner")
@@ -148,8 +149,6 @@ public class UserModel implements Serializable {
 	public void setContactList(List<ContactListModel> contactList) {
 		this.contactList = contactList;
 	}
-	
-	
 
 
 }

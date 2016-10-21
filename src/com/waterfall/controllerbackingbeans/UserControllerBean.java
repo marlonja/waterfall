@@ -7,21 +7,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
-
-
-import com.waterfall.EJB.interfaces.LocalContact;
 import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalUser;
 
 import com.waterfall.models.ContactListModel;
-import com.waterfall.models.ContactModel;
 import com.waterfall.models.UserModel;
-
-import jersey.repackaged.com.google.common.collect.Lists;
-
 
 
 @Named(value = "userControllerBean")
@@ -29,14 +21,10 @@ import jersey.repackaged.com.google.common.collect.Lists;
 public class UserControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 3773988104720989698L;
-	private List<UserModel> contactList;
 	private String usernameSearch;
 	private UserModel userToSearch;
 	private UserModel loggedInUser;
 	private String contactListName;
-	
-	@EJB
-	private LocalContact contactEJB;
 
 	@EJB
 	private LocalUser userEJB;
@@ -57,7 +45,6 @@ public class UserControllerBean implements Serializable {
 		UserModel userToCheckInDatabase = new UserModel();
 		userToCheckInDatabase.setUsername(usernameSearch);
 		userToSearch = userEJB.getUserByUsername(usernameSearch);
-		contactList = new ArrayList<UserModel>();
 		return "profile-page";
 	}
 	
@@ -69,32 +56,22 @@ public class UserControllerBean implements Serializable {
 		ContactListModel contactListModel = new ContactListModel();
 		loggedInUser = userEJB.getUserFromSession("loggedInUser");
 		
-		contactListModel.setContactListName(contactListName);
-		contactListModel.setContactListOwner(loggedInUser);
+		contactListModel.setContactlistname(contactListName);
+		contactListModel.setOwner(loggedInUser);
 		
 		contactListEJB.storeContactList(contactListModel);
 		loggedInUser.getContactList().add(contactListModel);
-		
-		
-		//addContactToList(contactListModel);
 	
 		return "profile-page";
 	}
 	
 	public String addContactToList(ContactListModel contactListModel){
-		ContactModel contactModel = new ContactModel();
-		//List<ContactModel> listOfContacts = new ArrayList<ContactModel>();
+//		List<UserModel> contacts = new ArrayList<UserModel>();
+//		contacts.add(userToSearch);
+//		contactListModel.setContacts(contacts);
+		contactListModel.setContactid(userToSearch.getUserid());
+		contactListEJB.storeContactList(contactListModel);
 		
-		contactModel.setUserId(userToSearch.getUserid());	
-		
-		
-		contactModel.setContactListModel(contactListModel);
-		
-		
-		//listOfContacts.add(contactModel);
-		contactEJB.storeContact(contactModel);
-		
-		//return listOfContacts;
 		return "profile-page";
 	}
 
@@ -116,16 +93,6 @@ public class UserControllerBean implements Serializable {
 //
 //		return friendList;
 //	}
-
-
-
-	public List<UserModel> getContactList() {
-		return contactList;
-	}
-
-	public void setContactList(List<UserModel> contactList) {
-		this.contactList = contactList;
-	}
 
 	public String getUsernameSearch() {
 		return usernameSearch;
