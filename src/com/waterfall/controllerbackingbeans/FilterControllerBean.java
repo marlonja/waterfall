@@ -73,8 +73,23 @@ public class FilterControllerBean {
 	public String filter() {
 		FilterModel filterModel = createNewFilter();
 		
-		dropControllerBean.setDropList(filterServiceEJB.filterDrops(filterModel));
+		dropControllerBean.setDropList(filterServiceEJB.filterDrops(filterModel));		
 		
+		return "index";
+	}
+	
+	public String clearFilterInputFields(){
+		dropControllerBean.init();
+		
+		filterFirstName = null;
+		filterLastName = null;
+		filterUsername = null;
+		filterCity = null;
+		filterCountry = null;
+		filteredByMale = false;
+		filteredByFemale = false;
+		filteredByOther = false;
+		tagList = null;
 		return "index";
 	}
 

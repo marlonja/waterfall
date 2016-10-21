@@ -8,14 +8,11 @@ $(document).ready(function(){
 	
 	$(".comment-link").click(function(){
 		$(this).parent().next().toggle('fast');
-	});
-	
-	$(".clear-button").click(function(){
-		$(".search-field").val("");
-	});
+	});	
 	
 	$(".more-filters-link").click(function(){
 		$(".show-more-filters").stop().toggle();
+		
 	});
 	
 	$(function() {
@@ -32,5 +29,7 @@ $(document).ready(function(){
 	    });
 	    $(document.getElementById("filter-form:ageSpan")).val($( "#slider-range" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
 	  });
+	
+	
 	
 });
