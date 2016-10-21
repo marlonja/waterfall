@@ -8,11 +8,7 @@ $(document).ready(function(){
 	
 	$(".comment-link").click(function(){
 		$(this).parent().next().toggle('fast');
-	});
-	
-	$(".clear-button").click(function(){
-		$(".search-field").val("");
-	});
+	});	
 	
 	$(".more-filters-link").click(function(){
 		$(".show-more-filters").stop().toggle();

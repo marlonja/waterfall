@@ -78,8 +78,9 @@ public class FilterControllerBean {
 		return "index";
 	}
 	
-	public String clearFilter(){
+	public String clearFilterInputFields(){
 		dropControllerBean.init();
+		
 		filterFirstName = null;
 		filterLastName = null;
 		filterUsername = null;
@@ -88,6 +89,7 @@ public class FilterControllerBean {
 		filteredByMale = false;
 		filteredByFemale = false;
 		filteredByOther = false;
+		tagList = null;
 		return "index";
 	}
 
