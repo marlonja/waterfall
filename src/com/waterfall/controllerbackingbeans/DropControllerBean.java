@@ -16,6 +16,7 @@ import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.DropModel;
+import com.waterfall.models.UserModel;
 import com.waterfall.validators.CreateDropValidator;
 
 import jersey.repackaged.com.google.common.collect.Lists;
@@ -55,9 +56,12 @@ public class DropControllerBean implements Serializable {
 
 	public String createNewDrop() {
 		DropModel dropModel = new DropModel();
+		UserModel userModel = new UserModel();
+		userModel = userEJB.getUserFromSession("loggedInUser");
+		
 		dropModel.setContent(content);
 		dropModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
-		dropModel.setLocation("Gothenburg");
+		dropModel.setLocation(userModel.getCity());
 		
 		if(createDropValidator.validateDrop(dropModel)){
 			dropEJB.storeDrop(dropModel);
