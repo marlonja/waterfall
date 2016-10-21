@@ -9,6 +9,10 @@ h1 {
 	margin-bottom: 5px;
 }
 
+body {
+	padding: 2em;
+}
+
 h4 {
 	color: steelblue;
 	font-family: Tahoma;
@@ -127,7 +131,6 @@ h4 {
 
 .navbar {
 	padding: 10px;
-	margin: 10px;
 }
 
 .login-username, .login-password, .login-btn-div {
@@ -138,7 +141,7 @@ h4 {
 	display: block;
 }
 
-.waterfall-div {
+.waterfall-column {
 	background-color: steelblue;
 	border-radius: 0 0 10px 10px;
 	margin-bottom: 40px;
@@ -153,7 +156,6 @@ h4 {
 	font-family: Tahoma;
 	text-align: center;
 	border-radius: 10px 10px 0 0;
-	margin-bottom: 5px;
 }
 
 .navbar-default .navbar-brand {
@@ -175,6 +177,7 @@ h4 {
 	border-radius: 10px;
 	background: whitesmoke;
 	border-radius: 10px;
+	text-align: left;
 }
 
 .test-comment {
@@ -296,5 +299,9 @@ h4 {
 	border-radius: 4px;
 	cursor: pointer;
 	font-family: Tahoma;
-	
+}
+
+#my-pools-headline {
+	font-size: 2em;
+	color: white;
 }
