@@ -1,12 +1,14 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalComment;
@@ -31,6 +33,9 @@ public class DropControllerBean implements Serializable {
 	private String commentContent;
 	private List<DropModel> dropList;
 	
+	@Inject
+	FilterControllerBean filterControllerBean;
+	
 	
 	@EJB
 	CreateDropValidator createDropValidator;
@@ -51,8 +56,8 @@ public class DropControllerBean implements Serializable {
 	public void init() {
 		dropList = Lists.reverse(dropEJB.getAllDrops());
 		System.out.println("Nu �r vi i drop innit");
+		
 	}
-
 
 	public String createNewDrop() {
 		DropModel dropModel = new DropModel();

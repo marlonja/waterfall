@@ -16,6 +16,7 @@ $(document).ready(function(){
 	
 	$(".more-filters-link").click(function(){
 		$(".show-more-filters").stop().toggle();
+		
 	});
 	
 	$(function() {
@@ -32,5 +33,7 @@ $(document).ready(function(){
 	    });
 	    $(document.getElementById("filter-form:ageSpan")).val($( "#slider-range" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
 	  });
+	
+	
 	
 });

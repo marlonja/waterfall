@@ -60,13 +60,13 @@
 					</b:column>
 					<b:column span="1">
 						<h:commandButton value="Filter"
-							action="#{filterControllerBean.filter()}" styleClass="filter-btn" />
+							action="#{filterControllerBean.filter()}" styleClass="filter-btn" class="filter-button" />
 					</b:column>
 				</b:row>
 				<b:row>
 					<b:column span="4" offset="8">
-						<h:commandLink class="clear-button" value="Restore filters"
-							action="#{dropControllerBean.init()}" />
+						<h:commandLink id="clear-btn" class="clear-button" value="Restore filters"
+							action="#{filterControllerBean.clearFilter()}" />					
 						<b:button class="more-filters-link" value="More filters"
 							look="link" />
 						<b:button rendered="#{loginControllerBean.loggedInUser != null}"
@@ -94,7 +94,7 @@
 				</b:row>
 				<b:row>
 					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="First name"
+						<b:inputText id="first-name" styleClass="input" placeholder="First name"
 							value="#{filterControllerBean.filterFirstName}" />
 					</b:column>
 					<b:column class="show-more-filters" span="2">
