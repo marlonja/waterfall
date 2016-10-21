@@ -49,83 +49,83 @@
 		</b:navbarLinks>
 	</b:navBar>
 
-	<b:container>
-		<div class="filter-div">
-			<h:form id="filter-form">
-				<b:row>
-					<b:column span="11">
-						<b:inputText value="#{filterControllerBean.tagList}" tags="true"
-							render-label="true" placeholder="Filter..."
-							styleClass="filter-input" class="search-field" />
-					</b:column>
-					<b:column span="1">
-						<h:commandButton value="Filter"
-							action="#{filterControllerBean.filter()}" styleClass="filter-btn" />
-					</b:column>
-				</b:row>
-				<b:row>
-					<b:column span="4" offset="8">
-						<h:commandLink class="clear-button" value="Restore filters"
-							action="#{dropControllerBean.init()}" />
-						<b:button class="more-filters-link" value="More filters"
-							look="link" />
-						<b:button rendered="#{loginControllerBean.loggedInUser != null}"
-							class="show-create-drop-div-btn" value="Drop something!" />
-					</b:column>
-				</b:row>
+	<b:container styleClass="filter-div">
+		<h:form id="filter-form">
+			<b:row>
+				<b:column span="9">
+					<b:inputText value="#{filterControllerBean.tagList}" tags="true"
+						render-label="true" placeholder="Filter..."
+						styleClass="filter-input" class="search-field" />
+				</b:column>
+				<b:column span="2">
+					<h:commandButton value="Filter"
+						action="#{filterControllerBean.filter()}" styleClass="filter-btn" />
+					<h:commandButton value="Save as pool"
+						action="#{filterControllerBean.saveFilterAsPool()}"
+						styleClass="filter-btn" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column span="3">
+					<h:commandLink class="clear-button" value="Restore filters"
+						action="#{dropControllerBean.init()}" />
+					<b:button class="more-filters-link" value="More filters"
+						look="link" />
+					<b:button rendered="#{loginControllerBean.loggedInUser != null}"
+						class="show-create-drop-div-btn" value="Drop something!" />
+				</b:column>
+			</b:row>
 
-				<b:row>
-					<b:column span="1" class="show-more-filters">
-						<b:selectBooleanCheckbox caption="Male"
-							value="#{filterControllerBean.filteredByMale}"
-							styleClass="checkbox" />
-					</b:column>
-					<b:column span="1" class="show-more-filters">
-						<b:selectBooleanCheckbox caption="Female"
-							value="#{filterControllerBean.filteredByFemale}"
-							styleClass="checkbox" />
-					</b:column>
-					<b:column span="1" class="show-more-filters">
-						<b:selectBooleanCheckbox caption="Other"
-							value="#{filterControllerBean.filteredByOther}"
-							styleClass="checkbox" />
-					</b:column>
+			<b:row>
+				<b:column span="1" class="show-more-filters">
+					<b:selectBooleanCheckbox caption="Male"
+						value="#{filterControllerBean.filteredByMale}"
+						styleClass="checkbox" />
+				</b:column>
+				<b:column span="1" class="show-more-filters">
+					<b:selectBooleanCheckbox caption="Female"
+						value="#{filterControllerBean.filteredByFemale}"
+						styleClass="checkbox" />
+				</b:column>
+				<b:column span="1" class="show-more-filters">
+					<b:selectBooleanCheckbox caption="Other"
+						value="#{filterControllerBean.filteredByOther}"
+						styleClass="checkbox" />
+				</b:column>
 
-				</b:row>
-				<b:row>
-					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="First name"
-							value="#{filterControllerBean.filterFirstName}" />
-					</b:column>
-					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="Last name"
-							value="#{filterControllerBean.filterLastName}" />
-					</b:column>
-					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="Username"
-							value="#{filterControllerBean.filterUsername}" />
-					</b:column>
-					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="City"
-							value="#{filterControllerBean.filterCity}" />
-					</b:column>
-					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="Country"
-							value="#{filterControllerBean.filterCountry}" />
-					</b:column>
-					<b:column class="show-more-filters" span="4">
-						<p id="age-tag">
-							<label for="ageSpan">Age span: </label>
-							<h:inputText styleClass="" id="ageSpan"
-								value="#{filterControllerBean.ageSpan}" />
-						</p>
-						<div id="slider-range"></div>
-					</b:column>
-				</b:row>
-			</h:form>
+			</b:row>
+			<b:row>
+				<b:column class="show-more-filters" span="2">
+					<b:inputText styleClass="input" placeholder="First name"
+						value="#{filterControllerBean.filterFirstName}" />
+				</b:column>
+				<b:column class="show-more-filters" span="2">
+					<b:inputText styleClass="input" placeholder="Last name"
+						value="#{filterControllerBean.filterLastName}" />
+				</b:column>
+				<b:column class="show-more-filters" span="2">
+					<b:inputText styleClass="input" placeholder="Username"
+						value="#{filterControllerBean.filterUsername}" />
+				</b:column>
+				<b:column class="show-more-filters" span="2">
+					<b:inputText styleClass="input" placeholder="City"
+						value="#{filterControllerBean.filterCity}" />
+				</b:column>
+				<b:column class="show-more-filters" span="2">
+					<b:inputText styleClass="input" placeholder="Country"
+						value="#{filterControllerBean.filterCountry}" />
+				</b:column>
+				<b:column class="show-more-filters" span="4">
+					<p id="age-tag">
+						<label for="ageSpan">Age span: </label>
+						<h:inputText styleClass="" id="ageSpan"
+							value="#{filterControllerBean.ageSpan}" />
+					</p>
+					<div id="slider-range"></div>
+				</b:column>
+			</b:row>
+		</h:form>
 
-
-		</div>
 		<div class="create-drop-div">
 			<h:form>
 				<h:inputTextarea rows="5" styleClass="input"
@@ -135,39 +135,46 @@
 					action="#{dropControllerBean.createNewDrop()}" />
 			</h:form>
 		</div>
-		
-		<div class="waterfall-div">
-			<c:forEach var="drop" items="#{dropControllerBean.dropList}">
-				<div class="test">
-					<p class="waterfall-username">
-						#{drop.owner.username} <span id="gender-span">#{drop.owner.gender}</span>
-					</p>
-					<p class="waterfall-creation-date">#{drop.getCreationDateFormatted()}</p>
-					<p class="waterfall-drop-content">#{drop.content}</p>
-					<p class="comment-here-description">
-						<b:button class="comment-link"
-							value="#{drop.getComments().size()} comments" look="link" />
-					</p>
-					<div class="create-comment-div">
-						<c:forEach var="comment" items="#{drop.getComments()}">
-							<div class="comment-content">
-								<p class="comment-username">
-									#{comment.owner.username} <span id="date-span">#{comment.getCreationDateFormatted()}</span>
-								</p>
-								<p>#{comment.content}</p>
-							</div>
-						</c:forEach>
-						<h:form rendered="#{loginControllerBean.loggedInUser != null}">
-							<b:inputText placeholder="Comment..."
-								value="#{dropControllerBean.commentContent}" />
-							<h:commandButton styleClass="comment-btn" value="Comment"
-								action="#{dropControllerBean.createNewComment(drop.getDropId())}" />
-						</h:form>
-					</div>
-				</div>
-			</c:forEach>
 
-		</div>
+		<b:row styleClass="waterfall-column">
+			<b:column span="9">
+				<c:forEach var="drop" items="#{dropControllerBean.dropList}">
+					<div class="test">
+						<p class="waterfall-username">
+							#{drop.owner.username} <span id="gender-span">#{drop.owner.gender}</span>
+						</p>
+						<p class="waterfall-creation-date">#{drop.getCreationDateFormatted()}</p>
+						<p class="waterfall-drop-content">#{drop.content}</p>
+						<p class="comment-here-description">
+							<b:button class="comment-link"
+								value="#{drop.getComments().size()} comments" look="link" />
+						</p>
+						<div class="create-comment-div">
+							<c:forEach var="comment" items="#{drop.getComments()}">
+								<div class="comment-content">
+									<p class="comment-username">
+										#{comment.owner.username} <span id="date-span">#{comment.getCreationDateFormatted()}</span>
+									</p>
+									<p>#{comment.content}</p>
+								</div>
+							</c:forEach>
+							<h:form rendered="#{loginControllerBean.loggedInUser != null}">
+								<b:inputText placeholder="Comment..."
+									value="#{dropControllerBean.commentContent}" />
+								<h:commandButton styleClass="comment-btn" value="Comment"
+									action="#{dropControllerBean.createNewComment(drop.getDropId())}" />
+							</h:form>
+						</div>
+					</div>
+				</c:forEach>
+			</b:column>
+			<b:column span="3">
+				<p id="my-pools-headline">My pools</p>
+			</b:column>
+		</b:row>
+
+
+
 	</b:container>
 </h:body>
 </html>
