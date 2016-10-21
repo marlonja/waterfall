@@ -1,5 +1,6 @@
 package com.waterfall.RESTResources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -9,8 +10,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 import com.waterfall.EJB.interfaces.LocalUser;
+import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
+import com.waterfall.storage.UserDAOBean;
 
 
 @Path("/users")

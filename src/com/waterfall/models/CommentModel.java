@@ -5,10 +5,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
 @NamedQuery(name="CommentModel.findAll", query="SELECT c FROM CommentModel c")
+@XmlRootElement
 public class CommentModel implements Serializable {
 
 	private static final long serialVersionUID = -2986930687226854493L;
@@ -22,11 +26,19 @@ public class CommentModel implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "drophostid")
+	@JsonIgnore
 	private DropModel dropHost;
+	
+	@Transient
+	private Long dropHostId;
 	
 	@OneToOne
 	@JoinColumn(name = "ownerid")
+	@JsonIgnore
 	private UserModel owner;
+	
+	@Transient
+	private Long ownerId;
 
 	public CommentModel() {
 	}
@@ -74,6 +86,22 @@ public class CommentModel implements Serializable {
 
 	public void setCreationdate(LocalDateTime creationdate) {
 		this.creationdate = creationdate;
+	}
+
+	public Long getDropHostId() {
+		return dropHostId;
+	}
+
+	public void setDropHostId(Long dropHostId) {
+		dropHostId = dropHost.getDropId();
+	}
+
+	public Long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		ownerId = owner.getUserid();
 	}
 
 	

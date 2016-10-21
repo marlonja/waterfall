@@ -3,6 +3,7 @@ package com.waterfall.models;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.Date;
 		@NamedQuery(name = "UserModel.findByGender", query = "SELECT u FROM UserModel u WHERE u.gender LIKE :gender"),
 		@NamedQuery(name = "UserModel.findByBirthdate" , query = "SELECT u FROM UserModel u WHERE u.birthdate BETWEEN :enddate AND :startdate")
 })
-
+@XmlRootElement
 public class UserModel implements Serializable {
 
 	private static final long serialVersionUID = 5461470282886888730L;
@@ -45,8 +46,6 @@ public class UserModel implements Serializable {
 	private String username;
 
 	private String country;
-	
-	private List<UserModel> friendsList;
 
 	@OneToMany(mappedBy = "owner")
 	private List<DropModel> dropList;
@@ -132,14 +131,6 @@ public class UserModel implements Serializable {
 
 	public void setCountry(String country) {
 		this.country = country;
-	}
-
-	public List<UserModel> getFriendsList() {
-		return friendsList;
-	}
-
-	public void setFriendsList(List<UserModel> friendsList) {
-		this.friendsList = friendsList;
 	}
 
 	public String getPassword() {
