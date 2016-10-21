@@ -2,11 +2,17 @@ package com.waterfall.models;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import java.util.List;
+import org.jboss.weld.context.ejb.Ejb;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.waterfall.EJB.interfaces.LocalDrop;
+
+import java.util.List;
+import java.util.Set;
 import java.util.Date;
 
 @Entity
@@ -47,17 +53,17 @@ public class UserModel implements Serializable {
 
 	private String country;
 
-	@OneToMany(mappedBy = "owner")
-	private List<DropModel> dropList;
+	@OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+	private Set<DropModel> dropList;
 	
 	public UserModel() {
 		
 	}
-	public List<DropModel> getDrops() {
+	public Set<DropModel> getDrops() {
 		return dropList;
 	}
 
-	public void setDrops(List<DropModel> dropModels) {
+	public void setDrops(Set<DropModel> dropModels) {
 		this.dropList = dropModels;
 	}
 

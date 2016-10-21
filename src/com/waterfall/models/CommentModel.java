@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,7 +33,7 @@ public class CommentModel implements Serializable {
 	private DropModel dropHost;
 	
 	@Transient
-	private Long dropHostId;
+	private Long drophostid;
 	
 	@OneToOne
 	@JoinColumn(name = "ownerid")
@@ -38,7 +41,7 @@ public class CommentModel implements Serializable {
 	private UserModel owner;
 	
 	@Transient
-	private Long ownerId;
+	private Long ownerid;
 
 	public CommentModel() {
 	}
@@ -58,6 +61,7 @@ public class CommentModel implements Serializable {
 	public void setCommentid(Long commentid) {
 		this.commentid = commentid;
 	}
+
 
 	public DropModel getDropHost() {
 		return dropHost;
@@ -88,20 +92,22 @@ public class CommentModel implements Serializable {
 		this.creationdate = creationdate;
 	}
 
-	public Long getDropHostId() {
-		return dropHostId;
+	public Long getDropHostid() {
+		drophostid = dropHost.getDropId();
+		return drophostid;
 	}
 
-	public void setDropHostId(Long dropHostId) {
-		dropHostId = dropHost.getDropId();
+	public void setDropHostid(Long dropHostid) {
+		this.drophostid = dropHostid;
 	}
 
-	public Long getOwnerId() {
-		return ownerId;
+	public Long getOwnerid() {
+		ownerid = owner.getUserid();
+		return ownerid;
 	}
 
-	public void setOwnerId(Long ownerId) {
-		ownerId = owner.getUserid();
+	public void setOwnerid(Long ownerId) {
+		this.ownerid = ownerId;
 	}
 
 	

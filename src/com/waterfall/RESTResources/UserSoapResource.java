@@ -9,12 +9,13 @@ import javax.jws.WebService;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
+import com.waterfall.serviceEJB.UserServiceEJB;
 
 @WebService
 public class UserSoapResource {
 
 	@EJB
-	LocalUser userEjb;
+	private LocalUser userEjb;
 	
 	
 	public UserModel getUser(Long userId) {
@@ -37,15 +38,15 @@ public class UserSoapResource {
 	}
 	
 	public List<UserModel> getAllUsers() {
-		ArrayList<UserModel> users = new ArrayList<UserModel>();
+//		ArrayList<UserModel> users = new ArrayList<UserModel>();
+//		
+//		users.addAll(userEjb.getAll());
 		
-		users.addAll(userEjb.getAll());
+//		for (UserModel userModel : users) {
+//			userModel.setDrops(new ArrayList<>());
+//			
+//		}
 		
-		for (UserModel userModel : users) {
-			userModel.setDrops(new ArrayList<>());
-			
-		}
-		
-		return users;
+		return userEjb.getAll();
 	}
 }

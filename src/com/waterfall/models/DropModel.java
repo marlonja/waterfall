@@ -6,15 +6,20 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "DropModel.findAll", query = "SELECT d FROM DropModel d"),
-		@NamedQuery(name = "DropModel.findDropContentFromSearch", query = "SELECT d FROM DropModel d WHERE d.content LIKE :content") })
+		@NamedQuery(name = "DropModel.findDropContentFromSearch", query = "SELECT d FROM DropModel d WHERE d.content LIKE :content"),
+		})
 @XmlRootElement
 public class DropModel implements Serializable {
 
@@ -35,10 +40,10 @@ public class DropModel implements Serializable {
 	private UserModel owner;
 	
 	@Transient
-	private Long ownerId;
+	private Long ownerid;
 
-	@OneToMany(mappedBy = "dropHost", fetch=FetchType.EAGER)
-	private List<CommentModel> comments;
+//	@OneToMany(mappedBy = "dropHost", fetch=FetchType.EAGER)
+//	private Set<CommentModel> comments;
 
 	public DropModel() {
 	}
@@ -55,13 +60,13 @@ public class DropModel implements Serializable {
 		this.creationDate = creationDate;
 	}
 
-	public List<CommentModel> getComments() {
-		return comments;
-	}
-
-	public void setComments(List<CommentModel> comments) {
-		this.comments = comments;
-	}
+//	public Set<CommentModel> getComments() {
+//		return comments;
+//	}
+//
+//	public void setComments(Set<CommentModel> comments) {
+//		this.comments = comments;
+//	}
 
 	public Long getDropId() {
 		return this.dropid;
@@ -97,11 +102,12 @@ public class DropModel implements Serializable {
 	}
 
 	public Long getOwnerId() {
-		return ownerId;
+		ownerid = owner.getUserid();
+		return ownerid;
 	}
 
 	public void setOwnerId(Long ownerId) {
-		ownerId = owner.getUserid();
+		this.ownerid = ownerId;
 	}
 	
 	
