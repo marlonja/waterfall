@@ -36,7 +36,6 @@ public class UserServiceEJB implements LocalUser {
 
 	@Override
 	public boolean storeUser(UserModel userModel) {
-		System.out.println("Inne i store user");
 		return userDaoBean.storeUser(userModel);
 
 	}

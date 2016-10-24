@@ -12,6 +12,7 @@ import com.waterfall.models.DropModel;
 import com.waterfall.models.FilterModel;
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.DropDAOBean;
+import com.waterfall.storage.FilterDAOBean;
 import com.waterfall.storage.UserDAOBean;
 import com.waterfall.utils.DateService;
 
@@ -23,6 +24,9 @@ public class FilterServiceEJB implements LocalFilter {
 
 	@EJB
 	UserDAOBean userDAOBean;
+	
+	@EJB
+	FilterDAOBean filterDAOBean;
 
 	@EJB
 	DateService dateService;
@@ -38,22 +42,27 @@ public class FilterServiceEJB implements LocalFilter {
 	private String filterByUsername;
 	private String filterByCity;
 	private String filterByCountry;
+	
+	@Override
+	public void saveFilterAsPool(FilterModel filterModel) {
+		filterDAOBean.storeFilterAsPool(filterModel);
+	}
 
 	@Override
 	public List<DropModel> filterDrops(FilterModel filterModel) {
 
-		filterByMale = filterModel.isFilterByMale();
-		filterByFemale = filterModel.isFilterByFemale();
-		filterByOther = filterModel.isFilterByOther();
-		startAge = filterModel.getAgeSpanStartDate();
-		endAge = filterModel.getAgeSpanEndDate();
-		filterByFirstName = filterModel.getFilterFirstName();
-		filterByLastName = filterModel.getFilterLastName();
-		filterByUsername = filterModel.getFilterUsername();
-		filterByCity = filterModel.getFilterCity();
-		filterByCountry = filterModel.getFilterCountry();
-
-		dropListFromSearch = (ArrayList<DropModel>) getInitialList(filterModel.getSearchWords());
+		filterByMale = filterModel.getIsFilteredByMale();
+		filterByFemale = filterModel.getIsFilteredByFemale();
+		filterByOther = filterModel.getIsFilteredByOther();
+		startAge = filterModel.getStartAge();
+		endAge = filterModel.getEndAge();
+		filterByFirstName = filterModel.getFirstName();
+		filterByLastName = filterModel.getLastName();
+		filterByUsername = filterModel.getUsername();
+		filterByCity = filterModel.getCity();
+		filterByCountry = filterModel.getCountry();
+		
+		dropListFromSearch = (ArrayList<DropModel>) getInitialList(splitTagList(filterModel));
 		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList();
 
 		return dropListFromSearch;
@@ -261,4 +270,11 @@ public class FilterServiceEJB implements LocalFilter {
 		}
 		return true;
 	}
+	
+	private String[] splitTagList(FilterModel filterModel) {
+		String[] searchWords = filterModel.getSearchWords().split(",");
+		return searchWords;
+	}
+
+	
 }

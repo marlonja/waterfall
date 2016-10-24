@@ -14,4 +14,6 @@ public interface LocalFilter {
 
 	List<DropModel> filterByAgeSpan(int startAge, int endAge);
 
+	void saveFilterAsPool(FilterModel filterModel);
+
 }

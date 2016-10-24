@@ -46,6 +46,13 @@ public class FilterControllerBean {
 	@EJB
 	LocalFilter filterServiceEJB;
 	
+	public String saveFilterAsPool() {
+		FilterModel filterModel = createNewFilter();
+		
+		filterServiceEJB.saveFilterAsPool(filterModel);
+		return "index";
+	}
+	
 	private FilterModel createNewFilter() {
 		FilterModel filterModel = new FilterModel();
 		
@@ -53,19 +60,17 @@ public class FilterControllerBean {
 		startAge = Integer.parseInt(ageSpanList[0].trim());
 		endAge = Integer.parseInt(ageSpanList[1].trim());
 		
-		filterModel.setAgeSpanEndAge(endAge);
-		filterModel.setAgeSpanStartAge(startAge);
-		filterModel.setFilterByFemale(filteredByFemale);
-		filterModel.setFilterByMale(filteredByMale);
-		filterModel.setFilterByOther(filteredByOther);
-		filterModel.setFilterFirstName(filterFirstName);
-		filterModel.setFilterLastName(filterLastName);
-		filterModel.setFilterUsername(filterUsername);
-		filterModel.setFilterCity(filterCity);
-		filterModel.setFilterCountry(filterCountry);
-		
-		String[] searchWords = tagList.split(",");
-		filterModel.setSearchWords(searchWords);
+		filterModel.setEndAge(endAge);
+		filterModel.setStartAge(startAge);
+		filterModel.setIsFilteredByFemale(filteredByFemale);
+		filterModel.setIsFilteredByMale(filteredByMale);
+		filterModel.setIsFilteredByOther(filteredByOther);
+		filterModel.setFirstName(filterFirstName);
+		filterModel.setLastName(filterLastName);
+		filterModel.setUsername(filterUsername);
+		filterModel.setCity(filterCity);
+		filterModel.setCountry(filterCountry);
+		filterModel.setSearchWords(tagList);
 		
 		return filterModel;
 	}

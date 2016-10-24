@@ -1,107 +1,141 @@
 package com.waterfall.models;
 
-public class FilterModel {
-	
-	private String[] searchWords;
-	private Boolean filterByMale;
-	private Boolean filterByFemale;
-	private Boolean filterByOther;
-	private Integer ageSpanStartDate;
-	private Integer ageSpanEndDate;
-	private String filterFirstName;
-	private String filterLastName;
-	private String filterUsername;
-	private String filterCity;
-	private String filterCountry;
+import java.io.Serializable;
+import javax.persistence.*;
 
-	public String[] getSearchWords() {
-		return searchWords;
+
+/**
+ * The persistent class for the filtermodels database table.
+ * 
+ */
+@Entity
+@Table(name="filtermodels")
+@NamedQuery(name="FilterModel.findAll", query="SELECT f FROM FilterModel f")
+public class FilterModel implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private String filterid;
+
+	private String city;
+
+	private String country;
+
+	private int endAge;
+
+	private String firstName;
+
+	private Boolean isFilteredByFemale;
+
+	private Boolean isFilteredByMale;
+
+	private Boolean isFilteredByOther;
+
+	private String lastName;
+
+	private String searchWords;
+
+	private int startAge;
+
+	private String username;
+
+	public FilterModel() {
 	}
 
-	public void setSearchWords(String[] searchWords) {
+	public String getFilterid() {
+		return this.filterid;
+	}
+
+	public void setFilterid(String filterid) {
+		this.filterid = filterid;
+	}
+
+	public String getCity() {
+		return this.city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return this.country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public int getEndAge() {
+		return this.endAge;
+	}
+
+	public void setEndAge(int endAge) {
+		this.endAge = endAge;
+	}
+
+	public String getFirstName() {
+		return this.firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public Boolean getIsFilteredByFemale() {
+		return this.isFilteredByFemale;
+	}
+
+	public void setIsFilteredByFemale(Boolean isFilteredByFemale) {
+		this.isFilteredByFemale = isFilteredByFemale;
+	}
+
+	public Boolean getIsFilteredByMale() {
+		return this.isFilteredByMale;
+	}
+
+	public void setIsFilteredByMale(Boolean isFilteredByMale) {
+		this.isFilteredByMale = isFilteredByMale;
+	}
+
+	public Boolean getIsFilteredByOther() {
+		return this.isFilteredByOther;
+	}
+
+	public void setIsFilteredByOther(Boolean isFilteredByOther) {
+		this.isFilteredByOther = isFilteredByOther;
+	}
+
+	public String getLastName() {
+		return this.lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getSearchWords() {
+		return this.searchWords;
+	}
+
+	public void setSearchWords(String searchWords) {
 		this.searchWords = searchWords;
 	}
 
-	public Boolean isFilterByMale() {
-		return filterByMale;
+	public int getStartAge() {
+		return this.startAge;
 	}
 
-	public void setFilterByMale(Boolean filterByMale) {
-		this.filterByMale = filterByMale;
+	public void setStartAge(int startAge) {
+		this.startAge = startAge;
 	}
 
-	public Boolean isFilterByFemale() {
-		return filterByFemale;
+	public String getUsername() {
+		return this.username;
 	}
 
-	public void setFilterByFemale(Boolean filterByFemale) {
-		this.filterByFemale = filterByFemale;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-
-	public Boolean isFilterByOther() {
-		return filterByOther;
-	}
-
-	public void setFilterByOther(Boolean filterByOther) {
-		this.filterByOther = filterByOther;
-	}
-
-	public Integer getAgeSpanStartDate() {
-		return ageSpanStartDate;
-	}
-
-	public void setAgeSpanStartAge(Integer ageSpanStartDate) {
-		this.ageSpanStartDate = ageSpanStartDate;
-	}
-
-	public Integer getAgeSpanEndDate() {
-		return ageSpanEndDate;
-	}
-
-	public void setAgeSpanEndAge(Integer ageSpanEndDate) {
-		this.ageSpanEndDate = ageSpanEndDate;
-	}
-
-	public String getFilterFirstName() {
-		return filterFirstName;
-	}
-
-	public void setFilterFirstName(String filterFirstName) {
-		this.filterFirstName = filterFirstName;
-	}
-
-	public String getFilterLastName() {
-		return filterLastName;
-	}
-
-	public void setFilterLastName(String filterLastName) {
-		this.filterLastName = filterLastName;
-	}
-
-	public String getFilterUsername() {
-		return filterUsername;
-	}
-
-	public void setFilterUsername(String filterUsername) {
-		this.filterUsername = filterUsername;
-	}
-
-	public String getFilterCity() {
-		return filterCity;
-	}
-
-	public void setFilterCity(String filterCity) {
-		this.filterCity = filterCity;
-	}
-
-	public String getFilterCountry() {
-		return filterCountry;
-	}
-
-	public void setFilterCountry(String filterCountry) {
-		this.filterCountry = filterCountry;
-	}
-	
-	
 
 }

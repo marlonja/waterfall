@@ -5,6 +5,7 @@
 	<class>com.waterfall.models.UserModel</class>
 	<class>com.waterfall.models.DropModel</class>
 	<class>com.waterfall.models.CommentModel</class>
+	<class>com.waterfall.models.FilterModel</class>
 	<shared-cache-mode>NONE</shared-cache-mode>
 	</persistence-unit>
 </persistence>
