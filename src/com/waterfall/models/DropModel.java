@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -21,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		@NamedQuery(name = "DropModel.findDropContentFromSearch", query = "SELECT d FROM DropModel d WHERE d.content LIKE :content"),
 		})
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DropModel implements Serializable {
 
 	private static final long serialVersionUID = -2443095827173416242L;
@@ -32,22 +35,22 @@ public class DropModel implements Serializable {
 
 	private LocalDateTime creationDate;
 
-	private String location;
-
 	@ManyToOne
-	@JoinColumn(name = "ownerid")
+	@JoinColumn(name = "dropownerid")
 	@JsonIgnore
 	private UserModel owner;
 	
 	@Transient
-	private Long ownerid;
+	private Long dropownerid;
 
-//	@OneToMany(mappedBy = "dropHost", fetch=FetchType.EAGER)
-//	private Set<CommentModel> comments;
+	
+	@OneToMany(mappedBy = "dropHost")
+	private List<CommentModel> comments;
 
 	public DropModel() {
 	}
 
+	@XmlTransient
 	public UserModel getOwner() {
 		return owner;
 	}
@@ -60,13 +63,14 @@ public class DropModel implements Serializable {
 		this.creationDate = creationDate;
 	}
 
-//	public Set<CommentModel> getComments() {
-//		return comments;
-//	}
-//
-//	public void setComments(Set<CommentModel> comments) {
-//		this.comments = comments;
-//	}
+	
+	public List<CommentModel> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<CommentModel> comments) {
+		this.comments = comments;
+	}
 
 	public Long getDropId() {
 		return this.dropid;
@@ -93,22 +97,17 @@ public class DropModel implements Serializable {
 		return creationDate;
 	}
 
-	public String getLocation() {
-		return location;
+
+	public Long getDropownerid() {
+		dropownerid = owner.getUserid();
+		return dropownerid;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setDropownerid(Long dropownerid) {
+		this.dropownerid = dropownerid;
 	}
 
-	public Long getOwnerId() {
-		ownerid = owner.getUserid();
-		return ownerid;
-	}
-
-	public void setOwnerId(Long ownerId) {
-		this.ownerid = ownerId;
-	}
+	
 	
 	
 

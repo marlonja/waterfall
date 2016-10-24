@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @NamedQuery(name="CommentModel.findAll", query="SELECT c FROM CommentModel c")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CommentModel implements Serializable {
 
 	private static final long serialVersionUID = -2986930687226854493L;
@@ -36,16 +39,17 @@ public class CommentModel implements Serializable {
 	private Long drophostid;
 	
 	@OneToOne
-	@JoinColumn(name = "ownerid")
+	@JoinColumn(name = "commentownerid")
 	@JsonIgnore
 	private UserModel owner;
 	
 	@Transient
-	private Long ownerid;
+	private Long commentownerid;
 
 	public CommentModel() {
 	}
 
+	@XmlTransient
 	public UserModel getOwner() {
 		return owner;
 	}
@@ -63,6 +67,7 @@ public class CommentModel implements Serializable {
 	}
 
 
+	@XmlTransient
 	public DropModel getDropHost() {
 		return dropHost;
 	}
@@ -101,14 +106,16 @@ public class CommentModel implements Serializable {
 		this.drophostid = dropHostid;
 	}
 
-	public Long getOwnerid() {
-		ownerid = owner.getUserid();
-		return ownerid;
+	public Long getCommentownerid() {
+		commentownerid = owner.getUserid();
+		return commentownerid;
 	}
 
-	public void setOwnerid(Long ownerId) {
-		this.ownerid = ownerId;
+	public void setCommentownerid(Long commentownerid) {
+		this.commentownerid = commentownerid;
 	}
+
+	
 
 	
 

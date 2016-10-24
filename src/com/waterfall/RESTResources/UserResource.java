@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.flow.builder.ReturnBuilder;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -25,27 +26,12 @@ public class UserResource {
 	@EJB
 	private LocalUser userEJB;
 	
+	@EJB
+	private LocalDrop dropEJB;
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UserModel> getUsers() {
-		
-		System.out.println("innan smäller inte!");
-		
-		List<UserModel> users = userEJB.getAll();
-		
-//		for (UserModel userModel : users) {
-//			
-//			System.out.println(userModel.getDrops());
-//			
-//			for (DropModel dropModel : userModel.getDrops()) {
-//				System.out.println("comments----------");
-//				System.out.println(dropModel.getComments());
-//			}
-//		}
-		
-		System.out.println("efter smäller inte!");
-		
-		
 		return userEJB.getAll();
 	}
 	
@@ -56,17 +42,20 @@ public class UserResource {
 		return userEJB.getUser(userId);
 	}
 	
-//	private List<DropModel> getUserDrops(Long userId, List<DropModel> list) {
-//		
-//		List<DropModel> finalDropList = new ArrayList<DropModel>();
-//		
-//		for (DropModel dropModel : list) {
-//			if(dropModel.getOwnerId() == userId) {
-//				System.out.println("Nu var det samma id");
-//				finalDropList.add(dropModel);
-//			}
-//		}
-//		
-//		return finalDropList;
-//	}
+	@GET
+	@Path("/{userId}/drops")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<DropModel> getUserDrops(@PathParam("userId") Long userId) {
+		
+		UserModel userModel = userEJB.getUser(userId);
+		
+		System.out.println("user:" + userModel);
+		
+		List<DropModel> list = new ArrayList<>();
+		list = userModel.getDrops();
+		
+		System.out.println("listan: " + list);
+		
+		return list;
+	}
 }

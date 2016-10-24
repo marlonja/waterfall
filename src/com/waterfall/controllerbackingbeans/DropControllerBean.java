@@ -51,7 +51,6 @@ public class DropControllerBean implements Serializable {
 		DropModel dropModel = new DropModel();
 		dropModel.setContent(content);
 		dropModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
-		dropModel.setLocation("Gothenburg");
 		
 		if(createDropValidator.validateDrop(dropModel)){
 			dropEJB.storeDrop(dropModel);

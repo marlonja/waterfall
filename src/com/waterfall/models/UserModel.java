@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.jboss.weld.context.ejb.Ejb;
 
@@ -53,17 +56,19 @@ public class UserModel implements Serializable {
 
 	private String country;
 
-	@OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-	private Set<DropModel> dropList;
+	@OneToMany(mappedBy = "owner", fetch=FetchType.EAGER)
+	private List<DropModel> dropList;
 	
 	public UserModel() {
 		
 	}
-	public Set<DropModel> getDrops() {
+	
+	@XmlTransient
+	public List<DropModel> getDrops() {
 		return dropList;
 	}
 
-	public void setDrops(Set<DropModel> dropModels) {
+	public void setDrops(List<DropModel> dropModels) {
 		this.dropList = dropModels;
 	}
 
@@ -139,6 +144,7 @@ public class UserModel implements Serializable {
 		this.country = country;
 	}
 
+	@XmlTransient
 	public String getPassword() {
 		return password;
 	}
