@@ -10,7 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalFilter;
+import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.FilterModel;
+import com.waterfall.serviceEJB.UserServiceEJB;
 import com.waterfall.utils.DateService;
 
 @Named(value = "filterControllerBean")
@@ -20,7 +22,6 @@ public class FilterControllerBean {
 	private boolean filteredByFemale;
 	private boolean filteredByMale;
 	private boolean filteredByOther;
-	private List<Integer> ageList;
 	private String filterFirstName;
 	private String filterLastName;
 	private String filterUsername;
@@ -28,15 +29,12 @@ public class FilterControllerBean {
 	private String filterCountry;
 	private String tagList;
 	private String ageSpan;
+	private String poolname;
 	private int startAge;
 	private int endAge;
+	private List<FilterModel> filterList;
 	
 
-	@PostConstruct
-	public void init() {
-		setAgeList(dateService.ageList());
-	}
-	
 	@EJB
 	DateService dateService;
 
@@ -46,9 +44,19 @@ public class FilterControllerBean {
 	@EJB
 	LocalFilter filterServiceEJB;
 	
+	@EJB
+	LocalUser userServiceEJB;
+	
+	
+	public String setFilters(Long filterid) {
+		FilterModel filterModel = filterServiceEJB.getFilterById(filterid);
+		dropControllerBean.setDropList(filterServiceEJB.filterDrops(filterModel));
+		
+		return "index";
+	}
+	
 	public String saveFilterAsPool() {
 		FilterModel filterModel = createNewFilter();
-		
 		filterServiceEJB.saveFilterAsPool(filterModel);
 		return "index";
 	}
@@ -71,6 +79,9 @@ public class FilterControllerBean {
 		filterModel.setCity(filterCity);
 		filterModel.setCountry(filterCountry);
 		filterModel.setSearchWords(tagList);
+		filterModel.setPoolname(poolname);
+		
+		filterModel.setFilterowner(userServiceEJB.getUserFromSession("loggedInUser"));
 		
 		return filterModel;
 	}
@@ -128,14 +139,6 @@ public class FilterControllerBean {
 
 	public void setTagList(String tags) {
 		this.tagList = tags;
-	}
-	
-	public List<Integer> getAgeList() {
-		return ageList;
-	}
-
-	public void setAgeList(List<Integer> ageList) {
-		this.ageList = ageList;
 	}
 
 	public int getStartAge() {
@@ -200,6 +203,24 @@ public class FilterControllerBean {
 
 	public void setFilterCountry(String filterCountry) {
 		this.filterCountry = filterCountry;
+	}
+
+	public List<FilterModel> getFilterList() {
+		return filterList;
+	}
+
+	public void setFilterList(List<FilterModel> filterList) {
+		this.filterList = filterList;
+	}
+
+
+	public String getPoolname() {
+		return poolname;
+	}
+
+
+	public void setPoolname(String poolname) {
+		this.poolname = poolname;
 	}
 
 }

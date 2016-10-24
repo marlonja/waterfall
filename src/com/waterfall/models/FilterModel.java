@@ -2,6 +2,7 @@ package com.waterfall.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigInteger;
 
 
 /**
@@ -10,12 +11,16 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="filtermodels")
-@NamedQuery(name="FilterModel.findAll", query="SELECT f FROM FilterModel f")
+@NamedQueries({
+	@NamedQuery(name="FilterModel.findAll", query="SELECT f FROM FilterModel f"),
+	@NamedQuery(name="FilterModel.findFilterById", query="SELECT f FROM FilterModel f WHERE f.filterid = :filterid")
+})
+
 public class FilterModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private String filterid;
+	private Long filterid;
 
 	private String city;
 
@@ -32,6 +37,12 @@ public class FilterModel implements Serializable {
 	private Boolean isFilteredByOther;
 
 	private String lastName;
+	
+	@JoinColumn(name = "ownerid")
+	@ManyToOne
+	private UserModel filterowner;
+
+	private String poolname;
 
 	private String searchWords;
 
@@ -42,11 +53,11 @@ public class FilterModel implements Serializable {
 	public FilterModel() {
 	}
 
-	public String getFilterid() {
+	public Long getFilterid() {
 		return this.filterid;
 	}
 
-	public void setFilterid(String filterid) {
+	public void setFilterid(Long filterid) {
 		this.filterid = filterid;
 	}
 
@@ -114,6 +125,14 @@ public class FilterModel implements Serializable {
 		this.lastName = lastName;
 	}
 
+	public String getPoolname() {
+		return this.poolname;
+	}
+
+	public void setPoolname(String poolname) {
+		this.poolname = poolname;
+	}
+
 	public String getSearchWords() {
 		return this.searchWords;
 	}
@@ -137,5 +156,15 @@ public class FilterModel implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public UserModel getFilterowner() {
+		return filterowner;
+	}
+
+	public void setFilterowner(UserModel filterowner) {
+		this.filterowner = filterowner;
+	}
+	
+	
 
 }

@@ -43,6 +43,18 @@ public class FilterServiceEJB implements LocalFilter {
 	private String filterByCity;
 	private String filterByCountry;
 	
+	
+	@Override
+	public FilterModel getFilterById(Long filterid) {
+		return filterDAOBean.getFilterById(filterid);
+	}
+	
+	@Override
+	public List<FilterModel> getAllFilters() {
+		
+		return filterDAOBean.getAllFilters();
+	}
+	
 	@Override
 	public void saveFilterAsPool(FilterModel filterModel) {
 		filterDAOBean.storeFilterAsPool(filterModel);
@@ -275,6 +287,10 @@ public class FilterServiceEJB implements LocalFilter {
 		String[] searchWords = filterModel.getSearchWords().split(",");
 		return searchWords;
 	}
+
+	
+
+	
 
 	
 }

@@ -61,15 +61,18 @@
 				<b:column span="2">
 					<h:commandButton value="Filter"
 						action="#{filterControllerBean.filter()}" styleClass="filter-btn" />
-					<h:commandButton value="Save as pool"
+					<b:inputText placeholder="Name of pool" styleClass="input"
+						value="#{filterControllerBean.poolname}"></b:inputText>
+					<h:commandButton value="Save this filter as a pool"
 						action="#{filterControllerBean.saveFilterAsPool()}"
 						styleClass="filter-btn" />
 				</b:column>
 			</b:row>
 			<b:row>
 				<b:column span="3">
-					<h:commandLink id="clear-btn" class="clear-button" value="Restore filters"
-							action="#{filterControllerBean.clearFilterInputFields()}" />
+					<h:commandLink id="clear-btn" class="clear-button"
+						value="Restore filters"
+						action="#{filterControllerBean.clearFilterInputFields()}" />
 					<b:button class="more-filters-link" value="More filters"
 						look="link" />
 					<b:button rendered="#{loginControllerBean.loggedInUser != null}"
@@ -96,38 +99,39 @@
 				</b:column>
 
 
-				</b:row>
-				<b:row>
-					<b:column class="show-more-filters" span="2">
-						<b:inputText id="first-name" styleClass="input" placeholder="First name"
-							value="#{filterControllerBean.filterFirstName}" />
-					</b:column>
-					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="Last name"
-							value="#{filterControllerBean.filterLastName}" />
-					</b:column>
-					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="Username"
-							value="#{filterControllerBean.filterUsername}" />
-					</b:column>
-					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="City"
-							value="#{filterControllerBean.filterCity}" />
-					</b:column>
-					<b:column class="show-more-filters" span="2">
-						<b:inputText styleClass="input" placeholder="Country"
-							value="#{filterControllerBean.filterCountry}" />
-					</b:column>
-					<b:column class="show-more-filters" span="4">
-						<p id="age-tag">
-							<label for="ageSpan">Age span: </label>
-							<h:inputText styleClass="" id="ageSpan"
-								value="#{filterControllerBean.ageSpan}" />
-						</p>
-						<div id="slider-range"></div>
-					</b:column>
-				</b:row>
-			</h:form>
+			</b:row>
+			<b:row>
+				<b:column class="show-more-filters" span="2">
+					<b:inputText id="first-name" styleClass="input"
+						placeholder="First name"
+						value="#{filterControllerBean.filterFirstName}" />
+				</b:column>
+				<b:column class="show-more-filters" span="2">
+					<b:inputText styleClass="input" placeholder="Last name"
+						value="#{filterControllerBean.filterLastName}" />
+				</b:column>
+				<b:column class="show-more-filters" span="2">
+					<b:inputText styleClass="input" placeholder="Username"
+						value="#{filterControllerBean.filterUsername}" />
+				</b:column>
+				<b:column class="show-more-filters" span="2">
+					<b:inputText styleClass="input" placeholder="City"
+						value="#{filterControllerBean.filterCity}" />
+				</b:column>
+				<b:column class="show-more-filters" span="2">
+					<b:inputText styleClass="input" placeholder="Country"
+						value="#{filterControllerBean.filterCountry}" />
+				</b:column>
+				<b:column class="show-more-filters" span="4">
+					<p id="age-tag">
+						<label for="ageSpan">Age span: </label>
+						<h:inputText styleClass="" id="ageSpan"
+							value="#{filterControllerBean.ageSpan}" />
+					</p>
+					<div id="slider-range"></div>
+				</b:column>
+			</b:row>
+		</h:form>
 
 
 		<div class="create-drop-div">
@@ -174,6 +178,13 @@
 			</b:column>
 			<b:column span="3">
 				<p id="my-pools-headline">My pools</p>
+				<h:form>
+					<c:forEach var="filter"
+						items="#{loginControllerBean.loggedInUser.filterList}">
+						<h:commandLink styleClass="filter-id" value="#{filter.poolname}"
+							action="#{filterControllerBean.setFilters(filter.filterid)}" />
+					</c:forEach>
+				</h:form>
 			</b:column>
 		</b:row>
 

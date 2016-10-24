@@ -16,4 +16,8 @@ public interface LocalFilter {
 
 	void saveFilterAsPool(FilterModel filterModel);
 
+	List<FilterModel> getAllFilters();
+
+	FilterModel getFilterById(Long filterid);
+
 }

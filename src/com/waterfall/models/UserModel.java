@@ -52,6 +52,9 @@ public class UserModel implements Serializable {
 	@OneToMany(mappedBy = "owner")
 	private List<DropModel> dropList;
 	
+	@OneToMany(mappedBy = "filterowner")
+	private List<FilterModel> filterList;
+	
 	public UserModel() {
 		
 	}
@@ -147,6 +150,12 @@ public class UserModel implements Serializable {
 	}
 	public void setContactList(List<ContactListModel> contactList) {
 		this.contactList = contactList;
+	}
+	public List<FilterModel> getFilterList() {
+		return filterList;
+	}
+	public void setFilterList(List<FilterModel> filterList) {
+		this.filterList = filterList;
 	}
 	
 	
