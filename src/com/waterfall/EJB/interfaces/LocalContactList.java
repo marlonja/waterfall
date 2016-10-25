@@ -10,6 +10,7 @@ import org.jboss.logging.LoggingClass;
 
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.DropModel;
+import com.waterfall.models.UserModel;
 
 
 @Local
@@ -20,5 +21,6 @@ public interface LocalContactList {
 	ContactListModel getContactListById(Long contactListId);
 	
 	List<ContactListModel> getAllContactLists();
+	
 	
 }

@@ -120,7 +120,10 @@
 			<h1>My lists</h1>
 			<c:forEach var="contactList"
 				items="#{userControllerBean.getContactLists()}">
-				<p>#{contactList.contactlistname}</p>
+				<p>#{contactList.contactlistname} :</p>
+				<c:forEach var="contacts" items="#{contactList.getContacts()}">
+					<p>#{contacts.username}</p>
+				</c:forEach>
 				<div>
 					<h:form>
 						<b:inputText placeholder="Search by username" value="#{userControllerBean.usernameSearch}"/>

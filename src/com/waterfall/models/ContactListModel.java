@@ -1,8 +1,11 @@
 package com.waterfall.models;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.*;
-import java.math.BigInteger;
 
 @Entity
 @NamedQuery(name="Contactlistmodel.findAll", query="SELECT c FROM ContactListModel c")
@@ -11,8 +14,12 @@ public class ContactListModel implements Serializable {
 
 	@Id
 	private Long id;
-
-	private Long contactid;
+	
+	@ManyToMany
+	@JoinTable(name = "user_list", joinColumns = 
+	@JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = 
+	@JoinColumn(name = "userid", referencedColumnName = "userid"))
+	private List<UserModel> contacts;
 
 	private String contactlistname;
 
@@ -23,20 +30,15 @@ public class ContactListModel implements Serializable {
 	public ContactListModel() {
 	}
 
+	public void addContact(UserModel contact){
+		this.contacts.add(contact);
+	}
 	public Long getId() {
 		return this.id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getContactid() {
-		return this.contactid;
-	}
-
-	public void setContactid(Long contactid) {
-		this.contactid = contactid;
 	}
 
 	public String getContactlistname() {
@@ -53,6 +55,14 @@ public class ContactListModel implements Serializable {
 
 	public void setOwner(UserModel owner) {
 		this.owner = owner;
+	}
+
+	public List<UserModel> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<UserModel> contacts) {
+		this.contacts = contacts;
 	}
 
 }

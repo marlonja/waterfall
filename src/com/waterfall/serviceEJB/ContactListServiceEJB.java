@@ -8,8 +8,9 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.waterfall.EJB.interfaces.LocalContactList;
+import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.ContactListModel;
-
+import com.waterfall.models.UserModel;
 import com.waterfall.storage.ContactListDAOBean;
 
 @Stateless
@@ -17,6 +18,9 @@ public class ContactListServiceEJB implements LocalContactList{
 
 	@EJB
 	private ContactListDAOBean contactListDAOBean;
+	
+	@EJB
+	private LocalUser userEJB;
 
 	@Override
 	public boolean storeContactList(ContactListModel contactListModel) {

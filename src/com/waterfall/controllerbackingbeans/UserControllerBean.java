@@ -51,7 +51,7 @@ public class UserControllerBean implements Serializable {
 	public List<ContactListModel> getContactLists() {
 		return loggedInUser.getContactList();
 	}
-
+	
 	public String createNewContactlist() {
 		ContactListModel contactListModel = new ContactListModel();
 		loggedInUser = userEJB.getUserFromSession("loggedInUser");
@@ -66,10 +66,7 @@ public class UserControllerBean implements Serializable {
 	}
 	
 	public String addContactToList(ContactListModel contactListModel){
-//		List<UserModel> contacts = new ArrayList<UserModel>();
-//		contacts.add(userToSearch);
-//		contactListModel.setContacts(contacts);
-		contactListModel.setContactid(userToSearch.getUserid());
+		contactListModel.addContact(userToSearch);
 		contactListEJB.storeContactList(contactListModel);
 		
 		return "profile-page";
@@ -125,8 +122,6 @@ public class UserControllerBean implements Serializable {
 	public void setContactListName(String contactListName) {
 		this.contactListName = contactListName;
 	}
-
-	
 	
 
 }
