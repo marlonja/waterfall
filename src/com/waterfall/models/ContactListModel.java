@@ -1,68 +1,68 @@
 package com.waterfall.models;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-
+import javax.persistence.*;
 
 @Entity
-@NamedQueries({
-	@NamedQuery(name = "ContactListModel.findAll", query = "SELECT c FROM ContactListModel c")
-})
-public class ContactListModel implements Serializable{
+@NamedQuery(name="Contactlistmodel.findAll", query="SELECT c FROM ContactListModel c")
+public class ContactListModel implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = -6426647291204634601L;
-	
 	@Id
-	private long contactListId;
+	private Long contactlistid;
 	
+	@ManyToMany
+	@JoinTable(name = "user_list", joinColumns = 
+	@JoinColumn(name = "contactlistid", referencedColumnName = "contactlistid"), inverseJoinColumns = 
+	@JoinColumn(name = "userid", referencedColumnName = "userid"))
+	private List<UserModel> contacts;
+
+	private String contactlistname;
+
 	@ManyToOne
 	@JoinColumn(name = "ownerid")
-	private UserModel contactListOwner;
+	private UserModel owner;
 	
-	private String contactListName;
-	
-	@OneToMany(mappedBy = "contactListModel")
-	private List<ContactModel> contacts;
-
-	public long getContactListId() {
-		return contactListId;
+	public ContactListModel() {
 	}
 
-	public void setContactListId(long contactListId) {
-		this.contactListId = contactListId;
+	public void addContact(UserModel contact){
+		this.contacts.add(contact);
+	}
+	public Long getId() {
+		return this.contactlistid;
 	}
 
-	public UserModel getContactListOwner() {
-		return contactListOwner;
+	public void setId(Long contactlistid) {
+		this.contactlistid = contactlistid;
 	}
 
-	public void setContactListOwner(UserModel contactListOwner) {
-		this.contactListOwner = contactListOwner;
+	public String getContactlistname() {
+		return this.contactlistname;
 	}
 
-	public String getContactListName() {
-		return contactListName;
+	public void setContactlistname(String contactlistname) {
+		this.contactlistname = contactlistname;
 	}
 
-	public void setContactListName(String contactListName) {
-		this.contactListName = contactListName;
+	public UserModel getOwner() {
+		return this.owner;
 	}
 
-	public List<ContactModel> getContacts() {
+	public void setOwner(UserModel owner) {
+		this.owner = owner;
+	}
+
+	public List<UserModel> getContacts() {
 		return contacts;
 	}
 
-	public void setContacts(List<ContactModel> contacts) {
+	public void setContacts(List<UserModel> contacts) {
 		this.contacts = contacts;
 	}
 
 }
-	

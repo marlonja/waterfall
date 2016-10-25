@@ -2,23 +2,24 @@ package com.waterfall.models;
 
 import java.io.Serializable;
 
+import javax.enterprise.inject.New;
 import javax.persistence.*;
 
 import java.util.List;
-
+import java.util.Set;
 import java.util.Date;
+import java.util.HashSet;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "UserModel.findAll", query = "SELECT u FROM UserModel u"),
 		@NamedQuery(name = "UserModel.findByUsername", query = "SELECT u FROM UserModel u WHERE u.username LIKE :username"),
-		@NamedQuery(name = "UserModel.findByEmail", query = "SELECT u FROM UserModel u WHERE u.email LIKE :email"), 
+		@NamedQuery(name = "UserModel.findByEmail", query = "SELECT u FROM UserModel u WHERE u.email LIKE :email"),
 		@NamedQuery(name = "UserModel.findByCountry", query = "SELECT u FROM UserModel u WHERE u.country LIKE :country"),
 		@NamedQuery(name = "UserModel.findByCity", query = "SELECT u FROM UserModel u WHERE u.city LIKE :city"),
 		@NamedQuery(name = "UserModel.findByFirstName", query = "SELECT u FROM UserModel u WHERE u.firstName LIKE :firstname"),
 		@NamedQuery(name = "UserModel.findByLastName", query = "SELECT u FROM UserModel u WHERE u.lastName LIKE :lastname"),
 		@NamedQuery(name = "UserModel.findByGender", query = "SELECT u FROM UserModel u WHERE u.gender LIKE :gender"),
-		@NamedQuery(name = "UserModel.findByBirthdate" , query = "SELECT u FROM UserModel u WHERE u.birthdate BETWEEN :enddate AND :startdate")
-})
+		@NamedQuery(name = "UserModel.findByBirthdate", query = "SELECT u FROM UserModel u WHERE u.birthdate BETWEEN :enddate AND :startdate") })
 
 public class UserModel implements Serializable {
 
@@ -45,8 +46,8 @@ public class UserModel implements Serializable {
 	private String username;
 
 	private String country;
-	
-	@OneToMany(mappedBy = "contactListOwner")
+
+	@OneToMany(mappedBy = "owner")
 	private List<ContactListModel> contactList;
 
 	@OneToMany(mappedBy = "owner")
@@ -55,9 +56,13 @@ public class UserModel implements Serializable {
 	@OneToMany(mappedBy = "filterowner")
 	private List<FilterModel> filterList;
 	
+	@ManyToMany(mappedBy = "contacts")
+	private List<ContactListModel> userAsContact;
+
 	public UserModel() {
-		
+
 	}
+
 	public List<DropModel> getDrops() {
 		return dropList;
 	}
@@ -145,9 +150,11 @@ public class UserModel implements Serializable {
 	public void setPassword(String passwordhash) {
 		this.password = passwordhash;
 	}
+
 	public List<ContactListModel> getContactList() {
 		return contactList;
 	}
+
 	public void setContactList(List<ContactListModel> contactList) {
 		this.contactList = contactList;
 	}
@@ -158,7 +165,13 @@ public class UserModel implements Serializable {
 		this.filterList = filterList;
 	}
 	
-	
 
+	public List<ContactListModel> getContacts() {
+		return userAsContact;
+	}
+
+	public void setContacts(List<ContactListModel> userAsContact) {
+		this.userAsContact = userAsContact;
+	}
 
 }
