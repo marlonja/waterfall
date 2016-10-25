@@ -56,7 +56,7 @@ public class UserModel implements Serializable {
 
 	private String country;
 
-	@OneToMany(mappedBy = "owner", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "owner", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<DropModel> dropList;
 	
 	public UserModel() {
@@ -152,6 +152,15 @@ public class UserModel implements Serializable {
 	public void setPassword(String passwordhash) {
 		this.password = passwordhash;
 	}
+
+	@Override
+	public String toString() {
+		return "UserModel [userid=" + userid + ", birthdate=" + birthdate + ", city=" + city + ", email=" + email
+				+ ", firstName=" + firstName + ", gender=" + gender + ", lastName=" + lastName + ", password="
+				+ password + ", username=" + username + ", country=" + country + ", dropList=" + dropList + "]";
+	}
+	
+	
 
 
 }

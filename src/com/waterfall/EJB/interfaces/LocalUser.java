@@ -35,4 +35,6 @@ public interface LocalUser {
 	
 	void displayLoginErrorMessage(String field, String message);
 
+	void deleteUser(UserModel user);
+
 }

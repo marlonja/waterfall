@@ -44,7 +44,7 @@ public class DropModel implements Serializable {
 	private Long dropownerid;
 
 	
-	@OneToMany(mappedBy = "dropHost")
+	@OneToMany(mappedBy = "dropHost", cascade=CascadeType.ALL)
 	private List<CommentModel> comments;
 
 	public DropModel() {

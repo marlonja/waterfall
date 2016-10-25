@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.flow.builder.ReturnBuilder;
 
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
@@ -37,7 +38,7 @@ public class UserServiceEJB implements LocalUser {
 
 	@Override
 	public boolean storeUser(UserModel userModel) {
-		System.out.println("Inne i store user");
+		
 		return userDaoBean.storeUser(userModel);
 
 	}
@@ -125,6 +126,11 @@ public class UserServiceEJB implements LocalUser {
 	public UserModel getUserByUsername(String username) {
 		
 		return userDaoBean.getUserByUsername(username);
+	}
+
+	@Override
+	public void deleteUser(UserModel user) {
+		userDaoBean.deleteUser(user);
 	}
 
 
