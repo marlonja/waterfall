@@ -99,6 +99,8 @@ public class UserResource {
 		UserModel userModel = userEJB.getUser(userId);
 		List<DropModel> list = new ArrayList<>();
 		
+		//FIXA DENNA!
+		
 		list = userModel.getDrops();
 
 		return list;
