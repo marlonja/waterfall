@@ -51,6 +51,29 @@ h4 {
 	resize: none;
 }
 
+.input-age-range {
+	width: 100%;
+	padding: 5px 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: steelblue;
+	font-family: Tahoma;
+	resize: none;
+	margin-bottom: 15px;
+    margin-top: -10px;
+}
+
+.input-pool-name {
+	width: inherit;
+	padding: 5px 8px;
+	margin: 3px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: steelblue;
+	font-family: Tahoma;
+	resize: none;
+}
+
 .age-span-input {
 	width: 30%;
 	padding: 5px 8px;
@@ -93,10 +116,32 @@ h4 {
     color: white;
     padding: 10px;
     border: none;
+    margin: 8px 0;
     border-radius: 4px;
     cursor: pointer;
     font-family: Tahoma;
-    width: 8%;
+    width: 100%;
+}
+
+.save-pool-btn {
+	background-color: steelblue;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: Tahoma;
+    width: 100%;
+}
+
+.save-filter-btn {
+	background-color: steelblue;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: Tahoma;
 }
 
 .dropdown-age {
@@ -105,6 +150,7 @@ h4 {
 
 .checkbox {
 	display: inline;
+	margin-top: 11px;
 }
 
 /* ----- STYLES FOR INDEX.XHTML ----- */
@@ -172,8 +218,6 @@ h4 {
 .navbar-default .navbar-brand {
 	color: steelblue;
 	font-family: Tahoma;
-	margin-top: 15px;
-	margin-left: 50px;
 }
 
 .form-update-user {
@@ -257,12 +301,13 @@ h4 {
 }
 
 #slider-range {
-	width: 70%;
+	width: 100%;
 }
 
 #age-tag {
 	display: inline-block;
 	text-align: left;
+    font-weight: bold;
 }
 
 .comment-btn {
@@ -277,7 +322,7 @@ h4 {
 }
 
 .bootstrap-tagsinput {
-	width: 90%;
+	width: 100%;
     margin: 8px 0;
     padding: 10px;
     font-size: 1.2em;
@@ -332,4 +377,12 @@ h4 {
 	float: right;
     font-size: 1.2em;
     margin: 5px;
+}
+
+.left-column {
+	width: 90%;
+}
+
+.right-column {
+	width: 10%;
 }
