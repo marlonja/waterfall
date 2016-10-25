@@ -77,7 +77,7 @@ h4 {
 	border: 1px solid steelblue;
 }
 
-.submit-btn, .filter-btn {
+.submit-btn {
 	background-color: steelblue;
 	color: white;
 	padding: 6px 10px;
@@ -86,6 +86,17 @@ h4 {
 	border-radius: 4px;
 	cursor: pointer;
 	font-family: Tahoma;
+}
+
+.filter-btn {
+	background-color: steelblue;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: Tahoma;
+    width: 8%;
 }
 
 .dropdown-age {
@@ -266,10 +277,11 @@ h4 {
 }
 
 .bootstrap-tagsinput {
-	width: 100%;
-	margin: 8px 0;
-	padding: 10px;
-	font-size: 1.2em;
+	width: 90%;
+    margin: 8px 0;
+    padding: 10px;
+    font-size: 1.2em;
+    float: left;
 }
 
 .label-info {
@@ -308,4 +320,16 @@ h4 {
 
 .filter-id {
 	color: white;
+}
+
+.more-filters-link {
+	float: right;
+	font-size: 1.2em;
+	margin: 5px;
+}
+
+.clear-button {
+	float: right;
+    font-size: 1.2em;
+    margin: 5px;
 }
