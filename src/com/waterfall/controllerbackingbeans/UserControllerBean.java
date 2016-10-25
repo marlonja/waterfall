@@ -18,6 +18,7 @@ import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.UserModel;
+import com.waterfall.serviceEJB.ContactListServiceEJB;
 
 @Named(value = "userControllerBean")
 @SessionScoped
@@ -28,6 +29,7 @@ public class UserControllerBean implements Serializable {
 	private UserModel userToSearch;
 	private UserModel loggedInUser;
 	private String contactListName;
+	private List<ContactListModel> contactList;
 
 	@EJB
 	private LocalUser userEJB;
@@ -38,7 +40,7 @@ public class UserControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		loggedInUser = userEJB.getUserFromSession("loggedInUser");
-		loggedInUser.getContactList();
+		contactList = contactListEJB.getContactListByOwner(loggedInUser.getUserid());
 	}
 	
 	public void updateUser(UserModel user) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
@@ -53,27 +55,20 @@ public class UserControllerBean implements Serializable {
 		return "profile-page";
 	}
 	
-	public List<ContactListModel> getContactLists() {
-		init();
-		return loggedInUser.getContactList();
-		
-	}
-	
 	public String createNewContactlist() {
 		ContactListModel contactListModel = new ContactListModel();
-		loggedInUser = userEJB.getUserFromSession("loggedInUser");
 		
 		contactListModel.setContactlistname(contactListName);
 		contactListModel.setOwner(loggedInUser);
 		
 		contactListEJB.storeContactList(contactListModel);
-		loggedInUser.getContactList().add(contactListModel);		
+		loggedInUser.getContactList().add(contactListModel);
+		contactList = contactListEJB.getContactListByOwner(loggedInUser.getUserid());
 	
 		return "profile-page";
 	}
 	
 	public String addContactToList(ContactListModel contactListModel){
-
 		contactListModel.addContact(userToSearch);
 		contactListEJB.storeContactList(contactListModel);
 
@@ -130,6 +125,14 @@ public class UserControllerBean implements Serializable {
 	public void setContactListName(String contactListName) {
 		this.contactListName = contactListName;
 	}
-	
 
+	public void setContactList(List<ContactListModel> contactList) {
+		this.contactList = contactList;
+	}
+
+	public List<ContactListModel> getContactList() {
+		return contactList;
+	}
+	
+	
 }

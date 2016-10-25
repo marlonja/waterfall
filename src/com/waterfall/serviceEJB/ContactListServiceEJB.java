@@ -37,6 +37,12 @@ public class ContactListServiceEJB implements LocalContactList{
 	public List<ContactListModel> getAllContactLists() {
 		return contactListDAOBean.getAllContactLists();
 	}
+
+	@Override
+	public List<ContactListModel> getContactListByOwner(Long userId) {
+		UserModel userModel = userEJB.getUser(userId);
+		return userModel.getContactList();
+	}
 	
 	
 

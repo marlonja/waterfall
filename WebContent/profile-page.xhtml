@@ -119,7 +119,7 @@
 		<b:column span="4">
 			<h1>My lists</h1>
 			<c:forEach var="contactList"
-				items="#{userControllerBean.getContactLists()}">
+				items="#{userControllerBean.contactList}">
 				<p>#{contactList.contactlistname} :</p>
 				<c:forEach var="contacts" items="#{contactList.getContacts()}">
 					<p>#{contacts.username}</p>

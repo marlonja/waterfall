@@ -22,5 +22,5 @@ public interface LocalContactList {
 	
 	List<ContactListModel> getAllContactLists();
 	
-	
+	List<ContactListModel> getContactListByOwner(Long userId);
 }
