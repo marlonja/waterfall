@@ -33,8 +33,10 @@ public class LoginControllerBean implements Serializable {
 
 		userEJB.removeUserFromSession("loggedInUser");
 		loggedInUser = null;
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "index.xhtml?faces-redirect=true";
 
-		return "index";
+		
 	}
 
 	public String loginUser() throws NoSuchAlgorithmException, InvalidKeySpecException {
