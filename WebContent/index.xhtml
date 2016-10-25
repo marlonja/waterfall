@@ -53,51 +53,54 @@
 	<b:container styleClass="filter-div">
 		<h:form id="filter-form">
 			<b:row>
-				<b:column span="9">
+				<b:column styleClass="left-column">
 					<b:inputText value="#{filterControllerBean.tagList}" tags="true"
 						render-label="true" placeholder="Filter..."
 						styleClass="filter-input" class="search-field" />
 				</b:column>
-				<b:column span="2">
+				<b:column styleClass="right-column">
 					<h:commandButton value="Filter"
 						action="#{filterControllerBean.filter()}" styleClass="filter-btn" />
-					<b:inputText placeholder="Name of pool" styleClass="input"
-						value="#{filterControllerBean.poolname}"></b:inputText>
-					<h:commandButton value="Save this filter as a pool"
-						action="#{filterControllerBean.saveFilterAsPool()}"
-						styleClass="filter-btn" />
 				</b:column>
 			</b:row>
 			<b:row>
-				<b:column span="3">
+				<b:column>
 					<h:commandLink id="clear-btn" class="clear-button"
 						value="Restore filters"
 						action="#{filterControllerBean.clearFilterInputFields()}" />
-					<b:button class="more-filters-link" value="More filters"
-						look="link" />
-					<b:button rendered="#{loginControllerBean.loggedInUser != null}"
-						class="show-create-drop-div-btn" value="Drop something!" />
+					<a class="more-filters-link">More filters</a>
+
 				</b:column>
 			</b:row>
+
 
 
 			<b:row>
 				<b:column span="1" class="show-more-filters">
 					<b:selectBooleanCheckbox caption="Male"
-						value="#{filterControllerBean.filteredByMale}"
-						styleClass="checkbox" />
-				</b:column>
-				<b:column span="1" class="show-more-filters">
-					<b:selectBooleanCheckbox caption="Female"
-						value="#{filterControllerBean.filteredByFemale}"
-						styleClass="checkbox" />
-				</b:column>
-				<b:column span="1" class="show-more-filters">
-					<b:selectBooleanCheckbox caption="Other"
-						value="#{filterControllerBean.filteredByOther}"
-						styleClass="checkbox" />
+						value="#{filterControllerBean.filteredByMale}" />
 				</b:column>
 
+				<b:column span="1" class="show-more-filters">
+					<b:selectBooleanCheckbox caption="Female"
+						value="#{filterControllerBean.filteredByFemale}" />
+				</b:column>
+
+				<b:column span="1" class="show-more-filters">
+					<b:selectBooleanCheckbox caption="Other"
+						value="#{filterControllerBean.filteredByOther}" />
+				</b:column>
+
+				<b:column class="show-more-filters" span="1">
+					<p id="age-tag">Age-span:</p>
+				</b:column>
+				<b:column class="show-more-filters" span="1">
+					<h:inputText styleClass="input-age-range" id="ageSpan"
+						value="#{filterControllerBean.ageSpan}" />
+				</b:column>
+				<b:column class="show-more-filters" span="3">
+					<div id="slider-range"></div>
+				</b:column>
 
 			</b:row>
 			<b:row>
@@ -122,14 +125,26 @@
 					<b:inputText styleClass="input" placeholder="Country"
 						value="#{filterControllerBean.filterCountry}" />
 				</b:column>
-				<b:column class="show-more-filters" span="4">
-					<p id="age-tag">
-						<label for="ageSpan">Age span: </label>
-						<h:inputText styleClass="" id="ageSpan"
-							value="#{filterControllerBean.ageSpan}" />
-					</p>
-					<div id="slider-range"></div>
+
+			</b:row>
+
+			<b:row>
+				<b:column styleClass="right-column">
+					<b:inputText placeholder="Poolname"
+						value="#{filterControllerBean.poolname}"
+						rendered="#{loginControllerBean.loggedInUser != null}" />
 				</b:column>
+				<b:column styleClass="right-column">
+					<h:commandButton value="Save"
+						action="#{filterControllerBean.saveFilterAsPool()}"
+						styleClass="save-pool-btn"
+						rendered="#{loginControllerBean.loggedInUser != null}" />
+				</b:column>
+
+			</b:row>
+			<b:row>
+				<b:button rendered="#{loginControllerBean.loggedInUser != null}"
+					class="show-create-drop-div-btn" value="Drop something!" />
 			</b:row>
 		</h:form>
 
@@ -176,20 +191,20 @@
 					</div>
 				</c:forEach>
 			</b:column>
-			<b:column span="3">
+			<b:column span="3"
+				rendered="#{loginControllerBean.loggedInUser != null}">
 				<p id="my-pools-headline">My pools</p>
 				<h:form>
 					<c:forEach var="filter"
 						items="#{loginControllerBean.loggedInUser.filterList}">
-						<h:commandLink styleClass="filter-id" value="#{filter.poolname}"
-							action="#{filterControllerBean.setFilters(filter.filterid)}" />
+						<p class="filter-id">
+							<h:commandLink styleClass="filter-id" value="#{filter.poolname}"
+								action="#{filterControllerBean.setFilters(filter.filterid)}" />
+						</p>
 					</c:forEach>
 				</h:form>
 			</b:column>
 		</b:row>
-
-
-
 	</b:container>
 </h:body>
 </html>
