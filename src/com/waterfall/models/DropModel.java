@@ -44,7 +44,7 @@ public class DropModel implements Serializable {
 	private Long dropownerid;
 
 	
-	@OneToMany(mappedBy = "dropHost", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "dropHost",fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<CommentModel> comments;
 
 	public DropModel() {
@@ -63,7 +63,7 @@ public class DropModel implements Serializable {
 		this.creationDate = creationDate;
 	}
 
-	
+	@XmlTransient
 	public List<CommentModel> getComments() {
 		return comments;
 	}

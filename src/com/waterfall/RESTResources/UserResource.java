@@ -5,6 +5,7 @@ import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
@@ -18,9 +19,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.jasper.tagplugins.jstl.ForEach;
+import org.eclipse.persistence.jpa.rs.util.ResourceLocalTransactionWrapper;
+
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
+import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 import com.waterfall.serviceEJB.UserServiceEJB;
@@ -97,12 +102,21 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<DropModel> getUserDrops(@PathParam("userId") Long userId) {
 		UserModel userModel = userEJB.getUser(userId);
-		List<DropModel> list = new ArrayList<>();
-		
-		//FIXA DENNA!
-		
-		list = userModel.getDrops();
+		List<DropModel> dropList = userModel.getDrops();
+	
+		for (DropModel dropModel : dropList) {
+			dropModel.setComments(removeOwnerFromCommentList( (Vector<CommentModel>) dropModel.getComments()));
+		}
 
-		return list;
+		return dropList;
+	}
+	
+	public List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
+		
+		for (CommentModel commentModel : commentList) {
+			commentModel.setOwner(null);
+			commentModel.setDropHost(null);
+		}
+		return commentList;
 	}
 }
