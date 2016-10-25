@@ -1,10 +1,12 @@
 package com.waterfall.RESTResources;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.flow.builder.ReturnBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,12 +18,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.eclipse.persistence.jpa.jpql.parser.ElseExpressionBNF;
-
-import com.sun.faces.application.annotation.DelegatedPersistenceUnitScanner;
-import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
+import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 import com.waterfall.serviceEJB.UserServiceEJB;
@@ -42,6 +41,23 @@ public class UserResource {
 		return userEJB.getAll();
 	}
 
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response createUser(UserModel userModel) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
+		
+		if(userModel.getPasswordTest() != null){
+		String unsaltedPassword = userModel.getPasswordTest();
+		userModel.setPassword(PBKDF2.generatePasswordHash(unsaltedPassword));
+		}else {
+			System.out.println("Nu var pw null");
+		}
+		
+		if(userEJB.storeUser(userModel)) {
+			return Response.status(Response.Status.CREATED).entity(userModel).build();
+		}else {
+			return Response.status(Response.Status.NO_CONTENT).build();
+		}
+	}
 
 	@GET
 	@Path("/{userId}")

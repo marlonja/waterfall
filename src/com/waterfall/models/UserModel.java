@@ -2,20 +2,15 @@ package com.waterfall.models;
 
 import java.io.Serializable;
 
-import javax.inject.Inject;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.jboss.weld.context.ejb.Ejb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.waterfall.EJB.interfaces.LocalDrop;
 
 import java.util.List;
-import java.util.Set;
 import java.util.Date;
 
 @Entity
@@ -49,7 +44,8 @@ public class UserModel implements Serializable {
 	private String gender;
 
 	private String lastName;
-
+	
+	@XmlTransient
 	private String password;
 
 	private String username;
@@ -144,15 +140,15 @@ public class UserModel implements Serializable {
 		this.country = country;
 	}
 
-	@XmlTransient
+	@XmlElement(name="password")
 	public String getPassword() {
-		return password;
+		return null;
 	}
 
 	public void setPassword(String passwordhash) {
 		this.password = passwordhash;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "UserModel [userid=" + userid + ", birthdate=" + birthdate + ", city=" + city + ", email=" + email
@@ -160,7 +156,8 @@ public class UserModel implements Serializable {
 				+ password + ", username=" + username + ", country=" + country + ", dropList=" + dropList + "]";
 	}
 	
-	
-
+	public String getPasswordTest() {
+		return password;
+	}
 
 }
