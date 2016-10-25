@@ -156,7 +156,7 @@ public class UserModel implements Serializable {
 				+ password + ", username=" + username + ", country=" + country + ", dropList=" + dropList + "]";
 	}
 	
-	public String getPasswordTest() {
+	public String getPasswordReset() {
 		return password;
 	}
 

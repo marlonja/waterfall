@@ -45,11 +45,11 @@ public class UserResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createUser(UserModel userModel) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 		
-		if(userModel.getPasswordTest() != null){
-		String unsaltedPassword = userModel.getPasswordTest();
+		if(userModel.getPasswordReset() != null){
+		String unsaltedPassword = userModel.getPasswordReset();
 		userModel.setPassword(PBKDF2.generatePasswordHash(unsaltedPassword));
 		}else {
-			System.out.println("Nu var pw null");
+			return Response.status(Response.Status.NO_CONTENT).build();
 		}
 		
 		if(userEJB.storeUser(userModel)) {
@@ -96,15 +96,10 @@ public class UserResource {
 	@Path("/{userId}/drops")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<DropModel> getUserDrops(@PathParam("userId") Long userId) {
-
 		UserModel userModel = userEJB.getUser(userId);
-
-		System.out.println("user:" + userModel);
-
 		List<DropModel> list = new ArrayList<>();
+		
 		list = userModel.getDrops();
-
-		System.out.println("listan: " + list);
 
 		return list;
 	}
