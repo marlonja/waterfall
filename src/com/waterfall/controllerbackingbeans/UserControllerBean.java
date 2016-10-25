@@ -1,6 +1,9 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +15,7 @@ import javax.inject.Named;
 import com.waterfall.EJB.interfaces.LocalContact;
 import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalUser;
-
+import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.ContactModel;
 import com.waterfall.models.UserModel;
@@ -43,7 +46,8 @@ public class UserControllerBean implements Serializable {
 		loggedInUser.getContactList();
 	}
 	
-	public void updateUser(UserModel user) {
+	public void updateUser(UserModel user) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
+		user.setPassword(PBKDF2.generatePasswordHash(user.getPassword()));
 		userEJB.storeUser(user);
 	}	
 
