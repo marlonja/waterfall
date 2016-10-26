@@ -58,18 +58,20 @@
 						render-label="true" placeholder="Filter..."
 						styleClass="filter-input" class="search-field" />
 				</b:column>
-				<b:column styleClass="right-column">
+				<b:column styleClass="middle-column">
 					<h:commandButton value="Filter"
 						action="#{filterControllerBean.filter()}" styleClass="filter-btn" />
+				</b:column>
+				<b:column styleClass="right-column">
+					<p class="clear-fields-link">
+						<b:navLink value="X"
+							action="#{filterControllerBean.clearFilterInputFields()}" />
+					</p>
 				</b:column>
 			</b:row>
 			<b:row>
 				<b:column>
-					<h:commandLink id="clear-btn" class="clear-button"
-						value="Restore filters"
-						action="#{filterControllerBean.clearFilterInputFields()}" />
 					<a class="more-filters-link">More filters</a>
-
 				</b:column>
 			</b:row>
 

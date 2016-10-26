@@ -373,16 +373,20 @@ h4 {
 	margin: 5px;
 }
 
-.clear-button {
-	float: right;
-    font-size: 1.2em;
-    margin: 5px;
-}
-
 .left-column {
 	width: 90%;
 }
 
+.middle-column {
+	width: 7%;
+}
+
 .right-column {
-	width: 10%;
+	width: 3%;
+	font-size: 1.5em;
+	margin-top: 12px;
+}
+
+.clear-fields-link {
+	margin-left: -15px;
 }
