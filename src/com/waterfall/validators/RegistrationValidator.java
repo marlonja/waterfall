@@ -64,7 +64,7 @@ public class RegistrationValidator {
 		if(!isEmailUnique(userToValidate.getEmail())){
 			errorMessageService.setValidationErrorMessage("email", validationErrorMessages);
 		}
-		if(!isPasswordCorrect(userToValidate.getPassword())){
+		if(!isPasswordCorrect(userToValidate.getVisiblePassword())){
 			errorMessageService.setValidationErrorMessage("password", validationErrorMessages);
 		}
 		

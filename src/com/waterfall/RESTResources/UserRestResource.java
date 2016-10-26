@@ -32,7 +32,7 @@ import com.waterfall.serviceEJB.UserServiceEJB;
 import com.waterfall.storage.UserDAOBean;
 
 @Path("/users")
-public class UserResource {
+public class UserRestResource {
 
 	@EJB
 	private LocalUser userEJB;
@@ -43,15 +43,15 @@ public class UserResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UserModel> getUsers() {
-		return userEJB.getAll();
+		return userEJB.getAllUsers();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createUser(UserModel userModel) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 		
-		if(userModel.getPasswordReset() != null){
-		String unsaltedPassword = userModel.getPasswordReset();
+		if(userModel.getVisiblePassword() != null){
+		String unsaltedPassword = userModel.getVisiblePassword();
 		userModel.setPassword(PBKDF2.generatePasswordHash(unsaltedPassword));
 		}else {
 			return Response.status(Response.Status.NO_CONTENT).build();
@@ -75,7 +75,7 @@ public class UserResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public UserModel updateUser(UserModel userModel) {
 
-		userModel.setPassword(userEJB.getUser(userModel.getUserid()).getPassword());
+		userModel.setPassword(userEJB.getUser(userModel.getUserid()).getVisiblePassword());
 
 		if (userEJB.storeUser(userModel)) {
 			return userModel;

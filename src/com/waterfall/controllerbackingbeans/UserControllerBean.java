@@ -29,7 +29,7 @@ public class UserControllerBean implements Serializable {
 	}
 
 	public String search() {
-		friendList = userEJB.getAll();
+		friendList = userEJB.getAllUsers();
 
 		return "all";
 	}

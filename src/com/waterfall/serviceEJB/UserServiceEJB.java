@@ -44,7 +44,7 @@ public class UserServiceEJB implements LocalUser {
 	}
 
 	@Override
-	public List<UserModel> getAll() {
+	public List<UserModel> getAllUsers() {
 
 		return userDaoBean.getAll();
 	}
@@ -57,7 +57,7 @@ public class UserServiceEJB implements LocalUser {
 			displayLoginErrorMessage("search-form", "Wrong input");
 			return null;
 		}else {
-			if(PBKDF2.validatePassword(typedPassword, userToCheckInDatabase.getPassword())) {
+			if(PBKDF2.validatePassword(typedPassword, userToCheckInDatabase.getVisiblePassword())) {
 				setUserInSession("loggedInUser", userToCheckInDatabase);
 				return userToCheckInDatabase;
 			}else {

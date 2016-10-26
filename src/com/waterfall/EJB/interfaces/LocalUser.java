@@ -19,7 +19,7 @@ public interface LocalUser {
 
 	boolean storeUser(UserModel userModel);
 
-	List<UserModel> getAll();
+	List<UserModel> getAllUsers();
 
 	UserModel validateLogin(String username, String typedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException;
 

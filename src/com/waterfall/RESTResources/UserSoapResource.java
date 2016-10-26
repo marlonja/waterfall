@@ -47,7 +47,7 @@ public class UserSoapResource {
 	}
 	
 	public List<UserModel> getAllUsers() {
-		return userEjb.getAll();
+		return userEjb.getAllUsers();
 	}
 	
 	
