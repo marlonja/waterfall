@@ -2,6 +2,7 @@ package com.waterfall.EJB.interfaces;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -18,7 +19,7 @@ public interface LocalUser {
 
 	boolean storeUser(UserModel userModel);
 
-	List<UserModel> getAll();
+	List<UserModel> getAllUsers();
 
 	UserModel validateLogin(String username, String typedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException;
 
@@ -33,5 +34,7 @@ public interface LocalUser {
 	void removeUserFromSession(String sessionKey);
 	
 	void displayLoginErrorMessage(String field, String message);
+
+	void deleteUser(UserModel user);
 
 }

@@ -44,7 +44,9 @@ public class UserControllerBean implements Serializable {
 	public void updateUser(UserModel user) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 		user.setPassword(PBKDF2.generatePasswordHash(user.getPassword()));
 		userEJB.storeUser(user);
-	}	
+
+	}
+
 
 	public String searchUserByUsername() {
 		UserModel userToCheckInDatabase = new UserModel();

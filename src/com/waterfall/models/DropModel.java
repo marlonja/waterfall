@@ -1,17 +1,29 @@
 package com.waterfall.models;
 
 import java.io.Serializable;
+import java.security.acl.Owner;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "DropModel.findAll", query = "SELECT d FROM DropModel d"),
-		@NamedQuery(name = "DropModel.findDropContentFromSearch", query = "SELECT d FROM DropModel d WHERE d.content LIKE :content") })
-
+		@NamedQuery(name = "DropModel.findDropContentFromSearch", query = "SELECT d FROM DropModel d WHERE d.content LIKE :content"),
+		})
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DropModel implements Serializable {
 
 	private static final long serialVersionUID = -2443095827173416242L;
@@ -23,18 +35,22 @@ public class DropModel implements Serializable {
 
 	private LocalDateTime creationDate;
 
-	private String location;
-
 	@ManyToOne
-	@JoinColumn(name = "ownerid")
+	@JoinColumn(name = "dropownerid")
+	@JsonIgnore
 	private UserModel owner;
+	
+	@Transient
+	private Long dropownerid;
 
-	@OneToMany(mappedBy = "dropHost", fetch=FetchType.EAGER)
+	
+	@OneToMany(mappedBy = "dropHost",fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<CommentModel> comments;
 
 	public DropModel() {
 	}
 
+	@XmlTransient
 	public UserModel getOwner() {
 		return owner;
 	}
@@ -47,6 +63,7 @@ public class DropModel implements Serializable {
 		this.creationDate = creationDate;
 	}
 
+	@XmlTransient
 	public List<CommentModel> getComments() {
 		return comments;
 	}
@@ -80,12 +97,18 @@ public class DropModel implements Serializable {
 		return creationDate;
 	}
 
-	public String getLocation() {
-		return location;
+
+	public Long getDropownerid() {
+		dropownerid = owner.getUserid();
+		return dropownerid;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setDropownerid(Long dropownerid) {
+		this.dropownerid = dropownerid;
 	}
+
+	
+	
+	
 
 }

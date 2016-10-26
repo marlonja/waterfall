@@ -5,10 +5,20 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
 @NamedQuery(name="CommentModel.findAll", query="SELECT c FROM CommentModel c")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CommentModel implements Serializable {
 
 	private static final long serialVersionUID = -2986930687226854493L;
@@ -22,15 +32,24 @@ public class CommentModel implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "drophostid")
+	@JsonIgnore
 	private DropModel dropHost;
 	
+	@Transient
+	private Long drophostid;
+	
 	@OneToOne
-	@JoinColumn(name = "ownerid")
+	@JoinColumn(name = "commentownerid")
+	@JsonIgnore
 	private UserModel owner;
+	
+	@Transient
+	private Long commentownerid;
 
 	public CommentModel() {
 	}
 
+	@XmlTransient
 	public UserModel getOwner() {
 		return owner;
 	}
@@ -47,6 +66,8 @@ public class CommentModel implements Serializable {
 		this.commentid = commentid;
 	}
 
+
+	@XmlTransient
 	public DropModel getDropHost() {
 		return dropHost;
 	}
@@ -75,6 +96,26 @@ public class CommentModel implements Serializable {
 	public void setCreationdate(LocalDateTime creationdate) {
 		this.creationdate = creationdate;
 	}
+
+	public Long getDropHostid() {
+		drophostid = dropHost.getDropId();
+		return drophostid;
+	}
+
+	public void setDropHostid(Long dropHostid) {
+		this.drophostid = dropHostid;
+	}
+
+	public Long getCommentownerid() {
+		commentownerid = owner.getUserid();
+		return commentownerid;
+	}
+
+	public void setCommentownerid(Long commentownerid) {
+		this.commentownerid = commentownerid;
+	}
+
+	
 
 	
 

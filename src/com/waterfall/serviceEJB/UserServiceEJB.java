@@ -2,6 +2,7 @@ package com.waterfall.serviceEJB;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.flow.builder.ReturnBuilder;
 
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
@@ -41,7 +43,7 @@ public class UserServiceEJB implements LocalUser {
 	}
 
 	@Override
-	public List<UserModel> getAll() {
+	public List<UserModel> getAllUsers() {
 
 		return userDaoBean.getAll();
 	}
@@ -54,7 +56,7 @@ public class UserServiceEJB implements LocalUser {
 			displayLoginErrorMessage("search-form", "Wrong input");
 			return null;
 		}else {
-			if(PBKDF2.validatePassword(typedPassword, userToCheckInDatabase.getPassword())) {
+			if(PBKDF2.validatePassword(typedPassword, userToCheckInDatabase.getVisiblePassword())) {
 				setUserInSession("loggedInUser", userToCheckInDatabase);
 				return userToCheckInDatabase;
 			}else {
@@ -123,6 +125,11 @@ public class UserServiceEJB implements LocalUser {
 	public UserModel getUserByUsername(String username) {
 		
 		return userDaoBean.getUserByUsername(username);
+	}
+
+	@Override
+	public void deleteUser(UserModel user) {
+		userDaoBean.deleteUser(user);
 	}
 
 

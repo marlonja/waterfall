@@ -19,12 +19,15 @@ public class UserDAOBean {
 	private EntityManager em;
 
 	public boolean storeUser(UserModel userModel) {
+
 		if (em.merge(userModel) != null) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+
+
 
 	@SuppressWarnings("unchecked")
 	public List<UserModel> getAll() {
@@ -124,8 +127,14 @@ public class UserDAOBean {
 
 	@SuppressWarnings("unchecked")
 	public List<UserModel> getUserByCountry(String country) {
-		return em.createNamedQuery("UserModel.findByCountry")
-				.setParameter("country", country).getResultList();
+		return em.createNamedQuery("UserModel.findByCountry").setParameter("country", country).getResultList();
+	}
+
+
+
+	public void deleteUser(UserModel user) {
+		user = em.merge(user);
+		em.remove(user);
 	}
 
 }
