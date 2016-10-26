@@ -39,10 +39,13 @@ public class UserRestResource {
 
 	@EJB
 	private LocalDrop dropEJB;
+	
+	//TODO fix hateoas
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UserModel> getUsers() {
+		
 		return userEJB.getAllUsers();
 	}
 
