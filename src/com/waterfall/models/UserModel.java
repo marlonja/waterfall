@@ -156,6 +156,7 @@ public class UserModel implements Serializable {
 		this.password = passwordhash;
 	}
 
+	@XmlTransient
 	public List<ContactListModel> getContactList() {
 		return contactList;
 	}
@@ -163,6 +164,8 @@ public class UserModel implements Serializable {
 	public void setContactList(List<ContactListModel> contactList) {
 		this.contactList = contactList;
 	}
+	
+	@XmlTransient
 	public List<FilterModel> getFilterList() {
 		return filterList;
 	}
@@ -170,7 +173,7 @@ public class UserModel implements Serializable {
 		this.filterList = filterList;
 	}
 	
-
+	@XmlTransient
 	public List<ContactListModel> getContacts() {
 		return userAsContact;
 	}
