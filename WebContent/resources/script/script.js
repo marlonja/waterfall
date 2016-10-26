@@ -10,6 +10,10 @@ $(document).ready(function(){
 		$(this).parent().next().toggle('fast');
 	});	
 	
+	$(".contactlist-link").click(function(){
+		$(this).next().toggle();
+	});
+	
 	$(".more-filters-link").click(function(){
 		$(".show-more-filters").stop().toggle();
 		

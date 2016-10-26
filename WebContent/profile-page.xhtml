@@ -13,7 +13,7 @@
 </h:head>
 <h:body>
 	<h:outputStylesheet library="css" name="style.css" position="last" />
-
+	<h:outputScript library="script" name="script.js" />
 	<b:navBar brand="Waterfall" brandHref="index.xhtml">
 		<b:navbarLinks pull="right">
 			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
@@ -120,20 +120,42 @@
 			<h1>My lists</h1>
 			<c:forEach var="contactList"
 				items="#{userControllerBean.getContactLists()}">
-				<p>#{contactList.contactlistname} :</p>
-				<c:forEach var="contacts" items="#{contactList.getContacts()}">
-					<p>#{contacts.username}</p>
-				</c:forEach>
-				<div>
-					<h:form>
-						<b:inputText placeholder="Search by username" value="#{userControllerBean.usernameSearch}"/>
-						<b:commandButton value="Search" action="#{userControllerBean.searchUserByUsername()}"/>
-					</h:form>
-					Result: #{userControllerBean.userToSearch.getUsername()}
-					<h:form>
-						<b:commandButton value="Add user to list" action="#{userControllerBean.addContactToList(contactList)}"/>
-					</h:form>
-					<p>____________________________________________________</p>
+				<div class="contactlist-div">
+					<img class="contactlist-img" src="resources/img/contacts.png"></img>
+					<b:button look="link" styleClass="contactlist-link"
+						value="#{contactList.contactlistname}" />
+
+					<div class="add-contact-to-contactlist">
+						<b:row>
+							<b:column span="5">
+								<img class="add-user-img" src="resources/img/add-user.png"></img>
+							</b:column>
+							<h:form>
+								<b:column span="8">
+									<b:inputText placeholder="Search by username"
+										styleClass="input-add-user"
+										value="#{userControllerBean.usernameSearch}" />
+								</b:column>
+								<b:column span="3">
+									<b:commandButton value="Search"
+										action="#{userControllerBean.searchUserByUsername()}" />
+								</b:column>
+							</h:form>
+						</b:row>
+						<c:forEach var="contacts" items="#{contactList.getContacts()}">
+							<p>
+								<img class="contacts-img" src="resources/img/contact.png"></img>#{contacts.username}
+							</p>
+						</c:forEach>
+						<div class="search-contact-div">
+
+							Result: #{userControllerBean.userToSearch.getUsername()}
+							<h:form>
+								<b:commandButton value="Add user to list"
+									action="#{userControllerBean.addContactToList(contactList)}" />
+							</h:form>
+						</div>
+					</div>
 				</div>
 			</c:forEach>
 		</b:column>

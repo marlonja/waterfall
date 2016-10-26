@@ -395,3 +395,22 @@ h4 {
 .clear-fields-link {
 	margin-left: -15px;
 }
+
+.contactlist-div {
+	background-color: steelblue;
+	
+}
+.contactlist-link{
+	color: white;
+	font-size: 1.3em;
+    font-family: Tahoma;
+}
+.add-contact-to-contactlist, .search-contact-div{
+	display: none;
+}
+.contactlist-img, .contacts-img{
+	width: 10%;
+}
+.add-user-img{
+	width: 20%;
+}
