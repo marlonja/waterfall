@@ -74,9 +74,6 @@
 					<a class="more-filters-link">More filters</a>
 				</b:column>
 			</b:row>
-
-
-
 			<b:row>
 				<b:column span="1" class="show-more-filters">
 					<b:selectBooleanCheckbox caption="Male"
@@ -127,26 +124,24 @@
 					<b:inputText styleClass="input" placeholder="Country"
 						value="#{filterControllerBean.filterCountry}" />
 				</b:column>
-
 			</b:row>
 
 			<b:row>
-				<b:column styleClass="right-column">
+				<b:column styleClass="pool-column">
 					<b:inputText placeholder="Poolname"
 						value="#{filterControllerBean.poolname}"
 						rendered="#{loginControllerBean.loggedInUser != null}" />
 				</b:column>
-				<b:column styleClass="right-column">
+				<b:column styleClass="pool-column">
 					<h:commandButton value="Save"
 						action="#{filterControllerBean.saveFilterAsPool()}"
 						styleClass="save-pool-btn"
 						rendered="#{loginControllerBean.loggedInUser != null}" />
 				</b:column>
-
-			</b:row>
-			<b:row>
-				<b:button rendered="#{loginControllerBean.loggedInUser != null}"
-					class="show-create-drop-div-btn" value="Drop something!" />
+				<b:column styleClass="pool-column">
+					<b:button rendered="#{loginControllerBean.loggedInUser != null}"
+						class="show-create-drop-div-btn" value="Drop something!" />
+				</b:column>
 			</b:row>
 		</h:form>
 
