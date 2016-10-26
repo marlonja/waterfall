@@ -111,7 +111,7 @@ public class UserRestResource {
 		return dropList;
 	}
 	
-	public List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
+	private List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
 		
 		for (CommentModel commentModel : commentList) {
 			commentModel.setOwner(null);
