@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@Table(name="contactlistmodel")
 @NamedQuery(name="Contactlistmodel.findAll", query="SELECT c FROM ContactListModel c")
 public class ContactListModel implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,8 +23,8 @@ public class ContactListModel implements Serializable {
 	private String contactlistname;
 
 	@ManyToOne
-	@JoinColumn(name = "ownerid")
-	private UserModel owner;
+	@JoinColumn(name = "contactlistownerid")
+	private UserModel contactlistowner;
 	
 	public ContactListModel() {
 	}
@@ -48,11 +49,11 @@ public class ContactListModel implements Serializable {
 	}
 
 	public UserModel getOwner() {
-		return this.owner;
+		return this.contactlistowner;
 	}
 
 	public void setOwner(UserModel owner) {
-		this.owner = owner;
+		this.contactlistowner = owner;
 	}
 
 	public List<UserModel> getContacts() {

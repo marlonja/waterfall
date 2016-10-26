@@ -10,7 +10,7 @@ import java.math.BigInteger;
  * 
  */
 @Entity
-@Table(name="filtermodels")
+@Table(name="filtermodel")
 @NamedQueries({
 	@NamedQuery(name="FilterModel.findAll", query="SELECT f FROM FilterModel f"),
 	@NamedQuery(name="FilterModel.findFilterById", query="SELECT f FROM FilterModel f WHERE f.filterid = :filterid")
@@ -38,7 +38,7 @@ public class FilterModel implements Serializable {
 
 	private String lastName;
 	
-	@JoinColumn(name = "ownerid")
+	@JoinColumn(name = "filterownerid")
 	@ManyToOne
 	private UserModel filterowner;
 

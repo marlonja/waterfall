@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
+@Table(name="commentmodel")
 @NamedQuery(name="CommentModel.findAll", query="SELECT c FROM CommentModel c")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)

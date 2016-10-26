@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Date;
 
 @Entity
+@Table(name="usermodel")
 @NamedQueries({ @NamedQuery(name = "UserModel.findAll", query = "SELECT u FROM UserModel u"),
 		@NamedQuery(name = "UserModel.findByUsername", query = "SELECT u FROM UserModel u WHERE u.username LIKE :username"),
 		@NamedQuery(name = "UserModel.findByEmail", query = "SELECT u FROM UserModel u WHERE u.email LIKE :email"),
@@ -49,13 +50,13 @@ public class UserModel implements Serializable {
 
 	private String country;
 
-	@OneToMany(mappedBy = "owner")
+	@OneToMany(mappedBy = "contactlistowner", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<ContactListModel> contactList;
 
-	@OneToMany(mappedBy = "owner", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "dropowner", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<DropModel> dropList;
 	
-	@OneToMany(mappedBy = "filterowner")
+	@OneToMany(mappedBy = "filterowner", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<FilterModel> filterList;
 	
 	@ManyToMany(mappedBy = "contacts")

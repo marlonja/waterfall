@@ -19,6 +19,7 @@ import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name="dropmodel")
 @NamedQueries({ @NamedQuery(name = "DropModel.findAll", query = "SELECT d FROM DropModel d"),
 		@NamedQuery(name = "DropModel.findDropContentFromSearch", query = "SELECT d FROM DropModel d WHERE d.content LIKE :content"),
 		})
@@ -38,7 +39,7 @@ public class DropModel implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "dropownerid")
 	@JsonIgnore
-	private UserModel owner;
+	private UserModel dropowner;
 	
 	@Transient
 	private Long dropownerid;
@@ -52,11 +53,11 @@ public class DropModel implements Serializable {
 
 	@XmlTransient
 	public UserModel getOwner() {
-		return owner;
+		return dropowner;
 	}
 
 	public void setOwner(UserModel owner) {
-		this.owner = owner;
+		this.dropowner = owner;
 	}
 
 	public void setCreationDate(LocalDateTime creationDate) {
@@ -99,7 +100,7 @@ public class DropModel implements Serializable {
 
 
 	public Long getDropownerid() {
-		dropownerid = owner.getUserid();
+		dropownerid = dropowner.getUserid();
 		return dropownerid;
 	}
 
