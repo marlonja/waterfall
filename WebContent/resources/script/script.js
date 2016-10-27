@@ -14,8 +14,17 @@ $(document).ready(function(){
 		$(this).next().toggle();
 	});
 	
+	$("#update-user-info-link").click(function(){
+		$("#update-user-info-column").show();
+	});
+	
 	$(".more-filters-link").click(function(){
 		$(".show-more-filters").stop().toggle();
+	});
+	
+	$("#add-new-list-link").click(function(){
+		$("#add-list-form").toggle();
+		$(this).hide();
 	});
 	
 	$("#add-new-contact-link").click(function(){
