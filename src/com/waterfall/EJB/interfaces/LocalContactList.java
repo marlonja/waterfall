@@ -21,6 +21,8 @@ public interface LocalContactList {
 	ContactListModel getContactListById(Long contactListId);
 	
 	List<ContactListModel> getAllContactLists();
+
+	List<DropModel> getContactDrops(ContactListModel contactListModel);
 	
 	
 }
