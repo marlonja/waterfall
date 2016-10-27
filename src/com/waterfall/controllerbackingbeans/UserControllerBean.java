@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -27,6 +26,8 @@ public class UserControllerBean implements Serializable {
 	private String usernameSearch;
 	private UserModel loggedInUser;
 	private String contactListName;
+	private String errorMessage;
+	private boolean addContactNotValid;
 
 	@EJB
 	private LocalUser userEJB;
@@ -73,31 +74,18 @@ public class UserControllerBean implements Serializable {
 	}
 	
 	public String addContactToList(ContactListModel contactListModel){
-
-		contactListModel.addContact(searchUserByUsername());
-		contactListEJB.storeContactList(contactListModel);
-
+		errorMessage = userEJB.controlUserContactList(contactListModel, usernameSearch);
+		if(errorMessage.equals("ok")){
+			errorMessage = "";
+			setAddContactNotValid(false);
+			contactListModel.addContact(searchUserByUsername());
+			contactListEJB.storeContactList(contactListModel);
+		}else{
+			setAddContactNotValid(true);
+			//return "profile-page";
+		}
 		return "profile-page";
 	}
-
-//	private List<UserModel> controlUserFriendList(List<UserModel> friendList) {
-//		if (usernameSearch.equals(loggedInUser.getUsername())) {
-//			System.out.println("Cannot add yourself");
-//		} else {
-//			for (UserModel userModel : friendList) {
-//				if (userModel.getUsername().equals(usernameSearch)) {
-//					System.out.println("This friend is already in list");
-//
-//					return friendList;
-//				}
-//			}
-//			friendList.add(userToSearch);
-//			System.out.println("addded friend");
-//
-//		}
-//
-//		return friendList;
-//	}
 
 	public String getUsernameSearch() {
 		return usernameSearch;
@@ -122,6 +110,23 @@ public class UserControllerBean implements Serializable {
 	public void setContactListName(String contactListName) {
 		this.contactListName = contactListName;
 	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public boolean isAddContactNotValid() {
+		return addContactNotValid;
+	}
+
+	public void setAddContactNotValid(boolean addContactNotValid) {
+		this.addContactNotValid = addContactNotValid;
+	}
+
 	
 
 }
