@@ -39,8 +39,6 @@ public class UserRestResource {
 
 	@EJB
 	private LocalDrop dropEJB;
-	
-	//TODO fix hateoas
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

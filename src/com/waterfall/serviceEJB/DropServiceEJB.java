@@ -34,6 +34,11 @@ public class DropServiceEJB implements LocalDrop {
 		return dropDaoBean.getAllDrops();
 	}
 
+	@Override
+	public void deleteDrop(DropModel dropModel) {
+		dropDaoBean.deleteDrop(dropModel);
+	}
+
 
 
 	

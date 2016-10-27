@@ -14,6 +14,8 @@ public interface LocalDrop {
 	DropModel getDrop(Long dropId);
 
 	List<DropModel> getAllDrops();
+
+	void deleteDrop(DropModel dropModel);
 	
 	
 }

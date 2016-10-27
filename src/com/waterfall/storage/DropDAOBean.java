@@ -37,6 +37,11 @@ public class DropDAOBean {
 				.setParameter("content", "%" + searchWord + "%").getResultList();
 	}
 
+	public void deleteDrop(DropModel dropModel) {
+		dropModel = em.merge(dropModel);
+		em.remove(dropModel);
+	}
+
 
 
 }
