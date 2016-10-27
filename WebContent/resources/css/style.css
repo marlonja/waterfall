@@ -435,3 +435,9 @@ h4 {
 .search-contact-contactlist-btn-column {
 	width: 20%;
 }
+.contactlist-alert {
+	z-index: 2;
+	position: absolute;
+	bottom: 100%;
+	left: 0%;
+}

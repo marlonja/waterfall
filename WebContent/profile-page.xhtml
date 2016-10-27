@@ -147,10 +147,10 @@
 								<img class="contact-img" src="resources/img/avatar.png"></img>#{contact.username}
 							</p>
 						</c:forEach>
-
 					</div>
 				</div>
 			</c:forEach>
+			<b:alert span="2" styleClass="contactlist-alert" rendered="#{userControllerBean.addContactNotValid}" closable="true" severity="danger"><strong>#{userControllerBean.errorMessage}</strong></b:alert>
 		</b:column>
 	</b:container>
 </h:body>
