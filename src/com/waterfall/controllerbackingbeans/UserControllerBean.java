@@ -25,7 +25,6 @@ public class UserControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 3773988104720989698L;
 	private String usernameSearch;
-	private UserModel userToSearch;
 	private UserModel loggedInUser;
 	private String contactListName;
 
@@ -47,12 +46,11 @@ public class UserControllerBean implements Serializable {
 
 	}
 
-
-	public String searchUserByUsername() {
-		UserModel userToCheckInDatabase = new UserModel();
-		userToCheckInDatabase.setUsername(usernameSearch);
+	private UserModel searchUserByUsername() {
+		UserModel userToSearch = new UserModel();
+		userToSearch.setUsername(usernameSearch);
 		userToSearch = userEJB.getUserByUsername(usernameSearch);
-		return "profile-page";
+		return userToSearch;
 	}
 	
 	public List<ContactListModel> getContactLists() {
@@ -76,7 +74,7 @@ public class UserControllerBean implements Serializable {
 	
 	public String addContactToList(ContactListModel contactListModel){
 
-		contactListModel.addContact(userToSearch);
+		contactListModel.addContact(searchUserByUsername());
 		contactListEJB.storeContactList(contactListModel);
 
 		return "profile-page";
@@ -107,14 +105,6 @@ public class UserControllerBean implements Serializable {
 
 	public void setUsernameSearch(String usernameSearch) {
 		this.usernameSearch = usernameSearch;
-	}
-
-	public UserModel getUserToSearch() {
-		return userToSearch;
-	}
-
-	public void setUserToSearch(UserModel userToSearch) {
-		this.userToSearch = userToSearch;
 	}
 
 	public UserModel getLoggedInUser() {

@@ -16,7 +16,11 @@ $(document).ready(function(){
 	
 	$(".more-filters-link").click(function(){
 		$(".show-more-filters").stop().toggle();
-		
+	});
+	
+	$("#add-new-contact-link").click(function(){
+		$("#add-contact-form").toggle();
+		$(this).hide();
 	});
 	
 	$(function() {

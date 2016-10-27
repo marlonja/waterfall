@@ -397,20 +397,41 @@ h4 {
 }
 
 .contactlist-div {
-	background-color: steelblue;
 	
 }
+
 .contactlist-link{
-	color: white;
+	color: steelblue;
 	font-size: 1.3em;
     font-family: Tahoma;
 }
-.add-contact-to-contactlist, .search-contact-div{
+.add-contact-to-contactlist, .find-contact-result-column {
 	display: none;
 }
-.contactlist-img, .contacts-img{
+.contactlist-img{
 	width: 10%;
 }
-.add-user-img{
+
+.contact-img {
+	width: 5%;
+}
+
+#add-contact-form {
+	display: none;
+}
+
+.add-user-img {
+	width: 60%;
+}
+
+.add-user-to-contactlist-column {
+	width: 20%;
+}
+
+.add-contact-contactlist-column {
+	width: 60%;
+}
+
+.search-contact-contactlist-btn-column {
 	width: 20%;
 }

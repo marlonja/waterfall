@@ -121,40 +121,33 @@
 			<c:forEach var="contactList"
 				items="#{userControllerBean.getContactLists()}">
 				<div class="contactlist-div">
-					<img class="contactlist-img" src="resources/img/contacts.png"></img>
+					<img class="contactlist-img" src="resources/img/group.png"></img>
 					<b:button look="link" styleClass="contactlist-link"
 						value="#{contactList.contactlistname}" />
 
 					<div class="add-contact-to-contactlist">
 						<b:row>
-							<b:column span="5">
-								<img class="add-user-img" src="resources/img/add-user.png"></img>
-							</b:column>
-							<h:form>
-								<b:column span="8">
-									<b:inputText placeholder="Search by username"
+							<a href="#" id="add-new-contact-link">Add new contact</a>
+							<h:form id="add-contact-form">
+								<b:column styleClass="add-contact-contactlist-column">
+									<b:inputText placeholder="Username..."
 										styleClass="input-add-user"
 										value="#{userControllerBean.usernameSearch}" />
 								</b:column>
-								<b:column span="3">
-									<b:commandButton value="Search"
-										action="#{userControllerBean.searchUserByUsername()}" />
+								<b:column styleClass="search-contact-contactlist-btn-column">
+									<h:commandLink
+										action="#{userControllerBean.addContactToList(contactList)}">
+										<h:graphicImage styleClass="add-user-img" library="img" name="add-user.png" />
+									</h:commandLink>
 								</b:column>
 							</h:form>
 						</b:row>
-						<c:forEach var="contacts" items="#{contactList.getContacts()}">
+						<c:forEach var="contact" items="#{contactList.contacts}">
 							<p>
-								<img class="contacts-img" src="resources/img/contact.png"></img>#{contacts.username}
+								<img class="contact-img" src="resources/img/avatar.png"></img>#{contact.username}
 							</p>
 						</c:forEach>
-						<div class="search-contact-div">
 
-							Result: #{userControllerBean.userToSearch.getUsername()}
-							<h:form>
-								<b:commandButton value="Add user to list"
-									action="#{userControllerBean.addContactToList(contactList)}" />
-							</h:form>
-						</div>
 					</div>
 				</div>
 			</c:forEach>
