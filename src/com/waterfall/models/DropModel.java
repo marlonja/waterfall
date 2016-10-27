@@ -5,6 +5,7 @@ import java.security.acl.Owner;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -35,6 +36,9 @@ public class DropModel implements Serializable {
 	private String content;
 
 	private LocalDateTime creationDate;
+	
+	@Transient
+	private List<LinkModel> links = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "dropownerid")
@@ -108,7 +112,17 @@ public class DropModel implements Serializable {
 		this.dropownerid = dropownerid;
 	}
 
-	
+	public List<LinkModel> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<LinkModel> links) {
+		this.links = links;
+	}
+
+	public void addLink(LinkModel link) {
+		this.links.add(link);
+	}
 	
 	
 

@@ -2,12 +2,14 @@ package com.waterfall.models;
 
 import java.io.Serializable;
 
+import javax.enterprise.inject.New;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -49,6 +51,9 @@ public class UserModel implements Serializable {
 	private String username;
 
 	private String country;
+	
+	@Transient
+	private List<LinkModel> links = new ArrayList<>();
 
 	@OneToMany(mappedBy = "contactlistowner", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<ContactListModel> contactList;
@@ -193,5 +198,19 @@ public class UserModel implements Serializable {
 	public String getVisiblePassword() {
 		return password;
 	}
+
+	public List<LinkModel> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<LinkModel> links) {
+		this.links = links;
+	}
+	
+	public void addLink(LinkModel link) {
+		this.links.add(link);
+	}
+	
+	
 
 }

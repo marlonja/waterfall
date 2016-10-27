@@ -13,14 +13,17 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
+import com.waterfall.utils.LinkBuilder;
 
 @Path("/drops")
 public class DropRestResource {
@@ -48,17 +51,28 @@ public class DropRestResource {
 			return null;
 		}
 	}
-
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<DropModel> getDrops() {
+	@Path("/{dropModelId}")
+	public DropModel getDropModel(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
+		DropModel dropModel = dropEjb.getDrop(dropModelId);
+		dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+		dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
+		
+		return dropModel;
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<DropModel> getDrops(@Context UriInfo uriInfo) {
 		List<DropModel> dropList = dropEjb.getAllDrops();
 
 		for (DropModel dropModel : dropList) {
 			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 		}
 
-		return dropList;
+		return provideLinksForDrops(dropList, uriInfo);
 	}
 	
 	@PUT
@@ -93,6 +107,16 @@ public class DropRestResource {
 	public List<CommentModel> getDropComments(@PathParam("dropModelId") Long dropModelId) {
 		System.out.println("kommer in i getDropComments");
 		return removeOwnerFromCommentList((Vector<CommentModel>) dropEjb.getDrop(dropModelId).getComments());
+	}
+	
+	public List<DropModel> provideLinksForDrops(List<DropModel> drops, UriInfo uriInfo) {
+		for (DropModel dropModel : drops) {
+			dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+			dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
+			dropModel.addLink(LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
+		}
+		
+		return drops;
 	}
 	
 	

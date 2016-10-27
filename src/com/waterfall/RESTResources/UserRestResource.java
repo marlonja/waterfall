@@ -16,8 +16,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.apache.jasper.tagplugins.jstl.ForEach;
 import org.eclipse.persistence.jpa.rs.util.ResourceLocalTransactionWrapper;
@@ -27,9 +29,11 @@ import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
+import com.waterfall.models.LinkModel;
 import com.waterfall.models.UserModel;
 import com.waterfall.serviceEJB.UserServiceEJB;
 import com.waterfall.storage.UserDAOBean;
+import com.waterfall.utils.LinkBuilder;
 
 @Path("/users")
 public class UserRestResource {
@@ -42,9 +46,9 @@ public class UserRestResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<UserModel> getUsers() {
+	public List<UserModel> getUsers(@Context UriInfo uriInfo) {
 		
-		return userEJB.getAllUsers();
+		return provideLinksForUsers(userEJB.getAllUsers(), uriInfo);
 	}
 
 	@POST
@@ -68,8 +72,14 @@ public class UserRestResource {
 	@GET
 	@Path("/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserModel getUser(@PathParam("userId") Long userId) {
-		return userEJB.getUser(userId);
+	public UserModel getUser(@PathParam("userId") Long userId, @Context UriInfo uriInfo) {
+
+		UserModel userModel = userEJB.getUser(userId);
+		
+		userModel.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userId, "Self"));
+		userModel.addLink(LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userId, "Drops"));
+		
+		return userModel;
 	}
 
 	@PUT
@@ -110,6 +120,15 @@ public class UserRestResource {
 		}
 
 		return dropList;
+	}
+	
+	public List<UserModel> provideLinksForUsers(List<UserModel> users, UriInfo uriInfo) {
+		for (UserModel userModel : users) {
+			userModel.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Self"));
+			userModel.addLink(LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Drops"));
+		}
+		
+		return users;
 	}
 	
 	private List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
