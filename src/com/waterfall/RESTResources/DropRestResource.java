@@ -87,6 +87,13 @@ public class DropRestResource {
 	}
 	
 	//TODO fix drop comments
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{dropModelId}/comments")
+	public List<CommentModel> getDropComments(@PathParam("dropModelId") Long dropModelId) {
+		System.out.println("kommer in i getDropComments");
+		return removeOwnerFromCommentList((Vector<CommentModel>) dropEjb.getDrop(dropModelId).getComments());
+	}
 	
 	
 	private List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
