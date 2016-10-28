@@ -35,4 +35,5 @@ public class ContactListDAOBean {
 	public List<ContactListModel> getAllContactLists() {
 		return em.createNamedQuery("ContactListModel.findAll").getResultList();
 	}
+
 }

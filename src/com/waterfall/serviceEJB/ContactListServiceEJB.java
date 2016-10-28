@@ -50,7 +50,6 @@ public class ContactListServiceEJB implements LocalContactList{
 		return contactDrops;
 	}
 	
-	
 
 
 }

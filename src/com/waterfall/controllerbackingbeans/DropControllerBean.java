@@ -61,8 +61,8 @@ public class DropControllerBean implements Serializable {
 
 	public String createNewDrop() {
 		DropModel dropModel = new DropModel();
-		UserModel userModel = new UserModel();
-		userModel = userEJB.getUserFromSession("loggedInUser");
+//		UserModel userModel = new UserModel();
+//		userModel = userEJB.getUserFromSession("loggedInUser");
 		
 		dropModel.setContent(content);
 		dropModel.setOwner(userEJB.getUserFromSession("loggedInUser"));

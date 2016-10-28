@@ -436,8 +436,5 @@ h4 {
 	width: 20%;
 }
 .contactlist-alert {
-	z-index: 2;
-	position: absolute;
-	bottom: 100%;
-	left: 0%;
+	
 }

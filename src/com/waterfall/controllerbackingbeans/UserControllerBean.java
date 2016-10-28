@@ -27,6 +27,7 @@ public class UserControllerBean implements Serializable {
 	private UserModel loggedInUser;
 	private String contactListName;
 	private String errorMessage;
+	private List<ContactListModel> contactListModels;
 	private boolean addContactNotValid;
 
 	@EJB
@@ -38,7 +39,7 @@ public class UserControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		loggedInUser = userEJB.getUserFromSession("loggedInUser");
-		loggedInUser.getContactList();
+		contactListModels = loggedInUser.getContactList();
 	}
 	
 	public void updateUser(UserModel user) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
@@ -66,10 +67,9 @@ public class UserControllerBean implements Serializable {
 		
 		contactListModel.setContactlistname(contactListName);
 		contactListModel.setOwner(loggedInUser);
-		
+		loggedInUser.getContactList().add(contactListModel);
 		contactListEJB.storeContactList(contactListModel);
-		loggedInUser.getContactList().add(contactListModel);		
-	
+		contactListModels = userEJB.getUser(loggedInUser.getUserid()).getContactList();
 		return "profile-page";
 	}
 	
@@ -78,6 +78,7 @@ public class UserControllerBean implements Serializable {
 		if(errorMessage.equals("ok")){
 			errorMessage = "";
 			setAddContactNotValid(false);
+			
 			contactListModel.addContact(searchUserByUsername());
 			contactListEJB.storeContactList(contactListModel);
 		}else{
@@ -125,6 +126,14 @@ public class UserControllerBean implements Serializable {
 
 	public void setAddContactNotValid(boolean addContactNotValid) {
 		this.addContactNotValid = addContactNotValid;
+	}
+
+	public List<ContactListModel> getContactListModels() {
+		return contactListModels;
+	}
+
+	public void setContactListModels(List<ContactListModel> contactListModels) {
+		this.contactListModels = contactListModels;
 	}
 
 	

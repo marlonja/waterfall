@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="contactlistmodel")
-@NamedQuery(name="Contactlistmodel.findAll", query="SELECT c FROM ContactListModel c")
+@NamedQuery(name="ContactListModel.findAll", query="SELECT c FROM ContactListModel c")
 public class ContactListModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -26,6 +26,7 @@
 					action="#{loginControllerBean.logOutUser()}"
 					styleClass="submit-btn" />
 			</h:form>
+			
 			<h:form rendered="#{loginControllerBean.loggedInUser == null}">
 				<h:messages></h:messages>
 
@@ -117,9 +118,12 @@
 			</h:form>
 		</b:column>
 		<b:column span="4">
+		
 			<h1>My lists</h1>
+			<b:alert styleClass="contactlist-alert" rendered="#{userControllerBean.addContactNotValid}" closable="true" severity="danger"><strong>#{userControllerBean.errorMessage}</strong></b:alert>
 			<c:forEach var="contactList"
-				items="#{userControllerBean.getContactLists()}">
+				items="#{userControllerBean.contactListModels}">
+				
 				<div class="contactlist-div">
 					<img class="contactlist-img" src="resources/img/group.png"></img>
 					<b:button look="link" styleClass="contactlist-link"
@@ -150,8 +154,10 @@
 					</div>
 				</div>
 			</c:forEach>
-			<b:alert span="2" styleClass="contactlist-alert" rendered="#{userControllerBean.addContactNotValid}" closable="true" severity="danger"><strong>#{userControllerBean.errorMessage}</strong></b:alert>
+			
 		</b:column>
+		
 	</b:container>
+	
 </h:body>
 </html>
