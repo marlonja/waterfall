@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.waterfall.models.ContactListModel;
-import com.waterfall.models.DropModel;
 
 @Stateful
 public class ContactListDAOBean {

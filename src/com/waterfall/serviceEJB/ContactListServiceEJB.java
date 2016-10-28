@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.enterprise.inject.New;
 
 import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalUser;
