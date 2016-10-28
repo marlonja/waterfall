@@ -33,7 +33,6 @@ public interface LocalUser {
 
 	void removeUserFromSession(String sessionKey);
 	
-	void displayLoginErrorMessage(String field, String message);
 
 	void deleteUser(UserModel user);
 

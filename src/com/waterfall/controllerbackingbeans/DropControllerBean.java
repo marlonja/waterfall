@@ -19,6 +19,7 @@ import com.waterfall.models.CommentModel;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
+import com.waterfall.utils.ValidationMessageService;
 import com.waterfall.validators.CreateDropValidator;
 
 import jersey.repackaged.com.google.common.collect.Lists;
@@ -35,8 +36,7 @@ public class DropControllerBean implements Serializable {
 	
 	@Inject
 	FilterControllerBean filterControllerBean;
-	
-	
+		
 	@EJB
 	CreateDropValidator createDropValidator;
 
@@ -67,7 +67,7 @@ public class DropControllerBean implements Serializable {
 		dropModel.setContent(content);
 		dropModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
 		
-		if(createDropValidator.validateDrop(dropModel)){
+		if(createDropValidator.validateDrop(dropModel)){			
 			dropEJB.storeDrop(dropModel);
 			System.out.println("droppe sparad");
 		}
