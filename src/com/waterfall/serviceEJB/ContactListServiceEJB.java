@@ -19,8 +19,6 @@ public class ContactListServiceEJB implements LocalContactList{
 	@EJB
 	private ContactListDAOBean contactListDAOBean;
 	
-	@EJB
-	private LocalUser userEJB;
 
 	@Override
 	public boolean storeContactList(ContactListModel contactListModel) {
@@ -37,8 +35,6 @@ public class ContactListServiceEJB implements LocalContactList{
 	public List<ContactListModel> getAllContactLists() {
 		return contactListDAOBean.getAllContactLists();
 	}
-	
-	
 
 
 }

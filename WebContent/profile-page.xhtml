@@ -27,10 +27,8 @@
 					action="#{loginControllerBean.logOutUser()}"
 					styleClass="logout-btn" />
 			</h:form>
-			<h:link id="update-user-info-link">
-				<h:graphicImage styleClass="update-user-info-img" library="img"
-					name="settings.png" />
-			</h:link>
+			<a id="update-user-info-link"> <img class="update-user-info-img"
+				src="resources/img/settings.png" /></a>
 			<h:form rendered="#{loginControllerBean.loggedInUser == null}">
 				<h:messages></h:messages>
 
@@ -48,28 +46,31 @@
 				styleClass="link-register-new-user" />
 		</b:navbarLinks>
 	</b:navBar>
+
+
 	<b:container>
-		<b:column span="6">
+
+		<b:column span="4">
 			<h1>My lists</h1>
 			<b:row>
 				<a href="#" id="add-new-list-link">Add new list</a>
 				<h:form id="add-list-form">
 					<b:column styleClass="name-list-input-column">
-						<b:inputText value="#{userControllerBean.contactListName}"
+						<b:inputText id="input-list-name"
+							value="#{userControllerBean.contactListName}"
 							placeholder="Name your list" />
 					</b:column>
 					<b:column styleClass="add-list-column">
 						<h:commandLink
 							action="#{userControllerBean.createNewContactlist()}">
-							<h:graphicImage styleClass="add-img" library="img"
-								name="add.png" />
+							<h:graphicImage styleClass="add-img" library="img" name="add.png" />
 						</h:commandLink>
 					</b:column>
 				</h:form>
 			</b:row>
 			<c:forEach var="contactList"
-				items="#{userControllerBean.getContactLists()}">
-				<div class="contactlist-div">
+				items="#{userControllerBean.contactLists}">
+				<div id="contactlist-div" class="contactlist-div">
 					<img class="contactlist-img" src="resources/img/group.png"></img>
 					<b:button look="link" styleClass="contactlist-link"
 						value="#{contactList.contactlistname}" />
@@ -101,7 +102,7 @@
 				</div>
 			</c:forEach>
 		</b:column>
-		<b:column span="6">
+		<b:column span="4">
 			<h:form id="update-user-info-column">
 				<h1>Update info</h1>
 				<h:messages></h:messages>

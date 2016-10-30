@@ -15,7 +15,7 @@ $(document).ready(function(){
 	});
 	
 	$("#update-user-info-link").click(function(){
-		$("#update-user-info-column").show();
+		$("#update-user-info-column").stop().toggle();
 	});
 	
 	$(".more-filters-link").click(function(){

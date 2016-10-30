@@ -22,6 +22,8 @@ import com.waterfall.utils.CountryService;
 import com.waterfall.utils.DateService;
 import com.waterfall.validators.RegistrationValidator;
 
+import jersey.repackaged.com.google.common.collect.Lists;
+
 @Named(value = "registrationControllerBean")
 @SessionScoped
 public class RegistrationControllerBean implements Serializable {
@@ -62,7 +64,7 @@ public class RegistrationControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		setAllCountries(countryService.getAllCountries());
-		setYears(dateService.years());
+		setYears(Lists.reverse(dateService.years()));
 		setDays(dateService.days());
 		if (errorMessages == null) {
 			errorMessages = new ArrayList<>();
@@ -86,7 +88,8 @@ public class RegistrationControllerBean implements Serializable {
 		errorMessages = registrationValidator.validateUserForRegistration(birthYear, birthMonth, birthDay,
 				userToValidate, errorMessages);
 		if (errorMessages.isEmpty()) {
-			return storeUser(createUserToSave());
+			storeUser(createUserToSave());
+			return "index";
 
 		} else {
 			setErrorAsJson(new Gson().toJson(errorMessages));

@@ -435,12 +435,12 @@ h4 {
 	width: 5%;
 }
 
-#add-contact-form, #add-list-form {
+#add-contact-form, #add-list-form, #update-user-info-column {
 	display: none;
 }
 
 .add-user-img, .add-img {
-	width: 60%;
+	width: 40%;
 }
 
 #add-new-contact-link, #add-new-list-link {

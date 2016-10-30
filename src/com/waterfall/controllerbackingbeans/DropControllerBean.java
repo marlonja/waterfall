@@ -36,7 +36,6 @@ public class DropControllerBean implements Serializable {
 	@Inject
 	FilterControllerBean filterControllerBean;
 	
-	
 	@EJB
 	CreateDropValidator createDropValidator;
 
@@ -55,26 +54,24 @@ public class DropControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		dropList = Lists.reverse(dropEJB.getAllDrops());
-		System.out.println("Nu �r vi i drop innit");
-		
 	}
 
 	public String createNewDrop() {
 		DropModel dropModel = new DropModel();
-		UserModel userModel = new UserModel();
-		userModel = userEJB.getUserFromSession("loggedInUser");
 		
 		dropModel.setContent(content);
 		dropModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
+		System.out.println(dropModel.getOwner().getFirstName());
+		System.out.println(dropModel.getOwner().getUserid());
 		
 		if(createDropValidator.validateDrop(dropModel)){
+			
 			dropEJB.storeDrop(dropModel);
-			System.out.println("droppe sparad");
 		}
 		
 		dropList = Lists.reverse(dropEJB.getAllDrops());
-		
 		content = null;
+		
 		return "index";
 	}
 
