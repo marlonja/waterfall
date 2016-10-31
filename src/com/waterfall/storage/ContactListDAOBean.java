@@ -1,6 +1,5 @@
 package com.waterfall.storage;
 
-
 import java.util.List;
 
 import javax.ejb.Stateful;
@@ -8,14 +7,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.waterfall.models.ContactListModel;
-import com.waterfall.models.DropModel;
 
 @Stateful
 public class ContactListDAOBean {
 
 	@PersistenceContext
 	private EntityManager em;
-	
 
 	public boolean storeContactList(ContactListModel contactListModel) {
 		System.out.println("DAO: store friendslist");
@@ -24,15 +21,16 @@ public class ContactListDAOBean {
 		} else {
 			return false;
 		}
-		
+
 	}
-	
+
 	public ContactListModel getContactListById(Long contactListId) {
 		return em.find(ContactListModel.class, contactListId);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<ContactListModel> getAllContactLists() {
 		return em.createNamedQuery("ContactListModel.findAll").getResultList();
 	}
+
 }

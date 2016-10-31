@@ -84,7 +84,7 @@ h4 {
 	font-family: Tahoma;
 }
 
-.input-error {
+.error {
 	width: 100%;
 	padding: 10px 18px;
 	margin: 3px 0;
@@ -101,6 +101,16 @@ h4 {
 }
 
 .submit-btn {
+	background-color: steelblue;
+	color: white;
+	padding: 6px 10px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: Tahoma;
+}
+.logout-btn {
 	background-color: steelblue;
 	color: white;
 	padding: 6px 10px;
@@ -335,6 +345,11 @@ h4 {
 	margin: 2px;
 }
 
+.label {
+	color: steelblue;
+	margin-top: 6px;
+}
+
 .navbar-brand {
 	font-size: 40px;
 }
@@ -394,4 +409,59 @@ h4 {
 
 .clear-fields-link {
 	margin-left: -15px;
+}
+
+.contactlist-div {
+	
+}
+
+.contactlist-link{
+	color: steelblue;
+	font-size: 1.3em;
+    font-family: Tahoma;
+}
+.add-contact-to-contactlist, .find-contact-result-column {
+	display: none;
+}
+.contactlist-img{
+	width: 10%;
+}
+
+.update-user-info-img {
+	width: 10%;
+}
+
+.contact-img {
+	width: 5%;
+}
+
+#add-contact-form, #add-list-form, #update-user-info-column {
+	display: none;
+}
+
+.add-user-img, .add-img {
+	width: 40%;
+}
+
+#add-new-contact-link, #add-new-list-link {
+    margin-left: 15px;
+}
+
+.add-user-to-contactlist-column {
+	width: 20%;
+}
+
+.add-contact-contactlist-column, .name-list-input-column {
+	width: 60%;
+}
+
+.search-contact-contactlist-btn-column, .add-list-column {
+	width: 20%;
+}
+
+.logout-form {
+    display: inline;
+}
+.contactlist-alert {
+	
 }

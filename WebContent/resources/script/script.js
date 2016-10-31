@@ -10,9 +10,26 @@ $(document).ready(function(){
 		$(this).parent().next().toggle('fast');
 	});	
 	
+	$(".contactlist-link").click(function(){
+		$(this).next().toggle();
+	});
+	
+	$("#update-user-info-link").click(function(){
+		$("#update-user-info-column").stop().toggle();
+	});
+	
 	$(".more-filters-link").click(function(){
 		$(".show-more-filters").stop().toggle();
-		
+	});
+	
+	$("#add-new-list-link").click(function(){
+		$("#add-list-form").toggle();
+		$(this).hide();
+	});
+	
+	$("#add-new-contact-link").click(function(){
+		$("#add-contact-form").toggle();
+		$(this).hide();
 	});
 	
 	$(function() {

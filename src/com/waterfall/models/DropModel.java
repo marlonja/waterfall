@@ -102,7 +102,7 @@ public class DropModel implements Serializable {
 		return creationDate;
 	}
 
-
+	// TODO borde vi inte kunna koppla det här med en foreign key istället?
 	public Long getDropownerid() {
 		dropownerid = dropowner.getUserid();
 		return dropownerid;

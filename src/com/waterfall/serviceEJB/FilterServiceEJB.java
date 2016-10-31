@@ -129,84 +129,80 @@ public class FilterServiceEJB implements LocalFilter {
 		}
 
 		if (!filterByFirstName.isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByFirstName(filterByFirstName);
+			dropListFromSearch = (ArrayList<DropModel>) filterByFirstName(dropListFromSearch, filterByFirstName);
 		}
 
 		if (!filterByLastName.isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByLastName(filterByLastName);
+			dropListFromSearch = (ArrayList<DropModel>) filterByLastName(dropListFromSearch, filterByLastName);
 		}
 
 		if (!filterByUsername.isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByUsername(filterByUsername);
+			dropListFromSearch = (ArrayList<DropModel>) filterByUsername(dropListFromSearch, filterByUsername);
 		}
 
 		if (!filterByCity.isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByCity(filterByCity);
+			dropListFromSearch = (ArrayList<DropModel>) filterByCity(dropListFromSearch, filterByCity);
 		}
 
 		if (!filterByCountry.isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByCountry(filterByCountry);
+			dropListFromSearch = (ArrayList<DropModel>) filterByCountry(dropListFromSearch, filterByCountry);
 		}
 
 		return (ArrayList<DropModel>) dropListFromSearch;
 	}
 
-	private List<DropModel> filterByCountry(String country) {
-		List<UserModel> users = new ArrayList<UserModel>();
-		List<DropModel> drops = new ArrayList<DropModel>();
-
-		users.addAll(userDAOBean.getUserByCountry(country));
-
-		for (UserModel user : users) {
-			drops.addAll(user.getDrops());
+	private List<DropModel> filterByCountry(ArrayList<DropModel> dropListFromSearch,String country) {
+		List<DropModel> filteredList = new ArrayList<DropModel>();
+		
+		for(DropModel drop : dropListFromSearch) {
+			if(drop.getOwner().getCountry().equalsIgnoreCase(country)) {
+				filteredList.add(drop);
+			}
 		}
-		return drops;
+		return filteredList;
 	}
 
-	private List<DropModel> filterByCity(String city) {
-		List<UserModel> users = new ArrayList<UserModel>();
-		List<DropModel> drops = new ArrayList<DropModel>();
-
-		users.addAll(userDAOBean.getUserByCity(city));
-
-		for (UserModel user : users) {
-			drops.addAll(user.getDrops());
+	private List<DropModel> filterByCity(ArrayList<DropModel> dropListFromSearch, String city) {
+		List<DropModel> filteredList = new ArrayList<DropModel>();
+		
+		for(DropModel drop : dropListFromSearch) {
+			if(drop.getOwner().getCity().equalsIgnoreCase(city)) {
+				filteredList.add(drop);
+			}
 		}
-		return drops;
+		return filteredList;
 	}
 
-	private List<DropModel> filterByUsername(String username) {
-		UserModel user = new UserModel();
-		List<DropModel> drops = new ArrayList<DropModel>();
-
-		user = userDAOBean.getUserByUsername(username);
-		drops.addAll(user.getDrops());
-
-		return drops;
+	private List<DropModel> filterByUsername(ArrayList<DropModel> dropListFromSearch, String username) {
+		List<DropModel> filteredList = new ArrayList<DropModel>();
+		for(DropModel drop : dropListFromSearch) {
+			if(drop.getOwner().getUsername().equalsIgnoreCase(username)) {
+				filteredList.add(drop);
+			}
+		}
+		return filteredList;
 	}
 
-	private List<DropModel> filterByLastName(String lastName) {
-		List<UserModel> users = new ArrayList<UserModel>();
-		List<DropModel> drops = new ArrayList<DropModel>();
-
-		users.addAll(userDAOBean.getUserByLastName(lastName));
-
-		for (UserModel user : users) {
-			drops.addAll(user.getDrops());
+	private List<DropModel> filterByLastName(ArrayList<DropModel> dropListFromSearch, String lastName) {
+		List<DropModel> filteredList = new ArrayList<DropModel>();
+		
+		for(DropModel drop : dropListFromSearch) {
+			if(drop.getOwner().getLastName().equalsIgnoreCase(lastName)) {
+				filteredList.add(drop);
+			}
 		}
-		return drops;
+		return filteredList;
 	}
 
-	private List<DropModel> filterByFirstName(String firstName) {
-		List<UserModel> users = new ArrayList<UserModel>();
-		List<DropModel> drops = new ArrayList<DropModel>();
-
-		users.addAll(userDAOBean.getUserByFirstName(firstName));
-
-		for (UserModel user : users) {
-			drops.addAll(user.getDrops());
+	private List<DropModel> filterByFirstName(List<DropModel> dropListFromSearch, String firstName) {
+		List<DropModel> filteredList = new ArrayList<DropModel>();
+		
+		for(DropModel drop : dropListFromSearch) {
+			if(drop.getOwner().getFirstName().equalsIgnoreCase(firstName)) {
+				filteredList.add(drop);
+			}
 		}
-		return drops;
+		return filteredList;
 	}
 
 	private List<DropModel> getDropsByGender() {

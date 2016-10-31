@@ -1,8 +1,5 @@
 package com.waterfall.storage;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateful;
@@ -27,8 +24,6 @@ public class UserDAOBean {
 		}
 	}
 
-
-
 	@SuppressWarnings("unchecked")
 	public List<UserModel> getAll() {
 		return em.createNamedQuery("UserModel.findAll").getResultList();
@@ -38,7 +33,6 @@ public class UserDAOBean {
 		try {
 			UserModel userModel = (UserModel) em.createNamedQuery("UserModel.findByUsername")
 					.setParameter("username", userToCheckInDatabase).getSingleResult();
-
 			return userModel;
 		} catch (NoResultException e) {
 			return null;
@@ -55,7 +49,6 @@ public class UserDAOBean {
 			return true;
 		}
 		return true;
-
 	}
 
 	public boolean isUsernameInDatabaseUnique(String username) {
@@ -72,65 +65,9 @@ public class UserDAOBean {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<UserModel> searchDropsFromUserTable(String searchWord) {
-		List<UserModel> userModels = new ArrayList<UserModel>();
-
-		try {
-			userModels.addAll(em.createNamedQuery("UserModel.findByUsername")
-					.setParameter("username", "%" + searchWord + "%").getResultList());
-
-			userModels.addAll(em.createNamedQuery("UserModel.findByCountry")
-					.setParameter("country", "%" + searchWord + "%").getResultList());
-
-			userModels.addAll(em.createNamedQuery("UserModel.findByCity").setParameter("city", "%" + searchWord + "%")
-					.getResultList());
-
-			userModels.addAll(em.createNamedQuery("UserModel.findByFirstName").setParameter("firstname", searchWord)
-					.getResultList());
-
-			userModels.addAll(em.createNamedQuery("UserModel.findByLastName").setParameter("lastname", searchWord)
-					.getResultList());
-
-		} catch (NoResultException e) {
-			return null;
-		}
-		return userModels;
-
-	}
-
-	@SuppressWarnings("unchecked")
 	public List<UserModel> getUsersByGender(String string) {
 		return em.createNamedQuery("UserModel.findByGender").setParameter("gender", string).getResultList();
-
 	}
-
-	@SuppressWarnings("unchecked")
-	public List<UserModel> getUsersByAge(Date endAge, Date startAge) {
-		return em.createNamedQuery("UserModel.findByBirthdate").setParameter("enddate", endAge)
-				.setParameter("startdate", startAge).getResultList();
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<UserModel> getUserByFirstName(String firstName) {
-		return em.createNamedQuery("UserModel.findByFirstName").setParameter("firstname", firstName).getResultList();
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<UserModel> getUserByLastName(String lastName) {
-		return em.createNamedQuery("UserModel.findByLastName").setParameter("lastname", lastName).getResultList();
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<UserModel> getUserByCity(String city) {
-		return em.createNamedQuery("UserModel.findByCity").setParameter("city", city).getResultList();
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<UserModel> getUserByCountry(String country) {
-		return em.createNamedQuery("UserModel.findByCountry").setParameter("country", country).getResultList();
-	}
-
-
 
 	public void deleteUser(UserModel user) {
 		user = em.merge(user);

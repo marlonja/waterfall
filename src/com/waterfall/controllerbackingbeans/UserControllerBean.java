@@ -19,15 +19,19 @@ import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.UserModel;
 
+import jersey.repackaged.com.google.common.collect.Lists;
+
 @Named(value = "userControllerBean")
 @SessionScoped
 public class UserControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 3773988104720989698L;
 	private String usernameSearch;
-	private UserModel userToSearch;
 	private UserModel loggedInUser;
 	private String contactListName;
+	private List<ContactListModel> contactLists;
+	private String errorMessage;
+	private boolean addContactNotValid;
 
 	@EJB
 	private LocalUser userEJB;
@@ -38,7 +42,12 @@ public class UserControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		loggedInUser = userEJB.getUserFromSession("loggedInUser");
-		loggedInUser.getContactList();
+		if(contactLists == null) {
+			contactLists = new ArrayList<ContactListModel>();
+			contactLists = Lists.reverse(loggedInUser.getContactList());
+		}
+		
+
 	}
 	
 	public void updateUser(UserModel user) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
@@ -47,18 +56,11 @@ public class UserControllerBean implements Serializable {
 
 	}
 
-
-	public String searchUserByUsername() {
-		UserModel userToCheckInDatabase = new UserModel();
-		userToCheckInDatabase.setUsername(usernameSearch);
+	private UserModel searchUserByUsername() {
+		UserModel userToSearch = new UserModel();
+		userToSearch.setUsername(usernameSearch);
 		userToSearch = userEJB.getUserByUsername(usernameSearch);
-		return "profile-page";
-	}
-	
-	public List<ContactListModel> getContactLists() {
-		init();
-		return loggedInUser.getContactList();
-		
+		return userToSearch;
 	}
 	
 	public String createNewContactlist() {
@@ -67,39 +69,28 @@ public class UserControllerBean implements Serializable {
 		
 		contactListModel.setContactlistname(contactListName);
 		contactListModel.setOwner(loggedInUser);
-		
+		loggedInUser.getContactList().add(contactListModel);
 		contactListEJB.storeContactList(contactListModel);
-		loggedInUser.getContactList().add(contactListModel);		
-	
+		loggedInUser.getContactList().add(contactListModel);
+		contactLists = Lists.reverse(userEJB.getUser(loggedInUser.getUserid()).getContactList());
+
 		return "profile-page";
 	}
 	
 	public String addContactToList(ContactListModel contactListModel){
-
-		contactListModel.addContact(userToSearch);
-		contactListEJB.storeContactList(contactListModel);
-
+		errorMessage = userEJB.controlUserContactList(contactListModel, usernameSearch);
+		if(errorMessage.equals("ok")){
+			errorMessage = "";
+			setAddContactNotValid(false);
+			
+			contactListModel.addContact(searchUserByUsername());
+			contactListEJB.storeContactList(contactListModel);
+		}else{
+			setAddContactNotValid(true);
+			//return "profile-page";
+		}
 		return "profile-page";
 	}
-
-//	private List<UserModel> controlUserFriendList(List<UserModel> friendList) {
-//		if (usernameSearch.equals(loggedInUser.getUsername())) {
-//			System.out.println("Cannot add yourself");
-//		} else {
-//			for (UserModel userModel : friendList) {
-//				if (userModel.getUsername().equals(usernameSearch)) {
-//					System.out.println("This friend is already in list");
-//
-//					return friendList;
-//				}
-//			}
-//			friendList.add(userToSearch);
-//			System.out.println("addded friend");
-//
-//		}
-//
-//		return friendList;
-//	}
 
 	public String getUsernameSearch() {
 		return usernameSearch;
@@ -107,14 +98,6 @@ public class UserControllerBean implements Serializable {
 
 	public void setUsernameSearch(String usernameSearch) {
 		this.usernameSearch = usernameSearch;
-	}
-
-	public UserModel getUserToSearch() {
-		return userToSearch;
-	}
-
-	public void setUserToSearch(UserModel userToSearch) {
-		this.userToSearch = userToSearch;
 	}
 
 	public UserModel getLoggedInUser() {
@@ -132,6 +115,30 @@ public class UserControllerBean implements Serializable {
 	public void setContactListName(String contactListName) {
 		this.contactListName = contactListName;
 	}
-	
+
+	public List<ContactListModel> getContactLists() {
+		return contactLists;
+	}
+
+	public void setContactLists(List<ContactListModel> contactLists) {
+		this.contactLists = contactLists;
+	}
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public boolean isAddContactNotValid() {
+		return addContactNotValid;
+	}
+
+	public void setAddContactNotValid(boolean addContactNotValid) {
+		this.addContactNotValid = addContactNotValid;
+	}
+
+
 
 }

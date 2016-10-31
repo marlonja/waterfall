@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import com.waterfall.models.ContactListModel;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 
@@ -36,5 +37,7 @@ public interface LocalUser {
 	void displayLoginErrorMessage(String field, String message);
 
 	void deleteUser(UserModel user);
+	
+	String controlUserContactList(ContactListModel contactListModel, String username);
 
 }

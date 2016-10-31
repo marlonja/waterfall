@@ -16,7 +16,7 @@
 </h:head>
 <h:body>
 	<h:outputStylesheet library="css" name="style.css" position="last" />
-	<h:outputScript library="script" name="script.js"></h:outputScript>
+	<h:outputScript library="script" name="script.js"/>
 	<b:navBar brand="Waterfall" brandHref="#">
 		<b:navbarLinks pull="right">
 			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
@@ -157,7 +157,7 @@
 		</div>
 
 		<b:row styleClass="waterfall-column">
-			<b:column span="9">
+			<b:column span="8">
 				<c:forEach var="drop" items="#{dropControllerBean.dropList}">
 					<div class="test">
 						<p class="waterfall-username">
@@ -188,7 +188,7 @@
 					</div>
 				</c:forEach>
 			</b:column>
-			<b:column span="3"
+			<b:column span="2"
 				rendered="#{loginControllerBean.loggedInUser != null}">
 				<p id="my-pools-headline">My pools</p>
 				<h:form>
@@ -197,6 +197,18 @@
 						<p class="filter-id">
 							<h:commandLink styleClass="filter-id" value="#{filter.poolname}"
 								action="#{filterControllerBean.setFilters(filter.filterid)}" />
+						</p>
+					</c:forEach>
+				</h:form>
+			</b:column>
+			<b:column span="2"
+				rendered="#{loginControllerBean.loggedInUser != null}">
+				<p id="my-pools-headline">My Contacts</p>
+				<h:form>
+					<c:forEach var="contactlist"
+						items="#{loginControllerBean.loggedInUser.contactList}">
+						<p class="filter-id">
+							<h:commandLink styleClass="filter-id" value="#{contactlist.contactlistname}" action="#{filterControllerBean.filterByContacts(contactlist)}"/>
 						</p>
 					</c:forEach>
 				</h:form>
