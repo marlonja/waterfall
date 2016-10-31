@@ -15,7 +15,6 @@ public class DropDAOBean {
 	private EntityManager em;
 
 	public boolean storeDrop(DropModel dropModel) {
-		System.out.println("DAO: store drop");
 
 		if (em.merge(dropModel) != null) {
 			return true;

@@ -18,7 +18,6 @@ public class LinkBuilder {
 		.build()
 		.toString();
 		
-		System.out.println(uri);
 		
 		LinkModel linkModel = new LinkModel();
 		linkModel.setUri(uri);
@@ -36,7 +35,6 @@ public class LinkBuilder {
 		.build()
 		.toString();
 		
-		System.out.println(uri);
 		
 		LinkModel linkModel = new LinkModel();
 		linkModel.setUri(uri);
@@ -54,7 +52,6 @@ public class LinkBuilder {
 		.build()
 		.toString();
 				
-		System.out.println(uri);
 				
 		LinkModel linkModel = new LinkModel();
 		linkModel.setUri(uri);
@@ -70,7 +67,6 @@ public class LinkBuilder {
 		.build()
 		.toString();
 				
-		System.out.println(uri);
 				
 		LinkModel linkModel = new LinkModel();
 		linkModel.setUri(uri);

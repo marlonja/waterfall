@@ -8,7 +8,6 @@ import com.waterfall.models.DropModel;
 public class CreateDropValidator {
 
 	public boolean validateDrop(DropModel dropModel) {
-		System.out.println("inne i validateDrop");
 		if(validateDropContent(dropModel.getContent())){
 			return true;
 		}
@@ -17,9 +16,7 @@ public class CreateDropValidator {
 	}
 	
 	private boolean validateDropContent(String content){
-		System.out.println("inne i validatedDropent");
 		if(content.equals("") || content.length() > 200){
-			System.out.println("droppen är tom eller större än 200 tecken");
 			return false;
 		}
 		

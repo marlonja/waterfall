@@ -27,7 +27,7 @@ import com.waterfall.utils.ErrorMessageService;
 @Stateful
 public class RegistrationValidator {
 
-	private String regexOnlyLetter = "^[-A-ZÅÄÖa-zåäö]+$";
+	private String regexOnlyLetter = "^[-A-Zï¿½ï¿½ï¿½a-zï¿½ï¿½ï¿½]+$";
 	private String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private String regexOnlyNumbers = "^[0-9-]+$";
@@ -133,9 +133,6 @@ public class RegistrationValidator {
 	}
 
 	private ArrayList<String> isBirthdateCorrect(int birthYear, int birthMonth, int birthDay, ArrayList<String> validationErrorMessages) {
-		System.out.println("day " + birthDay);
-		System.out.println("month " + birthMonth);
-		System.out.println("year " + birthYear);
 		if(birthDay == 0){
 			errorMessageService.setValidationErrorMessage("birthday", validationErrorMessages);
 		}

@@ -20,7 +20,6 @@ public class PBKDF2 {
 		PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
 		SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 		byte[] hash = skf.generateSecret(spec).getEncoded();
-		System.out.println(iterations + ":" + toHex(salt) + ":" + toHex(hash));
 		return iterations + ":" + toHex(salt) + ":" + toHex(hash);
 	}
 	

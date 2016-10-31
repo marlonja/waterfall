@@ -13,7 +13,6 @@ public class CommentDAOBean {
 	private EntityManager em;
 
 	public boolean storeComment(CommentModel commentModel) {
-		System.out.println("DAO: store comment");
 		if (em.merge(commentModel) != null) {
 			return true;
 		} else {

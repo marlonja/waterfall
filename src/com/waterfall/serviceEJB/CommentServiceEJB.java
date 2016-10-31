@@ -15,7 +15,6 @@ public class CommentServiceEJB implements LocalComment {
 
 	@Override
 	public boolean storeComment(CommentModel commentModel) {
-		System.out.println("EJB: store comment");
 		return commentDaoBean.storeComment(commentModel);
 	}
 

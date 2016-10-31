@@ -50,10 +50,8 @@ public class UserSoapResource {
 		userModel.setUsername(username);
 
 		if (userEjb.storeUser(userModel)) {
-			System.out.println("sparat");
 			return userModel;
 		} else {
-			System.out.println("INTE sparat");
 			return null;
 		}
 	}
@@ -85,10 +83,8 @@ public class UserSoapResource {
 		userModel.setUsername(username);
 
 		if (userEjb.storeUser(userModel)) {
-			System.out.println("sparat");
 			return userModel;
 		} else {
-			System.out.println("INTE sparat");
 			return null;
 		}
 	}

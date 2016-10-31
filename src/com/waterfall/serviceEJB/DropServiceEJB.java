@@ -18,13 +18,11 @@ public class DropServiceEJB implements LocalDrop {
 
 	@Override
 	public boolean storeDrop(DropModel dropModel) {
-		System.out.println("EJB: store drop");
 		return dropDaoBean.storeDrop(dropModel);
 	}
 
 	@Override
 	public DropModel getDrop(Long dropId) {
-		System.out.println("EJB: get drop");
 		return dropDaoBean.getDropById(dropId);
 	}
 
