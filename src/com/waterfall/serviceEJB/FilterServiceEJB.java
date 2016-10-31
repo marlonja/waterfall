@@ -32,16 +32,7 @@ public class FilterServiceEJB implements LocalFilter {
 	DateService dateService;
 
 	private ArrayList<DropModel> dropListFromSearch;
-	private boolean filterByMale;
-	private boolean filterByFemale;
-	private boolean filterByOther;
-	private int startAge;
-	private int endAge;
-	private String filterByFirstName;
-	private String filterByLastName;
-	private String filterByUsername;
-	private String filterByCity;
-	private String filterByCountry;
+	private FilterModel filter;
 	
 	
 	@Override
@@ -63,16 +54,7 @@ public class FilterServiceEJB implements LocalFilter {
 	@Override
 	public List<DropModel> filterDrops(FilterModel filterModel) {
 
-		filterByMale = filterModel.getIsFilteredByMale();
-		filterByFemale = filterModel.getIsFilteredByFemale();
-		filterByOther = filterModel.getIsFilteredByOther();
-		startAge = filterModel.getStartAge();
-		endAge = filterModel.getEndAge();
-		filterByFirstName = filterModel.getFirstName();
-		filterByLastName = filterModel.getLastName();
-		filterByUsername = filterModel.getUsername();
-		filterByCity = filterModel.getCity();
-		filterByCountry = filterModel.getCountry();
+		filter = filterModel;
 		
 		dropListFromSearch = (ArrayList<DropModel>) getInitialList(splitTagList(filterModel));
 		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList();
@@ -94,8 +76,6 @@ public class FilterServiceEJB implements LocalFilter {
 
 		Date endDate = new Date(startAge - 1900, month, day);
 		Date startDate = new Date(endAge - 1900, month, day);
-		System.out.println("enddate: " + endDate);
-		System.out.println("startdate " + startDate);
 
 		for (int i = 0; i < dropListFromSearch.size(); i++) {
 			int birthYear = dropListFromSearch.get(i).getOwner().getBirthdate().getYear();
@@ -114,92 +94,73 @@ public class FilterServiceEJB implements LocalFilter {
 	private List<DropModel> getInitialList(String[] searchWords) {
 		dropListFromSearch = new ArrayList<DropModel>();
 
-		if (filterByMale || filterByFemale || filterByOther) {
+		if (filter.getIsFilteredByMale() || filter.getIsFilteredByFemale() || filter.getIsFilteredByOther()) {
 			dropListFromSearch = (ArrayList<DropModel>) getDropsByGender();
 		} else {
 			dropListFromSearch.addAll(dropDAOBean.getAllDrops());
 		}
 
-		if (!(startAge == 0 && endAge == 0) && !(startAge > endAge)) {
+		if (!(filter.getStartAge() == 0 && filter.getEndAge() == 0) && !(filter.getStartAge() > filter.getEndAge())) {
 
-			dropListFromSearch = (ArrayList<DropModel>) filterByAgeSpan(startAge, endAge);
+			dropListFromSearch = (ArrayList<DropModel>) filterByAgeSpan(filter.getStartAge(), filter.getEndAge());
 		}
 		if (!searchWords[0].isEmpty()) {
 			dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
 		}
 
-		if (!filterByFirstName.isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByFirstName(dropListFromSearch, filterByFirstName);
+		if (!filter.getFirstName().isEmpty()) {
+			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, "firstName", filter.getFirstName());
 		}
 
-		if (!filterByLastName.isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByLastName(dropListFromSearch, filterByLastName);
+		if (!filter.getLastName().isEmpty()) {
+			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, "lastName", filter.getLastName());
 		}
 
-		if (!filterByUsername.isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByUsername(dropListFromSearch, filterByUsername);
+		if (!filter.getUsername().isEmpty()) {
+			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, "username", filter.getUsername());
 		}
 
-		if (!filterByCity.isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByCity(dropListFromSearch, filterByCity);
+		if (!filter.getCity().isEmpty()) {
+			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, "city", filter.getCity());
 		}
 
-		if (!filterByCountry.isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterByCountry(dropListFromSearch, filterByCountry);
+		if (!filter.getCountry().isEmpty()) {
+			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, "country", filter.getCountry());
 		}
 
 		return (ArrayList<DropModel>) dropListFromSearch;
 	}
-
-	private List<DropModel> filterByCountry(ArrayList<DropModel> dropListFromSearch,String country) {
+	
+	private List<DropModel> filterBySpecificInput(ArrayList<DropModel> dropListFromSearch, String methodName, String keyWord) {
 		List<DropModel> filteredList = new ArrayList<DropModel>();
 		
 		for(DropModel drop : dropListFromSearch) {
-			if(drop.getOwner().getCountry().equalsIgnoreCase(country)) {
-				filteredList.add(drop);
-			}
-		}
-		return filteredList;
-	}
-
-	private List<DropModel> filterByCity(ArrayList<DropModel> dropListFromSearch, String city) {
-		List<DropModel> filteredList = new ArrayList<DropModel>();
-		
-		for(DropModel drop : dropListFromSearch) {
-			if(drop.getOwner().getCity().equalsIgnoreCase(city)) {
-				filteredList.add(drop);
-			}
-		}
-		return filteredList;
-	}
-
-	private List<DropModel> filterByUsername(ArrayList<DropModel> dropListFromSearch, String username) {
-		List<DropModel> filteredList = new ArrayList<DropModel>();
-		for(DropModel drop : dropListFromSearch) {
-			if(drop.getOwner().getUsername().equalsIgnoreCase(username)) {
-				filteredList.add(drop);
-			}
-		}
-		return filteredList;
-	}
-
-	private List<DropModel> filterByLastName(ArrayList<DropModel> dropListFromSearch, String lastName) {
-		List<DropModel> filteredList = new ArrayList<DropModel>();
-		
-		for(DropModel drop : dropListFromSearch) {
-			if(drop.getOwner().getLastName().equalsIgnoreCase(lastName)) {
-				filteredList.add(drop);
-			}
-		}
-		return filteredList;
-	}
-
-	private List<DropModel> filterByFirstName(List<DropModel> dropListFromSearch, String firstName) {
-		List<DropModel> filteredList = new ArrayList<DropModel>();
-		
-		for(DropModel drop : dropListFromSearch) {
-			if(drop.getOwner().getFirstName().equalsIgnoreCase(firstName)) {
-				filteredList.add(drop);
+			switch(methodName) {
+			case "country":
+				if(drop.getOwner().getCountry().equalsIgnoreCase(keyWord)) {
+					filteredList.add(drop);
+				}
+				break;
+			case "city":
+				if(drop.getOwner().getCity().equalsIgnoreCase(keyWord)) {
+					filteredList.add(drop);
+				}
+				break;
+			case "firstName":
+				if(drop.getOwner().getFirstName().equalsIgnoreCase(keyWord)) {
+					filteredList.add(drop);
+				}
+				break;
+			case "lastName":
+				if(drop.getOwner().getLastName().equalsIgnoreCase(keyWord)) {
+					filteredList.add(drop);
+				}
+				break;
+			case "username":
+				if(drop.getOwner().getUsername().equalsIgnoreCase(keyWord)) {
+					filteredList.add(drop);
+				}
+				break;
 			}
 		}
 		return filteredList;
@@ -208,15 +169,15 @@ public class FilterServiceEJB implements LocalFilter {
 	private List<DropModel> getDropsByGender() {
 		List<UserModel> users = new ArrayList<UserModel>();
 		List<DropModel> drops = new ArrayList<DropModel>();
-		if (filterByMale) {
+		if (filter.getIsFilteredByMale()) {
 			users.addAll(userDAOBean.getUsersByGender("Male"));
 		}
 
-		if (filterByFemale) {
+		if (filter.getIsFilteredByFemale()) {
 			users.addAll(userDAOBean.getUsersByGender("Female"));
 		}
 
-		if (filterByOther) {
+		if (filter.getIsFilteredByOther()) {
 			users.addAll(userDAOBean.getUsersByGender("Other"));
 		}
 		
