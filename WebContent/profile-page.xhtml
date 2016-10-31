@@ -51,7 +51,9 @@
 	<b:container>
 
 		<b:column span="4">
+		
 			<h1>My lists</h1>
+			<b:alert styleClass="contactlist-alert" rendered="#{userControllerBean.addContactNotValid}" closable="true" severity="danger"><strong>#{userControllerBean.errorMessage}</strong></b:alert>
 			<b:row>
 				<a href="#" id="add-new-list-link">Add new list</a>
 				<h:form id="add-list-form">
@@ -71,6 +73,7 @@
 			<c:forEach var="contactList"
 				items="#{userControllerBean.contactLists}">
 				<div id="contactlist-div" class="contactlist-div">
+
 					<img class="contactlist-img" src="resources/img/group.png"></img>
 					<b:button look="link" styleClass="contactlist-link"
 						value="#{contactList.contactlistname}" />
@@ -101,6 +104,7 @@
 					</div>
 				</div>
 			</c:forEach>
+			
 		</b:column>
 		<b:column span="4">
 			<h:form id="update-user-info-column">
@@ -206,5 +210,6 @@
 			</h:form>
 		</b:column>
 	</b:container>
+	
 </h:body>
 </html>

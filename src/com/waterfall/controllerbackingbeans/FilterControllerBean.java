@@ -9,9 +9,12 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalFilter;
 import com.waterfall.EJB.interfaces.LocalUser;
+import com.waterfall.models.ContactListModel;
 import com.waterfall.models.FilterModel;
+import com.waterfall.serviceEJB.ContactListServiceEJB;
 import com.waterfall.serviceEJB.UserServiceEJB;
 import com.waterfall.utils.DateService;
 
@@ -45,6 +48,9 @@ public class FilterControllerBean {
 	LocalFilter filterServiceEJB;
 	
 	@EJB
+	LocalContactList contactListServiceEJB;
+	
+	@EJB
 	LocalUser userServiceEJB;
 	
 	
@@ -52,6 +58,11 @@ public class FilterControllerBean {
 		FilterModel filterModel = filterServiceEJB.getFilterById(filterid);
 		dropControllerBean.setDropList(filterServiceEJB.filterDrops(filterModel));
 		
+		return "index";
+	}
+	
+	public String filterByContacts(ContactListModel contactListModel){
+		dropControllerBean.setDropList(contactListServiceEJB.getContactDrops(contactListModel));
 		return "index";
 	}
 	

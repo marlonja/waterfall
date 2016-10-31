@@ -120,6 +120,7 @@ public class RegistrationControllerBean implements Serializable {
 
 		userEJB.storeUser(userModel);
 		System.out.println("user saved");
+		userModel = userEJB.getUserByUsername(userModel.getUsername());
 		userEJB.setUserInSession("loggedInUser", userModel);
 		loginControllerBean.setLoggedInUser(userModel);
 		errorMessages.clear();

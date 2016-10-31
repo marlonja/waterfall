@@ -13,8 +13,10 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.flow.builder.ReturnBuilder;
 
+import com.sun.xml.registry.uddi.bindings_v2_2.Contact;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
+import com.waterfall.models.ContactListModel;
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.UserDAOBean;
 import com.waterfall.validators.LoginValidator;
@@ -130,6 +132,30 @@ public class UserServiceEJB implements LocalUser {
 	@Override
 	public void deleteUser(UserModel user) {
 		userDaoBean.deleteUser(user);
+	}
+
+	@Override
+	public String controlUserContactList(ContactListModel contactListModel, String username) {
+		UserModel loggedInUser = getUserFromSession("loggedInUser");
+		String errorMessage = "";
+		if(getUserByUsername(username) == null){
+			errorMessage = "User not in database";
+			return errorMessage;
+		}
+		if(username.equals(loggedInUser.getUsername())){
+			errorMessage = "Can't add yourself";
+			return errorMessage;
+		}else{
+			for(UserModel userModel : contactListModel.getContacts()){
+				if(username.equals(userModel.getUsername())){
+					errorMessage = "Contact already in list";
+					return errorMessage;
+				}
+			}
+		}
+		errorMessage = "ok";
+		
+		return errorMessage;
 	}
 
 

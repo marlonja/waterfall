@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.waterfall.models.ContactListModel;
-import com.waterfall.models.DropModel;
 
 @Stateful
 public class ContactListDAOBean {
@@ -33,4 +32,5 @@ public class ContactListDAOBean {
 	public List<ContactListModel> getAllContactLists() {
 		return em.createNamedQuery("ContactListModel.findAll").getResultList();
 	}
+
 }
