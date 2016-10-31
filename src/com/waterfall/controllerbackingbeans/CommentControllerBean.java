@@ -31,14 +31,14 @@ public class CommentControllerBean implements Serializable {
 	@EJB
 	LocalUser userEJB;
 	
-	public String createNewComment(Long dropId) {
+	public CommentModel createNewComment(Long dropId) {
 		CommentModel commentModel = new CommentModel();
 		commentModel.setContent(content);
 		commentModel.setDropHost(dropEJB.getDrop(dropId));
 		commentModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
 		commentEJB.storeComment(commentModel);
 		content = null;
-		return "index";
+		return commentModel;
 	}
 
 	public String getContent() {
