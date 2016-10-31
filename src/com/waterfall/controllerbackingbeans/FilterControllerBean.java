@@ -36,7 +36,6 @@ public class FilterControllerBean {
 	private int startAge;
 	private int endAge;
 	private List<FilterModel> filterList;
-	
 
 	@EJB
 	DateService dateService;
@@ -53,7 +52,6 @@ public class FilterControllerBean {
 	@EJB
 	LocalUser userServiceEJB;
 	
-	
 	public String setFilters(Long filterid) {
 		FilterModel filterModel = filterServiceEJB.getFilterById(filterid);
 		dropControllerBean.setDropList(filterServiceEJB.filterDrops(filterModel));
@@ -69,6 +67,7 @@ public class FilterControllerBean {
 	public String saveFilterAsPool() {
 		FilterModel filterModel = createNewFilter();
 		filterServiceEJB.saveFilterAsPool(filterModel);
+		filterList = userServiceEJB.getUser(userServiceEJB.getUserFromSession("loggedInUser").getUserid()).getFilterList();
 		return "index";
 	}
 	

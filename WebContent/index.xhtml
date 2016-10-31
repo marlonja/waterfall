@@ -193,7 +193,7 @@
 				<p id="my-pools-headline">My pools</p>
 				<h:form>
 					<c:forEach var="filter"
-						items="#{loginControllerBean.loggedInUser.filterList}">
+						items="#{filterControllerBean.filterList}">
 						<p class="filter-id">
 							<h:commandLink styleClass="filter-id" value="#{filter.poolname}"
 								action="#{filterControllerBean.setFilters(filter.filterid)}" />
