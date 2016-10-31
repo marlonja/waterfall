@@ -52,6 +52,9 @@ public class FilterControllerBean {
 	@EJB
 	LocalUser userServiceEJB;
 	
+	@Inject
+	LoginControllerBean loginControllerBean;
+	
 	public String setFilters(Long filterid) {
 		FilterModel filterModel = filterServiceEJB.getFilterById(filterid);
 		dropControllerBean.setDropList(filterServiceEJB.filterDrops(filterModel));
@@ -67,7 +70,8 @@ public class FilterControllerBean {
 	public String saveFilterAsPool() {
 		FilterModel filterModel = createNewFilter();
 		filterServiceEJB.saveFilterAsPool(filterModel);
-		filterList = userServiceEJB.getUser(userServiceEJB.getUserFromSession("loggedInUser").getUserid()).getFilterList();
+		loginControllerBean.setLoggedInUser(userServiceEJB.getUser(userServiceEJB.getUserFromSession("loggedInUser").getUserid()));
+		
 		return "index";
 	}
 	

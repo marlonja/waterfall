@@ -58,8 +58,6 @@ public class DropControllerBean implements Serializable {
 
 	public String createNewDrop() {
 		DropModel dropModel = new DropModel();
-//		UserModel userModel = new UserModel();
-//		userModel = userEJB.getUserFromSession("loggedInUser");
 		
 		dropModel.setContent(content);
 		dropModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
@@ -82,10 +80,8 @@ public class DropControllerBean implements Serializable {
 		commentModel.setDropHost(dropEJB.getDrop(dropId));
 		commentModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
 		commentEJB.storeComment(commentModel);
-		//dropList = Lists.reverse(dropEJB.getAllDrops());
 		commentContent = null;
 		init();
-		//return "/index.xhtml?faces-redirect=true";
 		return "index";
 
 	}

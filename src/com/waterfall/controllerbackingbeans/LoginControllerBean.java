@@ -45,7 +45,6 @@ public class LoginControllerBean implements Serializable {
 		
 		if(userEJB.validateLogin(username, password) != null){
 			loggedInUser = userEJB.validateLogin(username, password);
-			filterControllerBean.setFilterList(loggedInUser.getFilterList());
 		}
 		return "index";
 		
