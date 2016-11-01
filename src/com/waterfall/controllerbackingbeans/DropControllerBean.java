@@ -1,13 +1,11 @@
 package com.waterfall.controllerbackingbeans;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -16,10 +14,7 @@ import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
-import com.waterfall.models.ContactListModel;
 import com.waterfall.models.DropModel;
-import com.waterfall.models.UserModel;
-import com.waterfall.utils.ValidationMessageService;
 import com.waterfall.validators.CreateDropValidator;
 
 import jersey.repackaged.com.google.common.collect.Lists;
@@ -36,21 +31,20 @@ public class DropControllerBean implements Serializable {
 	
 	@Inject
 	FilterControllerBean filterControllerBean;
-
-	@EJB
-	CreateDropValidator createDropValidator;
-
-	@EJB
-	LocalUser userEJB;
-
-	@EJB
-	LocalDrop dropEJB;
 	
 	@EJB
-	LocalContactList contactListEJB;
+	private CreateDropValidator createDropValidator;
 
 	@EJB
-	LocalComment commentEJB;
+	private LocalUser userEJB;
+
+	@EJB
+	private LocalDrop dropEJB;
+	@EJB
+	private LocalContactList contactListEJB;
+
+	@EJB
+	private LocalComment commentEJB;
 
 	@PostConstruct
 	public void init() {

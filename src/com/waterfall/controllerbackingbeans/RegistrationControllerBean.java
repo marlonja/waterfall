@@ -47,16 +47,16 @@ public class RegistrationControllerBean implements Serializable {
 	private String errorAsJson;
 
 	@Inject
-	LoginControllerBean loginControllerBean;
+	private LoginControllerBean loginControllerBean;
 
 	@EJB
-	RegistrationValidator registrationValidator;
+	private RegistrationValidator registrationValidator;
 
 	@EJB
-	CountryService countryService;
+	private CountryService countryService;
 
 	@EJB
-	DateService dateService;
+	private DateService dateService;
 
 	@EJB
 	private LocalUser userEJB;

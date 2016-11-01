@@ -46,8 +46,6 @@ public class UserControllerBean implements Serializable {
 			contactLists = new ArrayList<ContactListModel>();
 			contactLists = Lists.reverse(loggedInUser.getContactList());
 		}
-		
-
 	}
 	
 	public void updateUser(UserModel user) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
