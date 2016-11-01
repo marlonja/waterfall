@@ -29,7 +29,6 @@
 					styleClass="link-profile-page" />
 			</h:form>
 			<h:form rendered="#{loginControllerBean.loggedInUser == null}">
-				
 
 				<div class="login-username">
 					<b:inputText placeholder="Username" id="username"
@@ -43,7 +42,6 @@
 				<div class="login-btn-div">
 					<h:commandButton class="login-btn" action="#{loginControllerBean.loginUser()}"
 						value="Login" styleClass="submit-btn" />
-						
 				</div>
 				
 			</h:form>

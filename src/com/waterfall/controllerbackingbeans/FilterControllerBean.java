@@ -18,6 +18,8 @@ import com.waterfall.serviceEJB.ContactListServiceEJB;
 import com.waterfall.serviceEJB.UserServiceEJB;
 import com.waterfall.utils.DateService;
 
+import jersey.repackaged.com.google.common.collect.Lists;
+
 @Named(value = "filterControllerBean")
 @RequestScoped
 public class FilterControllerBean {
@@ -57,7 +59,7 @@ public class FilterControllerBean {
 	
 	public String setFilters(Long filterid) {
 		FilterModel filterModel = filterEJB.getFilterById(filterid);
-		dropControllerBean.setDropList(filterEJB.filterDrops(filterModel));
+		dropControllerBean.setDropList(Lists.reverse(filterEJB.filterDrops(filterModel)));
 		
 		return "index";
 	}
