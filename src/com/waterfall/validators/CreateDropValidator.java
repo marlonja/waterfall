@@ -16,7 +16,7 @@ public class CreateDropValidator {
 	}
 	
 	private boolean validateDropContent(String content){
-		if(content.equals("") || content.length() > 200){
+		if(content.trim().equals("") || content.length() > 200){
 			return false;
 		}
 		

@@ -187,9 +187,9 @@
 							</c:forEach>
 							<h:form rendered="#{loginControllerBean.loggedInUser != null}">
 								<b:inputText placeholder="Comment..."
-									value="#{dropControllerBean.commentContent}" />
+									value="#{commentControllerBean.content}" />
 								<h:commandButton styleClass="comment-btn" value="Comment"
-									action="#{dropControllerBean.createNewComment(drop.getDropId())}" />
+									action="#{commentControllerBean.createNewComment(drop.getDropId())}" />
 							</h:form>
 						</div>
 					</div>

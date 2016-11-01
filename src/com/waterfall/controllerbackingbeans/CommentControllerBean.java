@@ -6,12 +6,14 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalComment;
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
+import com.waterfall.validators.CreateCommentValidator;
 
 @Named(value="commentControllerBean")
 @RequestScoped
@@ -31,12 +33,19 @@ public class CommentControllerBean implements Serializable {
 	@EJB
 	private LocalUser userEJB;
 	
+	@EJB
+	private CreateCommentValidator commentValidator;
+	
 	public CommentModel createNewComment(Long dropId) {
 		CommentModel commentModel = new CommentModel();
 		commentModel.setContent(content);
 		commentModel.setDropHost(dropEJB.getDrop(dropId));
 		commentModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
-		commentEJB.storeComment(commentModel);
+		if(commentValidator.validateComment(commentModel)){
+			commentEJB.storeComment(commentModel);
+			
+		}
+		
 		content = null;
 		return commentModel;
 	}
