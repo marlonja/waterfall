@@ -30,17 +30,6 @@ public class LoginControllerBean implements Serializable {
 	private LocalUser userEJB;
 	
 	
-	 public void info() throws NoSuchAlgorithmException, InvalidKeySpecException {
-		 loggedInUser = userEJB.validateLogin(username, password);
-		 if(loggedInUser != null){
-			 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Login succes")); 
-		 }else{
-			 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Info", "Login failed")); 
-		 }			
-			        
-	    }
-	 
-
 	public String logOutUser() {
 
 		userEJB.removeUserFromSession("loggedInUser");
