@@ -28,8 +28,8 @@ public class LoginControllerBean implements Serializable {
 	private UserModel loggedInUser;
 
 	@EJB
-	private LocalUser userEJB;
-	
+	private LocalUser userEJB;	
+
 	@Inject
 	FilterControllerBean filterControllerBean;
 

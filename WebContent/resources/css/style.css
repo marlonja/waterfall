@@ -1,4 +1,10 @@
 /* ----- STYLES FOR REG-NEW-USER.XHTML ----- */
+#messages {
+	z-index: 2;
+	position: abolute;
+}
+
+
 h1 {
 	color: steelblue;
 	background: whitesmoke;

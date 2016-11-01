@@ -19,6 +19,7 @@ import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.UserDAOBean;
+import com.waterfall.utils.ValidationMessageService;
 import com.waterfall.validators.LoginValidator;
 import com.waterfall.validators.RegistrationValidator;
 
@@ -37,6 +38,9 @@ public class UserServiceEJB implements LocalUser {
 	private ExternalContext externalContext;
 	
 	private Map<String, Object> currentSession;
+	
+	@EJB
+	private ValidationMessageService validationMessageService;
 
 	@Override
 	public boolean storeUser(UserModel userModel) {
@@ -55,7 +59,7 @@ public class UserServiceEJB implements LocalUser {
 
 		UserModel userToCheckInDatabase = getUserByUsername(username);
 		if(userToCheckInDatabase == null) {
-			displayLoginErrorMessage("search-form", "Wrong input");
+			validationMessageService.errorMsg("Wrong username");
 			return null;
 		}else {
 			if(PBKDF2.validatePassword(typedPassword, userToCheckInDatabase.getVisiblePassword())) {
@@ -63,18 +67,13 @@ public class UserServiceEJB implements LocalUser {
 				return userToCheckInDatabase;
 			}else {
 				// Wrong password
-				displayLoginErrorMessage("search-form", "Wrong input");
+				validationMessageService.errorMsg("Wrong password");
 				return null;
 			}
 		}
 	}
 	
-	@Override
-	public void displayLoginErrorMessage(String field, String message) {
-		FacesContext.getCurrentInstance().addMessage(field,
-				new FacesMessage(message));
-		
-	}
+
 
 	@Override
 	public UserModel getUser(Long userId) {
