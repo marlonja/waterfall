@@ -69,9 +69,8 @@ public class UserControllerBean implements Serializable {
 		contactListModel.setOwner(loggedInUser);
 		loggedInUser.getContactList().add(contactListModel);
 		contactListEJB.storeContactList(contactListModel);
-		loggedInUser.getContactList().add(contactListModel);
 		contactLists = Lists.reverse(userEJB.getUser(loggedInUser.getUserid()).getContactList());
-
+		
 		return "profile-page";
 	}
 	
