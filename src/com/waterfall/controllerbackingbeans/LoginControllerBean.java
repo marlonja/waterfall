@@ -3,20 +3,13 @@ package com.waterfall.controllerbackingbeans;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
-
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.UserModel;
-import com.waterfall.utils.DateService;
 
 @Named(value = "loginControllerBean")
 @SessionScoped
@@ -29,9 +22,6 @@ public class LoginControllerBean implements Serializable {
 
 	@EJB
 	private LocalUser userEJB;
-	
-	@Inject
-	FilterControllerBean filterControllerBean;
 
 	public String logOutUser() {
 

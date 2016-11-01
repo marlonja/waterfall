@@ -23,13 +23,13 @@ public class CommentControllerBean implements Serializable {
 	private String creationDate;
 	
 	@EJB
-	LocalComment commentEJB;
+	private LocalComment commentEJB;
 	
 	@EJB
-	LocalDrop dropEJB;
+	private LocalDrop dropEJB;
 	
 	@EJB
-	LocalUser userEJB;
+	private LocalUser userEJB;
 	
 	public CommentModel createNewComment(Long dropId) {
 		CommentModel commentModel = new CommentModel();

@@ -38,39 +38,39 @@ public class FilterControllerBean {
 	private List<FilterModel> filterList;
 
 	@EJB
-	DateService dateService;
+	private DateService dateService;
 
 	@Inject
-	DropControllerBean dropControllerBean;
+	private DropControllerBean dropControllerBean;
 
 	@EJB
-	LocalFilter filterServiceEJB;
+	private LocalFilter filterEJB;
 	
 	@EJB
-	LocalContactList contactListServiceEJB;
+	private LocalContactList contactListEJB;
 	
 	@EJB
-	LocalUser userServiceEJB;
+	private LocalUser userEJB;
 	
 	@Inject
 	LoginControllerBean loginControllerBean;
 	
 	public String setFilters(Long filterid) {
-		FilterModel filterModel = filterServiceEJB.getFilterById(filterid);
-		dropControllerBean.setDropList(filterServiceEJB.filterDrops(filterModel));
+		FilterModel filterModel = filterEJB.getFilterById(filterid);
+		dropControllerBean.setDropList(filterEJB.filterDrops(filterModel));
 		
 		return "index";
 	}
 	
 	public String filterByContacts(ContactListModel contactListModel){
-		dropControllerBean.setDropList(contactListServiceEJB.getContactDrops(contactListModel));
+		dropControllerBean.setDropList(contactListEJB.getContactDrops(contactListModel));
 		return "index";
 	}
 	
 	public String saveFilterAsPool() {
 		FilterModel filterModel = createNewFilter();
-		filterServiceEJB.saveFilterAsPool(filterModel);
-		loginControllerBean.setLoggedInUser(userServiceEJB.getUser(userServiceEJB.getUserFromSession("loggedInUser").getUserid()));
+		filterEJB.saveFilterAsPool(filterModel);
+		loginControllerBean.setLoggedInUser(userEJB.getUser(userEJB.getUserFromSession("loggedInUser").getUserid()));
 		
 		return "index";
 	}
@@ -95,7 +95,7 @@ public class FilterControllerBean {
 		filterModel.setSearchWords(tagList);
 		filterModel.setPoolname(poolname);
 		
-		filterModel.setFilterowner(userServiceEJB.getUserFromSession("loggedInUser"));
+		filterModel.setFilterowner(userEJB.getUserFromSession("loggedInUser"));
 		
 		return filterModel;
 	}
@@ -103,7 +103,7 @@ public class FilterControllerBean {
 	public String filter() {
 		FilterModel filterModel = createNewFilter();
 		
-		dropControllerBean.setDropList(filterServiceEJB.filterDrops(filterModel));		
+		dropControllerBean.setDropList(filterEJB.filterDrops(filterModel));		
 		
 		return "index";
 	}

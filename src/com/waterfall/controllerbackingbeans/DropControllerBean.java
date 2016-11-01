@@ -33,23 +33,20 @@ public class DropControllerBean implements Serializable {
 	private String commentContent;
 	private List<DropModel> dropList;
 	
-	@Inject
-	FilterControllerBean filterControllerBean;
+	@EJB
+	private CreateDropValidator createDropValidator;
+
+	@EJB
+	private LocalUser userEJB;
+
+	@EJB
+	private LocalDrop dropEJB;
 	
 	@EJB
-	CreateDropValidator createDropValidator;
+	private LocalContactList contactListEJB;
 
 	@EJB
-	LocalUser userEJB;
-
-	@EJB
-	LocalDrop dropEJB;
-	
-	@EJB
-	LocalContactList contactListEJB;
-
-	@EJB
-	LocalComment commentEJB;
+	private LocalComment commentEJB;
 
 	@PostConstruct
 	public void init() {
