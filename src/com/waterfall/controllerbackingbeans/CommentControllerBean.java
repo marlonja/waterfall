@@ -36,6 +36,9 @@ public class CommentControllerBean implements Serializable {
 	@EJB
 	private CreateCommentValidator commentValidator;
 	
+	@Inject
+	DropControllerBean dropControllerBean;
+	
 	public CommentModel createNewComment(Long dropId) {
 		CommentModel commentModel = new CommentModel();
 		commentModel.setContent(content);
@@ -43,6 +46,7 @@ public class CommentControllerBean implements Serializable {
 		commentModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
 		if(commentValidator.validateComment(commentModel)){
 			commentEJB.storeComment(commentModel);
+			dropControllerBean.init();
 			
 		}
 		
