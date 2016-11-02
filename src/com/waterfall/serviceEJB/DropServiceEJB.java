@@ -9,10 +9,11 @@ import javax.ejb.Stateless;
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.models.DropModel;
 import com.waterfall.storage.DropDAOBean;
+import com.waterfall.utils.ValidationMessageService;
 
 @Stateless
 public class DropServiceEJB implements LocalDrop {
-
+	
 	@EJB 
 	private DropDAOBean dropDaoBean;
 
