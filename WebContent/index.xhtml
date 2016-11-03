@@ -21,7 +21,7 @@
 
 	<h:outputScript library="script" name="script.js"/>
 
-	<b:navBar brand="Waterfall" brandHref="#{dropControllerBean.init()}">
+	<b:navBar brand="Waterfall" brandHref="#">
 		<b:navbarLinks pull="right">
 			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
 				<h:commandLink action="profile-page"

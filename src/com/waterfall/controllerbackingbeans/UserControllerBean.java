@@ -18,6 +18,7 @@ import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.UserModel;
+import com.waterfall.utils.ValidationMessageService;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 
@@ -30,8 +31,10 @@ public class UserControllerBean implements Serializable {
 	private UserModel loggedInUser;
 	private String contactListName;
 	private List<ContactListModel> contactLists;
-	private String errorMessage;
-	private boolean addContactNotValid;
+		
+	
+	@EJB
+	private ValidationMessageService validationMessageService;
 
 	@EJB
 	private LocalUser userEJB;
@@ -62,29 +65,28 @@ public class UserControllerBean implements Serializable {
 	}
 	
 	public String createNewContactlist() {
-		ContactListModel contactListModel = new ContactListModel();
-		loggedInUser = userEJB.getUserFromSession("loggedInUser");
 		
+		ContactListModel contactListModel = new ContactListModel();
+		loggedInUser = userEJB.getUserFromSession("loggedInUser");		
 		contactListModel.setContactlistname(contactListName);
 		contactListModel.setOwner(loggedInUser);
 		loggedInUser.getContactList().add(contactListModel);
 		contactListEJB.storeContactList(contactListModel);
+		validationMessageService.successMsg("Contactlist created");
 		contactLists = Lists.reverse(userEJB.getUser(loggedInUser.getUserid()).getContactList());
 		
 		return "profile-page";
 	}
 	
 	public String addContactToList(ContactListModel contactListModel){
-		errorMessage = userEJB.controlUserContactList(contactListModel, usernameSearch);
+		String errorMessage = userEJB.controlUserContactList(contactListModel, usernameSearch);
 		if(errorMessage.equals("ok")){
-			errorMessage = "";
-			setAddContactNotValid(false);
+			validationMessageService.successMsg("Contact added");			
 			
 			contactListModel.addContact(searchUserByUsername());
 			contactListEJB.storeContactList(contactListModel);
 		}else{
-			setAddContactNotValid(true);
-			//return "profile-page";
+			validationMessageService.errorMsg(errorMessage);			
 		}
 		return "profile-page";
 	}
@@ -120,21 +122,7 @@ public class UserControllerBean implements Serializable {
 	public void setContactLists(List<ContactListModel> contactLists) {
 		this.contactLists = contactLists;
 	}
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-
-	public boolean isAddContactNotValid() {
-		return addContactNotValid;
-	}
-
-	public void setAddContactNotValid(boolean addContactNotValid) {
-		this.addContactNotValid = addContactNotValid;
-	}
+	
 
 
 

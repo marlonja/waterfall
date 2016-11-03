@@ -7,7 +7,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Profile Page</title>
 </h:head>
@@ -51,9 +52,12 @@
 	<b:container>
 
 		<b:column span="4">
-		
+			 
+			
+			
 			<h1>My lists</h1>
-			<b:alert styleClass="contactlist-alert" rendered="#{userControllerBean.addContactNotValid}" closable="true" severity="danger"><strong>#{userControllerBean.errorMessage}</strong></b:alert>
+			 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />	
+			
 			<b:row>
 				<a href="#" id="add-new-list-link">Add new list</a>
 				<h:form id="add-list-form">
