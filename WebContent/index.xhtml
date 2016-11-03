@@ -21,7 +21,7 @@
 
 	<h:outputScript library="script" name="script.js"/>
 
-	<b:navBar brand="Waterfall" brandHref="#">
+	<b:navBar brand="Waterfall" brandHref="#{dropControllerBean.init()}">
 		<b:navbarLinks pull="right">
 			<h:form rendered="#{loginControllerBean.loggedInUser != null}">
 				<h:commandLink action="profile-page"
@@ -71,7 +71,7 @@
 				</b:column>
 				<b:column styleClass="right-column">
 					<p class="clear-fields-link">
-						<b:navLink value="X"
+						<h:commandLink value="X"
 							action="#{filterControllerBean.clearFilterInputFields()}" />
 					</p>
 				</b:column>
