@@ -23,6 +23,8 @@ public interface LocalContactList {
 	List<ContactListModel> getAllContactLists();
 
 	List<DropModel> getContactDrops(ContactListModel contactListModel);
+
+	void removeContactList(ContactListModel contactListModel);
 	
 	
 }

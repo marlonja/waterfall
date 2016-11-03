@@ -51,6 +51,12 @@ public class UserControllerBean implements Serializable {
 		}
 	}
 	
+	public String removeContactList(ContactListModel contactListModel){
+		contactListEJB.removeContactList(contactListModel);
+		contactLists.remove(contactListModel);
+		return "profile-page";
+	}
+	
 	public void updateUser(UserModel user) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 		user.setPassword(PBKDF2.generatePasswordHash(user.getVisiblePassword()));
 		userEJB.storeUser(user);
@@ -65,15 +71,19 @@ public class UserControllerBean implements Serializable {
 	}
 	
 	public String createNewContactlist() {
+		if(contactListName == null || contactListName.trim().equals("")){
+			validationMessageService.errorMsg("Please enter a name for your list");
+		}else{
+			ContactListModel contactListModel = new ContactListModel();
+			loggedInUser = userEJB.getUserFromSession("loggedInUser");		
+			contactListModel.setContactlistname(contactListName);
+			contactListModel.setOwner(loggedInUser);
+			loggedInUser.getContactList().add(contactListModel);
+			contactListEJB.storeContactList(contactListModel);
+			validationMessageService.successMsg("Contactlist created");
+			contactLists = Lists.reverse(userEJB.getUser(loggedInUser.getUserid()).getContactList());
+		}
 		
-		ContactListModel contactListModel = new ContactListModel();
-		loggedInUser = userEJB.getUserFromSession("loggedInUser");		
-		contactListModel.setContactlistname(contactListName);
-		contactListModel.setOwner(loggedInUser);
-		loggedInUser.getContactList().add(contactListModel);
-		contactListEJB.storeContactList(contactListModel);
-		validationMessageService.successMsg("Contactlist created");
-		contactLists = Lists.reverse(userEJB.getUser(loggedInUser.getUserid()).getContactList());
 		
 		return "profile-page";
 	}

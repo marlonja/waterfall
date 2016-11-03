@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import com.sun.xml.registry.uddi.bindings_v2_2.Contact;
 import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.ContactListModel;
@@ -45,6 +46,12 @@ public class ContactListServiceEJB implements LocalContactList{
 			contactDrops.addAll(userModel.getDrops());
 		}
 		return contactDrops;
+	}
+
+	@Override
+	public void removeContactList(ContactListModel contactListModel) {
+		contactListDAOBean.removeContactList(contactListModel);
+		
 	}
 
 

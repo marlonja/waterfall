@@ -48,12 +48,9 @@
 		</b:navbarLinks>
 	</b:navBar>
 
-
 	<b:container>
 
-		<b:column span="4">
-			 
-			
+		<b:column span="4">			
 			
 			<h1>My lists</h1>
 			 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />	
@@ -69,9 +66,10 @@
 					<b:column styleClass="add-list-column">
 						<h:commandLink
 							action="#{userControllerBean.createNewContactlist()}">
-							<h:graphicImage styleClass="add-img" library="img" name="add.png" />
-						</h:commandLink>
+							<h:graphicImage styleClass="add-img" library="img" name="add.png" />							
+						</h:commandLink>											
 					</b:column>
+					
 				</h:form>
 			</b:row>
 			<c:forEach var="contactList"
@@ -81,7 +79,12 @@
 					<img class="contactlist-img" src="resources/img/group.png"></img>
 					<b:button look="link" styleClass="contactlist-link"
 						value="#{contactList.contactlistname}" />
-
+						<h:form>
+						<h:commandLink
+							action="#{userControllerBean.removeContactList(contactList)}">
+							<h:graphicImage styleClass="minus-img" library="img" name="minus.png" />							
+						</h:commandLink>
+						</h:form>	
 					<div class="add-contact-to-contactlist">
 						<b:row>
 							<a href="#" id="add-new-contact-link">Add new contact</a>
