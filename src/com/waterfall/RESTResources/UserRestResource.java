@@ -3,6 +3,8 @@ package com.waterfall.RESTResources;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -27,6 +29,7 @@ import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 import com.waterfall.utils.LinkBuilder;
+import com.waterfall.validators.RegistrationValidator;
 
 @Path("/users")
 public class UserRestResource {
@@ -37,27 +40,39 @@ public class UserRestResource {
 	@EJB
 	private LocalDrop dropEJB;
 
+	@EJB
+	private RegistrationValidator registrationValidator;
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UserModel> getUsers(@Context UriInfo uriInfo) {
-		
+
 		return provideLinksForUsers(userEJB.getAllUsers(), uriInfo);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createUser(UserModel userModel) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
-		
-		if(userModel.getVisiblePassword() != null){
+	public Response createUser(UserModel userModel)
+			throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
+
+		ArrayList<String> errorMessages = registrationValidator.validateUserForRegistration(
+				userModel.getBirthdate().getYear(), userModel.getBirthdate().getMonth(),
+				userModel.getBirthdate().getDate(), userModel, new ArrayList<>());
+
+		if (errorMessages.size() > 0) {
+
+			for (String errorMsg : errorMessages) {
+				System.out.println(errorMsg);
+			}
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+
 		String unsaltedPassword = userModel.getVisiblePassword();
 		userModel.setPassword(PBKDF2.generatePasswordHash(unsaltedPassword));
-		}else {
-			return Response.status(Response.Status.NO_CONTENT).build();
-		}
-		
-		if(userEJB.storeUser(userModel)) {
+
+		if (userEJB.storeUser(userModel)) {
 			return Response.status(Response.Status.CREATED).entity(userModel).build();
-		}else {
+		} else {
 			return Response.status(Response.Status.NO_CONTENT).build();
 		}
 	}
@@ -68,24 +83,45 @@ public class UserRestResource {
 	public UserModel getUser(@PathParam("userId") Long userId, @Context UriInfo uriInfo) {
 
 		UserModel userModel = userEJB.getUser(userId);
-		
+
 		userModel.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userId, "Self"));
 		userModel.addLink(LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userId, "Drops"));
-		
+
 		return userModel;
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public UserModel updateUser(UserModel userModel) {
+	public Response updateUser(UserModel userModel) {
+		
+		//TODO gör klart validering, update får ha samma username och email
+		//TODO gör klart resten av valideringen
+		
+		System.out.println("inn i update");
+		
+		ArrayList<String> errorMessages = registrationValidator.validateUserForRegistration(
+				userModel.getBirthdate().getYear(), userModel.getBirthdate().getMonth(),
+				userModel.getBirthdate().getDate(), userModel, new ArrayList<>());
+		
+		if (errorMessages.size() > 0) {
 
-		userModel.setPassword(userEJB.getUser(userModel.getUserid()).getVisiblePassword());
-
-		if (userEJB.storeUser(userModel)) {
-			return userModel;
-		} else {
-			return null;
+			for (String errorMsg : errorMessages) {
+				System.out.println(errorMsg);
+			}
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
+
+		userModel.setPassword(userModel.getVisiblePassword());
+		userEJB.storeUser(userModel);
+		
+		
+		return Response.status(Response.Status.OK).entity(userModel).build();
+
+//		if (userEJB.storeUser(userModel)) {
+//			return userModel;
+//		} else {
+//			return null;
+//		}
 	}
 
 	@DELETE
@@ -107,27 +143,31 @@ public class UserRestResource {
 	public List<DropModel> getUserDrops(@PathParam("userId") Long userId, @Context UriInfo uriInfo) {
 		UserModel userModel = userEJB.getUser(userId);
 		List<DropModel> dropList = userModel.getDrops();
-	
+
 		for (DropModel dropModel : dropList) {
-			dropModel.setComments(removeOwnerFromCommentList( (Vector<CommentModel>) dropModel.getComments()));
-			dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
-			dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
+			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
+			dropModel
+					.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+			dropModel.addLink(
+					LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
 		}
 
 		return dropList;
 	}
-	
+
 	public List<UserModel> provideLinksForUsers(List<UserModel> users, UriInfo uriInfo) {
 		for (UserModel userModel : users) {
-			userModel.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Self"));
-			userModel.addLink(LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Drops"));
+			userModel
+					.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Self"));
+			userModel.addLink(
+					LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Drops"));
 		}
-		
+
 		return users;
 	}
-	
+
 	private List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
-		
+
 		for (CommentModel commentModel : commentList) {
 			commentModel.setOwner(null);
 			commentModel.setDropHost(null);
