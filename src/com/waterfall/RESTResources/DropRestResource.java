@@ -58,6 +58,8 @@ public class DropRestResource {
 	public DropModel getDropModel(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
 		DropModel dropModel = dropEjb.getDrop(dropModelId);
 		dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+		dropModel.addLink(LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
+		dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
 		dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 		
 		return dropModel;
@@ -104,8 +106,15 @@ public class DropRestResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{dropModelId}/comments")
-	public List<CommentModel> getDropComments(@PathParam("dropModelId") Long dropModelId) {
-		return removeOwnerFromCommentList((Vector<CommentModel>) dropEjb.getDrop(dropModelId).getComments());
+	public List<CommentModel> getDropComments(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
+		
+		List<CommentModel> comments = dropEjb.getDrop(dropModelId).getComments();
+		
+		for (CommentModel commentModel : comments) {
+			commentModel.addLink(LinkBuilder.buildOwnerLink(DropRestResource.class, uriInfo, commentModel.getDropHost().getDropId(), "DropHost"));
+		}
+		
+		return removeOwnerFromCommentList((Vector<CommentModel>) comments);
 	}
 	
 	public List<DropModel> provideLinksForDrops(List<DropModel> drops, UriInfo uriInfo) {
@@ -127,4 +136,17 @@ public class DropRestResource {
 		}
 		return commentList;
 	}
+	
+//	private List<CommentModel> renewOwnerInCommentList(Vector<CommentModel> commentList) {
+//
+//		for (CommentModel commentModel : commentList) {
+//			UserModel commentOwner = commentModel.getOwner();
+//			DropModel dropModel = commentModel.getDropHost();
+//			commentOwner.setDrops(null);
+//			
+//			commentModel.setOwner(commentOwner);
+//			commentModel.setDropHost(null);
+//		}
+//		return commentList;
+//	}
 }

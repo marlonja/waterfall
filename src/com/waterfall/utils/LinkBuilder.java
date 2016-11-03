@@ -21,7 +21,7 @@ public class LinkBuilder {
 		
 		LinkModel linkModel = new LinkModel();
 		linkModel.setUri(uri);
-		linkModel.setRelation(relation);
+		linkModel.setRel(relation);
 		
 		return linkModel;
 		
@@ -38,7 +38,7 @@ public class LinkBuilder {
 		
 		LinkModel linkModel = new LinkModel();
 		linkModel.setUri(uri);
-		linkModel.setRelation(relation);
+		linkModel.setRel(relation);
 		
 		return linkModel;
 		
@@ -55,7 +55,7 @@ public class LinkBuilder {
 				
 		LinkModel linkModel = new LinkModel();
 		linkModel.setUri(uri);
-		linkModel.setRelation(relation);
+		linkModel.setRel(relation);
 				
 		return linkModel;
 	}
@@ -70,7 +70,7 @@ public class LinkBuilder {
 				
 		LinkModel linkModel = new LinkModel();
 		linkModel.setUri(uri);
-		linkModel.setRelation(relation);
+		linkModel.setRel(relation);
 				
 		return linkModel;
 	}

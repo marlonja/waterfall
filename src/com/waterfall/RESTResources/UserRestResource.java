@@ -104,12 +104,14 @@ public class UserRestResource {
 	@GET
 	@Path("/{userId}/drops")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<DropModel> getUserDrops(@PathParam("userId") Long userId) {
+	public List<DropModel> getUserDrops(@PathParam("userId") Long userId, @Context UriInfo uriInfo) {
 		UserModel userModel = userEJB.getUser(userId);
 		List<DropModel> dropList = userModel.getDrops();
 	
 		for (DropModel dropModel : dropList) {
 			dropModel.setComments(removeOwnerFromCommentList( (Vector<CommentModel>) dropModel.getComments()));
+			dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+			dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
 		}
 
 		return dropList;
