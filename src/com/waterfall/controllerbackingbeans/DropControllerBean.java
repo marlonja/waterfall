@@ -52,7 +52,6 @@ public class DropControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		dropList = Lists.reverse(dropEJB.getAllDrops());
-		System.out.println("nu kör vi init " + dropList.size());
 	}
 
 	public String createNewDrop() {
@@ -60,10 +59,8 @@ public class DropControllerBean implements Serializable {
 		
 		dropModel.setContent(content);
 		dropModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
-		
 
 		if(createDropValidator.validateDrop(dropModel)){			
-
 			dropEJB.storeDrop(dropModel);
 		}
 		

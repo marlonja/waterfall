@@ -38,6 +38,7 @@ public class FilterControllerBean {
 	private int startAge;
 	private int endAge;
 	private List<FilterModel> filterList;
+	private FilterModel filterModel;
 
 	@EJB
 	private DateService dateService;
@@ -58,7 +59,7 @@ public class FilterControllerBean {
 	LoginControllerBean loginControllerBean;
 	
 	public String setFilters(Long filterid) {
-		FilterModel filterModel = filterEJB.getFilterById(filterid);
+		filterModel = filterEJB.getFilterById(filterid);
 		dropControllerBean.setDropList(Lists.reverse(filterEJB.filterDrops(filterModel)));
 		
 		return "index";
@@ -238,5 +239,15 @@ public class FilterControllerBean {
 	public void setPoolname(String poolname) {
 		this.poolname = poolname;
 	}
+
+	public FilterModel getFilterModel() {
+		return filterModel;
+	}
+
+	public void setFilterModel(FilterModel filterModel) {
+		this.filterModel = filterModel;
+	}
+	
+	
 
 }

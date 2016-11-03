@@ -47,7 +47,6 @@ public class CommentControllerBean implements Serializable {
 		if(commentValidator.validateComment(commentModel)){
 			commentEJB.storeComment(commentModel);
 			dropControllerBean.init();
-			
 		}
 		
 		content = null;

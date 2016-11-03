@@ -13,24 +13,18 @@ public class CreateCommentValidator {
 	private ValidationMessageService validationMessageService;
 
 	public boolean validateComment(CommentModel commentModel) {
-		if(validateCommentContent(commentModel.getContent())){
-			return true;
-		}else{
-			return false;
-		}
-		
+		return validateCommentContent(commentModel.getContent());	
 	}
 	
 	public boolean validateCommentContent(String content){
-		if(content.trim().equals("")){
+		if(content.trim().equals("") || content == null){
 			validationMessageService.errorMsg("Comment is empty");
 			return false;
 		}if(content.length() > 200){
 			validationMessageService.errorMsg("Comment cannot exceed 200 characters");
 			return false;
-		}else{
-			return true;
 		}
+			return true;
 	}
 
 	

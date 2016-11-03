@@ -24,7 +24,6 @@ public class LoginControllerBean implements Serializable {
 	private LocalUser userEJB;	
 
 	public String logOutUser() {
-
 		userEJB.removeUserFromSession("loggedInUser");
 		loggedInUser = null;
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
@@ -32,7 +31,6 @@ public class LoginControllerBean implements Serializable {
 	}
 
 	public String loginUser() throws NoSuchAlgorithmException, InvalidKeySpecException {
-		
 		if(userEJB.validateLogin(username, password) != null){
 			loggedInUser = userEJB.validateLogin(username, password);
 		}
