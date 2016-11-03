@@ -4,23 +4,18 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import javax.ejb.EJB;
-import javax.enterprise.inject.New;
 import javax.jws.WebService;
 
-import org.eclipse.persistence.jpa.jpql.parser.ElseExpressionBNF;
 
-import com.sun.xml.ws.security.trust.elements.RequestSecurityTokenResponse;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
-import com.waterfall.serviceEJB.UserServiceEJB;
 
 @WebService
 public class UserSoapResource {

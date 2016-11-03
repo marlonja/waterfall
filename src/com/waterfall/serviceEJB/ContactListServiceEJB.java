@@ -9,7 +9,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.waterfall.EJB.interfaces.LocalContactList;
-import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;

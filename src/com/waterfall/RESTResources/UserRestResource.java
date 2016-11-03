@@ -3,7 +3,6 @@ package com.waterfall.RESTResources;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -21,18 +20,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.apache.jasper.tagplugins.jstl.ForEach;
-import org.eclipse.persistence.jpa.rs.util.ResourceLocalTransactionWrapper;
-
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
-import com.waterfall.models.LinkModel;
 import com.waterfall.models.UserModel;
-import com.waterfall.serviceEJB.UserServiceEJB;
-import com.waterfall.storage.UserDAOBean;
 import com.waterfall.utils.LinkBuilder;
 
 @Path("/users")

@@ -3,7 +3,6 @@ package com.waterfall.controllerbackingbeans;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -14,8 +13,6 @@ import com.waterfall.EJB.interfaces.LocalFilter;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.FilterModel;
-import com.waterfall.serviceEJB.ContactListServiceEJB;
-import com.waterfall.serviceEJB.UserServiceEJB;
 import com.waterfall.utils.DateService;
 
 import jersey.repackaged.com.google.common.collect.Lists;

@@ -1,6 +1,5 @@
 package com.waterfall.serviceEJB;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -9,7 +8,6 @@ import javax.ejb.Stateless;
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.models.DropModel;
 import com.waterfall.storage.DropDAOBean;
-import com.waterfall.utils.ValidationMessageService;
 
 @Stateless
 public class DropServiceEJB implements LocalDrop {

@@ -8,7 +8,6 @@ import java.util.Vector;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 
-import org.apache.jasper.tagplugins.jstl.ForEach;
 
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
