@@ -11,6 +11,7 @@ import com.waterfall.EJB.interfaces.LocalFilter;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.FilterModel;
 import com.waterfall.models.UserModel;
+import com.waterfall.serviceEJB.enums.Method;
 import com.waterfall.storage.DropDAOBean;
 import com.waterfall.storage.FilterDAOBean;
 import com.waterfall.storage.UserDAOBean;
@@ -24,7 +25,7 @@ public class FilterServiceEJB implements LocalFilter {
 
 	@EJB
 	UserDAOBean userDAOBean;
-	
+
 	@EJB
 	FilterDAOBean filterDAOBean;
 
@@ -33,19 +34,18 @@ public class FilterServiceEJB implements LocalFilter {
 
 	private ArrayList<DropModel> dropListFromSearch;
 	private FilterModel filter;
-	
-	
+
 	@Override
 	public FilterModel getFilterById(Long filterid) {
 		return filterDAOBean.getFilterById(filterid);
 	}
-	
+
 	@Override
 	public List<FilterModel> getAllFilters() {
-		
+
 		return filterDAOBean.getAllFilters();
 	}
-	
+
 	@Override
 	public void saveFilterAsPool(FilterModel filterModel) {
 		filterDAOBean.storeFilterAsPool(filterModel);
@@ -55,7 +55,7 @@ public class FilterServiceEJB implements LocalFilter {
 	public List<DropModel> filterDrops(FilterModel filterModel) {
 
 		filter = filterModel;
-		
+
 		dropListFromSearch = (ArrayList<DropModel>) getInitialList(splitTagList(filterModel));
 		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList();
 
@@ -109,55 +109,61 @@ public class FilterServiceEJB implements LocalFilter {
 		}
 
 		if (!filter.getFirstName().isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, "firstName", filter.getFirstName());
+			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, Method.FIRSTNAME,
+					filter.getFirstName());
 		}
 
 		if (!filter.getLastName().isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, "lastName", filter.getLastName());
+			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, Method.LASTNAME,
+					filter.getLastName());
 		}
 
 		if (!filter.getUsername().isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, "username", filter.getUsername());
+			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, Method.USERNAME,
+					filter.getUsername());
 		}
 
 		if (!filter.getCity().isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, "city", filter.getCity());
+			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, Method.CITY,
+					filter.getCity());
 		}
 
 		if (!filter.getCountry().isEmpty()) {
-			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, "country", filter.getCountry());
+			dropListFromSearch = (ArrayList<DropModel>) filterBySpecificInput(dropListFromSearch, Method.COUNTRY,
+					filter.getCountry());
 		}
 
 		return (ArrayList<DropModel>) dropListFromSearch;
 	}
-	
-	private List<DropModel> filterBySpecificInput(ArrayList<DropModel> dropListFromSearch, String methodName, String keyWord) {
+
+	private List<DropModel> filterBySpecificInput(ArrayList<DropModel> dropListFromSearch, Method methodName,
+			String keyWord) {
 		List<DropModel> filteredList = new ArrayList<DropModel>();
-		
-		for(DropModel drop : dropListFromSearch) {
-			switch(methodName) {
-			case "country":
-				if(drop.getOwner().getCountry().equalsIgnoreCase(keyWord)) {
+
+		for (DropModel drop : dropListFromSearch) {
+			switch (methodName) {
+			case FIRSTNAME:
+				if (drop.getOwner().getFirstName().equalsIgnoreCase(keyWord)) {
 					filteredList.add(drop);
 				}
 				break;
-			case "city":
-				if(drop.getOwner().getCity().equalsIgnoreCase(keyWord)) {
+			case LASTNAME:
+				if (drop.getOwner().getLastName().equalsIgnoreCase(keyWord)) {
 					filteredList.add(drop);
 				}
 				break;
-			case "firstName":
-				if(drop.getOwner().getFirstName().equalsIgnoreCase(keyWord)) {
+			case USERNAME:
+				if (drop.getOwner().getUsername().equalsIgnoreCase(keyWord)) {
 					filteredList.add(drop);
 				}
 				break;
-			case "lastName":
-				if(drop.getOwner().getLastName().equalsIgnoreCase(keyWord)) {
+			case CITY:
+				if (drop.getOwner().getCity().equalsIgnoreCase(keyWord)) {
 					filteredList.add(drop);
 				}
 				break;
-			case "username":
-				if(drop.getOwner().getUsername().equalsIgnoreCase(keyWord)) {
+			case COUNTRY:
+				if (drop.getOwner().getCountry().equalsIgnoreCase(keyWord)) {
 					filteredList.add(drop);
 				}
 				break;
@@ -180,7 +186,7 @@ public class FilterServiceEJB implements LocalFilter {
 		if (filter.getIsFilteredByOther()) {
 			users.addAll(userDAOBean.getUsersByGender("Other"));
 		}
-		
+
 		for (UserModel user : users) {
 			drops.addAll(user.getDrops());
 		}
@@ -201,6 +207,7 @@ public class FilterServiceEJB implements LocalFilter {
 
 	private List<DropModel> filterList(ArrayList<DropModel> dropListFromSearch, String[] searchWords) {
 		List<DropModel> filteredList = new ArrayList<DropModel>();
+		System.out.println("nu kör vi på filter");
 		for (int i = 0; i < dropListFromSearch.size(); i++) {
 			boolean dropContainsAllWords = dropContainsAllSearchWords(dropListFromSearch.get(i), searchWords);
 
@@ -209,6 +216,17 @@ public class FilterServiceEJB implements LocalFilter {
 			}
 		}
 		return filteredList;
+	}
+	
+	private boolean dropContainsAllSearchWords(DropModel drop, String[] searchWords) {
+		for (int i = 0; i < searchWords.length; i++) {
+			if (!drop.getContent().toLowerCase().contains(searchWords[i].toLowerCase())
+					&& !userInformationContainsSearchWords(drop.getOwner(), searchWords[i])) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	private boolean userInformationContainsSearchWords(UserModel owner, String searchWord) {
@@ -225,29 +243,15 @@ public class FilterServiceEJB implements LocalFilter {
 				+ user.getCountry();
 
 		if (userInfo.toLowerCase().contains(searchWord.toLowerCase())) {
+			System.out.println(userInfo + searchWord);
 			return true;
 		}
 		return false;
 	}
 
-	private boolean dropContainsAllSearchWords(DropModel drop, String[] searchWords) {
-		for (int i = 0; i < searchWords.length; i++) {
-			if (!drop.getContent().toLowerCase().contains(searchWords[i].toLowerCase())
-					&& !userInformationContainsSearchWords(drop.getOwner(), searchWords[i])) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	private String[] splitTagList(FilterModel filterModel) {
 		String[] searchWords = filterModel.getSearchWords().split(",");
 		return searchWords;
 	}
 
-	
-
-	
-
-	
 }

@@ -45,6 +45,7 @@ public class RegistrationControllerBean implements Serializable {
 	private List<Integer> days;
 	private ArrayList<String> errorMessages;
 	private String errorAsJson;
+	private UserModel userToStore;
 
 	@Inject
 	private LoginControllerBean loginControllerBean;
@@ -76,17 +77,17 @@ public class RegistrationControllerBean implements Serializable {
 	}
 
 	public String registerNewUser() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
-		UserModel userToValidate = new UserModel();
-		userToValidate.setFirstName(firstName);
-		userToValidate.setLastName(lastName);
-		userToValidate.setUsername(username);
-		userToValidate.setEmail(email);
-		userToValidate.setCity(city);
-		userToValidate.setCountry(country);
-		userToValidate.setGender(gender);
-		userToValidate.setPassword(password);
+		userToStore = new UserModel();
+		userToStore.setFirstName(firstName);
+		userToStore.setLastName(lastName);
+		userToStore.setUsername(username);
+		userToStore.setEmail(email);
+		userToStore.setCity(city);
+		userToStore.setCountry(country);
+		userToStore.setGender(gender);
+		userToStore.setPassword(password);
 		errorMessages = registrationValidator.validateUserForRegistration(birthYear, birthMonth, birthDay,
-				userToValidate, errorMessages);
+				userToStore, errorMessages);
 		if (errorMessages.isEmpty()) {
 			storeUser(createUserToSave());
 			return "index";
@@ -101,19 +102,11 @@ public class RegistrationControllerBean implements Serializable {
 
 	private UserModel createUserToSave()
 			throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
-		UserModel userModel = new UserModel();
-		userModel.setFirstName(firstName);
-		userModel.setLastName(lastName);
-		userModel.setUsername(username);
-		userModel.setEmail(email);
-		userModel.setCity(city);
-		userModel.setCountry(country);
-		userModel.setGender(gender);
-		userModel.setPassword(PBKDF2.generatePasswordHash(password));
+		userToStore.setPassword(PBKDF2.generatePasswordHash(userToStore.getVisiblePassword()));
 		@SuppressWarnings("deprecation")
 		Date birthDate = new Date((birthYear - 1900), (birthMonth - 1), birthDay);
-		userModel.setBirthdate(birthDate);
-		return userModel;
+		userToStore.setBirthdate(birthDate);
+		return userToStore;
 	}
 
 	private String storeUser(UserModel userModel) {
