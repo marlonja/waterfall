@@ -137,16 +137,16 @@ public class UserServiceEJB implements LocalUser {
 		UserModel loggedInUser = getUserFromSession("loggedInUser");
 		String errorMessage = "";
 		if(getUserByUsername(username) == null){
-			errorMessage = "User not in database";
+			errorMessage = "This user does not exist here.";
 			return errorMessage;
 		}
 		if(username.equals(loggedInUser.getUsername())){
-			errorMessage = "Can't add yourself";
+			errorMessage = "You're not allowed to add yourself.";
 			return errorMessage;
 		}else{
 			for(UserModel userModel : contactListModel.getContacts()){
 				if(username.equals(userModel.getUsername())){
-					errorMessage = "Contact already in list";
+					errorMessage = "This user is already in your list.";
 					return errorMessage;
 				}
 			}
