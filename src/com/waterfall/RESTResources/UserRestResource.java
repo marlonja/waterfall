@@ -55,15 +55,9 @@ public class UserRestResource {
 	public Response createUser(UserModel userModel)
 			throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 
-		ArrayList<String> errorMessages = registrationValidator.validateUserForRegistration(
-				userModel.getBirthdate().getYear(), userModel.getBirthdate().getMonth(),
-				userModel.getBirthdate().getDate(), userModel, new ArrayList<>());
+		ArrayList<String> errorMessages = getErrorMessages(userModel);
 
 		if (errorMessages.size() > 0) {
-
-			for (String errorMsg : errorMessages) {
-				System.out.println(errorMsg);
-			}
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 
@@ -80,46 +74,42 @@ public class UserRestResource {
 	@GET
 	@Path("/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserModel getUser(@PathParam("userId") Long userId, @Context UriInfo uriInfo) {
+	public Response getUser(@PathParam("userId") Long userId, @Context UriInfo uriInfo) {
 
 		UserModel userModel = userEJB.getUser(userId);
 
-		userModel.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userId, "Self"));
-		userModel.addLink(LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userId, "Drops"));
-
-		return userModel;
+		if (userModel == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		} else {
+			userModel.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userId, "Self"));
+			userModel.addLink(LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userId, "Drops"));
+			return Response.status(Response.Status.OK).entity(userModel).build();
+		}
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateUser(UserModel userModel) {		
-		
-		ArrayList<String> errorMessages = registrationValidator.validateUserForRegistration(
-				userModel.getBirthdate().getYear(), userModel.getBirthdate().getMonth(),
-				userModel.getBirthdate().getDate(), userModel, new ArrayList<>());
-		
-		if (errorMessages.size() > 0) {
+	public Response updateUser(UserModel userModel) {
 
-			for (String errorMsg : errorMessages) {
-				System.out.println(errorMsg);
-			}
+		ArrayList<String> errorMessages = getErrorMessages(userModel);
+
+		if (errorMessages.size() > 0) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 
 		userModel.setPassword(userModel.getVisiblePassword());
 		userEJB.storeUser(userModel);
-		
-		
+
 		return Response.status(Response.Status.OK).entity(userModel).build();
 	}
 
 	@DELETE
 	@Path("/{userId}")
 	public Response deleteUser(@PathParam("userId") Long userId) {
-		UserModel user = userEJB.getUser(userId);
+		UserModel userToDelete = userEJB.getUser(userId);
 
-		if (user != null) {
-			userEJB.deleteUser(user);
+		if (userToDelete != null) {
+			userEJB.deleteUser(userToDelete);
 			return Response.status(Response.Status.OK).build();
 		}
 		return Response.status(Response.Status.NOT_FOUND).build();
@@ -130,8 +120,7 @@ public class UserRestResource {
 	@Path("/{userId}/drops")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<DropModel> getUserDrops(@PathParam("userId") Long userId, @Context UriInfo uriInfo) {
-		UserModel userModel = userEJB.getUser(userId);
-		List<DropModel> dropList = userModel.getDrops();
+		List<DropModel> dropList = userEJB.getUser(userId).getDrops();
 
 		for (DropModel dropModel : dropList) {
 			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
@@ -162,5 +151,14 @@ public class UserRestResource {
 			commentModel.setDropHost(null);
 		}
 		return commentList;
+	}
+
+	@SuppressWarnings("deprecation")
+	private ArrayList<String> getErrorMessages(UserModel userModel) {
+		ArrayList<String> errorMessages = registrationValidator.validateUserForRegistration(
+				userModel.getBirthdate().getYear(), userModel.getBirthdate().getMonth(),
+				userModel.getBirthdate().getDate(), userModel, new ArrayList<>());
+
+		return errorMessages;
 	}
 }
