@@ -1,5 +1,5 @@
 # Waterfall API documentation
-## Show all users
+## Get all users
 **Url:** /Waterfall/api/users  
 **Method:** GET  
 **Success Response:** [200 OK]  
@@ -23,7 +23,7 @@
         			"uri": "http://localhost:8080/Waterfall/api/users/1/drops"  
       			}  
 		],  
-    		"userid": 1,  
+		"userid": 1,  
     		"username": "Lenaspena"  
 	},  
 	{  
@@ -48,4 +48,10 @@
     		"username": "Fi"  
 	}  
 ]`  
-**Error response:** [// todo lägg in något här]
+**Error response:** [// todo lägg in något här]  
+## Get user by ID
+**URL:** /Waterfall/api/users/:id  
+**URL params:** id=[Long]  
+**Method:** GET  
+**Success Response:** [200 OK]  
+**Example content:**
