@@ -77,7 +77,7 @@
   "username": ”Sigge”  
 }`  
 **Error response:** [// todo lägg in något här]  
-## Get all drops by user-ID
+## Get all drops by user-ID  
 **URL:** /Waterfall/api/users/:id/drops  
 **URL params:** id=[Long]  
 **Method:** `GET`  
@@ -115,3 +115,20 @@
     ]  
   }  
 ]`  
+**Error response:** [// todo lägg in något här]  
+## Update user  
+**URL:** /Waterfall/api/users/  
+**Method:** `PUT`  
+**Success Response:** [200 OK]  
+**Example content:**  
+`{  
+    "birthdate": "1989-09-06T00:00:00+02:00",  
+    "city": "Gothenburg",  
+    "country": "Sweden",  
+    "email": ”sigrid@mail.com",  
+    "firstName": ”Sigrid”,  
+    "gender": "Female",  
+    "lastName": ”Gunnarsson”,  
+    "userid": 1,  
+    "username": ”Siggis”  
+}`
