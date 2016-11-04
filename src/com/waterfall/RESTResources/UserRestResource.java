@@ -46,6 +46,7 @@ public class UserRestResource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response createUser(UserModel userModel) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 		
 		if(userModel.getVisiblePassword() != null){
@@ -77,6 +78,7 @@ public class UserRestResource {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public UserModel updateUser(UserModel userModel) {
 
 		userModel.setPassword(userEJB.getUser(userModel.getUserid()).getVisiblePassword());

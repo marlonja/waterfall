@@ -97,7 +97,6 @@ public class RegistrationControllerBean implements Serializable {
 			errorMessages.clear();
 			return "reg-new-user";
 		}
-
 	}
 
 	private UserModel createUserToSave()

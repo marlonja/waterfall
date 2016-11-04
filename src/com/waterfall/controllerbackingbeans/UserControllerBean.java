@@ -10,7 +10,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalContactList;
@@ -26,29 +26,31 @@ import jersey.repackaged.com.google.common.collect.Lists;
 public class UserControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 3773988104720989698L;
-	private String usernameSearch;
+	private List<ContactListModel> contactLists;
+	private boolean addContactNotValid;
 	private UserModel loggedInUser;
 	private String contactListName;
-	private List<ContactListModel> contactLists;
+	private String usernameSearch;
 	private String errorMessage;
-	private boolean addContactNotValid;
 
 	@EJB
 	private LocalUser userEJB;
-	
+
 	@EJB
 	private LocalContactList contactListEJB;
-	
+
 	@PostConstruct
 	public void init() {
 		loggedInUser = userEJB.getUserFromSession("loggedInUser");
-		if(contactLists == null) {
+		
+		if (contactLists == null) {
 			contactLists = new ArrayList<ContactListModel>();
 			contactLists = Lists.reverse(loggedInUser.getContactList());
 		}
 	}
-	
-	public void updateUser(UserModel user) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
+
+	public void updateUser(UserModel user)
+			throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 		user.setPassword(PBKDF2.generatePasswordHash(user.getVisiblePassword()));
 		userEJB.storeUser(user);
 
@@ -60,31 +62,32 @@ public class UserControllerBean implements Serializable {
 		userToSearch = userEJB.getUserByUsername(usernameSearch);
 		return userToSearch;
 	}
-	
+
 	public String createNewContactlist() {
 		ContactListModel contactListModel = new ContactListModel();
 		loggedInUser = userEJB.getUserFromSession("loggedInUser");
-		
+
 		contactListModel.setContactlistname(contactListName);
 		contactListModel.setOwner(loggedInUser);
 		loggedInUser.getContactList().add(contactListModel);
 		contactListEJB.storeContactList(contactListModel);
 		contactLists = Lists.reverse(userEJB.getUser(loggedInUser.getUserid()).getContactList());
-		
+		contactListName = "";
 		return "profile-page";
 	}
-	
-	public String addContactToList(ContactListModel contactListModel){
+
+	public String addContactToList(ContactListModel contactListModel) {
 		errorMessage = userEJB.controlUserContactList(contactListModel, usernameSearch);
-		if(errorMessage.equals("ok")){
+		if (errorMessage.equals("ok")) {
 			errorMessage = "";
+			usernameSearch = "";
 			setAddContactNotValid(false);
-			
+
 			contactListModel.addContact(searchUserByUsername());
 			contactListEJB.storeContactList(contactListModel);
-		}else{
+		} else {
 			setAddContactNotValid(true);
-			//return "profile-page";
+			usernameSearch = "";
 		}
 		return "profile-page";
 	}
@@ -120,6 +123,7 @@ public class UserControllerBean implements Serializable {
 	public void setContactLists(List<ContactListModel> contactLists) {
 		this.contactLists = contactLists;
 	}
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}
@@ -135,7 +139,4 @@ public class UserControllerBean implements Serializable {
 	public void setAddContactNotValid(boolean addContactNotValid) {
 		this.addContactNotValid = addContactNotValid;
 	}
-
-
-
 }
