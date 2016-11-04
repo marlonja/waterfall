@@ -266,12 +266,31 @@
 **Error response:** [204 NO CONTENT]  
 ## Create new drop  
 **URL:** /Waterfall/api/drops/:userid  
+**URL params:** id=[Long]  
 **Method:** `POST`  
 **Success Response:** [201 CREATED]  
 **Content type:** Json  
 **Example request:**  
 `{  
   "content": "HEJHEJHEJ"  
+}`  
+**Example response:**
+`{  
+  "content": "HEJHEJHEJ",  
+  "creationDate": "2016-11-04T14:55:26.295",  
+  "links": [],  
+  "dropowner": {  
+    "birthdate": "1973-09-04T00:00:00+01:00",  
+    "city": "Uddevalla",  
+    "country": "Sweden",  
+    "email": "arne@mail.se",  
+    "firstName": "Arne",  
+    "gender": "Male",  
+    "lastName": "Arnesson",  
+    "links": [],  
+    "userid": 9,  
+    "username": "Arne"  
+  }  
 }`  
 ## Delete user by ID  
 **URL:** /Waterfall/api/users/:id  
