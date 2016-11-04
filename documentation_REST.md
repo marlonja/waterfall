@@ -127,14 +127,27 @@
     "city": "Gothenburg",  
     "country": "Sweden",  
     "email": ”sigrid@mail.com",  
-    "firstName": ”Sigrid”,  
+    "firstName": ”Anna”,  
     "gender": "Female",  
     "lastName": ”Gunnarsson”,  
     "userid": 1,  
     "username": ”Siggis”  
 }`  
+**Example response:**  
+{  
+  "birthdate": "1989-09-06T00:00:00+02:00",  
+  "city": "Gothenburg",  
+  "country": "Sweden",  
+  "email": "sigrid@mail.com",  
+  "firstName": ”Anna”,  
+  "gender": "Female",  
+  "lastName": "Gunnarsson",  
+  "links": [],  
+  "userid": 1,  
+  "username": "Siggis"  
+}
 **Error response:** [// todo lägg in något här]  
-## Update user  
+## Create user  
 **URL:** /Waterfall/api/users/  
 **Method:** `POST`  
 **Content type:** Json  
@@ -152,15 +165,15 @@
 }`  
 **Success Response:** [201 CREATED]  
 **Example response:**  
-’{  
-  "birthdate": "1989-09-06T00:00:00+02:00",  
-  "city": "Gothenburg",  
+`{  
+  "birthdate": "1970-11-20T00:00:00+02:00",  
+  "city": ”Uddevalla”,  
   "country": "Sweden",  
-  "email": "lena@gmail.commm",  
-  "firstName": "Sigrid",  
-  "gender": "Female",  
-  "lastName": "Stridsberg",  
+  "email": "arne@gmail.com",  
+  "firstName": ”Arne”,  
+  "gender": ”Other”,  
+  "lastName": ”Arnesson”,  
   "links": [],  
-  "username": "Lenaspenaaa"  
-}’  
+  "username": ”ArneMannen”  
+}`  
 **Error response:** [204 NO CONTENT]  
