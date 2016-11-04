@@ -64,7 +64,7 @@ public class UserRestResource {
 			for (String errorMsg : errorMessages) {
 				System.out.println(errorMsg);
 			}
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 
 		String unsaltedPassword = userModel.getVisiblePassword();
@@ -73,7 +73,7 @@ public class UserRestResource {
 		if (userEJB.storeUser(userModel)) {
 			return Response.status(Response.Status.CREATED).entity(userModel).build();
 		} else {
-			return Response.status(Response.Status.NO_CONTENT).build();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 
@@ -92,12 +92,7 @@ public class UserRestResource {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateUser(UserModel userModel) {
-		
-		//TODO gör klart validering, update får ha samma username och email
-		//TODO gör klart resten av valideringen
-		
-		System.out.println("inn i update");
+	public Response updateUser(UserModel userModel) {		
 		
 		ArrayList<String> errorMessages = registrationValidator.validateUserForRegistration(
 				userModel.getBirthdate().getYear(), userModel.getBirthdate().getMonth(),
@@ -108,7 +103,7 @@ public class UserRestResource {
 			for (String errorMsg : errorMessages) {
 				System.out.println(errorMsg);
 			}
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 
 		userModel.setPassword(userModel.getVisiblePassword());
@@ -116,12 +111,6 @@ public class UserRestResource {
 		
 		
 		return Response.status(Response.Status.OK).entity(userModel).build();
-
-//		if (userEJB.storeUser(userModel)) {
-//			return userModel;
-//		} else {
-//			return null;
-//		}
 	}
 
 	@DELETE
