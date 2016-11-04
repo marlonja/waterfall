@@ -1,5 +1,6 @@
 package com.waterfall.controllerbackingbeans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -45,12 +46,22 @@ public class UserControllerBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		loggedInUser = userEJB.getUserFromSession("loggedInUser");
+		try{
+			loggedInUser = userEJB.getUserFromSession("loggedInUser");
 
-		if (contactLists == null) {
-			contactLists = new ArrayList<ContactListModel>();
-			contactLists = Lists.reverse(loggedInUser.getContactList());
+			if (contactLists == null) {
+				contactLists = new ArrayList<ContactListModel>();
+				contactLists = Lists.reverse(loggedInUser.getContactList());
+			}
+		}catch(Exception e){
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
+		
 	}
 
 	public String removeUserFromContactList(ContactListModel contactListModel, UserModel contactToRemove) {

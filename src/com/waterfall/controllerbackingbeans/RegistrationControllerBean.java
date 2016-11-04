@@ -108,14 +108,13 @@ public class RegistrationControllerBean implements Serializable {
 		return userToStore;
 	}
 
-	private String storeUser(UserModel userModel) {
+	private void storeUser(UserModel userModel) {
 
 		userEJB.storeUser(userModel);
 		userModel = userEJB.getUserByUsername(userModel.getUsername());
 		userEJB.setUserInSession("loggedInUser", userModel);
 		loginControllerBean.setLoggedInUser(userModel);
 		errorMessages.clear();
-		return "index";
 	}
 
 	public String getPassword() {
