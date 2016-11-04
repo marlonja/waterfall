@@ -3,7 +3,7 @@
 **Url:** /Waterfall/api/users  
 **Method:** `GET`  
 **Success Response:** [200 OK]  
-**Example content:**  
+**Example response content:**  
 `[  
   {  
     "birthdate": "1989-09-06T00:00:00+02:00",  
@@ -53,7 +53,7 @@
 **Url:** /Waterfall/api/drops  
 **Method:** `GET`  
 **Success Response:** [200 OK]  
-**Example response:**  
+**Example response content:**  
 `{  
     "dropid": 1,  
     "content": "Hi everyone, what are you doing?”,  
@@ -141,7 +141,7 @@
 **URL params:** id=[Long]  
 **Method:** `GET`  
 **Success Response:** [200 OK]  
-**Example content:**  
+**Example response content:**  
 `{  
   "birthdate": "1989-09-06T00:00:00+02:00",  
   "city": "Gothenburg",  
@@ -164,6 +164,48 @@
   "username": ”Sigge”  
 }`  
 **Error response:** [// todo lägg in något här]  
+## Get drops by ID
+**URL:** /Waterfall/api/drops/:id  
+**URL params:** id=[Long]  
+**Method:** `GET`  
+**Success Response:** [200 OK]  
+**Example response content:**  
+`{  
+  "dropid": 2,  
+  "content": "Hello out there!”,  
+  "creationDate": "2016-10-27T18:40:06.532",  
+  "links": [  
+    {  
+      "relation": "Self",  
+      "uri": "http://localhost:8080/Waterfall/api/drops/6"  
+    }  
+  ],  
+  "dropowner": {  
+    "birthdate": "1989-09-06T00:00:00+02:00",  
+    "city": "Gothenburg",  
+    "country": "Sweden",  
+    "email": "sigrid@mail.com",  
+    "firstName": "Sigridsigge",  
+    "gender": "Female",  
+    "lastName": "Gunnarsson",  
+    "links": [],  
+    "userid": 7,  
+    "username": "Siggis"  
+  },  
+  "comments": [  
+    {  
+      "commentid": 5,  
+      "content": ”Hi, wassup?”,  
+      "creationdate": "2016-10-27T18:40:15.868"  
+    },  
+    {  
+      "commentid": 7,  
+      "content": ”Hello back at you!”,  
+      "creationdate": "2016-10-31T13:46:49.383"  
+    }  
+  ]  
+}`  
+
 ## Get all drops by user-ID  
 **URL:** /Waterfall/api/users/:id/drops  
 **URL params:** id=[Long]  
@@ -274,7 +316,7 @@
 `{  
   "content": "HEJHEJHEJ"  
 }`  
-**Example response:**
+**Example response:**  
 `{  
   "content": "HEJHEJHEJ",  
   "creationDate": "2016-11-04T14:55:26.295",  
