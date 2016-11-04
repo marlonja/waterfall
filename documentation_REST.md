@@ -1,7 +1,7 @@
 # Waterfall API documentation
 ## Get all users
 **Url:** /Waterfall/api/users  
-**Method:** GET  
+**Method:** `GET`  
 **Success Response:** [200 OK]  
 **Example content:**  
 `[  
@@ -52,7 +52,7 @@
 ## Get user by ID
 **URL:** /Waterfall/api/users/:id  
 **URL params:** id=[Long]  
-**Method:** GET  
+**Method:** `GET`  
 **Success Response:** [200 OK]  
 **Example content:**  
 `{  
@@ -80,7 +80,7 @@
 ## Get all drops by user-ID
 **URL:** /Waterfall/api/users/:id/drops  
 **URL params:** id=[Long]  
-**Method:** GET  
+**Method:** `GET`  
 **Success Response:** [200 OK]  
 **Example content:**  
 `[  
