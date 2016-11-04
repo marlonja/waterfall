@@ -2,11 +2,9 @@
 ## Show all users
 **Url:** /Waterfall/api/users  
 **Method:** GET  
-
-
 **Success Response:** [200 OK]  
 **Example content:** [  
-{
+`{
 "birthdate": "1989-09-06T00:00:00+02:00",  
 "city": "Gothenburg",  
 "country": "Sweden",  
@@ -26,6 +24,7 @@
     ],  
     "userid": 1,  
     "username": "Lenaspena"  
-}  
+}  `
 ]  
+**Error response:** [// todo lägg in något här]
 **Error response:** [// todo lägg in något här]
