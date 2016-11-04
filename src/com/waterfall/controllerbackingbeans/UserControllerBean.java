@@ -84,7 +84,7 @@ public class UserControllerBean implements Serializable {
 			contactLists = Lists.reverse(userEJB.getUser(loggedInUser.getUserid()).getContactList());
 		}
 		
-		
+		contactListName = null;
 		return "profile-page";
 	}
 	
@@ -98,6 +98,8 @@ public class UserControllerBean implements Serializable {
 		}else{
 			validationMessageService.errorMsg(errorMessage);			
 		}
+		
+		usernameSearch = null;
 		return "profile-page";
 	}
 

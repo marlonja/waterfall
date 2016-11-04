@@ -116,7 +116,7 @@ h4 {
 	cursor: pointer;
 	font-family: Tahoma;
 }
-.logout-btn {
+.logout-btn, .delete-btn {
 	background-color: steelblue;
 	color: white;
 	padding: 6px 10px;
@@ -417,10 +417,6 @@ h4 {
 	margin-left: -15px;
 }
 
-.contactlist-div {
-	
-}
-
 .contactlist-link{
 	color: steelblue;
 	font-size: 1.3em;
@@ -434,14 +430,18 @@ h4 {
 }
 
 .update-user-info-img {
-	width: 10%;
+	width: 10%;	
+}
+
+#update-user-info-link {
+	cursor: pointer;	
 }
 
 .contact-img {
 	width: 5%;
 }
 
-#add-contact-form, #add-list-form, #update-user-info-column {
+#add-list-form, #update-user-info-column {
 	display: none;
 }
 
@@ -471,7 +471,4 @@ h4 {
 
 .logout-form {
     display: inline;
-}
-.remove-list-form {
-	display: inline;
 }
