@@ -59,8 +59,13 @@ public class DropRestResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{dropModelId}")
-	public DropModel getDropModel(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
+	public Response getDropModel(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
 		DropModel dropModel = dropEjb.getDrop(dropModelId);
+		
+		if(dropModel == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+		
 		dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
 		dropModel.addLink(
 				LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
@@ -68,19 +73,19 @@ public class DropRestResource {
 				LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
 		dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 
-		return dropModel;
+		return Response.status(Response.Status.OK).entity(dropModel).build();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<DropModel> getDrops(@Context UriInfo uriInfo) {
+	public Response getDrops(@Context UriInfo uriInfo) {
 		List<DropModel> dropList = dropEjb.getAllDrops();
 
 		for (DropModel dropModel : dropList) {
 			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 		}
 
-		return provideLinksForDrops(dropList, uriInfo);
+		return Response.status(Response.Status.OK).entity(provideLinksForDrops(dropList, uriInfo)).build();
 	}
 
 	@PUT
@@ -112,7 +117,7 @@ public class DropRestResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{dropModelId}/comments")
-	public List<CommentModel> getDropComments(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
+	public Response getDropComments(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
 
 		List<CommentModel> comments = dropEjb.getDrop(dropModelId).getComments();
 
@@ -121,10 +126,10 @@ public class DropRestResource {
 					commentModel.getDropHost().getDropId(), "DropHost"));
 		}
 
-		return removeOwnerFromCommentList((Vector<CommentModel>) comments);
+		return Response.status(Response.Status.OK).entity(removeOwnerFromCommentList((Vector<CommentModel>) comments)).build();
 	}
 
-	public List<DropModel> provideLinksForDrops(List<DropModel> drops, UriInfo uriInfo) {
+	public Response provideLinksForDrops(List<DropModel> drops, UriInfo uriInfo) {
 		for (DropModel dropModel : drops) {
 			dropModel
 					.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
@@ -134,7 +139,7 @@ public class DropRestResource {
 					dropModel.getOwner().getUserid(), "Owner"));
 		}
 
-		return drops;
+		return Response.status(Response.Status.OK).entity(drops).build();
 	}
 
 	private List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {

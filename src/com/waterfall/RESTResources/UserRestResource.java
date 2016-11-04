@@ -45,9 +45,9 @@ public class UserRestResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<UserModel> getUsers(@Context UriInfo uriInfo) {
+	public Response getUsers(@Context UriInfo uriInfo) {
 
-		return provideLinksForUsers(userEJB.getAllUsers(), uriInfo);
+		return Response.status(Response.Status.OK).entity(provideLinksForUsers(userEJB.getAllUsers(), uriInfo)).build();
 	}
 
 	@POST
@@ -85,7 +85,7 @@ public class UserRestResource {
 			userModel.addLink(LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userId, "Drops"));
 			return Response.status(Response.Status.OK).entity(userModel).build();
 		}
-	}
+	} 
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -133,14 +133,13 @@ public class UserRestResource {
 		return dropList;
 	}
 
-	public List<UserModel> provideLinksForUsers(List<UserModel> users, UriInfo uriInfo) {
+	private List<UserModel> provideLinksForUsers(List<UserModel> users, UriInfo uriInfo) {
 		for (UserModel userModel : users) {
 			userModel
 					.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Self"));
 			userModel.addLink(
 					LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Drops"));
 		}
-
 		return users;
 	}
 
