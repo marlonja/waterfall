@@ -3,8 +3,8 @@
 **Url:** /Waterfall/api/users  
 **Method:** GET  
 **Success Response:** [200 OK]  
-**Example content:** [  
-`{
+**Example content:** '[  
+{  
 "birthdate": "1989-09-06T00:00:00+02:00",  
 "city": "Gothenburg",  
 "country": "Sweden",  
@@ -24,7 +24,27 @@
     ],  
     "userid": 1,  
     "username": "Lenaspena"  
-}  `
-]  
-**Error response:** [// todo lägg in något här]
+},  
+{  
+"birthdate": "1986-07-29T00:00:00+02:00",  
+"city": "Gothenburg",  
+"country": "Sweden",  
+"email": "joel@gmail.com",  
+"firstName": "Joel",  
+"gender": "Male",  
+"lastName": "Nilsson",  
+"links": [  
+      {  
+        "relation": "Self",  
+        "uri": "http://localhost:8080/Waterfall/api/users/8"  
+      },  
+      {  
+        "relation": "Drops",  
+        "uri": "http://localhost:8080/Waterfall/api/users/8/drops"  
+      }  
+    ],  
+    "userid": 8,  
+    "username": "Fi"  
+}  
+]'  
 **Error response:** [// todo lägg in något här]
