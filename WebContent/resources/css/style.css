@@ -439,11 +439,13 @@ h4 {
 
 .contact-img {
 	width: 5%;
+	margin-left: 20px;
 }
 
 .remove-user-img {
 	width: 5%;
-	float: right;
+	margin-left: 20px;
+	
 }
 
 #add-list-form, #update-user-info-column {

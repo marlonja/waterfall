@@ -85,16 +85,19 @@
 
 					<div class="add-contact-to-contactlist">
 						<b:row>
+						<b:column>
 							<c:forEach var="contact" items="#{contactList.contacts}">
 								<p>
+								<h:form>								
 									<img class="contact-img" src="resources/img/avatar.png"></img>#{contact.username}
-								</p>
-								<h:form>
 									<h:commandLink action="#{userControllerBean.removeUserFromContactList(contactList, contact)}">
 										<h:graphicImage library="img" styleClass="remove-user-img" name="remove-user.png"></h:graphicImage>
 									</h:commandLink>
-								</h:form>
+									</h:form>
+								</p>
+								
 							</c:forEach>
+						</b:column>
 
 							<h:form id="add-contact-form">
 								<b:column styleClass="add-contact-contactlist-column">
