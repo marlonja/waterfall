@@ -25,6 +25,8 @@ public interface LocalContactList {
 	List<DropModel> getContactDrops(ContactListModel contactListModel);
 
 	void removeContactList(ContactListModel contactListModel);
+
+	void removeContactFromContactList(ContactListModel contactListModel, UserModel contactToRemove);
 	
 	
 }

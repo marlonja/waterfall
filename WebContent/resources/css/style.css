@@ -441,6 +441,11 @@ h4 {
 	width: 5%;
 }
 
+.remove-user-img {
+	width: 5%;
+	float: right;
+}
+
 #add-list-form, #update-user-info-column {
 	display: none;
 }

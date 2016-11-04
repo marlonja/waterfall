@@ -54,5 +54,12 @@ public class ContactListServiceEJB implements LocalContactList{
 		
 	}
 
+	@Override
+	public void removeContactFromContactList(ContactListModel contactListModel, UserModel contactToRemove) {
+		contactListModel.getContacts().remove(contactToRemove);
+		contactListDAOBean.storeContactList(contactListModel);
+		
+	}
+
 
 }

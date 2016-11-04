@@ -89,6 +89,11 @@
 								<p>
 									<img class="contact-img" src="resources/img/avatar.png"></img>#{contact.username}
 								</p>
+								<h:form>
+									<h:commandLink action="#{userControllerBean.removeUserFromContactList(contactList, contact)}">
+										<h:graphicImage library="img" styleClass="remove-user-img" name="remove-user.png"></h:graphicImage>
+									</h:commandLink>
+								</h:form>
 							</c:forEach>
 
 							<h:form id="add-contact-form">
