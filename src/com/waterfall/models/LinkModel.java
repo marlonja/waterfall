@@ -2,16 +2,16 @@ package com.waterfall.models;
 
 public class LinkModel {
 
-	private String relation;
+	private String rel;
 	
 	private String uri;
 
-	public String getRelation() {
-		return relation;
+	public String getRel() {
+		return rel;
 	}
 
-	public void setRelation(String relation) {
-		this.relation = relation;
+	public void setRel(String rel) {
+		this.rel = rel;
 	}
 
 	public String getUri() {

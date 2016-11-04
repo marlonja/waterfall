@@ -3,6 +3,8 @@ package com.waterfall.models;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -44,6 +46,9 @@ public class CommentModel implements Serializable {
 	
 	@Transient
 	private Long commentownerid;
+	
+	@Transient
+	private List<LinkModel> links = new ArrayList<>();
 
 	public CommentModel() {
 	}
@@ -114,8 +119,16 @@ public class CommentModel implements Serializable {
 		this.commentownerid = commentownerid;
 	}
 
-	
+	public List<LinkModel> getLinks() {
+		return links;
+	}
 
-	
+	public void setLinks(List<LinkModel> links) {
+		this.links = links;
+	}
+
+	public void addLink(LinkModel link) {
+		this.links.add(link);
+	}
 
 }

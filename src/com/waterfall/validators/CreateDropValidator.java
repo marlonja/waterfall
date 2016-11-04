@@ -13,24 +13,35 @@ public class CreateDropValidator {
 	private ValidationMessageService validationMessageService;
 
 	public boolean validateDrop(DropModel dropModel) {
-		if(validateDropContent(dropModel.getContent())){
+		if (validateDropContent(dropModel.getContent())) {
 			return true;
 		}
 		return false;
-		
+
 	}
-	
-	private boolean validateDropContent(String content){
-		if(content.trim().equals("")){
+
+	private boolean validateDropContent(String content) {
+		if (content.trim().equals("")) {
 			validationMessageService.errorMsg("Drop content empty");
 			return false;
-		}if(content.length() > 200){
+		}
+		if (content.length() > 200) {
 			validationMessageService.errorMsg("Drop cannot exceed 200 characters");
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
+	public boolean validateRestDrop(String content) {
+		
+		System.out.println("inne i rest valid 2");
+		if (content.trim().equals("") || content.length() > 200) {
+			System.out.println("inne i rest valid FEEEEEEEEL");
+			return false;
+		}
+		return true;
+	}
+
 
 }

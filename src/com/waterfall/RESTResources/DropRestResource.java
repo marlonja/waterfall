@@ -24,6 +24,7 @@ import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
 import com.waterfall.models.UserModel;
 import com.waterfall.utils.LinkBuilder;
+import com.waterfall.validators.CreateDropValidator;
 
 @Path("/drops")
 public class DropRestResource {
@@ -33,63 +34,76 @@ public class DropRestResource {
 
 	@EJB
 	private LocalUser userEjb;
-	
+
+	@EJB
+	private CreateDropValidator createDropValidator;
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{userId}")
-	public DropModel createDropModel(@PathParam("userId") Long userId, DropModel dropModel) {
+	public Response createDropModel(@PathParam("userId") Long userId, DropModel dropModel) {
 
 		UserModel dropOwner = userEjb.getUser(userId);
-
 		dropModel.setOwner(dropOwner);
 		dropModel.setCreationDate(LocalDateTime.now());
 
-		if (dropEjb.storeDrop(dropModel)) {
-			return dropModel;
+		if (createDropValidator.validateRestDrop(dropModel.getContent())) {
+			dropEjb.storeDrop(dropModel);
+			return Response.status(Response.Status.CREATED).entity(dropModel).build();
 		} else {
-			return null;
+			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{dropModelId}")
-	public DropModel getDropModel(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
+	public Response getDropModel(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
 		DropModel dropModel = dropEjb.getDrop(dropModelId);
-		dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
-		dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 		
-		return dropModel;
+		if(dropModel == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+		
+		dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+		dropModel.addLink(
+				LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
+		dropModel.addLink(
+				LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
+		dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
+
+		return Response.status(Response.Status.OK).entity(dropModel).build();
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<DropModel> getDrops(@Context UriInfo uriInfo) {
+	public Response getDrops(@Context UriInfo uriInfo) {
 		List<DropModel> dropList = dropEjb.getAllDrops();
 
 		for (DropModel dropModel : dropList) {
 			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 		}
 
-		return provideLinksForDrops(dropList, uriInfo);
+		return Response.status(Response.Status.OK).entity(provideLinksForDrops(dropList, uriInfo)).build();
 	}
-	
+
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{dropModelId}")
-	public DropModel updateDropModel(@PathParam("dropModelId") Long dropModelId, DropModel dropModel) {
+	public Response updateDropModel(@PathParam("dropModelId") Long dropModelId, DropModel dropModel) {
 		DropModel dropModelToUpdate = dropEjb.getDrop(dropModelId);
 		dropModelToUpdate.setContent(dropModel.getContent());
 		
-		if(dropEjb.storeDrop(dropModelToUpdate)) {
-			return dropModelToUpdate;
-		}else {
-			return null;
+		if (createDropValidator.validateRestDrop(dropModelToUpdate.getContent())) {
+			dropEjb.storeDrop(dropModelToUpdate);
+			return Response.status(Response.Status.OK).entity(dropModelToUpdate).build();
+		} else {
+			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 	}
-	
+
 	@DELETE
 	@Path("/{dropModelId}")
 	public Response deleteDropModel(@PathParam("dropModelId") Long dropModelId) {
@@ -97,28 +111,37 @@ public class DropRestResource {
 
 		dropEjb.deleteDrop(dropModel);
 		return Response.status(Response.Status.OK).build();
-		
+
 	}
-	
-	//TODO fix drop comments
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{dropModelId}/comments")
-	public List<CommentModel> getDropComments(@PathParam("dropModelId") Long dropModelId) {
-		return removeOwnerFromCommentList((Vector<CommentModel>) dropEjb.getDrop(dropModelId).getComments());
-	}
-	
-	public List<DropModel> provideLinksForDrops(List<DropModel> drops, UriInfo uriInfo) {
-		for (DropModel dropModel : drops) {
-			dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
-			dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
-			dropModel.addLink(LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
+	public Response getDropComments(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
+
+		List<CommentModel> comments = dropEjb.getDrop(dropModelId).getComments();
+
+		for (CommentModel commentModel : comments) {
+			commentModel.addLink(LinkBuilder.buildOwnerLink(DropRestResource.class, uriInfo,
+					commentModel.getDropHost().getDropId(), "DropHost"));
 		}
-		
-		return drops;
+
+		return Response.status(Response.Status.OK).entity(removeOwnerFromCommentList((Vector<CommentModel>) comments)).build();
 	}
-	
-	
+
+	public Response provideLinksForDrops(List<DropModel> drops, UriInfo uriInfo) {
+		for (DropModel dropModel : drops) {
+			dropModel
+					.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+			dropModel.addLink(
+					LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
+			dropModel.addLink(LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo,
+					dropModel.getOwner().getUserid(), "Owner"));
+		}
+
+		return Response.status(Response.Status.OK).entity(drops).build();
+	}
+
 	private List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
 
 		for (CommentModel commentModel : commentList) {
