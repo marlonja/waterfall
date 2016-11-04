@@ -84,6 +84,7 @@ public class UserRestResource {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public UserModel updateUser(UserModel userModel) {
 
 		userModel.setPassword(userEJB.getUser(userModel.getUserid()).getVisiblePassword());

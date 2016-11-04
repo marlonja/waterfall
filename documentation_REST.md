@@ -118,9 +118,10 @@
 **Error response:** [// todo lägg in något här]  
 ## Update user  
 **URL:** /Waterfall/api/users/  
+**Content type:** Json  
 **Method:** `PUT`  
 **Success Response:** [200 OK]  
-**Example content:**  
+**Example bodycontent:**  
 `{  
     "birthdate": "1989-09-06T00:00:00+02:00",  
     "city": "Gothenburg",  
