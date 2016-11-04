@@ -18,6 +18,7 @@ import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.UserModel;
+import com.waterfall.utils.ValidationMessageService;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 
@@ -34,6 +35,9 @@ public class UserControllerBean implements Serializable {
 	private String errorMessage;
 
 	@EJB
+	private ValidationMessageService validationMessageService;
+
+	@EJB
 	private LocalUser userEJB;
 
 	@EJB
@@ -42,11 +46,22 @@ public class UserControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		loggedInUser = userEJB.getUserFromSession("loggedInUser");
-		
+
 		if (contactLists == null) {
 			contactLists = new ArrayList<ContactListModel>();
 			contactLists = Lists.reverse(loggedInUser.getContactList());
 		}
+	}
+
+	public String removeUserFromContactList(ContactListModel contactListModel, UserModel contactToRemove) {
+		contactListEJB.removeContactFromContactList(contactListModel, contactToRemove);
+		return "profile-page";
+	}
+
+	public String removeContactList(ContactListModel contactListModel) {
+		contactListEJB.removeContactList(contactListModel);
+		contactLists.remove(contactListModel);
+		return "profile-page";
 	}
 
 	public void updateUser(UserModel user)
@@ -64,31 +79,38 @@ public class UserControllerBean implements Serializable {
 	}
 
 	public String createNewContactlist() {
-		ContactListModel contactListModel = new ContactListModel();
-		loggedInUser = userEJB.getUserFromSession("loggedInUser");
 
-		contactListModel.setContactlistname(contactListName);
-		contactListModel.setOwner(loggedInUser);
-		loggedInUser.getContactList().add(contactListModel);
-		contactListEJB.storeContactList(contactListModel);
-		contactLists = Lists.reverse(userEJB.getUser(loggedInUser.getUserid()).getContactList());
-		contactListName = "";
+		if (contactListName == null || contactListName.trim().equals("")) {
+			validationMessageService.errorMsg("Please enter a name for your list");
+		} else {
+			ContactListModel contactListModel = new ContactListModel();
+			loggedInUser = userEJB.getUserFromSession("loggedInUser");
+			contactListModel.setContactlistname(contactListName);
+			contactListModel.setOwner(loggedInUser);
+			loggedInUser.getContactList().add(contactListModel);
+			contactListEJB.storeContactList(contactListModel);
+			validationMessageService.successMsg("Contactlist created");
+			contactLists = Lists.reverse(userEJB.getUser(loggedInUser.getUserid()).getContactList());
+		}
+
+		contactListName = null;
 		return "profile-page";
 	}
 
 	public String addContactToList(ContactListModel contactListModel) {
-		errorMessage = userEJB.controlUserContactList(contactListModel, usernameSearch);
+		String errorMessage = userEJB.controlUserContactList(contactListModel, usernameSearch);
 		if (errorMessage.equals("ok")) {
-			errorMessage = "";
-			usernameSearch = "";
-			setAddContactNotValid(false);
+			validationMessageService.successMsg("Contact added");
 
 			contactListModel.addContact(searchUserByUsername());
 			contactListEJB.storeContactList(contactListModel);
+
 		} else {
-			setAddContactNotValid(true);
-			usernameSearch = "";
+			validationMessageService.errorMsg(errorMessage);
+
 		}
+
+		usernameSearch = null;
 		return "profile-page";
 	}
 
@@ -139,4 +161,5 @@ public class UserControllerBean implements Serializable {
 	public void setAddContactNotValid(boolean addContactNotValid) {
 		this.addContactNotValid = addContactNotValid;
 	}
+
 }

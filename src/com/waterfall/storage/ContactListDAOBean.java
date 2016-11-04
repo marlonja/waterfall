@@ -32,4 +32,12 @@ public class ContactListDAOBean {
 		return em.createNamedQuery("ContactListModel.findAll").getResultList();
 	}
 
+	
+
+	public void removeContactList(ContactListModel contactListModel) {		
+		contactListModel = em.merge(contactListModel);			
+		em.remove(contactListModel);
+				
+	}
+
 }

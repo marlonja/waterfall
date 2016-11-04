@@ -109,8 +109,8 @@ public class FilterControllerBean {
 	}
 	
 	public String clearFilterInputFields(){
-		dropControllerBean.init();
 		
+		System.out.println("inne i clearFilter");
 		filterFirstName = null;
 		filterLastName = null;
 		filterUsername = null;
@@ -120,6 +120,7 @@ public class FilterControllerBean {
 		filteredByFemale = false;
 		filteredByOther = false;
 		tagList = null;
+		dropControllerBean.init();
 		return "index";
 	}
 

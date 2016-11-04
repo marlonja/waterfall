@@ -23,13 +23,13 @@ $(document).ready(function(){
 	});
 	
 	$("#add-new-list-link").click(function(){
-		$("#add-list-form").toggle();
-		$(this).hide();
+		$("#add-list-form").stop().toggle('slow');
+		
 	});
 	
 	$("#add-new-contact-link").click(function(){
-		$("#add-contact-form").toggle();
-		$(this).hide();
+		$("#add-contact-form").stop().toggle('slow');
+		
 	});
 	
 	$(function() {

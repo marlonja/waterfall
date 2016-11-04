@@ -116,7 +116,7 @@ h4 {
 	cursor: pointer;
 	font-family: Tahoma;
 }
-.logout-btn {
+.logout-btn, .delete-btn {
 	background-color: steelblue;
 	color: white;
 	padding: 6px 10px;
@@ -417,10 +417,6 @@ h4 {
 	margin-left: -15px;
 }
 
-.contactlist-div {
-	
-}
-
 .contactlist-link{
 	color: steelblue;
 	font-size: 1.3em;
@@ -434,19 +430,34 @@ h4 {
 }
 
 .update-user-info-img {
-	width: 10%;
+	width: 10%;	
+}
+
+#update-user-info-link {
+	cursor: pointer;	
 }
 
 .contact-img {
 	width: 5%;
+	margin-left: 20px;
 }
 
-#add-contact-form, #add-list-form, #update-user-info-column {
+.remove-user-img {
+	width: 5%;
+	margin-left: 20px;
+	
+}
+
+#add-list-form, #update-user-info-column {
 	display: none;
 }
 
 .add-user-img, .add-img {
 	width: 40%;
+}
+
+.minus-img {
+	width: 5%;
 }
 
 #add-new-contact-link, #add-new-list-link {
@@ -467,7 +478,4 @@ h4 {
 
 .logout-form {
     display: inline;
-}
-.contactlist-alert {
-	
 }
