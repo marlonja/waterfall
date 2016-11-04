@@ -1,7 +1,7 @@
 $(document).ready(function(){
 		var errorsJsonFormat = $("#error-msg").html();
 		var errorMessages = JSON.parse(errorsJsonFormat);
-		var errorStyle = "input-error";
+		var errorStyle = "error";
 		console.log(errorMessages);
 		
 		for(var i = 0; i < errorMessages.length; i++){
