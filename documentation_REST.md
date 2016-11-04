@@ -53,7 +53,7 @@
 **Url:** /Waterfall/api/drops  
 **Method:** `GET`  
 **Success Response:** [200 OK]  
-**Example content:**  
+**Example response:**  
 `{  
     "dropid": 1,  
     "content": "Hi everyone, what are you doing?”,  
@@ -264,6 +264,15 @@
   "username": ”ArneMannen”  
 }`  
 **Error response:** [204 NO CONTENT]  
+## Create new drop  
+**URL:** /Waterfall/api/drops/:userid  
+**Method:** `POST`  
+**Success Response:** [201 CREATED]  
+**Content type:** Json  
+**Example request:**  
+`{  
+  "content": "HEJHEJHEJ"  
+}`  
 ## Delete user by ID  
 **URL:** /Waterfall/api/users/:id  
 **URL params:** id=[Long]  
