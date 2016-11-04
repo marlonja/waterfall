@@ -134,7 +134,7 @@
     "username": ”Siggis”  
 }`  
 **Example response:**  
-{  
+`{  
   "birthdate": "1989-09-06T00:00:00+02:00",  
   "city": "Gothenburg",  
   "country": "Sweden",  
@@ -145,11 +145,12 @@
   "links": [],  
   "userid": 1,  
   "username": "Siggis"  
-}
+}`  
 **Error response:** [// todo lägg in något här]  
-## Create user  
+## Create new user  
 **URL:** /Waterfall/api/users/  
 **Method:** `POST`  
+**Success Response:** [201 CREATED]  
 **Content type:** Json  
 **Example request:**  
 `{  
@@ -163,7 +164,6 @@
   "password": "123",  
   "username": ”ArneMannen”  
 }`  
-**Success Response:** [201 CREATED]  
 **Example response:**  
 `{  
   "birthdate": "1970-11-20T00:00:00+02:00",  
@@ -177,3 +177,9 @@
   "username": ”ArneMannen”  
 }`  
 **Error response:** [204 NO CONTENT]  
+## Delete user by ID  
+**URL:** /Waterfall/api/users/:id  
+**URL params:** id=[Long]  
+**Method:** `DELETE`  
+**Success Response:** [200 OK]  
+**Example request:**  
