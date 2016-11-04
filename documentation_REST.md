@@ -3,7 +3,7 @@
 **Url:** /Waterfall/api/users  
 **Method:** GET  
 **Success Response:** [200 OK]  
-**Example content:** '[  
+**Example content:** `[  
 {  
 "birthdate": "1989-09-06T00:00:00+02:00",  
 "city": "Gothenburg",  
@@ -46,5 +46,5 @@
     "userid": 8,  
     "username": "Fi"  
 }  
-]'  
+]`  
 **Error response:** [// todo lägg in något här]
