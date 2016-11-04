@@ -58,21 +58,60 @@
 `{  
   "birthdate": "1989-09-06T00:00:00+02:00",  
   "city": "Gothenburg",  
-  "country": "American Samoa",  
-  "email": "lena@gmail.com",  
-  "firstName": "Lena",  
+  "country": ”Sweden”,  
+  "email": ”sigrid@mail.com",  
+  "firstName": ”Sigrid”,  
   "gender": "Female",  
-  "lastName": "Stridsberg",  
+  "lastName": ”Gunnarsson”,  
   "links": [  
     {  
       "relation": "Self",  
-      "uri": "http://localhost:8080/Waterfall/api/users/7"  
+      "uri": "http://localhost:8080/Waterfall/api/users/1”  
     },  
     {  
       "relation": "Drops",  
-      "uri": "http://localhost:8080/Waterfall/api/users/7/drops"  
+      "uri": "http://localhost:8080/Waterfall/api/users/1/drops"  
     }  
   ],  
-  "userid": 7,  
-  "username": "Lenaspena"  
-}`
+  "userid": 1,  
+  "username": ”Sigge”  
+}`  
+**Error response:** [// todo lägg in något här]  
+## Get all drops by user-ID
+**URL:** /Waterfall/api/users/:id/drops  
+**URL params:** id=[Long]  
+**Method:** GET  
+**Success Response:** [200 OK]  
+**Example content:**  
+`[  
+  {  
+    "dropid": 6,  
+    "content": "Hi everyone, what are you doing?”,  
+    "creationDate": "2016-10-27T18:40:06.532",  
+    "links": [],  
+    "dropowner": {  
+      "birthdate": "1989-09-06T00:00:00+02:00",  
+      "city": "Gothenburg",  
+      "country": ”Sweden”,  
+      "email": ”sigrid@mail.com",  
+      "firstName": ”Sigrid”,  
+      "gender": "Female",  
+      "lastName": ”Gunnarsson”,  
+      "links": [],  
+      "userid": 1,  
+      "username": ”Sigge”  
+    },  
+    "comments": [  
+      {  
+        "commentid": 5,  
+        "content": ”Nothing much, just browsing away..”,  
+        "creationdate": "2016-10-27T18:40:15.868"  
+      },  
+      {  
+        "commentid": 7,  
+        "content": ”Eating lunch!”,  
+        "creationdate": "2016-10-31T13:46:49.383"  
+      }  
+    ]  
+  }  
+]`  
