@@ -54,4 +54,25 @@
 **URL params:** id=[Long]  
 **Method:** GET  
 **Success Response:** [200 OK]  
-**Example content:**
+**Example content:**  
+`{  
+  "birthdate": "1989-09-06T00:00:00+02:00",  
+  "city": "Gothenburg",  
+  "country": "American Samoa",  
+  "email": "lena@gmail.com",  
+  "firstName": "Lena",  
+  "gender": "Female",  
+  "lastName": "Stridsberg",  
+  "links": [  
+    {  
+      "relation": "Self",  
+      "uri": "http://localhost:8080/Waterfall/api/users/7"  
+    },  
+    {  
+      "relation": "Drops",  
+      "uri": "http://localhost:8080/Waterfall/api/users/7/drops"  
+    }  
+  ],  
+  "userid": 7,  
+  "username": "Lenaspena"  
+}`
