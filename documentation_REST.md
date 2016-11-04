@@ -118,10 +118,10 @@
 **Error response:** [// todo lägg in något här]  
 ## Update user  
 **URL:** /Waterfall/api/users/  
-**Content type:** Json  
 **Method:** `PUT`  
+**Content type:** Json  
 **Success Response:** [200 OK]  
-**Example bodycontent:**  
+**Example request:**  
 `{  
     "birthdate": "1989-09-06T00:00:00+02:00",  
     "city": "Gothenburg",  
@@ -132,4 +132,35 @@
     "lastName": ”Gunnarsson”,  
     "userid": 1,  
     "username": ”Siggis”  
-}`
+}`  
+**Error response:** [// todo lägg in något här]  
+## Update user  
+**URL:** /Waterfall/api/users/  
+**Method:** `POST`  
+**Content type:** Json  
+**Example request:**  
+`{  
+  "birthdate": "1970-11-20T00:00:00+02:00",  
+  "city": ”Uddevalla”,  
+  "country": "Sweden",  
+  "email": ”arne@gmail.com",  
+  "firstName": ”Arne”,  
+  "gender": ”Other”,  
+  "lastName": ”Arnesson”,  
+  "password": "123",  
+  "username": ”ArneMannen”  
+}`  
+**Success Response:** [201 CREATED]  
+**Example response:**  
+’{  
+  "birthdate": "1989-09-06T00:00:00+02:00",  
+  "city": "Gothenburg",  
+  "country": "Sweden",  
+  "email": "lena@gmail.commm",  
+  "firstName": "Sigrid",  
+  "gender": "Female",  
+  "lastName": "Stridsberg",  
+  "links": [],  
+  "username": "Lenaspenaaa"  
+}’  
+**Error response:** [204 NO CONTENT]  
