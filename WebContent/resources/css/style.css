@@ -281,10 +281,6 @@ h4 {
 	float: right;
 }
 
-#gender-span {
-	font-weight: normal;
-	font-size: 0.8em;
-}
 
 #date-span {
 	font-weight: normal;
@@ -393,6 +389,7 @@ h4 {
 	float: right;
 	font-size: 1.2em;
 	margin: 5px;
+	cursor: pointer;
 }
 
 .left-column {
@@ -439,12 +436,12 @@ h4 {
 
 .contact-img {
 	width: 5%;
-	margin-left: 20px;
+	margin-left: 5px;
 }
 
 .remove-user-img {
 	width: 5%;
-	margin-left: 20px;
+	float: right;
 	
 }
 
@@ -452,8 +449,12 @@ h4 {
 	display: none;
 }
 
-.add-user-img, .add-img {
-	width: 40%;
+.add-user-img {
+	width: 30%;		
+}
+
+.add-img {
+	width: 30%;
 }
 
 .minus-img {
