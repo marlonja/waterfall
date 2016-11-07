@@ -1,4 +1,4 @@
-# Waterfall API documentation
+# Waterfall REST API Documentation
 ## Get all users
 **Url:** /Waterfall/api/users  
 **Method:** `GET`  
@@ -164,7 +164,7 @@
   "username": ”Sigge”  
 }`  
 **Error response:** [// todo lägg in något här]  
-## Get drops by ID
+## Get drop by ID
 **URL:** /Waterfall/api/drops/:id  
 **URL params:** id=[Long]  
 **Method:** `GET`  
@@ -276,6 +276,9 @@
   "username": "Siggis"  
 }`  
 **Error response:** [// todo lägg in något här]  
+
+##Update drop
+
 ## Create new user  
 **URL:** /Waterfall/api/users/  
 **Method:** `POST`  
@@ -340,3 +343,9 @@
 **Method:** `DELETE`  
 **Success Response:** [200 OK]  
 **Example request:**  
+  
+## Delete drop by ID  
+**URL:** /Waterfall/api/drops/:id  
+**URL params:** id=[Long]  
+**Method:** `DELETE`  
+**Success Response:** [200 OK]    
