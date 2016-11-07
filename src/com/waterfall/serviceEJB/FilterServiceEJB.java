@@ -201,7 +201,6 @@ public class FilterServiceEJB implements LocalFilter {
 
 	private List<DropModel> filterList(ArrayList<DropModel> dropListFromSearch, String[] searchWords) {
 		List<DropModel> filteredList = new ArrayList<DropModel>();
-		System.out.println("nu kör vi på filter");
 		for (int i = 0; i < dropListFromSearch.size(); i++) {
 			boolean dropContainsAllWords = dropContainsAllSearchWords(dropListFromSearch.get(i), searchWords);
 
@@ -211,7 +210,7 @@ public class FilterServiceEJB implements LocalFilter {
 		}
 		return filteredList;
 	}
-	
+
 	private boolean dropContainsAllSearchWords(DropModel drop, String[] searchWords) {
 		for (int i = 0; i < searchWords.length; i++) {
 			if (!drop.getContent().toLowerCase().contains(searchWords[i].toLowerCase())
@@ -219,25 +218,16 @@ public class FilterServiceEJB implements LocalFilter {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
 	private boolean userInformationContainsSearchWords(UserModel owner, String searchWord) {
-		boolean containsSearchWord = false;
 
-		if (containsSearchWord(owner, searchWord)) {
-			containsSearchWord = true;
-		}
-		return containsSearchWord;
-	}
-
-	private boolean containsSearchWord(UserModel user, String searchWord) {
-		String userInfo = user.getFirstName() + user.getLastName() + user.getUsername() + user.getCity()
-				+ user.getCountry();
+		String userInfo = owner.getFirstName() + owner.getLastName() + owner.getUsername() + owner.getCity()
+				+ owner.getCountry();
 
 		if (userInfo.toLowerCase().contains(searchWord.toLowerCase())) {
-			System.out.println(userInfo + searchWord);
 			return true;
 		}
 		return false;

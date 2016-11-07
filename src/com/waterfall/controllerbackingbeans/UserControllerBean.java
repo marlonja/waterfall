@@ -22,7 +22,8 @@ import com.waterfall.models.ContactListModel;
 import com.waterfall.models.UserModel;
 import com.waterfall.utils.ValidationMessageService;
 
-import com.google.common.collect.Lists;
+import jersey.repackaged.com.google.common.collect.Lists;
+
 
 @Named(value = "userControllerBean")
 @SessionScoped
