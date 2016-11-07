@@ -12,6 +12,7 @@ import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalFilter;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.ContactListModel;
+import com.waterfall.models.DropModel;
 import com.waterfall.models.FilterModel;
 import com.waterfall.utils.DateService;
 
@@ -63,7 +64,7 @@ public class FilterControllerBean {
 	}
 	
 	public String filterByContacts(ContactListModel contactListModel){
-		dropControllerBean.setDropList(contactListEJB.getContactDrops(contactListModel));
+		dropControllerBean.setDropList(Lists.reverse(contactListEJB.getContactDrops(contactListModel)));
 		return "index";
 	}
 	

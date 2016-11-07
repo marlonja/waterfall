@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.waterfall.EJB.interfaces.LocalContactList;
@@ -43,6 +44,9 @@ public class UserControllerBean implements Serializable {
 
 	@EJB
 	private LocalContactList contactListEJB;
+	
+	@Inject
+	LoginControllerBean loginControllerBean;
 
 	@PostConstruct
 	public void init() {
@@ -102,6 +106,7 @@ public class UserControllerBean implements Serializable {
 			contactListEJB.storeContactList(contactListModel);
 			validationMessageService.successMsg("Contactlist created");
 			contactLists = Lists.reverse(userEJB.getUser(loggedInUser.getUserid()).getContactList());
+			loginControllerBean.setLoggedInUser(userEJB.getUser(loggedInUser.getUserid()));
 		}
 
 		contactListName = null;
@@ -115,6 +120,7 @@ public class UserControllerBean implements Serializable {
 
 			contactListModel.addContact(searchUserByUsername());
 			contactListEJB.storeContactList(contactListModel);
+			loginControllerBean.setLoggedInUser(userEJB.getUser(loggedInUser.getUserid()));
 
 		} else {
 			validationMessageService.errorMsg(errorMessage);
