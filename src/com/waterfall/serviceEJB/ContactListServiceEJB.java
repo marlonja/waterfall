@@ -1,14 +1,11 @@
 package com.waterfall.serviceEJB;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import com.sun.xml.registry.uddi.bindings_v2_2.Contact;
 import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.models.ContactListModel;
 import com.waterfall.models.DropModel;
@@ -26,16 +23,6 @@ public class ContactListServiceEJB implements LocalContactList{
 	public boolean storeContactList(ContactListModel contactListModel) {
 		
 		return contactListDAOBean.storeContactList(contactListModel);
-	}
-
-	@Override
-	public ContactListModel getContactListById(Long contactListId) {
-		return contactListDAOBean.getContactListById(contactListId);
-	}
-
-	@Override
-	public List<ContactListModel> getAllContactLists() {
-		return contactListDAOBean.getAllContactLists();
 	}
 
 	@Override

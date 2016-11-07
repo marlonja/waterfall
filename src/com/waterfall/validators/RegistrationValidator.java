@@ -1,25 +1,12 @@
 package com.waterfall.validators;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 
-import com.sun.el.parser.ParseException;
-import com.sun.xml.bind.v2.schemagen.xmlschema.List;
-import com.sun.xml.ws.security.opt.api.tokens.Timestamp;
-import com.waterfall.controllerbackingbeans.RegistrationControllerBean;
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.UserDAOBean;
 import com.waterfall.utils.ErrorMessageService;

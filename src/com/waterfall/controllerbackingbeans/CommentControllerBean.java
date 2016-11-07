@@ -47,7 +47,6 @@ public class CommentControllerBean implements Serializable {
 			commentEJB.storeComment(commentModel);
 			dropControllerBean.init();
 		}
-		
 		content = null;
 		return commentModel;
 	}

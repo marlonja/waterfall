@@ -67,7 +67,7 @@
 				</b:column>
 				<b:column styleClass="middle-column">
 					<h:commandButton value="Filter"
-						action="#{filterControllerBean.filter()}" styleClass="filter-btn" />
+						action="#{filterControllerBean.filterDrops()}" styleClass="filter-btn" />
 				</b:column>
 				<b:column styleClass="right-column">
 					<p class="clear-fields-link">
@@ -203,7 +203,7 @@
 						items="#{loginControllerBean.loggedInUser.filterList}">
 						<p class="filter-id">
 							<h:commandLink styleClass="filter-id" value="#{filter.poolname}"
-								action="#{filterControllerBean.setFilters(filter.filterid)}" />
+								action="#{filterControllerBean.setFiltersByPool(filter.filterid)}" />
 						</p>
 					</c:forEach>
 				</h:form>

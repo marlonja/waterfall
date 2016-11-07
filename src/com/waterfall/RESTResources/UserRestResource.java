@@ -77,7 +77,7 @@ public class UserRestResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUser(@PathParam("userId") Long userId, @Context UriInfo uriInfo) {
 
-		UserModel userModel = userEJB.getUser(userId);
+		UserModel userModel = userEJB.getUserById(userId);
 
 		if (userModel == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
@@ -108,7 +108,7 @@ public class UserRestResource {
 	@DELETE
 	@Path("/{userId}")
 	public Response deleteUser(@PathParam("userId") Long userId) {
-		UserModel userToDelete = userEJB.getUser(userId);
+		UserModel userToDelete = userEJB.getUserById(userId);
 
 		if (userToDelete != null) {
 			userEJB.deleteUser(userToDelete);
@@ -122,7 +122,7 @@ public class UserRestResource {
 	@Path("/{userId}/drops")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUserDrops(@PathParam("userId") Long userId, @Context UriInfo uriInfo) {
-		List<DropModel> dropList = userEJB.getUser(userId).getDrops();
+		List<DropModel> dropList = userEJB.getUserById(userId).getDrops();
 
 		for (DropModel dropModel : dropList) {
 			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));

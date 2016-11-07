@@ -26,7 +26,7 @@ public class DropSoapResource {
 	public DropModel createDropModel(Long ownerId, String content) {
 		DropModel dropModel = new DropModel();
 		
-		dropModel.setOwner(userEjb.getUser(ownerId));
+		dropModel.setOwner(userEjb.getUserById(ownerId));
 		dropModel.setContent(content);
 		dropModel.setCreationDate(LocalDateTime.now());
 		

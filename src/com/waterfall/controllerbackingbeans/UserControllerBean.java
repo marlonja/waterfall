@@ -61,8 +61,8 @@ public class UserControllerBean implements Serializable {
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-			} catch (IOException e1) {
-				e1.printStackTrace();
+			} catch (IOException ioException) {
+				ioException.printStackTrace();
 			}
 		}
 		
@@ -70,22 +70,22 @@ public class UserControllerBean implements Serializable {
 
 	public String removeUserFromContactList(ContactListModel contactListModel, UserModel contactToRemove) {
 		contactListEJB.removeContactFromContactList(contactListModel, contactToRemove);
-		loginControllerBean.setLoggedInUser(userEJB.getUser(loggedInUser.getUserid()));
+		loginControllerBean.setLoggedInUser(userEJB.getUserById(loggedInUser.getUserid()));
 		return "profile-page";
 	}
 
 	public String removeContactList(ContactListModel contactListModel) {
 		contactListEJB.removeContactList(contactListModel);
 		contactLists.remove(contactListModel);
-		loginControllerBean.setLoggedInUser(userEJB.getUser(loggedInUser.getUserid()));
+		loginControllerBean.setLoggedInUser(userEJB.getUserById(loggedInUser.getUserid()));
 		return "profile-page";
 	}
 
-	public void updateUser(UserModel user)
+	public String updateUser(UserModel user)
 			throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 		user.setPassword(PBKDF2.generatePasswordHash(user.getVisiblePassword()));
 		userEJB.storeUser(user);
-
+		return "profile-page";
 	}
 
 	private UserModel searchUserByUsername() {
@@ -107,8 +107,8 @@ public class UserControllerBean implements Serializable {
 			loggedInUser.getContactList().add(contactListModel);
 			contactListEJB.storeContactList(contactListModel);
 			validationMessageService.successMsg("Contactlist created");
-			contactLists = Lists.reverse(userEJB.getUser(loggedInUser.getUserid()).getContactList());
-			loginControllerBean.setLoggedInUser(userEJB.getUser(loggedInUser.getUserid()));
+			contactLists = Lists.reverse(userEJB.getUserById(loggedInUser.getUserid()).getContactList());
+			loginControllerBean.setLoggedInUser(userEJB.getUserById(loggedInUser.getUserid()));
 		}
 
 		contactListName = null;
@@ -116,13 +116,13 @@ public class UserControllerBean implements Serializable {
 	}
 
 	public String addContactToList(ContactListModel contactListModel) {
-		String errorMessage = userEJB.controlUserContactList(contactListModel, usernameSearch);
+		String errorMessage = userEJB.validateUserContactList(contactListModel, usernameSearch);
 		if (errorMessage.equals("ok")) {
 			validationMessageService.successMsg("Contact added");
 
 			contactListModel.addContact(searchUserByUsername());
 			contactListEJB.storeContactList(contactListModel);
-			loginControllerBean.setLoggedInUser(userEJB.getUser(loggedInUser.getUserid()));
+			loginControllerBean.setLoggedInUser(userEJB.getUserById(loggedInUser.getUserid()));
 
 		} else {
 			validationMessageService.errorMsg(errorMessage);

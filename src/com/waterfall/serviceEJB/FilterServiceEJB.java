@@ -41,12 +41,6 @@ public class FilterServiceEJB implements LocalFilter {
 	}
 
 	@Override
-	public List<FilterModel> getAllFilters() {
-
-		return filterDAOBean.getAllFilters();
-	}
-
-	@Override
 	public void saveFilterAsPool(FilterModel filterModel) {
 		filterDAOBean.storeFilterAsPool(filterModel);
 	}

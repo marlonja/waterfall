@@ -1,7 +1,5 @@
 package com.waterfall.storage;
 
-import java.util.List;
-
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,18 +20,7 @@ public class ContactListDAOBean {
 		}
 
 	}
-
-	public ContactListModel getContactListById(Long contactListId) {
-		return em.find(ContactListModel.class, contactListId);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<ContactListModel> getAllContactLists() {
-		return em.createNamedQuery("ContactListModel.findAll").getResultList();
-	}
-
 	
-
 	public void removeContactList(ContactListModel contactListModel) {		
 		contactListModel = em.merge(contactListModel);			
 		em.remove(contactListModel);

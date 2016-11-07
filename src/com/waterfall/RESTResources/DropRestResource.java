@@ -44,7 +44,7 @@ public class DropRestResource {
 	@Path("/{userId}")
 	public Response createDropModel(@PathParam("userId") Long userId, DropModel dropModel) {
 
-		UserModel dropOwner = userEjb.getUser(userId);
+		UserModel dropOwner = userEjb.getUserById(userId);
 		dropModel.setOwner(dropOwner);
 		dropModel.setCreationDate(LocalDateTime.now());
 

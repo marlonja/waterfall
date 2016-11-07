@@ -13,7 +13,6 @@ import com.waterfall.EJB.interfaces.LocalComment;
 import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
-import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
 import com.waterfall.validators.CreateDropValidator;
 
@@ -68,19 +67,6 @@ public class DropControllerBean implements Serializable {
 		return "index";
 	}
 
-	public String createNewComment(Long dropId) {
-		CommentModel commentModel = new CommentModel();
-		
-		commentModel.setContent(commentContent);
-		commentModel.setDropHost(dropEJB.getDrop(dropId));
-		commentModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
-		commentEJB.storeComment(commentModel);
-		commentContent = null;
-		init();
-		return "index";
-
-	}
-
 	public String getContent() {
 		return content;
 	}
@@ -104,9 +90,5 @@ public class DropControllerBean implements Serializable {
 	public void setCommentContent(String commentContent) {
 		this.commentContent = commentContent;
 	}
-
-
-
-
 
 }
