@@ -336,16 +336,4 @@
     "userid": 9,  
     "username": "Arne"  
   }  
-}`  
-## Delete user by ID  
-**URL:** /Waterfall/api/users/:id  
-**URL params:** id=[Long]  
-**Method:** `DELETE`  
-**Success Response:** [200 OK]  
-**Example request:**  
-  
-## Delete drop by ID  
-**URL:** /Waterfall/api/drops/:id  
-**URL params:** id=[Long]  
-**Method:** `DELETE`  
-**Success Response:** [200 OK]    
+}`    
