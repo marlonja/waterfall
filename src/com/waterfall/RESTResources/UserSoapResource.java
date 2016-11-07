@@ -52,14 +52,14 @@ public class UserSoapResource {
 	}
 
 	public UserModel getUser(Long userId) {
-		return userEjb.getUser(userId);
+		return userEjb.getUserById(userId);
 	}
 
 	public UserModel updateUser(Long userId, String birthdateFromUser, String city, String country, String email,
 			String firstName, String gender, String lastName, String pwFromUser, String username)
 			throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 
-		UserModel userModel = userEjb.getUser(userId);
+		UserModel userModel = userEjb.getUserById(userId);
 
 		String[] birthdateInfo = birthdateFromUser.split(",");
 		int birthyear = Integer.parseInt(birthdateInfo[0]);
@@ -85,7 +85,7 @@ public class UserSoapResource {
 	}
 
 	public UserModel deleteUser(Long userId) {
-		UserModel userModel = userEjb.getUser(userId);
+		UserModel userModel = userEjb.getUserById(userId);
 		userEjb.deleteUser(userModel);
 
 		return new UserModel();
@@ -96,7 +96,7 @@ public class UserSoapResource {
 	}
 
 	public List<DropModel> getUserDrops(Long userId) {
-		UserModel userModel = userEjb.getUser(userId);
+		UserModel userModel = userEjb.getUserById(userId);
 		List<DropModel> dropList = userModel.getDrops();
 		
 		for (DropModel dropModel : dropList) {

@@ -23,6 +23,7 @@ import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
+import com.waterfall.models.UserModel;
 import com.waterfall.utils.LinkBuilder;
 import com.waterfall.validators.CreateDropValidator;
 
@@ -43,7 +44,7 @@ public class DropRestResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{userId}")
 	public Response createDropModel(@PathParam("userId") Long userId, DropModel dropModel) {
-		dropModel.setOwner(userEjb.getUser(userId));
+		dropModel.setOwner(userEjb.getUserById(userId));
 		dropModel.setCreationDate(LocalDateTime.now());
 
 		if (createDropValidator.validateRestDrop(dropModel.getContent())) {

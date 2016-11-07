@@ -47,7 +47,7 @@ public class UserServiceEJB implements LocalUser {
 	@Override
 	public List<UserModel> getAllUsers() {
 
-		return userDaoBean.getAll();
+		return userDaoBean.getAllUsers();
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class UserServiceEJB implements LocalUser {
 
 
 	@Override
-	public UserModel getUser(Long userId) {
+	public UserModel getUserById(Long userId) {
 
 		return userDaoBean.getUserById(userId);
 	}
@@ -129,7 +129,7 @@ public class UserServiceEJB implements LocalUser {
 	}
 
 	@Override
-	public String controlUserContactList(ContactListModel contactListModel, String username) {
+	public String validateUserContactList(ContactListModel contactListModel, String username) {
 		UserModel loggedInUser = getUserFromSession("loggedInUser");
 		String errorMessage = "";
 		if(getUserByUsername(username) == null){

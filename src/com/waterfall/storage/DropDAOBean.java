@@ -27,10 +27,12 @@ public class DropDAOBean {
 		return em.find(DropModel.class, dropId);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<DropModel> getAllDrops() {
 		return em.createNamedQuery("DropModel.findAll").getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<DropModel> findDropsByContent(String searchWord) {
 		return em.createNamedQuery("DropModel.findDropContentFromSearch")
 				.setParameter("content", "%" + searchWord + "%").getResultList();

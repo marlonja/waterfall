@@ -25,7 +25,7 @@ public class UserDAOBean {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<UserModel> getAll() {
+	public List<UserModel> getAllUsers() {
 		return em.createNamedQuery("UserModel.findAll").getResultList();
 	}
 

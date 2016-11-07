@@ -12,7 +12,6 @@ import com.waterfall.EJB.interfaces.LocalContactList;
 import com.waterfall.EJB.interfaces.LocalFilter;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.ContactListModel;
-import com.waterfall.models.DropModel;
 import com.waterfall.models.FilterModel;
 import com.waterfall.utils.DateService;
 
@@ -56,14 +55,14 @@ public class FilterControllerBean {
 	@Inject
 	LoginControllerBean loginControllerBean;
 	
-	public String setFilters(Long filterid) {
+	public String setFiltersByPool(Long filterid) {
 		filterModel = filterEJB.getFilterById(filterid);
 		dropControllerBean.setDropList(Lists.reverse(filterEJB.filterDrops(filterModel)));
 		
 		return "index";
 	}
 	
-	public String filterByContacts(ContactListModel contactListModel){
+	public String filterByContacts(ContactListModel contactListModel) {
 		dropControllerBean.setDropList(Lists.reverse(contactListEJB.getContactDrops(contactListModel)));
 		return "index";
 	}
@@ -71,7 +70,7 @@ public class FilterControllerBean {
 	public String saveFilterAsPool() {
 		FilterModel filterModel = createNewFilter();
 		filterEJB.saveFilterAsPool(filterModel);
-		loginControllerBean.setLoggedInUser(userEJB.getUser(userEJB.getUserFromSession("loggedInUser").getUserid()));
+		loginControllerBean.setLoggedInUser(userEJB.getUserById(userEJB.getUserFromSession("loggedInUser").getUserid()));
 		
 		return "index";
 	}
@@ -101,7 +100,7 @@ public class FilterControllerBean {
 		return filterModel;
 	}
 	
-	public String filter() {
+	public String filterDrops() {
 		FilterModel filterModel = createNewFilter();
 		
 		dropControllerBean.setDropList(filterEJB.filterDrops(filterModel));		
@@ -111,7 +110,6 @@ public class FilterControllerBean {
 	
 	public String clearFilterInputFields(){
 		
-		System.out.println("inne i clearFilter");
 		filterFirstName = null;
 		filterLastName = null;
 		filterUsername = null;
