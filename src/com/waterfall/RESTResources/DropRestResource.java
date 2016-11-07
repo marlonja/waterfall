@@ -14,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -61,11 +62,11 @@ public class DropRestResource {
 	@Path("/{dropModelId}")
 	public Response getDropModel(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
 		DropModel dropModel = dropEjb.getDrop(dropModelId);
-		
-		if(dropModel == null) {
+
+		if (dropModel == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
-		
+
 		dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
 		dropModel.addLink(
 				LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
@@ -85,7 +86,13 @@ public class DropRestResource {
 			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 		}
 
-		return Response.status(Response.Status.OK).entity(provideLinksForDrops(dropList, uriInfo)).build();
+		// A generic wrapper for returning a messagebody that works with
+		// java.util.Vector
+		GenericEntity<List<DropModel>> dropListForPresentation = new GenericEntity<List<DropModel>>(
+				provideLinksForDrops(dropList, uriInfo)) {
+		};
+
+		return Response.status(Response.Status.OK).entity(dropListForPresentation).build();
 	}
 
 	@PUT
@@ -95,7 +102,7 @@ public class DropRestResource {
 	public Response updateDropModel(@PathParam("dropModelId") Long dropModelId, DropModel dropModel) {
 		DropModel dropModelToUpdate = dropEjb.getDrop(dropModelId);
 		dropModelToUpdate.setContent(dropModel.getContent());
-		
+
 		if (createDropValidator.validateRestDrop(dropModelToUpdate.getContent())) {
 			dropEjb.storeDrop(dropModelToUpdate);
 			return Response.status(Response.Status.OK).entity(dropModelToUpdate).build();
@@ -125,11 +132,19 @@ public class DropRestResource {
 			commentModel.addLink(LinkBuilder.buildOwnerLink(DropRestResource.class, uriInfo,
 					commentModel.getDropHost().getDropId(), "DropHost"));
 		}
+		
+		comments = removeOwnerFromCommentList((Vector<CommentModel>) comments);
 
-		return Response.status(Response.Status.OK).entity(removeOwnerFromCommentList((Vector<CommentModel>) comments)).build();
+		// A generic wrapper for returning a messagebody that works with
+		// java.util.Vector
+		GenericEntity<List<CommentModel>> commentListForPresentation = new GenericEntity<List<CommentModel>>(comments) {
+		};
+
+		return Response.status(Response.Status.OK).entity(commentListForPresentation)
+				.build();
 	}
 
-	public Response provideLinksForDrops(List<DropModel> drops, UriInfo uriInfo) {
+	private List<DropModel> provideLinksForDrops(List<DropModel> drops, UriInfo uriInfo) {
 		for (DropModel dropModel : drops) {
 			dropModel
 					.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
@@ -139,7 +154,7 @@ public class DropRestResource {
 					dropModel.getOwner().getUserid(), "Owner"));
 		}
 
-		return Response.status(Response.Status.OK).entity(drops).build();
+		return drops;
 	}
 
 	private List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {

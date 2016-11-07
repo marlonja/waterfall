@@ -18,6 +18,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -47,21 +48,27 @@ public class UserRestResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUsers(@Context UriInfo uriInfo) {
 
-		return Response.status(Response.Status.OK).entity(provideLinksForUsers(userEJB.getAllUsers(), uriInfo)).build();
+		// A generic wrapper for returning a messagebody that works with
+		// java.util.Vector
+		GenericEntity<List<UserModel>> userList = new GenericEntity<List<UserModel>>(
+				provideLinksForUsers(userEJB.getAllUsers(), uriInfo)) {
+		};
+		return Response.status(Response.Status.OK).entity(userList).build();
+
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createUser(UserModel userModel)
-			throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {	
+			throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 
 		ArrayList<String> errorMessages = getErrorMessages(userModel);
-		
+
 		if (errorMessages.size() > 0) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
-		
+
 		String unsaltedPassword = userModel.getVisiblePassword();
 		userModel.setPassword(PBKDF2.generatePasswordHash(unsaltedPassword));
 
@@ -86,12 +93,16 @@ public class UserRestResource {
 			userModel.addLink(LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userId, "Drops"));
 			return Response.status(Response.Status.OK).entity(userModel).build();
 		}
-	} 
+	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateUser(UserModel userModel) {
+
+		if (userModel.getVisiblePassword() == null) {
+			userModel.setPassword(userEJB.getUser(userModel.getUserid()).getVisiblePassword());
+		}
 
 		ArrayList<String> errorMessages = getErrorMessages(userModel);
 
@@ -125,14 +136,18 @@ public class UserRestResource {
 		List<DropModel> dropList = userEJB.getUser(userId).getDrops();
 
 		for (DropModel dropModel : dropList) {
+
 			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
-			dropModel
-					.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
-			dropModel.addLink(
-					LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
+			dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+			dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
 		}
 
-		return Response.status(Response.Status.OK).entity(dropList).build();
+		// A generic wrapper for returning a messagebody that works with
+		// java.util.Vector
+		GenericEntity<List<DropModel>> dropListForPresentation = new GenericEntity<List<DropModel>>(dropList) {
+		};
+
+		return Response.status(Response.Status.OK).entity(dropListForPresentation).build();
 	}
 
 	private List<UserModel> provideLinksForUsers(List<UserModel> users, UriInfo uriInfo) {
@@ -145,7 +160,7 @@ public class UserRestResource {
 		return users;
 	}
 
-	private List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
+	private Vector<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
 
 		for (CommentModel commentModel : commentList) {
 			commentModel.setOwner(null);
