@@ -107,7 +107,6 @@ public class UserRestResource {
 		ArrayList<String> errorMessages = getErrorMessages(userModel);
 
 		if (errorMessages.size() > 0) {
-
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 
@@ -139,11 +138,8 @@ public class UserRestResource {
 		for (DropModel dropModel : dropList) {
 
 			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
-
-			dropModel
-					.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
-			dropModel.addLink(
-					LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
+			dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+			dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
 		}
 
 		// A generic wrapper for returning a messagebody that works with
