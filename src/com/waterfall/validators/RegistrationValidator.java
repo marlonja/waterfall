@@ -1,19 +1,25 @@
 package com.waterfall.validators;
 
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+
 import com.waterfall.models.UserModel;
 import com.waterfall.storage.UserDAOBean;
 import com.waterfall.utils.ErrorMessageService;
 
 @Stateful
 public class RegistrationValidator {
-
-	private String regexOnlyLetter = "^[-A-Z���a-z���]+$";
+	
+	private String regexOnlyLetter = "^[-A-ZÅÄÖa-zåäö]+$";
 	private String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -78,9 +84,16 @@ public class RegistrationValidator {
 		Pattern pattern = Pattern.compile(regexPattern);
 		Matcher matcher = pattern.matcher(userInput);
 		
+		System.out.println(pattern);
+		
+		System.out.println(userInput);
+		
 		if(!matcher.matches()){
 			return false;
 		}
+		
+		System.out.println("det gick bra ÄLSKAR!" + userInput);
+		System.out.println("det gick bra!" + regexPattern);
 		return true;
 	}
 

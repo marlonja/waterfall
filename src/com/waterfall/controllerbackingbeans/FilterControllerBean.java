@@ -15,7 +15,7 @@ import com.waterfall.models.ContactListModel;
 import com.waterfall.models.FilterModel;
 import com.waterfall.utils.DateService;
 
-import jersey.repackaged.com.google.common.collect.Lists;
+import com.google.common.collect.Lists;
 
 @Named(value = "filterControllerBean")
 @RequestScoped

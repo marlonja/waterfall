@@ -22,7 +22,7 @@ import com.waterfall.utils.CountryService;
 import com.waterfall.utils.DateService;
 import com.waterfall.validators.RegistrationValidator;
 
-import jersey.repackaged.com.google.common.collect.Lists;
+import com.google.common.collect.Lists;
 
 @Named(value = "registrationControllerBean")
 @SessionScoped

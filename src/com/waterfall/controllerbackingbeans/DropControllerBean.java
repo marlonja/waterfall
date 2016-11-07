@@ -16,7 +16,7 @@ import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.DropModel;
 import com.waterfall.validators.CreateDropValidator;
 
-import jersey.repackaged.com.google.common.collect.Lists;
+import com.google.common.collect.Lists;
 
 @Named(value = "dropControllerBean")
 @SessionScoped
