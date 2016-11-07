@@ -70,12 +70,14 @@ public class UserControllerBean implements Serializable {
 
 	public String removeUserFromContactList(ContactListModel contactListModel, UserModel contactToRemove) {
 		contactListEJB.removeContactFromContactList(contactListModel, contactToRemove);
+		loginControllerBean.setLoggedInUser(userEJB.getUser(loggedInUser.getUserid()));
 		return "profile-page";
 	}
 
 	public String removeContactList(ContactListModel contactListModel) {
 		contactListEJB.removeContactList(contactListModel);
 		contactLists.remove(contactListModel);
+		loginControllerBean.setLoggedInUser(userEJB.getUser(loggedInUser.getUserid()));
 		return "profile-page";
 	}
 
