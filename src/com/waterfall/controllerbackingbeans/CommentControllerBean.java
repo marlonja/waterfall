@@ -37,10 +37,12 @@ public class CommentControllerBean implements Serializable {
 	@Inject
 	DropControllerBean dropControllerBean;
 	
-	public CommentModel createNewComment(Long dropId) {
+	public String createNewComment(Long dropId) {
 		CommentModel commentModel = new CommentModel();
 		commentModel.setContent(content);
 		commentModel.setDropHost(dropEJB.getDrop(dropId));
+		System.out.println("aktuell droppe " + commentModel.getDropHost().getContent());
+		System.out.println("aktuell kommentar " + commentModel.getContent());
 		commentModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
 		
 		if(commentValidator.validateComment(commentModel)){
@@ -48,7 +50,7 @@ public class CommentControllerBean implements Serializable {
 			dropControllerBean.init();
 		}
 		content = null;
-		return commentModel;
+		return "index";
 	}
 
 	public String getContent() {
