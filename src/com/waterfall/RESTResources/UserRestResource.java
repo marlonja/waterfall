@@ -4,7 +4,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -50,8 +49,7 @@ public class UserRestResource {
 
 		// A generic wrapper for returning a messagebody that works with
 		// java.util.Vector
-		GenericEntity<List<UserModel>> userList = new GenericEntity<List<UserModel>>(
-				provideLinksForUsers(userEJB.getAllUsers(), uriInfo)) {
+		GenericEntity<List<UserModel>> userList = new GenericEntity<List<UserModel>>(provideLinksForUsers(userEJB.getAllUsers(), uriInfo)) {
 		};
 		return Response.status(Response.Status.OK).entity(userList).build();
 
@@ -136,7 +134,6 @@ public class UserRestResource {
 		List<DropModel> dropList = userEJB.getUser(userId).getDrops();
 
 		for (DropModel dropModel : dropList) {
-
 			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 			dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
 			dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
@@ -152,10 +149,8 @@ public class UserRestResource {
 
 	private List<UserModel> provideLinksForUsers(List<UserModel> users, UriInfo uriInfo) {
 		for (UserModel userModel : users) {
-			userModel
-					.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Self"));
-			userModel.addLink(
-					LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Drops"));
+			userModel.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Self"));
+			userModel.addLink(LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Drops"));
 		}
 		return users;
 	}

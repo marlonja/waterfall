@@ -23,7 +23,6 @@ import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
-import com.waterfall.models.UserModel;
 import com.waterfall.utils.LinkBuilder;
 import com.waterfall.validators.CreateDropValidator;
 
@@ -44,9 +43,7 @@ public class DropRestResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{userId}")
 	public Response createDropModel(@PathParam("userId") Long userId, DropModel dropModel) {
-
-		UserModel dropOwner = userEjb.getUser(userId);
-		dropModel.setOwner(dropOwner);
+		dropModel.setOwner(userEjb.getUser(userId));
 		dropModel.setCreationDate(LocalDateTime.now());
 
 		if (createDropValidator.validateRestDrop(dropModel.getContent())) {
@@ -68,10 +65,8 @@ public class DropRestResource {
 		}
 
 		dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
-		dropModel.addLink(
-				LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
-		dropModel.addLink(
-				LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
+		dropModel.addLink(LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
+		dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
 		dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 
 		return Response.status(Response.Status.OK).entity(dropModel).build();
@@ -125,12 +120,10 @@ public class DropRestResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{dropModelId}/comments")
 	public Response getDropComments(@PathParam("dropModelId") Long dropModelId, @Context UriInfo uriInfo) {
-
 		List<CommentModel> comments = dropEjb.getDrop(dropModelId).getComments();
 
 		for (CommentModel commentModel : comments) {
-			commentModel.addLink(LinkBuilder.buildOwnerLink(DropRestResource.class, uriInfo,
-					commentModel.getDropHost().getDropId(), "DropHost"));
+			commentModel.addLink(LinkBuilder.buildOwnerLink(DropRestResource.class, uriInfo, commentModel.getDropHost().getDropId(), "DropHost"));
 		}
 		
 		comments = removeOwnerFromCommentList((Vector<CommentModel>) comments);
@@ -146,12 +139,9 @@ public class DropRestResource {
 
 	private List<DropModel> provideLinksForDrops(List<DropModel> drops, UriInfo uriInfo) {
 		for (DropModel dropModel : drops) {
-			dropModel
-					.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
-			dropModel.addLink(
-					LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
-			dropModel.addLink(LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo,
-					dropModel.getOwner().getUserid(), "Owner"));
+			dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+			dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
+			dropModel.addLink(LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
 		}
 
 		return drops;
