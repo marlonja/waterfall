@@ -18,9 +18,9 @@ public class DropDAOBean {
 
 		if (em.merge(dropModel) != null) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
+
 	}
 
 	public DropModel getDropById(Long dropId) {
@@ -42,7 +42,5 @@ public class DropDAOBean {
 		dropModel = em.merge(dropModel);
 		em.remove(dropModel);
 	}
-
-
 
 }

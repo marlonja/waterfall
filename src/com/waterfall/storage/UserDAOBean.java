@@ -19,9 +19,8 @@ public class UserDAOBean {
 
 		if (em.merge(userModel) != null) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	@SuppressWarnings("unchecked")

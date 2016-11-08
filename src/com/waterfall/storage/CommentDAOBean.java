@@ -15,8 +15,8 @@ public class CommentDAOBean {
 	public boolean storeComment(CommentModel commentModel) {
 		if (em.merge(commentModel) != null) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
+
 	}
 }

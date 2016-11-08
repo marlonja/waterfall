@@ -41,8 +41,6 @@ public class CommentControllerBean implements Serializable {
 		CommentModel commentModel = new CommentModel();
 		commentModel.setContent(content);
 		commentModel.setDropHost(dropEJB.getDrop(dropId));
-		System.out.println("aktuell droppe " + commentModel.getDropHost().getContent());
-		System.out.println("aktuell kommentar " + commentModel.getContent());
 		commentModel.setOwner(userEJB.getUserFromSession("loggedInUser"));
 		
 		if(commentValidator.validateComment(commentModel)){

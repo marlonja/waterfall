@@ -79,16 +79,10 @@ public class RegistrationValidator {
 		Pattern pattern = Pattern.compile(regexPattern);
 		Matcher matcher = pattern.matcher(userInput);
 		
-		System.out.println(pattern);
-		
-		System.out.println(userInput);
-		
 		if(!matcher.matches()){
 			return false;
 		}
 		
-		System.out.println("det gick bra ÄLSKAR!" + userInput);
-		System.out.println("det gick bra!" + regexPattern);
 		return true;
 	}
 
