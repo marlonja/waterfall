@@ -8,9 +8,9 @@ import javax.ejb.Stateful;
 
 @Stateful
 public class DateService {
-	
+
 	LocalDate currentDate = LocalDate.now();
-	
+
 	List<Integer> yearList;
 	List<Integer> ageList;
 	List<Integer> dayList;
@@ -22,10 +22,10 @@ public class DateService {
 		}
 		return yearList;
 	}
-	
+
 	public List<Integer> ageList() {
 		ageList = new ArrayList<Integer>();
-		for(int i = 0; i <= 116; i++) {
+		for (int i = 0; i <= 116; i++) {
 			ageList.add(i);
 		}
 		return ageList;
@@ -46,7 +46,5 @@ public class DateService {
 	public void setCurrentDate(LocalDate currentDate) {
 		this.currentDate = currentDate;
 	}
-	
-	
 
 }

@@ -62,7 +62,6 @@ public class UserServiceEJB implements LocalUser {
 				setUserInSession("loggedInUser", userToCheckInDatabase);
 				return userToCheckInDatabase;
 			}else {
-				// Wrong password
 				validationMessageService.errorMsg("Wrong password");
 				return null;
 			}

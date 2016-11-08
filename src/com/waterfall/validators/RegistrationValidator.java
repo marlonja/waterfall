@@ -27,9 +27,14 @@ public class RegistrationValidator {
 	public ArrayList<String> validateUserForRegistration(int birthYear, int birthMonth, int birthDay, UserModel userToValidate, ArrayList<String> validationErrorMessages) {
 		
 		isBasicFormatCorrect(userToValidate, validationErrorMessages);
+		isBirthdateCorrect(birthYear, birthMonth, birthDay, validationErrorMessages);	
+		validateUserInputs(userToValidate, validationErrorMessages);
 		
-		isBirthdateCorrect(birthYear, birthMonth, birthDay, validationErrorMessages);
-		
+		return errorMessageService.getValidationErrorMessages();
+
+	}
+
+	private ArrayList<String> validateUserInputs(UserModel userToValidate, ArrayList<String> validationErrorMessages) {
 		if(userToValidate.getGender() == null){
 			errorMessageService.setValidationErrorMessage("gender", validationErrorMessages);
 		}
@@ -55,7 +60,6 @@ public class RegistrationValidator {
 		}
 		
 		return errorMessageService.getValidationErrorMessages();
-
 	}
 
 	private ArrayList<String> isBasicFormatCorrect(UserModel userToValidate, ArrayList<String> validationErrorMessages) {
