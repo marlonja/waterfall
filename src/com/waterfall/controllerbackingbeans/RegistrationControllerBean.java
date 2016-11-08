@@ -1,6 +1,5 @@
 package com.waterfall.controllerbackingbeans;
 
-import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
@@ -10,7 +9,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -25,10 +24,9 @@ import com.waterfall.validators.RegistrationValidator;
 import jersey.repackaged.com.google.common.collect.Lists;
 
 @Named(value = "registrationControllerBean")
-@SessionScoped
-public class RegistrationControllerBean implements Serializable {
+@RequestScoped
+public class RegistrationControllerBean {
 
-	private static final long serialVersionUID = 5654269423508315837L;
 	private String firstName;
 	private String lastName;
 	private String username;

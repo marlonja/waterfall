@@ -1,7 +1,5 @@
 package com.waterfall.controllerbackingbeans;
 
-import java.io.Serializable;
-
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -15,9 +13,7 @@ import com.waterfall.validators.CreateCommentValidator;
 
 @Named(value="commentControllerBean")
 @RequestScoped
-public class CommentControllerBean implements Serializable {
-
-	private static final long serialVersionUID = 1085497880359743418L;
+public class CommentControllerBean {
 	
 	private String content;
 	private String creationDate;
