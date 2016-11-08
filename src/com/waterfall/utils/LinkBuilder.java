@@ -2,7 +2,6 @@ package com.waterfall.utils;
 
 import javax.ws.rs.core.UriInfo;
 
-import com.waterfall.RESTResources.UserRestResource;
 import com.waterfall.models.LinkModel;
 
 public class LinkBuilder {
