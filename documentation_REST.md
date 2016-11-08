@@ -1,5 +1,6 @@
 # Waterfall REST API Documentation
-## Get all users
+## Users
+### Get all users
 **Url:** /Waterfall/api/users  
 **Method:** `GET`  
 **Success Response:** [200 OK]  
@@ -48,7 +49,7 @@
     "username": ”Parab00la”  
   },  
 ]`  
-**Error response:** [// todo lägg in något här]  
+**Error response:** [404 NOT FOUND]  
 ## Get all drops
 **Url:** /Waterfall/api/drops  
 **Method:** `GET`  
