@@ -49,7 +49,8 @@ public class UserRestResource {
 
 		// A generic wrapper for returning a messagebody that works with
 		// java.util.Vector
-		GenericEntity<List<UserModel>> userList = new GenericEntity<List<UserModel>>(provideLinksForUsers(userEJB.getAllUsers(), uriInfo)) {
+		GenericEntity<List<UserModel>> userList = new GenericEntity<List<UserModel>>(
+				provideLinksForUsers(userEJB.getAllUsers(), uriInfo)) {
 		};
 		return Response.status(Response.Status.OK).entity(userList).build();
 
@@ -101,56 +102,60 @@ public class UserRestResource {
 		if (userModel.getVisiblePassword() == null) {
 			userModel.setPassword(userEJB.getUser(userModel.getUserid()).getVisiblePassword());
 		}
-
-		ArrayList<String> errorMessages = getErrorMessages(userModel);
-
-		if (errorMessages.size() > 0) {
-			return Response.status(Response.Status.BAD_REQUEST).build();
-		}
-
 		userModel.setPassword(userModel.getVisiblePassword());
 		userEJB.storeUser(userModel);
 
 		return Response.status(Response.Status.OK).entity(userModel).build();
 	}
 
-	@DELETE
-	@Path("/{userId}")
-	public Response deleteUser(@PathParam("userId") Long userId) {
-		UserModel userToDelete = userEJB.getUser(userId);
-
-		if (userToDelete != null) {
-			userEJB.deleteUser(userToDelete);
-			return Response.status(Response.Status.OK).build();
-		}
-		return Response.status(Response.Status.NOT_FOUND).build();
-
-	}
-
 	@GET
 	@Path("/{userId}/drops")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUserDrops(@PathParam("userId") Long userId, @Context UriInfo uriInfo) {
-		List<DropModel> dropList = userEJB.getUser(userId).getDrops();
+		UserModel userModel = userEJB.getUser(userId);
+		
+		if(userModel == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+		
+		List<DropModel> dropList = userModel.getDrops();
 
 		for (DropModel dropModel : dropList) {
 			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
-			dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
-			dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
+			dropModel
+					.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+			dropModel.addLink(
+					LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
 		}
 
 		// A generic wrapper for returning a messagebody that works with
 		// java.util.Vector
 		GenericEntity<List<DropModel>> dropListForPresentation = new GenericEntity<List<DropModel>>(dropList) {
 		};
-
+		if(dropList.isEmpty()) {
+			return Response.status(Response.Status.NO_CONTENT).entity(dropListForPresentation).build();
+		} 
 		return Response.status(Response.Status.OK).entity(dropListForPresentation).build();
 	}
 
+	// @DELETE
+	// @Path("/{userId}")
+	// public Response deleteUser(@PathParam("userId") Long userId) {
+	// UserModel userToDelete = userEJB.getUser(userId);
+	//
+	// if (userToDelete != null) {
+	// userEJB.deleteUser(userToDelete);
+	// return Response.status(Response.Status.OK).build();
+	// }
+	// return Response.status(Response.Status.NOT_FOUND).build();
+	// }
+
 	private List<UserModel> provideLinksForUsers(List<UserModel> users, UriInfo uriInfo) {
 		for (UserModel userModel : users) {
-			userModel.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Self"));
-			userModel.addLink(LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Drops"));
+			userModel
+					.addLink(LinkBuilder.buildSelfLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Self"));
+			userModel.addLink(
+					LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Drops"));
 		}
 		return users;
 	}
