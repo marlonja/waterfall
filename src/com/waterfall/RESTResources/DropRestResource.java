@@ -66,8 +66,10 @@ public class DropRestResource {
 		}
 
 		dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
-		dropModel.addLink(LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
-		dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
+		dropModel.addLink(
+				LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
+		dropModel.addLink(
+				LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
 		dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 
 		return Response.status(Response.Status.OK).entity(dropModel).build();
@@ -91,32 +93,6 @@ public class DropRestResource {
 		return Response.status(Response.Status.OK).entity(dropListForPresentation).build();
 	}
 
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{dropModelId}")
-	public Response updateDropModel(@PathParam("dropModelId") Long dropModelId, DropModel dropModel) {
-		DropModel dropModelToUpdate = dropEjb.getDrop(dropModelId);
-		dropModelToUpdate.setContent(dropModel.getContent());
-
-		if (createDropValidator.validateRestDrop(dropModelToUpdate.getContent())) {
-			dropEjb.storeDrop(dropModelToUpdate);
-			return Response.status(Response.Status.OK).entity(dropModelToUpdate).build();
-		} else {
-			return Response.status(Response.Status.BAD_REQUEST).build();
-		}
-	}
-
-	@DELETE
-	@Path("/{dropModelId}")
-	public Response deleteDropModel(@PathParam("dropModelId") Long dropModelId) {
-		DropModel dropModel = dropEjb.getDrop(dropModelId);
-
-		dropEjb.deleteDrop(dropModel);
-		return Response.status(Response.Status.OK).build();
-
-	}
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{dropModelId}/comments")
@@ -124,9 +100,10 @@ public class DropRestResource {
 		List<CommentModel> comments = dropEjb.getDrop(dropModelId).getComments();
 
 		for (CommentModel commentModel : comments) {
-			commentModel.addLink(LinkBuilder.buildOwnerLink(DropRestResource.class, uriInfo, commentModel.getDropHost().getDropId(), "DropHost"));
+			commentModel.addLink(LinkBuilder.buildOwnerLink(DropRestResource.class, uriInfo,
+					commentModel.getDropHost().getDropId(), "DropHost"));
 		}
-		
+
 		comments = removeOwnerFromCommentList((Vector<CommentModel>) comments);
 
 		// A generic wrapper for returning a messagebody that works with
@@ -134,15 +111,46 @@ public class DropRestResource {
 		GenericEntity<List<CommentModel>> commentListForPresentation = new GenericEntity<List<CommentModel>>(comments) {
 		};
 
-		return Response.status(Response.Status.OK).entity(commentListForPresentation)
-				.build();
+		return Response.status(Response.Status.OK).entity(commentListForPresentation).build();
 	}
+
+	// @PUT
+	// @Consumes(MediaType.APPLICATION_JSON)
+	// @Produces(MediaType.APPLICATION_JSON)
+	// @Path("/{dropModelId}")
+	// public Response updateDropModel(@PathParam("dropModelId") Long
+	// dropModelId, DropModel dropModel) {
+	// DropModel dropModelToUpdate = dropEjb.getDrop(dropModelId);
+	// dropModelToUpdate.setContent(dropModel.getContent());
+	//
+	// if (createDropValidator.validateRestDrop(dropModelToUpdate.getContent()))
+	// {
+	// dropEjb.storeDrop(dropModelToUpdate);
+	// return
+	// Response.status(Response.Status.OK).entity(dropModelToUpdate).build();
+	// } else {
+	// return Response.status(Response.Status.BAD_REQUEST).build();
+	// }
+	// }
+
+	// @DELETE
+	// @Path("/{dropModelId}")
+	// public Response deleteDropModel(@PathParam("dropModelId") Long
+	// dropModelId) {
+	// DropModel dropModel = dropEjb.getDrop(dropModelId);
+	//
+	// dropEjb.deleteDrop(dropModel);
+	// return Response.status(Response.Status.OK).build();
+	// }
 
 	private List<DropModel> provideLinksForDrops(List<DropModel> drops, UriInfo uriInfo) {
 		for (DropModel dropModel : drops) {
-			dropModel.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
-			dropModel.addLink(LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
-			dropModel.addLink(LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
+			dropModel
+					.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
+			dropModel.addLink(
+					LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
+			dropModel.addLink(LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo,
+					dropModel.getOwner().getUserid(), "Owner"));
 		}
 
 		return drops;
