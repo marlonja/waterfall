@@ -12,8 +12,6 @@ public interface LocalFilter {
 	
 	List<DropModel> filterDrops(FilterModel filterModel);
 
-	List<DropModel> filterByAgeSpan(int startAge, int endAge);
-
 	void saveFilterAsPool(FilterModel filterModel);
 
 	FilterModel getFilterById(Long filterid);

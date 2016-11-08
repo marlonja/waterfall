@@ -1,7 +1,7 @@
 package com.waterfall.serviceEJB;
 
-import java.util.ArrayList;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -50,19 +50,38 @@ public class FilterServiceEJB implements LocalFilter {
 
 		filter = filterModel;
 
-		dropListFromSearch = (ArrayList<DropModel>) getInitialList(splitTagList(filterModel));
+		dropListFromSearch = (ArrayList<DropModel>) getInitialList(splitTagList());
 		dropListFromSearch = (ArrayList<DropModel>) removeDuplicatesFromSearchList();
 
 		return dropListFromSearch;
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public List<DropModel> filterByAgeSpan(int startAge, int endAge) {
+	private List<DropModel> getInitialList(String[] searchWords) {
+		dropListFromSearch = new ArrayList<DropModel>();
 
-		if (dropListFromSearch == null) {
-			dropListFromSearch = new ArrayList<DropModel>();
+		if (filter.getIsFilteredByMale() || filter.getIsFilteredByFemale() || filter.getIsFilteredByOther()) {
+			dropListFromSearch = (ArrayList<DropModel>) getDropsByGender();
+		} else {
+			dropListFromSearch.addAll(dropDAOBean.getAllDrops());
 		}
+		
+		boolean startAgeIsZero = filter.getStartAge() == 0;
+		boolean endAgeIsZero = filter.getEndAge() == 0;
+		boolean startAgeIsHigherThanEndAge = filter.getStartAge() > filter.getEndAge();
+
+		if (!(startAgeIsZero && endAgeIsZero) && !(startAgeIsHigherThanEndAge)) {
+			dropListFromSearch = (ArrayList<DropModel>) filterByAgeSpan(filter.getStartAge(), filter.getEndAge());
+		}
+		
+		dropListFromSearch = (ArrayList<DropModel>) filterInitialList(searchWords, dropListFromSearch);
+		
+		return dropListFromSearch;
+		
+	}
+	
+	@SuppressWarnings("deprecation")
+	private List<DropModel> filterByAgeSpan(int startAge, int endAge) {
+
 		int month = dateService.getCurrentDate().getMonthValue() - 1;
 		int day = dateService.getCurrentDate().getDayOfMonth();
 		startAge = dateService.getCurrentDate().getYear() - startAge;
@@ -84,20 +103,9 @@ public class FilterServiceEJB implements LocalFilter {
 		}
 		return dropListFromSearch;
 	}
-
-	private List<DropModel> getInitialList(String[] searchWords) {
-		dropListFromSearch = new ArrayList<DropModel>();
-
-		if (filter.getIsFilteredByMale() || filter.getIsFilteredByFemale() || filter.getIsFilteredByOther()) {
-			dropListFromSearch = (ArrayList<DropModel>) getDropsByGender();
-		} else {
-			dropListFromSearch.addAll(dropDAOBean.getAllDrops());
-		}
-
-		if (!(filter.getStartAge() == 0 && filter.getEndAge() == 0) && !(filter.getStartAge() > filter.getEndAge())) {
-
-			dropListFromSearch = (ArrayList<DropModel>) filterByAgeSpan(filter.getStartAge(), filter.getEndAge());
-		}
+	
+	private List<DropModel> filterInitialList(String[] searchWords, ArrayList<DropModel> dropListFromSearch) {
+		
 		if (!searchWords[0].isEmpty()) {
 			dropListFromSearch = (ArrayList<DropModel>) filterList(dropListFromSearch, searchWords);
 		}
@@ -223,7 +231,6 @@ public class FilterServiceEJB implements LocalFilter {
 	}
 
 	private boolean userInformationContainsSearchWords(UserModel owner, String searchWord) {
-
 		String userInfo = owner.getFirstName() + owner.getLastName() + owner.getUsername() + owner.getCity()
 				+ owner.getCountry();
 
@@ -233,8 +240,8 @@ public class FilterServiceEJB implements LocalFilter {
 		return false;
 	}
 
-	private String[] splitTagList(FilterModel filterModel) {
-		String[] searchWords = filterModel.getSearchWords().split(",");
+	private String[] splitTagList() {
+		String[] searchWords = filter.getSearchWords().split(",");
 		return searchWords;
 	}
 

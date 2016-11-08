@@ -23,7 +23,6 @@ import com.waterfall.EJB.interfaces.LocalDrop;
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.models.CommentModel;
 import com.waterfall.models.DropModel;
-import com.waterfall.models.UserModel;
 import com.waterfall.utils.LinkBuilder;
 import com.waterfall.validators.CreateDropValidator;
 

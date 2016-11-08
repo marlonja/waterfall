@@ -15,16 +15,15 @@ public class ContactListDAOBean {
 	public boolean storeContactList(ContactListModel contactListModel) {
 		if (em.merge(contactListModel) != null) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 
 	}
-	
-	public void removeContactList(ContactListModel contactListModel) {		
-		contactListModel = em.merge(contactListModel);			
+
+	public void removeContactList(ContactListModel contactListModel) {
+		contactListModel = em.merge(contactListModel);
 		em.remove(contactListModel);
-				
+
 	}
 
 }

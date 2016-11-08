@@ -10,7 +10,6 @@ import java.util.Vector;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 
-
 import com.waterfall.EJB.interfaces.LocalUser;
 import com.waterfall.hashing.pbkdf2.PBKDF2;
 import com.waterfall.models.CommentModel;

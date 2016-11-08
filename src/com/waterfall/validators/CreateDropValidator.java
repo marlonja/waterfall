@@ -34,10 +34,7 @@ public class CreateDropValidator {
 	}
 
 	public boolean validateRestDrop(String content) {
-		
-		System.out.println("inne i rest valid 2");
 		if (content.trim().equals("") || content.length() > 200) {
-			System.out.println("inne i rest valid FEEEEEEEEL");
 			return false;
 		}
 		return true;
