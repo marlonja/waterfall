@@ -1,7 +1,7 @@
 package com.waterfall.RESTResources;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -40,24 +40,24 @@ public class DropSoapResource {
 		return dropEjb.getDrop(dropModelId);
 	}
 	
-	public DropModel updateDropModel(Long dropModelId, String content) {
-		DropModel dropModel = dropEjb.getDrop(dropModelId);
-		dropModel.setContent(content);
-		dropModel.setCreationDate(LocalDateTime.now());
-		if(dropEjb.storeDrop(dropModel)) {
-			dropModel.setComments(new ArrayList<>());
-			return dropModel;
-		}else {
-			return null;
-		}
-	}
-	
-	public DropModel deleteDropModel(Long dropModelId) {
-		DropModel dropModel = dropEjb.getDrop(dropModelId);
-		dropEjb.deleteDrop(dropModel);
-		
-		return new DropModel();
-	}
+//	public DropModel updateDropModel(Long dropModelId, String content) {
+//		DropModel dropModel = dropEjb.getDrop(dropModelId);
+//		dropModel.setContent(content);
+//		dropModel.setCreationDate(LocalDateTime.now());
+//		if(dropEjb.storeDrop(dropModel)) {
+//			dropModel.setComments(new ArrayList<>());
+//			return dropModel;
+//		}else {
+//			return null;
+//		}
+//	}
+//	
+//	public DropModel deleteDropModel(Long dropModelId) {
+//		DropModel dropModel = dropEjb.getDrop(dropModelId);
+//		dropEjb.deleteDrop(dropModel);
+//		
+//		return new DropModel();
+//	}
 	
 	public List<DropModel> getAllDrops() {
 		List<DropModel> dropModelList = dropEjb.getAllDrops();

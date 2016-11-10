@@ -22,8 +22,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name="dropmodel")
 @NamedQueries({ @NamedQuery(name = "DropModel.findAll", query = "SELECT d FROM DropModel d"),
@@ -47,20 +45,19 @@ public class DropModel implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "dropownerid")
-	@JsonIgnore
+	@XmlTransient
 	private UserModel dropowner;
 	
 	@Transient
 	private Long dropownerid;
 
-	
 	@OneToMany(mappedBy = "dropHost",fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@XmlTransient
 	private List<CommentModel> comments;
 
 	public DropModel() {
 	}
-
-	@XmlTransient
+	
 	public UserModel getOwner() {
 		return dropowner;
 	}
@@ -73,7 +70,6 @@ public class DropModel implements Serializable {
 		this.creationDate = creationDate;
 	}
 
-	@XmlTransient
 	public List<CommentModel> getComments() {
 		return comments;
 	}

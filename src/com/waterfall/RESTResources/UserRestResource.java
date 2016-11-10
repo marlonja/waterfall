@@ -117,7 +117,7 @@ public class UserRestResource {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
 		List<DropModel> dropList = userModel.getDrops();
-		
+
 		for (DropModel dropModel : dropList) {
 			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 			dropModel
@@ -136,17 +136,17 @@ public class UserRestResource {
 		return Response.status(Response.Status.OK).entity(dropListForPresentation).build();
 	}
 
-	// @DELETE
-	// @Path("/{userId}")
-	// public Response deleteUser(@PathParam("userId") Long userId) {
-	// UserModel userToDelete = userEJB.getUser(userId);
-	//
-	// if (userToDelete != null) {
-	// userEJB.deleteUser(userToDelete);
-	// return Response.status(Response.Status.OK).build();
-	// }
-	// return Response.status(Response.Status.NOT_FOUND).build();
-	// }
+//	@DELETE
+//	@Path("/{userId}")
+//	public Response deleteUser(@PathParam("userId") Long userId) {
+//		UserModel userToDelete = userEJB.getUserById(userId);
+//
+//		if (userToDelete != null) {
+//			userEJB.deleteUser(userToDelete);
+//			return Response.status(Response.Status.OK).build();
+//		}
+//		return Response.status(Response.Status.NOT_FOUND).build();
+//	}
 
 	private List<UserModel> provideLinksForUsers(List<UserModel> users, UriInfo uriInfo) {
 		for (UserModel userModel : users) {

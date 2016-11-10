@@ -83,12 +83,12 @@ public class UserSoapResource {
 		}
 	}
 
-	public UserModel deleteUser(Long userId) {
-		UserModel userModel = userEjb.getUserById(userId);
-		userEjb.deleteUser(userModel);
-
-		return new UserModel();
-	}
+//	public UserModel deleteUser(Long userId) {
+//		UserModel userModel = userEjb.getUserById(userId);
+//		userEjb.deleteUser(userModel);
+//
+//		return new UserModel();
+//	}
 
 	public List<UserModel> getAllUsers() {
 		return userEjb.getAllUsers();

@@ -19,8 +19,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 @Entity
 @Table(name="commentmodel")
@@ -40,7 +38,7 @@ public class CommentModel implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "drophostid")
-	@JsonIgnore
+	@XmlTransient
 	private DropModel dropHost;
 	
 	@Transient
@@ -48,7 +46,7 @@ public class CommentModel implements Serializable {
 	
 	@OneToOne
 	@JoinColumn(name = "commentownerid")
-	@JsonIgnore
+	@XmlTransient
 	private UserModel owner;
 	
 	@Transient
@@ -60,7 +58,6 @@ public class CommentModel implements Serializable {
 	public CommentModel() {
 	}
 
-	@XmlTransient
 	public UserModel getOwner() {
 		return owner;
 	}
@@ -77,8 +74,6 @@ public class CommentModel implements Serializable {
 		this.commentid = commentid;
 	}
 
-
-	@XmlTransient
 	public DropModel getDropHost() {
 		return dropHost;
 	}
