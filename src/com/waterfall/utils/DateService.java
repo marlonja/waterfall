@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 
-@Stateful
+@Stateless
 public class DateService {
 
 	LocalDate currentDate = LocalDate.now();

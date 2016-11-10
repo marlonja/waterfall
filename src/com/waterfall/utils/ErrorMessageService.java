@@ -2,9 +2,9 @@ package com.waterfall.utils;
 
 import java.util.ArrayList;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 
-@Stateful
+@Stateless
 public class ErrorMessageService {
 
 	public ArrayList<String> errorMessages;

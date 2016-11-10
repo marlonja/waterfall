@@ -3,9 +3,9 @@ package com.waterfall.utils;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 
-@Stateful
+@Stateless
 public class CountryService {
 
 	public ArrayList<String> getAllCountries() {

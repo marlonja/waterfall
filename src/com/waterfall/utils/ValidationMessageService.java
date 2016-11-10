@@ -1,10 +1,10 @@
 package com.waterfall.utils;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-@Stateful
+@Stateless
 public class ValidationMessageService {
 
 	public void errorMsg(String message) {
