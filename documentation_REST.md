@@ -5,8 +5,7 @@
 **Method:** `GET`  
 **Success Response:** [200 OK]  
 **Example response content:**  
-`[  
-  {  
+`{  
     "birthdate": "1989-09-06T00:00:00+02:00",  
     "city": "Gothenburg",  
     "country": ”Sweden”,  
@@ -47,8 +46,7 @@
     ],  
     "userid": 2,  
     "username": ”Parab00la”  
-  },  
-]`  
+  }`    
 **Error response:** [404 NOT FOUND]  
 ## Get user by ID
 **URL:** /Waterfall/api/users/:id  
