@@ -67,7 +67,6 @@ public class DropRestResource {
 				LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, dropModel.getOwner().getUserid(), "Owner"));
 		dropModel.addLink(
 				LinkBuilder.buildCommentLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Comments"));
-		dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 
 		return Response.status(Response.Status.OK).entity(dropModel).build();
 	}
@@ -75,16 +74,11 @@ public class DropRestResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDrops(@Context UriInfo uriInfo) {
-		List<DropModel> dropList = dropEjb.getAllDrops();
-
-		for (DropModel dropModel : dropList) {
-			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
-		}
 
 		// A generic wrapper for returning a messagebody that works with
 		// java.util.Vector
 		GenericEntity<List<DropModel>> dropListForPresentation = new GenericEntity<List<DropModel>>(
-				provideLinksForDrops(dropList, uriInfo)) {
+				provideLinksForDrops(dropEjb.getAllDrops(), uriInfo)) {
 		};
 
 		return Response.status(Response.Status.OK).entity(dropListForPresentation).build();
@@ -101,8 +95,6 @@ public class DropRestResource {
 					commentModel.getDropHost().getDropId(), "DropHost"));
 			commentModel.addLink(LinkBuilder.buildOwnerLink(UserRestResource.class, uriInfo, commentModel.getOwner().getUserid(), "Owner"));
 		}
-
-		comments = removeOwnerFromCommentList((Vector<CommentModel>) comments);
 
 		// A generic wrapper for returning a messagebody that works with
 		// java.util.Vector
@@ -152,14 +144,5 @@ public class DropRestResource {
 		}
 
 		return drops;
-	}
-
-	private List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
-
-		for (CommentModel commentModel : commentList) {
-			commentModel.setOwner(null);
-			commentModel.setDropHost(null);
-		}
-		return commentList;
 	}
 }

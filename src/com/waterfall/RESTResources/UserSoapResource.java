@@ -98,20 +98,7 @@ public class UserSoapResource {
 		UserModel userModel = userEjb.getUserById(userId);
 		List<DropModel> dropList = userModel.getDrops();
 		
-		for (DropModel dropModel : dropList) {
-			dropModel.setComments(removeOwnerFromCommentList( (Vector<CommentModel>) dropModel.getComments()));
-		}
-
 		return dropList;
-	}
-
-	private List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
-
-		for (CommentModel commentModel : commentList) {
-			commentModel.setOwner(null);
-			commentModel.setDropHost(null);
-		}
-		return commentList;
 	}
 
 }

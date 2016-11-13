@@ -60,22 +60,7 @@ public class DropSoapResource {
 //	}
 	
 	public List<DropModel> getAllDrops() {
-		List<DropModel> dropModelList = dropEjb.getAllDrops();
-		
-		for (DropModel dropModel : dropModelList) {
-			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
-		}
-		
-		return dropModelList;
-	}
-	
-	private List<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
-
-		for (CommentModel commentModel : commentList) {
-			commentModel.setOwner(null);
-			commentModel.setDropHost(null);
-		}
-		return commentList;
+		return dropEjb.getAllDrops();
 	}
 	  
 }

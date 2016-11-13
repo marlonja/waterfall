@@ -119,7 +119,6 @@ public class UserRestResource {
 		List<DropModel> dropList = userModel.getDrops();
 
 		for (DropModel dropModel : dropList) {
-			dropModel.setComments(removeOwnerFromCommentList((Vector<CommentModel>) dropModel.getComments()));
 			dropModel
 					.addLink(LinkBuilder.buildSelfLink(DropRestResource.class, uriInfo, dropModel.getDropId(), "Self"));
 			dropModel.addLink(
@@ -156,15 +155,6 @@ public class UserRestResource {
 					LinkBuilder.buildDropLink(UserRestResource.class, uriInfo, userModel.getUserid(), "Drops"));
 		}
 		return users;
-	}
-
-	private Vector<CommentModel> removeOwnerFromCommentList(Vector<CommentModel> commentList) {
-
-		for (CommentModel commentModel : commentList) {
-			commentModel.setOwner(null);
-			commentModel.setDropHost(null);
-		}
-		return commentList;
 	}
 
 	@SuppressWarnings("deprecation")
